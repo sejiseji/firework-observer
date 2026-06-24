@@ -68,3 +68,17 @@ Treat screen size as an isolated constant change, or draw scenery as a 2D screen
 
 Impact:
 `T0002.7` records screen and scenery planning before `T0003.0`. Future work should add `T0002.8` for screen profile configuration and `T0006.*` for staged scenery data and rendering. Scenery must not bypass the `Camera3D` projection pipeline.
+
+## 2026-06-24 Preserve main.py behavior through staged package migration
+
+Decision:
+Treat `main.py` as the protected reference for camera feel, box projection, kiku burst tuning, and partial trail behavior. Do not migrate it by direct copy or broad rewrite; migrate package-side behavior in small documented slices.
+
+Reason:
+The package implementation is currently a 2D template, while `main.py` contains the working 3D observation box prototype. Direct replacement would mix screen sizing, camera projection, box rendering, rocket physics, particle physics, trails, and UI, making regressions hard to review.
+
+Alternatives:
+Overwrite package gameplay from `main.py`, keep developing only `main.py`, or reimplement the package behavior from memory without preserving the exact prototype constants.
+
+Impact:
+Future work should use `docs/architecture/PROTOTYPE_RECONCILIATION.md` as the migration reference. The next recommended task remains `T0002.8` unless the roadmap is adjusted to insert a package-side Camera3D scaffold first.

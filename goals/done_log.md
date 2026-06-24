@@ -102,3 +102,17 @@ Record completed tasks here.
 - User-visible behavior: No gameplay behavior changed.
 - Preservation: `main.py` was unchanged. `src` gameplay behavior was unchanged. No screen profiles, scenery rendering, or firework presets were implemented.
 - Follow-up: Start `T0002.5` next.
+
+## 2026-06-24 T0002.5 Reconcile standalone prototype with package architecture
+
+- Summary: Inspected protected `main.py`, inventoried the current good-feeling prototype behavior, compared it with the package architecture, and documented a staged migration strategy in `docs/architecture/PROTOTYPE_RECONCILIATION.md`.
+- Pre-task git state: branch `main`; worktree clean; latest commit `b35b31b Record T0002 validation reconciliation`.
+- Files changed: `docs/architecture/PROTOTYPE_RECONCILIATION.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Tests:
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 9 passed.
+- User-visible behavior: No gameplay behavior changed.
+- Preservation: `main.py` was unchanged. `src` gameplay behavior was unchanged. No screen profile implementation, scenery rendering, or firework preset implementation was added.
+- Risks: The package is still a 2D template and should not be rewritten wholesale from `main.py`. Future migration should preserve Camera3D, box projection, y-up negative gravity, partial trails, and render order in small slices.
+- Follow-up: Start `T0002.8` next unless the user chooses to prioritize the newly added `T0002.9` Camera3D scaffold first.

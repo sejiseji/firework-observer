@@ -10,7 +10,7 @@
 
 - [ ] run template locally
 - [x] verify package imports, test tools, lint tools, and `check_all` behavior
-- [ ] reconcile standalone `main.py` with the package architecture before gameplay migration
+- [x] reconcile standalone `main.py` with the package architecture before gameplay migration
 - [x] document screen profiles and in-box scenery architecture
 - [ ] add screen profile configuration scaffold
 - [ ] confirm controls

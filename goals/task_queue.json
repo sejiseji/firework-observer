@@ -3,19 +3,6 @@
   "policy": "Keep tasks small enough for one Codex patch. Split ambiguous tasks before implementation.",
   "current": [
     {
-      "id": "T0002.5",
-      "title": "Reconcile standalone prototype with package architecture",
-      "goal": "Inspect standalone main.py, identify behavior to preserve, and document a migration strategy before implementing new package-side gameplay features.",
-      "status": "todo",
-      "acceptance": [
-        "main.py was inspected as a reference prototype",
-        "Good-feeling behavior to preserve was listed",
-        "A migration or preservation strategy was documented",
-        "No visual behavior was changed",
-        "T0003 remains blocked until this reconciliation is complete"
-      ]
-    },
-    {
       "id": "T0002.8",
       "title": "Add screen profile configuration scaffold",
       "goal": "Introduce a screen profile configuration scaffold while preserving the classic 256x144 behavior.",
@@ -40,12 +27,59 @@
       ]
     },
     {
+      "id": "T0002.9",
+      "title": "Add package-side Camera3D and projection scaffold",
+      "goal": "Introduce package-side Camera3D/projection scaffolding based on the protected main.py behavior without changing visible gameplay.",
+      "status": "todo",
+      "depends_on": [
+        "T0002.8"
+      ],
+      "constraints": [
+        "Do not modify standalone main.py",
+        "Do not change visible gameplay behavior",
+        "Preserve classic Camera3D defaults from PROTOTYPE_RECONCILIATION.md",
+        "Keep Pyxel API out of pure projection/model code",
+        "Do not implement firework presets",
+        "Do not implement scenery rendering"
+      ],
+      "acceptance": [
+        "Camera3D or equivalent projection scaffold exists package-side",
+        "Classic yaw, pitch, zoom, focal, camera_distance, and smoothing constants are represented",
+        "Projection tests cover y-up screen projection",
+        "No visible behavior changes are introduced",
+        "Validation results are recorded"
+      ]
+    },
+    {
+      "id": "T0002.10",
+      "title": "Add package-side wire box scaffold",
+      "goal": "Introduce package-side wire observation box geometry and rear/front render planning for the classic profile.",
+      "status": "todo",
+      "depends_on": [
+        "T0002.9"
+      ],
+      "constraints": [
+        "Do not modify standalone main.py",
+        "Do not migrate full firework behavior yet",
+        "Use classic 120x80x120 box values from PROTOTYPE_RECONCILIATION.md",
+        "Do not implement scenery rendering",
+        "Do not add new firework presets"
+      ],
+      "acceptance": [
+        "Wire box geometry has 8 vertices and 12 edges package-side",
+        "Rear/front edge classification is represented or documented in code",
+        "Classic profile remains available",
+        "No unrelated gameplay behavior changes are introduced",
+        "Validation results are recorded"
+      ]
+    },
+    {
       "id": "T0003.0",
       "title": "Establish firework preset scaffold",
       "goal": "Create a data-driven foundation for adding firework presets one at a time.",
       "status": "todo",
       "depends_on": [
-        "T0002.8"
+        "T0002.10"
       ],
       "constraints": [
         "Do not modify standalone main.py",
@@ -244,7 +278,7 @@
       "goal": "Add package-side viewpoint/camera adjustment matching the protected main.py prototype behavior.",
       "status": "todo",
       "depends_on": [
-        "T0002.5"
+        "T0002.9"
       ],
       "constraints": [
         "Use T0002.5 migration notes as the source of truth",
@@ -426,6 +460,12 @@
       "title": "Document screen profiles and in-box scenery architecture",
       "completed_on": "2026-06-24",
       "summary": "Completed as a documentation-only planning task. Added screen profile strategy, in-box 3D scenery architecture, future task ordering, and the requirement that scenery must not be a 2D screen-space background."
+    },
+    {
+      "id": "T0002.5",
+      "title": "Reconcile standalone prototype with package architecture",
+      "completed_on": "2026-06-24",
+      "summary": "Inspected protected standalone main.py, documented its Camera3D, box, rocket, particle, trail, render, and UI behavior, and mapped a staged package migration strategy in docs/architecture/PROTOTYPE_RECONCILIATION.md."
     }
   ]
 }

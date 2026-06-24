@@ -29,6 +29,7 @@ The project now includes:
 - `docs/prompts/goal_driven_mode.md`: master prompt for one-goal-at-a-time Codex development.
 - `docs/architecture/SCREEN_PROFILES.md`: planning for classic and larger landscape Pyxel internal profiles.
 - `docs/architecture/SCENERY_OBJECTS.md`: planning for future quiet 3D line scenery inside the observation box.
+- `docs/architecture/PROTOTYPE_RECONCILIATION.md`: inventory of protected `main.py` behavior and package migration strategy.
 
 An existing standalone `main.py` is still present and was not overwritten. It appears to contain a separate single-file Pyxel firework box prototype.
 
@@ -83,10 +84,11 @@ Completed work:
 - Completed `T0002`: pyxel, pytest, ruff, and uv are installed; imports, compile checks, pytest, ruff, and check_all pass.
 - Completed lint validation cleanup: existing ruff findings were fixed without changing gameplay behavior.
 - Completed `T0002.7` out of order as a documentation-only planning task: screen profiles and in-box scenery architecture are recorded. Do not redo it unless validation shows the task queue or docs are inconsistent.
+- Completed `T0002.5`: standalone `main.py` behavior is inventoried and mapped to package architecture in `docs/architecture/PROTOTYPE_RECONCILIATION.md`.
 
 Current next task:
 
-- `T0002.5: Reconcile standalone prototype with package architecture`
+- `T0002.8: Add screen profile configuration scaffold`
 
 Remaining queued tasks:
 
@@ -207,5 +209,6 @@ After the task:
 - If the user changes the game direction, update `project_brief.json` and regenerate or manually update the related docs.
 - Review whether the standalone `main.py` should be migrated into `src/pyxel_goal_game/` or kept only as a reference prototype.
 - Before implementing `T0003.0`, inspect `main.py`, identify behavior to preserve, and document the migration strategy in `T0002.5`.
+- Use `docs/architecture/PROTOTYPE_RECONCILIATION.md` as the source of truth for preserving protected prototype behavior during migration.
 - Use `docs/prompts/goal_driven_mode.md` for future Codex sessions so each run completes only one eligible task.
 - `T0004` should mean recreating the protected `main.py` viewpoint/camera feel on the package side, not inventing unrelated camera behavior.

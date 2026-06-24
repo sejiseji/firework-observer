@@ -138,3 +138,17 @@ Extend the existing 2D template `model.firework.FireworkPreset`, implement Kiku 
 
 Impact:
 `T0003.1` can implement deterministic radial/Kiku generation against this scaffold. This task intentionally does not change runtime gameplay, add visible presets, migrate rockets/particles, or connect Pyxel rendering.
+
+## 2026-06-24 Add deterministic Kiku burst generation as spawn specs
+
+Decision:
+Implement Kiku as `KIKU_PRESET` plus deterministic `ParticleSpawnSpec` generation in a Pyxel-independent `firework_bursts.py` module.
+
+Reason:
+The first firework behavior should be testable before it is connected to runtime particles or rendering. Generating immutable initial spawn specs preserves the protected y-up, negative-gravity, and partial-trail conventions while keeping runtime migration separate.
+
+Alternatives:
+Connect Kiku directly to the current runtime particle system, copy the standalone `main.py` implementation directly, or implement several preset shapes at once.
+
+Impact:
+`T0003.2` can add Ring generation using the same pure generation pattern. Runtime particle conversion and Pyxel rendering remain future work.

@@ -3,28 +3,6 @@
   "policy": "Keep tasks small enough for one Codex patch. Split ambiguous tasks before implementation.",
   "current": [
     {
-      "id": "T0003.1",
-      "title": "Implement deterministic radial / kiku preset",
-      "goal": "Implement the first basic spherical firework preset as the reference burst.",
-      "status": "todo",
-      "depends_on": [
-        "T0003.0"
-      ],
-      "constraints": [
-        "Implement only radial/kiku",
-        "Do not add ring, spiral, willow, peony, halo, or senrin yet",
-        "Do not modify standalone main.py",
-        "Do not copy external Firework.py code"
-      ],
-      "acceptance": [
-        "Kiku preset generates bounded spherical or near-spherical particles",
-        "Same seed gives same particle initial states",
-        "Particle trails are partial according to TrailPreset",
-        "Existing behavior remains intact",
-        "Validation results are recorded"
-      ]
-    },
-    {
       "id": "T0003.2",
       "title": "Implement ring preset",
       "goal": "Add a ring-shaped firework preset that benefits from rotating the observation box.",
@@ -395,6 +373,12 @@
       "title": "Establish firework preset scaffold",
       "completed_on": "2026-06-24",
       "summary": "Added Pyxel-independent firework preset scaffold with FireworkKind, FireworkShape, TrailPreset, SecondaryPreset, and FireworkPreset data types."
+    },
+    {
+      "id": "T0003.1",
+      "title": "Implement deterministic radial / kiku preset",
+      "completed_on": "2026-06-24",
+      "summary": "Added KIKU_PRESET and deterministic Pyxel-independent spherical burst generation that returns ParticleSpawnSpec values with partial trail data."
     }
   ]
 }

@@ -83,3 +83,27 @@ FUTURE_FIREWORK_KINDS = (
     FireworkKind.HALO,
     FireworkKind.SENRIN,
 )
+
+
+KIKU_TRAIL_PRESET = TrailPreset(
+    rate=0.32,
+    speed_threshold=1.05,
+    early_ratio=0.48,
+    strong_speed=1.45,
+)
+
+KIKU_PRESET = FireworkPreset(
+    kind=FireworkKind.KIKU,
+    label="Kiku",
+    shape=FireworkShape.SPHERE,
+    particle_count=112,
+    speed_range=(0.90, 1.65),
+    life_range=(55, 85),
+    palette=(10, 9, 7),
+    fade_mid=9,
+    fade_dark=2,
+    tip_color=7,
+    drag=0.985,
+    gravity=-0.025,
+    trail=KIKU_TRAIL_PRESET,
+)

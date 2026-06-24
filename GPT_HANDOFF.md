@@ -89,10 +89,11 @@ Completed work:
 - Completed `T0002.9`: package-side Pyxel-independent `Camera3D` projection scaffold exists in `src/pyxel_goal_game/camera3d.py` with tests for classic center projection, y-up projection, profile-dependent centers, depth guard, determinism, and smoothing.
 - Completed `T0002.10`: package-side Pyxel-independent `WireBox` scaffold exists in `src/pyxel_goal_game/wire_box.py` with tests for profile dimensions, 8 vertices, 12 edges, origin centering, edge groups, and `Camera3D` projection.
 - Completed `T0003.0`: package-side Pyxel-independent firework preset scaffold exists in `src/pyxel_goal_game/firework_presets.py` with `FireworkKind`, `FireworkShape`, `TrailPreset`, `SecondaryPreset`, and `FireworkPreset`.
+- Completed `T0003.1`: deterministic Kiku/radial burst generation exists in `src/pyxel_goal_game/firework_bursts.py`, producing immutable `ParticleSpawnSpec` values from `KIKU_PRESET`.
 
 Current next task:
 
-- `T0003.1: Implement deterministic radial / kiku preset`
+- `T0003.2: Implement ring preset`
 
 Remaining queued tasks:
 

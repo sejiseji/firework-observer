@@ -179,3 +179,19 @@ Record completed tasks here.
 - User-visible behavior: No visible gameplay behavior changed.
 - Preservation: `main.py` was unchanged. Default profile remains `classic`. No runtime firework behavior, scenery rendering, rocket migration, particle migration, or external Firework.py code was added.
 - Follow-up: Start `T0003.1` next to implement deterministic radial/Kiku generation.
+
+## 2026-06-24 T0003.1 Implement deterministic radial / kiku preset
+
+- Summary: Added `KIKU_PRESET` with protected prototype values and a Pyxel-independent deterministic Kiku burst generator that returns immutable `ParticleSpawnSpec` values. The generator creates a 3D spherical velocity distribution from a seed and represents partial trail eligibility from `TrailPreset`.
+- Pre-task git state: branch `main`; worktree clean; latest commit `aca566e Add firework preset scaffold`.
+- Files changed: `src/pyxel_goal_game/firework_presets.py`, `src/pyxel_goal_game/firework_bursts.py`, `tests/unit/test_firework_bursts.py`, `docs/architecture/PROTOTYPE_RECONCILIATION.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Tests:
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest tests/unit/test_firework_bursts.py tests/unit/test_firework_presets.py` passed: 16 tests passed.
+  - `.venv/bin/python -m pytest` passed: 43 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 43 passed.
+- User-visible behavior: No visible gameplay behavior changed.
+- Preservation: `main.py` was unchanged. Default profile remains `classic`. No runtime Rocket or Particle migration, Pyxel rendering connection, Ring/Spiral/Willow/Peony/Multi-ring/Halo/Senrin implementation, scenery rendering, or external Firework.py code was added.
+- Follow-up: Start `T0003.2` next to implement the Ring preset using the same pure generation pattern.

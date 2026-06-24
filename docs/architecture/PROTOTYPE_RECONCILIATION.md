@@ -331,3 +331,12 @@ This scaffold is not yet wired into Pyxel rendering and does not implement full 
 - Partial trail policy is represented by `TrailPreset`.
 
 This scaffold is not yet wired into runtime particles, rockets, rendering, or preset cycling.
+
+`T0003.1` added deterministic Kiku/radial burst generation in `src/pyxel_goal_game/firework_bursts.py`.
+
+- `KIKU_PRESET` stores the protected prototype Kiku values.
+- `ParticleSpawnSpec` represents initial particle data without runtime mutation.
+- `generate_kiku_burst()` generates a 3D spherical velocity distribution from a seed.
+- Trail eligibility is deterministic and partial, using `TrailPreset`.
+
+This generator is not yet wired into runtime particles, rockets, rendering, or preset cycling.

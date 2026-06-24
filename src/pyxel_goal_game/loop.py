@@ -10,7 +10,7 @@ from pyxel_goal_game.settings import GameSettings
 class GameLoop:
     def __init__(self, settings: GameSettings) -> None:
         self.settings = settings
-        self.scene = ObserverScene()
+        self.scene = ObserverScene(settings=settings)
 
     def update(self) -> None:
         if self.settings.quit_keys_enabled and (

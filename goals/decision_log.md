@@ -82,3 +82,17 @@ Overwrite package gameplay from `main.py`, keep developing only `main.py`, or re
 
 Impact:
 Future work should use `docs/architecture/PROTOTYPE_RECONCILIATION.md` as the migration reference. The next recommended task remains `T0002.8` unless the roadmap is adjusted to insert a package-side Camera3D scaffold first.
+
+## 2026-06-24 Add ScreenProfile scaffold with classic default
+
+Decision:
+Add `ScreenProfile` as package-side immutable configuration data and make `classic` the default profile for package settings.
+
+Reason:
+Screen size, observation box dimensions, camera focal length, camera distance, and max particle count must be managed together before larger-profile tuning. Keeping `classic` as the default preserves the protected baseline while allowing `iphone16_balanced` and `iphone16_large` to exist as data for future tasks.
+
+Alternatives:
+Keep hard-coded screen constants only, switch immediately to `512x236`, or delay profiles until after firework preset work.
+
+Impact:
+Future camera, box, particle budget, and UI work should read from `ScreenProfile` rather than adding new fixed constants. This task intentionally does not add scenery rendering, new firework presets, or `main.py` migration.

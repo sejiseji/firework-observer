@@ -66,3 +66,16 @@ This applies to fireworks, scenery, and any future visual guide lines inside the
 ## Future Task Boundary
 
 `T0002.8` should introduce a screen profile configuration scaffold while preserving the classic behavior. It should not add scenery rendering or new firework presets.
+
+## Implementation Status
+
+`T0002.8` added the package-side scaffold in `src/pyxel_goal_game/screen_profiles.py`.
+
+- `ScreenProfile` is an immutable dataclass.
+- `classic` is the default profile.
+- `iphone16_balanced` and `iphone16_large` exist as selectable data.
+- `GameSettings` now holds a profile and exposes width and height from that profile.
+- `ObserverScene` uses profile width, height, and max particle count.
+- HUD bottom text anchors to the active profile height instead of the old fixed `120px` template coordinate.
+
+This task did not implement scenery rendering, new firework presets, or `main.py` migration.

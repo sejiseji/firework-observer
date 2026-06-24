@@ -8,13 +8,18 @@ from pyxel_goal_game.input.controls import Controls
 from pyxel_goal_game.model.world import World
 from pyxel_goal_game.render.hud_renderer import draw_hud
 from pyxel_goal_game.render.particle_renderer import draw_particles
+from pyxel_goal_game.settings import GameSettings
 from pyxel_goal_game.systems.particle_system import ParticleSystem
 
 
 class ObserverScene:
-    def __init__(self) -> None:
-        self.world = World.initial()
-        self.particle_system = ParticleSystem(random=Random(0))
+    def __init__(self, settings: GameSettings | None = None) -> None:
+        self.settings = settings or GameSettings()
+        self.world = World.initial(width=self.settings.width, height=self.settings.height)
+        self.particle_system = ParticleSystem(
+            random=Random(0),
+            max_particles=self.settings.profile.max_particles,
+        )
 
     def update(self, controls: Controls) -> None:
         self.world.focus_x += controls.dx

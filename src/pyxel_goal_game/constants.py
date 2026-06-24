@@ -1,4 +1,6 @@
-SCREEN_WIDTH = 160
-SCREEN_HEIGHT = 120
+from pyxel_goal_game.screen_profiles import DEFAULT_SCREEN_PROFILE
+
+SCREEN_WIDTH = DEFAULT_SCREEN_PROFILE.width
+SCREEN_HEIGHT = DEFAULT_SCREEN_PROFILE.height
 FPS = 60
-TITLE = "Pyxel Goal Game"
+TITLE = "Firework Observer"

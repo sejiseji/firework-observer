@@ -3,30 +3,6 @@
   "policy": "Keep tasks small enough for one Codex patch. Split ambiguous tasks before implementation.",
   "current": [
     {
-      "id": "T0002.8",
-      "title": "Add screen profile configuration scaffold",
-      "goal": "Introduce a screen profile configuration scaffold while preserving the classic 256x144 behavior.",
-      "status": "todo",
-      "depends_on": [
-        "T0002.7"
-      ],
-      "constraints": [
-        "Preserve classic 256x144 profile",
-        "Add iphone16_balanced profile at 512x236",
-        "Do not implement scenery rendering",
-        "Do not implement new firework presets",
-        "Do not modify standalone main.py unless explicitly authorized by T0002.5 migration decision"
-      ],
-      "acceptance": [
-        "ScreenProfile or equivalent config exists",
-        "classic profile remains available",
-        "iphone16_balanced profile is documented and selectable in code or config",
-        "box size, focal length, camera distance, and max particle count can be profile-dependent",
-        "UI placement avoids hard-coded 256x144-only assumptions",
-        "Validation results are recorded"
-      ]
-    },
-    {
       "id": "T0002.9",
       "title": "Add package-side Camera3D and projection scaffold",
       "goal": "Introduce package-side Camera3D/projection scaffolding based on the protected main.py behavior without changing visible gameplay.",
@@ -466,6 +442,12 @@
       "title": "Reconcile standalone prototype with package architecture",
       "completed_on": "2026-06-24",
       "summary": "Inspected protected standalone main.py, documented its Camera3D, box, rocket, particle, trail, render, and UI behavior, and mapped a staged package migration strategy in docs/architecture/PROTOTYPE_RECONCILIATION.md."
+    },
+    {
+      "id": "T0002.8",
+      "title": "Add screen profile configuration scaffold",
+      "completed_on": "2026-06-24",
+      "summary": "Added package-side ScreenProfile configuration data with classic as the default profile and iphone16_balanced and iphone16_large as selectable data."
     }
   ]
 }

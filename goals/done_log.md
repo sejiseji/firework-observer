@@ -116,3 +116,18 @@ Record completed tasks here.
 - Preservation: `main.py` was unchanged. `src` gameplay behavior was unchanged. No screen profile implementation, scenery rendering, or firework preset implementation was added.
 - Risks: The package is still a 2D template and should not be rewritten wholesale from `main.py`. Future migration should preserve Camera3D, box projection, y-up negative gravity, partial trails, and render order in small slices.
 - Follow-up: Start `T0002.8` next unless the user chooses to prioritize the newly added `T0002.9` Camera3D scaffold first.
+
+## 2026-06-24 T0002.8 Add screen profile configuration scaffold
+
+- Summary: Added package-side `ScreenProfile` configuration data with `classic`, `iphone16_balanced`, and `iphone16_large` profiles. `classic` remains the default profile. `GameSettings` now exposes dimensions from its selected profile, and `ObserverScene` uses profile dimensions and max particle count.
+- Pre-task git state: branch `main`; worktree clean; latest commit `317eaa7 Document prototype reconciliation strategy`.
+- Files changed: `src/pyxel_goal_game/screen_profiles.py`, `src/pyxel_goal_game/constants.py`, `src/pyxel_goal_game/settings.py`, `src/pyxel_goal_game/model/world.py`, `src/pyxel_goal_game/render/hud_renderer.py`, `src/pyxel_goal_game/scenes/observer.py`, `src/pyxel_goal_game/loop.py`, `tests/unit/test_screen_profiles.py`, `docs/architecture/SCREEN_PROFILES.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Tests:
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 14 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 14 passed.
+- User-visible behavior: Package default screen settings now resolve through the `classic` profile values, and the HUD bottom line anchors to the active profile height. No firework preset, scenery, or `main.py` behavior was changed.
+- Preservation: `main.py` was unchanged. No scenery rendering, new firework presets, or external Firework.py code was added.
+- Follow-up: Start `T0002.9` next to add package-side Camera3D/projection scaffold without visible gameplay migration.

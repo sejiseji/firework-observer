@@ -1,0 +1,116 @@
+{
+  "project_identity": {
+    "working_title": "Firework Observer",
+    "package_name": "pyxel_goal_game",
+    "one_line_pitch": "A smooth Pyxel prototype where the player observes expressive fireworks in a small cutout space.",
+    "main_genre": "observation / toy / visual experience",
+    "sub_genre": "firework simulator",
+    "target_platform": "local prototype, later browser demo",
+    "target_audience": "people who enjoy calm visual toys and compact Pyxel experiments",
+    "session_length": "3-10 minutes",
+    "release_intent": "prototype"
+  },
+  "north_star": {
+    "first_feeling": "smooth, beautiful, surprisingly rich for Pyxel",
+    "memory_after_play": "the fireworks felt alive and pleasant to observe",
+    "single_most_important_experience": "freely observing fireworks from changing angles",
+    "must_not_lose": "smooth visual feel and small maintainable implementation",
+    "success_definition": "a playable prototype with satisfying fireworks, stable frame pacing, and clear Codex task continuity"
+  },
+  "player_experience": {
+    "mood": "calm and beautiful",
+    "pace": "meditative",
+    "difficulty": "no challenge",
+    "pressure": "none",
+    "desired_aftertaste": "relaxing and visually satisfying",
+    "main_verbs": [
+      "observe",
+      "rotate camera",
+      "trigger fireworks",
+      "adjust viewpoint"
+    ]
+  },
+  "game_loop": {
+    "start": "player opens a small observation space",
+    "repeat": "player changes viewpoint and triggers/selects fireworks",
+    "response": "fireworks launch, burst, trail, and fade",
+    "progress": "visual discovery rather than score progression",
+    "end": "player exits when satisfied",
+    "win_condition": "none",
+    "lose_condition": "none"
+  },
+  "controls": {
+    "keyboard": true,
+    "gamepad": false,
+    "mouse": "optional later",
+    "quit_key": "Q or Escape",
+    "core_controls": {
+      "arrow_keys": "adjust viewpoint or focus",
+      "space": "launch firework",
+      "z_x": "change firework preset later"
+    }
+  },
+  "visual_design": {
+    "pixel_art_strictness": "loose / intentionally smooth",
+    "palette": "Pyxel palette first, custom palette later if needed",
+    "uses_particles": true,
+    "uses_trails": true,
+    "uses_procedural_drawing": true,
+    "main_visual_risk": "too many particles or trails may hurt frame pacing",
+    "acceptable_fakes": [
+      "approximate projection",
+      "stylized physics",
+      "sparse trails"
+    ]
+  },
+  "audio_design": {
+    "use_sound_effects": "later",
+    "use_music": "optional",
+    "sound_mood": "soft, distant, not noisy"
+  },
+  "technical": {
+    "target_fps": 60,
+    "max_active_particles": 256,
+    "max_trail_length": 8,
+    "architecture": "model/system/render separation",
+    "deterministic_simulation": true,
+    "pyxel_api_boundary": "app, loop, render, input, audio only"
+  },
+  "asset_pipeline": {
+    "use_pyxres": "optional",
+    "raw_assets": "assets/raw",
+    "generated_assets": "assets/generated",
+    "pyxel_assets": "assets/pyxel",
+    "transparent_color": "0 unless overridden"
+  },
+  "codex_operation": {
+    "patch_size": "small",
+    "allow_refactor": "only when task explicitly asks",
+    "allow_dependency_addition": "no, unless approved",
+    "update_docs": true,
+    "stop_on_product_ambiguity": "record assumption or ask user depending on risk",
+    "report_required": [
+      "summary",
+      "files_changed",
+      "tests_run",
+      "assumptions",
+      "risks",
+      "next_task"
+    ]
+  },
+  "non_goals": [
+    "character walking",
+    "large story",
+    "complex scoring",
+    "network features",
+    "large engine framework",
+    "broad architecture rewrite"
+  ],
+  "initial_tasks": [
+    "Initialize docs from project brief",
+    "Verify package imports and tests",
+    "Implement first deterministic burst preset",
+    "Add viewpoint/camera adjustment",
+    "Add trail tuning checklist"
+  ]
+}

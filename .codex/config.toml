@@ -1,0 +1,7 @@
+# Example placeholder.
+# Keep actual machine-specific or secret configuration out of version control.
+
+model = "gpt-5.5-thinking"
+
+[project]
+instructions = "Read AGENTS.md first. Prefer small, testable changes."

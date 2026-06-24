@@ -1,0 +1,4 @@
+SCREEN_WIDTH = 160
+SCREEN_HEIGHT = 120
+FPS = 60
+TITLE = "Pyxel Goal Game"

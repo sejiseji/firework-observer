@@ -1,0 +1,37 @@
+[project]
+name = "pyxel-goal-game"
+version = "0.1.0"
+description = "Goal-oriented Pyxel game template for Codex-assisted development."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pyxel>=2.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "ruff>=0.6.0",
+]
+
+[project.scripts]
+pyxel-goal-game = "pyxel_goal_game.__main__:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = [
+    "--import-mode=importlib",
+]
+
+[tool.ruff]
+src = ["src", "tests", "scripts", "tools"]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = []
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"

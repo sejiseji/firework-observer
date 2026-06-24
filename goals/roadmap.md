@@ -1,0 +1,49 @@
+# Roadmap
+
+## Phase 0: Initialized brief
+
+- [x] project brief exists
+- [x] product direction documented
+- [ ] user reviews initialized docs
+
+## Phase 1: First playable loop
+
+- [ ] run template locally
+- [x] verify package imports, test tools, lint tools, and `check_all` behavior
+- [ ] reconcile standalone `main.py` with the package architecture before gameplay migration
+- [x] document screen profiles and in-box scenery architecture
+- [ ] add screen profile configuration scaffold
+- [ ] confirm controls
+- [ ] confirm first visual behavior
+- [ ] add or update smoke note
+
+## Phase 2: Core experience
+
+- [ ] establish firework preset scaffold
+- [ ] add radial/kiku preset
+- [ ] add ring preset
+- [ ] add spiral preset
+- [ ] add willow preset
+- [ ] add peony preset
+- [ ] add multi-ring or halo preset
+- [ ] add senrin / secondary burst preset
+- [ ] add preset cycling and visual tuning checklist
+- [ ] add scenery preset data scaffold
+- [ ] add EMPTY and MOUNTAINS scenery presets
+- [ ] add CITY skyline scenery preset
+- [ ] add FOREST scenery preset
+- [ ] add RIVERBANK scenery preset
+- [ ] add scenery preset cycling UI
+- [ ] recreate protected prototype viewpoint controls in the package
+- [ ] add trail tuning checklist
+- [ ] implement core verb: observe, rotate camera, trigger fireworks, adjust viewpoint
+- [ ] tune visual feel
+- [ ] tune performance budget
+- [ ] record user feedback
+
+## Phase 3: Prototype release
+
+- [ ] create build
+- [ ] draft release notes
+- [ ] list known issues
+- [ ] publish or archive

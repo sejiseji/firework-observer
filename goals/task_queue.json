@@ -1,0 +1,431 @@
+{
+  "version": 1,
+  "policy": "Keep tasks small enough for one Codex patch. Split ambiguous tasks before implementation.",
+  "current": [
+    {
+      "id": "T0002.5",
+      "title": "Reconcile standalone prototype with package architecture",
+      "goal": "Inspect standalone main.py, identify behavior to preserve, and document a migration strategy before implementing new package-side gameplay features.",
+      "status": "todo",
+      "acceptance": [
+        "main.py was inspected as a reference prototype",
+        "Good-feeling behavior to preserve was listed",
+        "A migration or preservation strategy was documented",
+        "No visual behavior was changed",
+        "T0003 remains blocked until this reconciliation is complete"
+      ]
+    },
+    {
+      "id": "T0002.8",
+      "title": "Add screen profile configuration scaffold",
+      "goal": "Introduce a screen profile configuration scaffold while preserving the classic 256x144 behavior.",
+      "status": "todo",
+      "depends_on": [
+        "T0002.7"
+      ],
+      "constraints": [
+        "Preserve classic 256x144 profile",
+        "Add iphone16_balanced profile at 512x236",
+        "Do not implement scenery rendering",
+        "Do not implement new firework presets",
+        "Do not modify standalone main.py unless explicitly authorized by T0002.5 migration decision"
+      ],
+      "acceptance": [
+        "ScreenProfile or equivalent config exists",
+        "classic profile remains available",
+        "iphone16_balanced profile is documented and selectable in code or config",
+        "box size, focal length, camera distance, and max particle count can be profile-dependent",
+        "UI placement avoids hard-coded 256x144-only assumptions",
+        "Validation results are recorded"
+      ]
+    },
+    {
+      "id": "T0003.0",
+      "title": "Establish firework preset scaffold",
+      "goal": "Create a data-driven foundation for adding firework presets one at a time.",
+      "status": "todo",
+      "depends_on": [
+        "T0002.8"
+      ],
+      "constraints": [
+        "Do not modify standalone main.py",
+        "Do not copy external Firework.py code",
+        "Keep Pyxel API outside pure simulation/model code",
+        "Respect y-up coordinates and negative gravity",
+        "Keep partial trail behavior",
+        "Do not make large visual behavior changes yet"
+      ],
+      "acceptance": [
+        "FireworkKind and FireworkShape or equivalent explicit preset identifiers are defined",
+        "TrailPreset and FireworkPreset are defined or extended for staged preset work",
+        "Burst generation can use deterministic RNG",
+        "At least one test verifies deterministic particle generation",
+        "Existing compile checks pass or environment gaps are documented"
+      ]
+    },
+    {
+      "id": "T0003.1",
+      "title": "Implement deterministic radial / kiku preset",
+      "goal": "Implement the first basic spherical firework preset as the reference burst.",
+      "status": "todo",
+      "depends_on": [
+        "T0003.0"
+      ],
+      "constraints": [
+        "Implement only radial/kiku",
+        "Do not add ring, spiral, willow, peony, halo, or senrin yet",
+        "Do not modify standalone main.py",
+        "Do not copy external Firework.py code"
+      ],
+      "acceptance": [
+        "Kiku preset generates bounded spherical or near-spherical particles",
+        "Same seed gives same particle initial states",
+        "Particle trails are partial according to TrailPreset",
+        "Existing behavior remains intact",
+        "Validation results are recorded"
+      ]
+    },
+    {
+      "id": "T0003.2",
+      "title": "Implement ring preset",
+      "goal": "Add a ring-shaped firework preset that benefits from rotating the observation box.",
+      "status": "todo",
+      "depends_on": [
+        "T0003.1"
+      ],
+      "constraints": [
+        "Implement only ring",
+        "Keep the ring as a 3D-box-compatible preset, not a direct 2D copy",
+        "Do not modify standalone main.py",
+        "Do not copy external Firework.py code"
+      ],
+      "acceptance": [
+        "Ring preset forms a readable circular or elliptic structure depending on camera angle",
+        "Same seed gives same particle initial states",
+        "Trail density is controlled and partial",
+        "Existing kiku preset still works",
+        "Validation results are recorded"
+      ]
+    },
+    {
+      "id": "T0003.3",
+      "title": "Implement spiral preset",
+      "goal": "Add one spiral firework preset that shows readable twist in the 3D observation box.",
+      "status": "todo",
+      "depends_on": [
+        "T0003.2"
+      ],
+      "constraints": [
+        "Implement only spiral",
+        "Do not tune unrelated camera behavior",
+        "Do not modify standalone main.py",
+        "Do not copy external Firework.py code"
+      ],
+      "acceptance": [
+        "Spiral preset has a readable twist when the view changes",
+        "Same seed gives same particle initial states",
+        "Particle count and trails remain bounded",
+        "Existing radial and ring presets still work",
+        "Validation results are recorded"
+      ]
+    },
+    {
+      "id": "T0003.4",
+      "title": "Implement willow preset",
+      "goal": "Add one willow-style preset focused on downward drift, trails, and afterglow.",
+      "status": "todo",
+      "depends_on": [
+        "T0003.3"
+      ],
+      "constraints": [
+        "Implement only willow",
+        "Respect y-up coordinates and negative gravity",
+        "Do not modify standalone main.py",
+        "Do not copy external Firework.py code"
+      ],
+      "acceptance": [
+        "Willow particles visibly drift downward in y-up space",
+        "Selected particles have longer but still bounded trails",
+        "Same seed gives same particle initial states",
+        "Existing presets still work",
+        "Validation results are recorded"
+      ]
+    },
+    {
+      "id": "T0003.5",
+      "title": "Implement peony preset",
+      "goal": "Add one bright short-lived peony-style preset with restrained trails.",
+      "status": "todo",
+      "depends_on": [
+        "T0003.4"
+      ],
+      "constraints": [
+        "Implement only peony",
+        "Favor bright points over dense trails",
+        "Do not modify standalone main.py",
+        "Do not copy external Firework.py code"
+      ],
+      "acceptance": [
+        "Peony preset is visually distinct from kiku through life, brightness, or spread tuning",
+        "Trail usage remains restrained and partial",
+        "Same seed gives same particle initial states",
+        "Existing presets still work",
+        "Validation results are recorded"
+      ]
+    },
+    {
+      "id": "T0003.6",
+      "title": "Implement multi-ring or halo preset",
+      "goal": "Add one layered ring or halo preset without obscuring the transparent box.",
+      "status": "todo",
+      "depends_on": [
+        "T0003.5"
+      ],
+      "constraints": [
+        "Implement only multi-ring or halo",
+        "Keep layers readable and particle counts capped",
+        "Do not modify standalone main.py",
+        "Do not copy external Firework.py code"
+      ],
+      "acceptance": [
+        "Multiple layers are readable without crushing frame pacing or box readability",
+        "Trail density is controlled and partial",
+        "Same seed gives same particle initial states",
+        "Existing presets still work",
+        "Validation results are recorded"
+      ]
+    },
+    {
+      "id": "T0003.7",
+      "title": "Implement senrin / secondary burst preset",
+      "goal": "Add one small-shell cluster or secondary-burst preset with restrained secondary trails.",
+      "status": "todo",
+      "depends_on": [
+        "T0003.6"
+      ],
+      "constraints": [
+        "Implement only senrin or secondary burst behavior",
+        "Keep secondary particles capped",
+        "Do not modify standalone main.py",
+        "Do not copy external Firework.py code"
+      ],
+      "acceptance": [
+        "Secondary burst timing is deterministic",
+        "Secondary particle count is bounded",
+        "Secondary trails are restrained",
+        "Existing presets still work",
+        "Validation results are recorded"
+      ]
+    },
+    {
+      "id": "T0003.8",
+      "title": "Add preset cycling and visual tuning checklist",
+      "goal": "Add a minimal way to cycle available presets and document visual tuning checks.",
+      "status": "todo",
+      "depends_on": [
+        "T0003.7"
+      ],
+      "constraints": [
+        "Do not add scoring, objectives, characters, maps, or unrelated gameplay",
+        "Do not rewrite renderer or camera architecture",
+        "Do not modify standalone main.py unless explicitly approved",
+        "Keep controls and checklist minimal"
+      ],
+      "acceptance": [
+        "Available presets can be selected or cycled without breaking existing controls",
+        "Visual tuning checklist covers trails, box readability, frame pacing, and depth ordering",
+        "No unrelated gameplay features were added",
+        "Validation results are recorded"
+      ]
+    },
+    {
+      "id": "T0004",
+      "title": "Recreate protected prototype viewpoint controls in package",
+      "goal": "Add package-side viewpoint/camera adjustment matching the protected main.py prototype behavior.",
+      "status": "todo",
+      "depends_on": [
+        "T0002.5"
+      ],
+      "constraints": [
+        "Use T0002.5 migration notes as the source of truth",
+        "Do not invent unrelated camera behavior",
+        "Preserve the 256x144 transparent box viewing feel",
+        "Keep Pyxel input handling at the app/input boundary"
+      ],
+      "acceptance": [
+        "Relevant docs and T0002.5 migration notes were read",
+        "Package-side controls match the protected prototype intent",
+        "No unrelated gameplay or preset work was added",
+        "Tests or checklist were updated when relevant",
+        "Assumptions and risks were reported"
+      ]
+    },
+    {
+      "id": "T0005",
+      "title": "Add trail tuning checklist",
+      "goal": "Add trail tuning checklist",
+      "status": "todo",
+      "acceptance": [
+        "Relevant docs were read",
+        "Patch is small and coherent",
+        "Tests or checklist were updated when relevant",
+        "Assumptions and risks were reported"
+      ]
+    },
+    {
+      "id": "T0006.0",
+      "title": "Add scenery preset data scaffold",
+      "goal": "Add data-only scaffolding for future selectable in-box scenery presets.",
+      "status": "todo",
+      "depends_on": [
+        "T0002.8"
+      ],
+      "constraints": [
+        "Data scaffold only",
+        "Do not add full scenery rendering yet",
+        "Do not use screen-space backgrounds",
+        "Use y-up 3D box coordinates",
+        "Keep Pyxel calls outside scenery model definitions"
+      ],
+      "acceptance": [
+        "SceneKind or equivalent enum exists",
+        "SceneryPreset or equivalent data type exists",
+        "Vec3, Line3D, and Polyline3D or equivalents are available",
+        "EMPTY preset exists",
+        "No visible behavior changes unless explicitly intended",
+        "Tests or compile checks are updated where practical"
+      ]
+    },
+    {
+      "id": "T0006.1",
+      "title": "Add EMPTY and MOUNTAINS scenery presets",
+      "goal": "Add the first scenery presets as quiet 3D line data inside the observation box.",
+      "status": "todo",
+      "depends_on": [
+        "T0006.0"
+      ],
+      "constraints": [
+        "Implement only EMPTY and MOUNTAINS",
+        "Use box-relative y-up 3D coordinates",
+        "Keep mountain geometry low-detail and dark",
+        "Do not use screen-space background drawing"
+      ],
+      "acceptance": [
+        "EMPTY preset remains visually empty",
+        "MOUNTAINS preset uses sparse rear-side 3D polyline data",
+        "Scenery stays quieter than fireworks",
+        "No unrelated firework preset work is added"
+      ]
+    },
+    {
+      "id": "T0006.2",
+      "title": "Add CITY skyline scenery preset",
+      "goal": "Add a quiet city skyline scenery preset using coarse 3D line segments.",
+      "status": "todo",
+      "depends_on": [
+        "T0006.1"
+      ],
+      "constraints": [
+        "Implement only CITY",
+        "Use coarse vertical and horizontal line segments",
+        "Do not add filled polygons",
+        "Do not use screen-space background drawing"
+      ],
+      "acceptance": [
+        "CITY preset is readable as a sparse skyline",
+        "Line density does not compete with fireworks",
+        "Scenery uses the shared 3D projection pipeline",
+        "No unrelated gameplay work is added"
+      ]
+    },
+    {
+      "id": "T0006.3",
+      "title": "Add FOREST scenery preset",
+      "goal": "Add a quiet forest scenery preset using simple trunks and sparse branch lines.",
+      "status": "todo",
+      "depends_on": [
+        "T0006.2"
+      ],
+      "constraints": [
+        "Implement only FOREST",
+        "Use simple trunks and sparse branch lines",
+        "Keep colors dark and low contrast",
+        "Do not use screen-space background drawing"
+      ],
+      "acceptance": [
+        "FOREST preset is readable without dense detail",
+        "Line count remains bounded",
+        "Scenery uses y-up 3D coordinates",
+        "No unrelated gameplay work is added"
+      ]
+    },
+    {
+      "id": "T0006.4",
+      "title": "Add RIVERBANK scenery preset",
+      "goal": "Add a quiet riverbank scenery preset using floor-plane polylines near the bottom of the box.",
+      "status": "todo",
+      "depends_on": [
+        "T0006.3"
+      ],
+      "constraints": [
+        "Implement only RIVERBANK",
+        "Use bottom-of-box floor-plane polylines",
+        "Do not implement reflections yet",
+        "Do not use screen-space background drawing"
+      ],
+      "acceptance": [
+        "RIVERBANK preset reads as low, quiet structure near the bottom of the box",
+        "No water reflection behavior is implemented",
+        "Scenery uses the shared 3D projection pipeline",
+        "No unrelated gameplay work is added"
+      ]
+    },
+    {
+      "id": "T0006.5",
+      "title": "Add scenery preset cycling UI",
+      "goal": "Add a minimal way to cycle available scenery presets without changing firework preset behavior.",
+      "status": "todo",
+      "depends_on": [
+        "T0006.4"
+      ],
+      "constraints": [
+        "Keep scenery selection minimal",
+        "Do not change firework preset cycling behavior",
+        "Do not add scoring, objectives, characters, or maps",
+        "Preserve current camera and observation feel"
+      ],
+      "acceptance": [
+        "Available scenery presets can be cycled or selected",
+        "UI remains unobtrusive",
+        "Firework controls remain intact",
+        "Validation results are recorded"
+      ]
+    }
+  ],
+  "done": [
+    {
+      "id": "T0001",
+      "title": "Initialize docs from project brief",
+      "completed_on": "2026-06-23",
+      "summary": "Created project_brief.json from the template example and generated the initial product docs, goal state, roadmap, and task queue."
+    },
+    {
+      "id": "T0002.6",
+      "title": "Review external firework reference files",
+      "completed_on": "2026-06-23",
+      "summary": "Reviewed the external Firework.py as reference material only and documented adaptable burst ideas, coordinate risks, trail risks, and suggested preset candidates in docs/research/external_firework_reference.md."
+    },
+    {
+      "id": "T0002",
+      "title": "Verify package imports and tests",
+      "completed_on": "2026-06-23",
+      "summary": "Set up local validation tools and verified package import, compile, pytest, ruff, uv, and check_all status. pyxel, pytest, ruff, and uv are installed; compileall, pytest, ruff, and check_all pass."
+    },
+    {
+      "id": "T0002.7",
+      "title": "Document screen profiles and in-box scenery architecture",
+      "completed_on": "2026-06-24",
+      "summary": "Completed as a documentation-only planning task. Added screen profile strategy, in-box 3D scenery architecture, future task ordering, and the requirement that scenery must not be a 2D screen-space background."
+    }
+  ]
+}

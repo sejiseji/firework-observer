@@ -1,0 +1,88 @@
+# Done Log
+
+Record completed tasks here.
+
+## Format
+
+```md
+## YYYY-MM-DD T0001 Task title
+
+- Summary:
+- Tests:
+- User-visible behavior:
+- Risks:
+- Follow-up:
+```
+
+## 2026-06-23 T0001 Initialize docs from project brief
+
+- Summary: Created `project_brief.json` from `project_brief.example.json` and generated the initial project docs, goal state, roadmap, and task queue.
+- Tests: `python3 -m compileall src tests scripts tools` passed. `python3 -m pytest`, `python3 -m ruff check .`, and `python3 scripts/check_all.py` could not run because local dev tools are not installed (`pytest`, `ruff`, and `uv` missing).
+- User-visible behavior: No gameplay behavior changed.
+- Risks: The brief is based on the template example and should be reviewed by the user before product direction is treated as final.
+- Follow-up: Complete T0002 by installing or configuring the project dev environment, then run tests and lint.
+
+## 2026-06-23 T0002.6 Review external firework reference files
+
+- Summary: Reviewed `/Users/toytoytoy330/Desktop/AllMyFiles/Pyxel/01_kamito/Firework.py` as reference material and created `docs/research/external_firework_reference.md`.
+- Tests: Not applicable; documentation-only research task.
+- User-visible behavior: No gameplay behavior changed.
+- Risks: The external file is 2D screen-space code and should not be imported directly into the 3D Firework Box package.
+- Follow-up: Finish T0002 and T0002.5 before implementing preset candidates from the research notes.
+
+## 2026-06-23 T0002 Verify package imports and tests
+
+- Summary: Set up local validation dependencies and verified package import, compile, pytest, ruff, uv, and check_all status. Dependency availability is now fixed; remaining validation failure is existing lint debt.
+- Pre-task git state: branch `main`; repository has no commits yet; current project files are untracked.
+- Files intentionally changed: `goals/task_queue.json`, `goals/done_log.md`, `GPT_HANDOFF.md`, and generated `uv.lock`.
+- Setup:
+  - Created project `.venv`.
+  - Installed `pyxel`, `pytest`, and `ruff` into `.venv` via project dependency sync.
+  - Installed `uv` as a user-level CLI with `pipx`, available at `/Users/toytoytoy330/.local/bin/uv`.
+  - `uv sync --extra dev` selected Python 3.12.13 and generated `uv.lock`.
+- Tests:
+  - `python3 -c 'import sys; sys.path.insert(0, "src"); import pyxel_goal_game; import pyxel_goal_game.model.firework; import pyxel_goal_game.systems.particle_system; print("package import ok")'` passed.
+  - `.venv/bin/python -c 'import sys; sys.path.insert(0, "src"); import pyxel; import pytest; import pyxel_goal_game.__main__; print("pyxel/pytest/entry imports ok with src path")'` passed.
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 9 tests passed.
+  - `.venv/bin/python -m ruff check .` ran and failed on 13 existing lint findings.
+  - `python3 scripts/check_all.py` now finds `uv`; when run with uv cache access, pytest passes and ruff fails on the same 13 lint findings.
+- Remaining lint findings:
+  - `main.py`: import sorting.
+  - `scripts/build_pyxapp.py`: unused `subprocess`.
+  - `scripts/capture_smoke.py`: import sorting and one long line.
+  - `scripts/check_all.py`: import sorting and unused `sys`.
+  - `scripts/init_from_brief.py`: two long lines.
+  - `scripts/new_task.py`: import sorting.
+  - `src/pyxel_goal_game/model/world.py`: quoted return annotation.
+  - `src/pyxel_goal_game/resources/paths.py`: import sorting.
+  - `tools/codex/make_task_packet.py`: import sorting.
+  - `tools/codex/validate_handoff.py`: import sorting.
+- User-visible behavior: No gameplay behavior changed.
+- Preservation: `main.py` was not edited, refactored, formatted, migrated, or overwritten. No new firework presets were implemented.
+- Risks: `ruff check .` and `check_all.py` still fail until lint findings are fixed. `main.py` has one ruff import-sorting finding but remains protected until T0002.5 decides how to treat it.
+- Follow-up: Start `T0002.5` next to inspect the protected standalone `main.py` and document package migration strategy.
+
+## 2026-06-23 Lint validation cleanup
+
+- Summary: Fixed existing ruff findings so the local validation suite is green.
+- Files changed: `main.py`, `scripts/build_pyxapp.py`, `scripts/capture_smoke.py`, `scripts/check_all.py`, `scripts/init_from_brief.py`, `scripts/new_task.py`, `src/pyxel_goal_game/model/world.py`, `src/pyxel_goal_game/resources/paths.py`, `tools/codex/make_task_packet.py`, and `tools/codex/validate_handoff.py`.
+- Tests:
+  - `.venv/bin/python -m ruff check .` passed.
+  - `.venv/bin/python -m pytest` passed: 9 tests passed.
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `python3 scripts/check_all.py` passed.
+- User-visible behavior: No gameplay behavior changed.
+- Preservation: `main.py` received only an import-formatting lint fix; no prototype logic was changed, migrated, or refactored.
+- Risks: The next task should still treat `main.py` as a protected reference prototype and start with `T0002.5`.
+- Follow-up: Start `T0002.5` next.
+
+## 2026-06-24 T0002.7 Document screen profiles and in-box scenery architecture
+
+- Summary: Completed `T0002.7` out of order as a documentation-only planning task. Added screen profile strategy and in-box scenery architecture before screen profile or scenery implementation.
+- Files changed: `docs/architecture/SCREEN_PROFILES.md`, `docs/architecture/SCENERY_OBJECTS.md`, `docs/product/GAME_BRIEF.md`, `docs/product/GAME_DESIGN.md`, `docs/prompts/goal_driven_mode.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, and `GPT_HANDOFF.md`.
+- Tests: `.venv/bin/python -m json.tool goals/task_queue.json` passed.
+- User-visible behavior: No gameplay behavior changed.
+- Preservation: `main.py` was unchanged. `src` gameplay behavior was unchanged. No new firework presets were implemented. No scenery rendering was implemented.
+- Risks: Future scenery must remain 3D line geometry inside the observation box; drawing scenery as a 2D screen-space background would violate the recorded design.
+- Follow-up: Keep `T0002.5` as the next reconciliation task before package-side gameplay migration. Start `T0002.8` only after `T0002.5` is complete.

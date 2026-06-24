@@ -96,3 +96,17 @@ Keep hard-coded screen constants only, switch immediately to `512x236`, or delay
 
 Impact:
 Future camera, box, particle budget, and UI work should read from `ScreenProfile` rather than adding new fixed constants. This task intentionally does not add scenery rendering, new firework presets, or `main.py` migration.
+
+## 2026-06-24 Add Pyxel-independent Camera3D projection scaffold
+
+Decision:
+Add package-side `Camera3D`, `Vec3`, and `ProjectedPoint` as pure projection data and math in `src/pyxel_goal_game/camera3d.py`.
+
+Reason:
+All future box, firework, and scenery rendering must share the same y-up 3D projection pipeline. Keeping the scaffold Pyxel-independent makes it testable and prevents camera math from being coupled to drawing or input handling.
+
+Alternatives:
+Embed projection math directly in render modules, extend the existing 2D `Camera`, or wait until firework preset work to introduce projection.
+
+Impact:
+Future package-side box geometry, particle rendering, and scenery rendering should use this projection scaffold. This task does not bind keyboard input, migrate particles or rockets, add scenery, or change the default profile.

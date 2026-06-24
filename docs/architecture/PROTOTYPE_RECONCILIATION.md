@@ -300,3 +300,16 @@ Preserve these exactly or with explicitly documented tuning deltas:
 - `T0002.10`: Add package-side wire box model/render scaffold for the classic profile.
 - `T0003.0`: Establish firework preset scaffold after profile/projection prerequisites are stable.
 - `T0003.1`: Recreate kiku/radial behavior using the protected prototype values.
+
+## Package Scaffold Status
+
+`T0002.9` added `src/pyxel_goal_game/camera3d.py` as a Pyxel-independent projection scaffold.
+
+- `Vec3` represents y-up 3D points.
+- `ProjectedPoint` preserves float projection values and rounded `sx` / `sy` draw coordinates.
+- `Camera3D.from_profile()` reads screen width, height, focal length, and camera distance from `ScreenProfile`.
+- `Camera3D.transform()` follows the protected prototype yaw-then-pitch formula.
+- `Camera3D.project()` follows the protected prototype perspective projection and depth guard.
+- `Camera3D.step_toward_target()` preserves the prototype smoothing coefficients without binding keyboard input.
+
+This scaffold is not yet wired into Pyxel rendering, box drawing, particles, rockets, or scenery.

@@ -13,6 +13,8 @@
 - [x] reconcile standalone `main.py` with the package architecture before gameplay migration
 - [x] document screen profiles and in-box scenery architecture
 - [x] add screen profile configuration scaffold
+- [x] add package-side Camera3D and projection scaffold
+- [ ] add package-side wire box scaffold
 - [ ] confirm controls
 - [ ] confirm first visual behavior
 - [ ] add or update smoke note

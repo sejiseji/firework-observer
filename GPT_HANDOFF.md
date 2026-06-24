@@ -86,10 +86,11 @@ Completed work:
 - Completed `T0002.7` out of order as a documentation-only planning task: screen profiles and in-box scenery architecture are recorded. Do not redo it unless validation shows the task queue or docs are inconsistent.
 - Completed `T0002.5`: standalone `main.py` behavior is inventoried and mapped to package architecture in `docs/architecture/PROTOTYPE_RECONCILIATION.md`.
 - Completed `T0002.8`: package-side `ScreenProfile` scaffold exists in `src/pyxel_goal_game/screen_profiles.py`; `classic` is the default profile, with `iphone16_balanced` and `iphone16_large` available as data.
+- Completed `T0002.9`: package-side Pyxel-independent `Camera3D` projection scaffold exists in `src/pyxel_goal_game/camera3d.py` with tests for classic center projection, y-up projection, profile-dependent centers, depth guard, determinism, and smoothing.
 
 Current next task:
 
-- `T0002.9: Add package-side Camera3D and projection scaffold`
+- `T0002.10: Add package-side wire box scaffold`
 
 Remaining queued tasks:
 

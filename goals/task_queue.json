@@ -3,30 +3,6 @@
   "policy": "Keep tasks small enough for one Codex patch. Split ambiguous tasks before implementation.",
   "current": [
     {
-      "id": "T0002.9",
-      "title": "Add package-side Camera3D and projection scaffold",
-      "goal": "Introduce package-side Camera3D/projection scaffolding based on the protected main.py behavior without changing visible gameplay.",
-      "status": "todo",
-      "depends_on": [
-        "T0002.8"
-      ],
-      "constraints": [
-        "Do not modify standalone main.py",
-        "Do not change visible gameplay behavior",
-        "Preserve classic Camera3D defaults from PROTOTYPE_RECONCILIATION.md",
-        "Keep Pyxel API out of pure projection/model code",
-        "Do not implement firework presets",
-        "Do not implement scenery rendering"
-      ],
-      "acceptance": [
-        "Camera3D or equivalent projection scaffold exists package-side",
-        "Classic yaw, pitch, zoom, focal, camera_distance, and smoothing constants are represented",
-        "Projection tests cover y-up screen projection",
-        "No visible behavior changes are introduced",
-        "Validation results are recorded"
-      ]
-    },
-    {
       "id": "T0002.10",
       "title": "Add package-side wire box scaffold",
       "goal": "Introduce package-side wire observation box geometry and rear/front render planning for the classic profile.",
@@ -448,6 +424,12 @@
       "title": "Add screen profile configuration scaffold",
       "completed_on": "2026-06-24",
       "summary": "Added package-side ScreenProfile configuration data with classic as the default profile and iphone16_balanced and iphone16_large as selectable data."
+    },
+    {
+      "id": "T0002.9",
+      "title": "Add package-side Camera3D and projection scaffold",
+      "completed_on": "2026-06-24",
+      "summary": "Added Pyxel-independent Camera3D projection scaffold using ScreenProfile values and tests for y-up projection, profile-dependent centers, depth guard, determinism, and smoothing."
     }
   ]
 }

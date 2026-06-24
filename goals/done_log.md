@@ -131,3 +131,19 @@ Record completed tasks here.
 - User-visible behavior: Package default screen settings now resolve through the `classic` profile values, and the HUD bottom line anchors to the active profile height. No firework preset, scenery, or `main.py` behavior was changed.
 - Preservation: `main.py` was unchanged. No scenery rendering, new firework presets, or external Firework.py code was added.
 - Follow-up: Start `T0002.9` next to add package-side Camera3D/projection scaffold without visible gameplay migration.
+
+## 2026-06-24 T0002.9 Add package-side Camera3D and projection scaffold
+
+- Summary: Added Pyxel-independent package-side `Camera3D`, `Vec3`, and `ProjectedPoint` projection scaffold using `ScreenProfile` width, height, focal length, and camera distance. The scaffold preserves the protected prototype yaw-then-pitch transform, y-up screen projection, depth guard, and smoothing coefficients without binding keyboard input or rendering.
+- Pre-task git state: branch `main`; worktree clean; latest commit `646b0dc Add screen profile scaffold`.
+- Files changed: `src/pyxel_goal_game/camera3d.py`, `tests/unit/test_camera3d.py`, `docs/architecture/PROTOTYPE_RECONCILIATION.md`, `docs/architecture/SCREEN_PROFILES.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Tests:
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest tests/unit/test_camera3d.py` passed: 6 tests passed.
+  - `.venv/bin/python -m pytest` passed: 20 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 20 passed.
+- User-visible behavior: No visible gameplay behavior changed.
+- Preservation: `main.py` was unchanged. Default profile remains `classic`. No firework presets, scenery rendering, rocket migration, particle migration, or external Firework.py code was added.
+- Follow-up: Start `T0002.10` next to add package-side wire box scaffold.

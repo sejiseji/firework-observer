@@ -60,8 +60,8 @@ Initialized from `project_brief.json`.
 
 - Preserve `256x144` as the classic baseline profile.
 - Plan larger Pyxel internal profiles separately from display scaling; do not default to native phone-pixel resolution.
-- Recommended future profile: `512x236` for an iPhone16-landscape-like balanced view.
-- Optional larger profile: `852x393`.
+- Recommended future profile: `236x512` for an iPhone-style portrait firework view.
+- Optional larger profile: `393x852`.
 - Box dimensions, camera focal length, camera distance, UI placement, and max particle count should become profile-dependent.
 - Future scenery should be selectable static low-detail 3D line geometry inside the observation box.
 - Scenery must project through the same camera pipeline as fireworks, not a 2D screen-space background.

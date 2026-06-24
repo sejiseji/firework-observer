@@ -33,9 +33,9 @@ Firework Observer
 Screen profile and scenery work should be designed together because the observation box scale, projection camera, UI placement, particle budget, and scenery proportions are linked.
 
 - The classic `256x144` profile remains the baseline.
-- A balanced larger profile should target `512x236`.
-- A larger optional profile may target `852x393`.
-- Larger landscape profiles should use a portrait/tall internal firework volume so launch height, altitude differences, and falling trails remain expressive.
+- A balanced larger profile should target `236x512`.
+- A larger optional profile may target `393x852`.
+- Larger profiles should use a portrait/tall screen and internal firework volume so launch height, altitude differences, and falling trails remain expressive.
 - Future in-box scenery should be quiet 3D line geometry that rotates with the box.
 - Do not solve scenery by drawing 2D screen-space backgrounds.
 

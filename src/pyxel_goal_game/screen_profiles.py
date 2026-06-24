@@ -30,8 +30,8 @@ CLASSIC_PROFILE = ScreenProfile(
 
 IPHONE16_BALANCED_PROFILE = ScreenProfile(
     name="iphone16_balanced",
-    width=512,
-    height=236,
+    width=236,
+    height=512,
     box_width=120.0,
     box_height=260.0,
     box_depth=120.0,
@@ -42,8 +42,8 @@ IPHONE16_BALANCED_PROFILE = ScreenProfile(
 
 IPHONE16_LARGE_PROFILE = ScreenProfile(
     name="iphone16_large",
-    width=852,
-    height=393,
+    width=393,
+    height=852,
     box_width=200.0,
     box_height=440.0,
     box_depth=200.0,

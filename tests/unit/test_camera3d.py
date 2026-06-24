@@ -32,12 +32,12 @@ def test_profile_controls_projection_center_and_camera_values() -> None:
     camera = Camera3D.from_profile(IPHONE16_BALANCED_PROFILE)
     projected = camera.project(Vec3(0.0, 0.0, 0.0))
 
-    assert camera.width == 512
-    assert camera.height == 236
+    assert camera.width == 236
+    assert camera.height == 512
     assert camera.focal == 260.0
     assert camera.camera_distance == 340.0
-    assert projected.x == 256
-    assert projected.y == 118
+    assert projected.x == 118
+    assert projected.y == 256
     assert projected.depth == 340.0
 
 

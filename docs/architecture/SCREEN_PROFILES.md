@@ -2,26 +2,26 @@
 
 ## Purpose
 
-Firework Observer should support larger landscape screen profiles without losing the protected classic prototype feel.
+Firework Observer should support larger portrait firework screen profiles without losing the protected classic prototype feel.
 
 Screen size affects the observation box, camera projection, UI placement, max particle count, scenery proportions, and render cost. These values must be treated as profile-dependent rather than scattered constants.
 
 ## Resolution Policy
 
 - Preserve the existing `256x144` classic profile as the baseline.
-- Prefer a balanced iPhone16-landscape-like internal profile of `512x236`.
-- Keep `852x393` as an optional larger profile.
+- Prefer a balanced iPhone-style portrait internal profile of `236x512`.
+- Keep `393x852` as an optional larger profile.
 - Do not use native `2556x1179` as the default Pyxel internal resolution.
 - Treat Pyxel internal resolution and display scale as separate concerns.
-- For iPhone-style profiles, use a landscape viewport with a portrait firework volume.
+- For iPhone-style profiles, use a portrait viewport with a portrait firework volume.
 
 The internal Pyxel resolution defines simulation-to-screen composition and drawing cost. Display scaling can enlarge the window or browser canvas without requiring native phone-pixel rendering.
 
-## Landscape Viewport / Portrait Firework Volume
+## Portrait Viewport / Portrait Firework Volume
 
-Fireworks depend on vertical motion: launch height, altitude variation, burst placement, gravity, and falling trails. Larger iPhone-style profiles should keep the screen canvas landscape while making the internal observation box tall.
+Fireworks depend on vertical motion: launch height, altitude variation, burst placement, gravity, and falling trails. Larger iPhone-style profiles should make both the Pyxel canvas and the internal observation box tall.
 
-For these profiles, the box height-to-width ratio should roughly mirror the screen width-to-height ratio. Width and depth should remain relatively narrow so the rotated box reads as a vertical firework chamber rather than a wide slab.
+For these profiles, the box height-to-width ratio should roughly mirror the screen height-to-width ratio. Width and depth should remain relatively narrow so the rotated box reads as a vertical firework chamber rather than a wide slab.
 
 The classic profile remains unchanged as the protected comparison baseline.
 
@@ -30,8 +30,8 @@ The classic profile remains unchanged as the protected comparison baseline.
 | Profile | Screen | Box | Focal | Camera Distance | Max Particles |
 | --- | --- | --- | --- | --- | --- |
 | `classic` | `256x144` | `120x80x120` | `180.0` | `180.0` | `400` |
-| `iphone16_balanced` | `512x236` | `120x260x120` | `260.0` | `340.0` | `600` |
-| `iphone16_large` | `852x393` | `200x440x200` | `430.0` | `560.0` | `900` |
+| `iphone16_balanced` | `236x512` | `120x260x120` | `260.0` | `340.0` | `600` |
+| `iphone16_large` | `393x852` | `200x440x200` | `430.0` | `560.0` | `900` |
 
 These values are starting points for visual tuning, not final proof that every effect reads well.
 
@@ -66,7 +66,7 @@ This applies to fireworks, scenery, and any future visual guide lines inside the
 
 ## Risks
 
-- Wider profiles increase particle and line rendering cost.
+- Larger portrait profiles increase particle and line rendering cost.
 - Larger profiles may require max particle and trail-density tuning.
 - UI tied to `256x144` positions will look cramped or misplaced in larger profiles.
 - Box dimensions and camera values tuned independently can break the feeling that fireworks are inside the box.

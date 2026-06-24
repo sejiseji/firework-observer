@@ -232,13 +232,12 @@ Record completed tasks here.
 
 ## 2026-06-24 T0003.2.6 Tune iPhone screen profiles to portrait firework volume
 
-- Summary: Adjusted iPhone-style screen profiles so the Pyxel canvas stays landscape while the internal observation box becomes a tall firework volume. `classic` remains unchanged and remains the default.
+- Summary: Adjusted iPhone-style screen profiles so the internal observation box becomes a tall firework volume. `classic` remains unchanged and remains the default.
 - Pre-task git state: branch `main`; worktree clean; latest commit `55fbc18 Add manual Kiku Ring preview harness`.
 - Files changed: `src/pyxel_goal_game/screen_profiles.py`, `tests/unit/test_screen_profiles.py`, `tests/unit/test_wire_box.py`, `tests/unit/test_camera3d.py`, `docs/architecture/SCREEN_PROFILES.md`, `docs/product/GAME_DESIGN.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
 - Profile changes:
   - `classic`: unchanged at screen `256x144`, box `120x80x120`, focal `180.0`, camera distance `180.0`, max particles `400`.
-  - `iphone16_balanced`: screen `512x236`, box `120x260x120`, focal `260.0`, camera distance `340.0`, max particles `600`.
-  - `iphone16_large`: screen `852x393`, box `200x440x200`, focal `430.0`, camera distance `560.0`, max particles `900`.
+  - Superseded by `T0003.2.7`, which makes the iPhone-style Pyxel screens portrait as well as the box.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Tests:
   - `python3 -m compileall src tests scripts tools` passed.
@@ -249,3 +248,23 @@ Record completed tasks here.
 - User-visible behavior: No production gameplay behavior changed. The tuned profile values affect only code that explicitly selects those larger profiles.
 - Preservation: `main.py` was unchanged. Default profile remains `classic`. No new firework types, scenery rendering, production runtime migration, or external Firework.py code was added.
 - Follow-up: Use the manual preview to inspect `iphone16_balanced`, then start `T0003.3` to implement Spiral against the updated profile assumptions.
+
+## 2026-06-24 T0003.2.7 Tune iPhone screen profiles to portrait Pyxel viewport
+
+- Summary: Changed iPhone-style Pyxel screen profiles from landscape to portrait while preserving the tall internal firework volume. `classic` remains unchanged and remains the default.
+- Pre-task git state: branch `main`; worktree clean; latest commit `7a3a09c Tune iPhone profiles for portrait firework volume`.
+- Files changed: `src/pyxel_goal_game/screen_profiles.py`, `tests/unit/test_screen_profiles.py`, `tests/unit/test_camera3d.py`, `docs/architecture/SCREEN_PROFILES.md`, `docs/product/GAME_BRIEF.md`, `docs/product/GAME_DESIGN.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Profile changes:
+  - `classic`: unchanged at screen `256x144`, box `120x80x120`, focal `180.0`, camera distance `180.0`, max particles `400`.
+  - `iphone16_balanced`: screen `236x512`, box `120x260x120`, focal `260.0`, camera distance `340.0`, max particles `600`.
+  - `iphone16_large`: screen `393x852`, box `200x440x200`, focal `430.0`, camera distance `560.0`, max particles `900`.
+- Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
+- Tests:
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 54 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 54 passed.
+- User-visible behavior: No production gameplay behavior changed. The tuned profile values affect only code that explicitly selects those larger profiles.
+- Preservation: `main.py` was unchanged. Default profile remains `classic`. No new firework types, scenery rendering, production runtime migration, or external Firework.py code was added.
+- Follow-up: Use the manual preview to inspect `iphone16_balanced`, then start `T0003.3` to implement Spiral against the updated portrait profile assumptions.

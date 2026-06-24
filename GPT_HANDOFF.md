@@ -27,7 +27,7 @@ The project now includes:
 - `.agents/skills/`: local skill documents for Codex-style task workflows.
 - `docs/research/external_firework_reference.md`: notes from reviewing an external firework implementation as reference material only.
 - `docs/prompts/goal_driven_mode.md`: master prompt for one-goal-at-a-time Codex development.
-- `docs/architecture/SCREEN_PROFILES.md`: planning for classic and larger landscape Pyxel internal profiles.
+- `docs/architecture/SCREEN_PROFILES.md`: planning for classic and larger portrait Pyxel internal profiles.
 - `docs/architecture/SCENERY_OBJECTS.md`: planning for future quiet 3D line scenery inside the observation box.
 - `docs/architecture/PROTOTYPE_RECONCILIATION.md`: inventory of protected `main.py` behavior and package migration strategy.
 
@@ -66,7 +66,7 @@ Details that should be preserved or reviewed before feature migration:
 - Partial trails: rockets always have trails, particles only partially have trails.
 - Firework preset direction includes chrysanthemum, peony, ring, willow, spiral, and small-shell cluster styles.
 - Render ordering should preserve depth readability: rear box edges, particles, then front box edges.
-- The classic `256x144` profile remains the baseline, with planned larger profiles documented as `512x236` and `852x393`.
+- The classic `256x144` profile remains the baseline, with planned larger portrait profiles documented as `236x512` and `393x852`.
 - Future scenery must be 3D line geometry inside the observation box, projected through the same camera pipeline as fireworks.
 - Do not solve scenery as a 2D screen-space background.
 
@@ -216,7 +216,7 @@ After the task:
 - Run the preview with `.venv/bin/python tools/preview_firework_box.py`; use `--profile iphone16_balanced` to inspect the larger balanced profile without changing defaults.
 - Preview controls: `Z` launches, `SPACE` switches Kiku/Ring, arrow keys rotate, `A`/`S` zoom, `C` resets camera, `X` toggles auto-rotate, `V` toggles auto-launch, and `D` toggles debug HUD.
 - The preview is a development tool only. It does not migrate `main.py`, production runtime particles, scenery, or future firework presets.
-- `T0003.2.6` tuned iPhone-style profiles to use landscape viewport / portrait firework volume: `iphone16_balanced` is now screen `512x236`, box `120x260x120`, camera distance `340.0`; `iphone16_large` is screen `852x393`, box `200x440x200`, camera distance `560.0`.
+- `T0003.2.7` tuned iPhone-style profiles to use portrait viewport / portrait firework volume: `iphone16_balanced` is now screen `236x512`, box `120x260x120`, camera distance `340.0`; `iphone16_large` is screen `393x852`, box `200x440x200`, camera distance `560.0`.
 - `classic` remains unchanged and remains the default profile.
 - If the user changes the game direction, update `project_brief.json` and regenerate or manually update the related docs.
 - Review whether the standalone `main.py` should be migrated into `src/pyxel_goal_game/` or kept only as a reference prototype.

@@ -92,7 +92,7 @@ Reason:
 Screen size, observation box dimensions, camera focal length, camera distance, and max particle count must be managed together before larger-profile tuning. Keeping `classic` as the default preserves the protected baseline while allowing `iphone16_balanced` and `iphone16_large` to exist as data for future tasks.
 
 Alternatives:
-Keep hard-coded screen constants only, switch immediately to `512x236`, or delay profiles until after firework preset work.
+Keep hard-coded screen constants only, switch immediately to a larger profile, or delay profiles until after firework preset work.
 
 Impact:
 Future camera, box, particle budget, and UI work should read from `ScreenProfile` rather than adding new fixed constants. This task intentionally does not add scenery rendering, new firework presets, or `main.py` migration.
@@ -184,13 +184,27 @@ The preview is manual-only and opens Pyxel only when executed directly. It does 
 ## 2026-06-24 Tune iPhone profiles to portrait firework volume
 
 Decision:
-Keep iPhone-style screen profiles as landscape canvases, but make their internal observation boxes tall portrait firework volumes. `classic` remains unchanged and remains the default.
+Make iPhone-style internal observation boxes tall portrait firework volumes. `classic` remains unchanged and remains the default.
 
 Reason:
-Firework composition depends on vertical launch space, altitude variation, gravity, and falling trails. A landscape viewport with a tall internal box makes better use of the wide screen by keeping the central firework chamber vertical and leaving horizontal quiet space for HUD and composition.
+Firework composition depends on vertical launch space, altitude variation, gravity, and falling trails. The internal box should read as a vertical firework chamber rather than a wide slab.
 
 Alternatives:
-Keep iPhone boxes horizontally oriented, switch the whole internal resolution to portrait, or delay profile tuning until after Spiral.
+Keep iPhone boxes horizontally oriented or delay profile tuning until after Spiral.
 
 Impact:
-`iphone16_balanced` now uses `120x260x120` with camera distance `340.0`, and `iphone16_large` uses `200x440x200` with camera distance `560.0`. Future Spiral, Willow, and scenery tuning should assume landscape viewport / portrait firework volume for iPhone-style profiles.
+`iphone16_balanced` now uses `120x260x120` with camera distance `340.0`, and `iphone16_large` uses `200x440x200` with camera distance `560.0`.
+
+## 2026-06-24 Tune iPhone profiles to portrait Pyxel viewport
+
+Decision:
+Change iPhone-style Pyxel screens from landscape to portrait while preserving the tall internal firework volume. `classic` remains unchanged and remains the default.
+
+Reason:
+The manual preview confirmed that making only the box vertical is insufficient when the Pyxel canvas remains wide. Firework viewing benefits from vertical screen space as well as vertical internal volume.
+
+Alternatives:
+Keep the wide canvas with a tall central box, add side UI first, or wait until Spiral before changing viewport dimensions.
+
+Impact:
+`iphone16_balanced` now uses screen `236x512` with box `120x260x120`; `iphone16_large` now uses screen `393x852` with box `200x440x200`. Future Spiral, Willow, and scenery tuning should assume portrait viewport / portrait firework volume for iPhone-style profiles.

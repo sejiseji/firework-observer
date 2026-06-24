@@ -8,7 +8,7 @@
       "goal": "Add one spiral firework preset that shows readable twist in the 3D observation box.",
       "status": "todo",
       "depends_on": [
-        "T0003.2.6"
+        "T0003.2.7"
       ],
       "constraints": [
         "Implement only spiral",
@@ -374,7 +374,13 @@
       "id": "T0003.2.6",
       "title": "Tune iPhone screen profiles to portrait firework volume",
       "completed_on": "2026-06-24",
-      "summary": "Adjusted iPhone-style profiles so the screen remains landscape while the internal observation box becomes a tall portrait firework volume."
+      "summary": "Adjusted iPhone-style profiles so the internal observation box becomes a tall portrait firework volume."
+    },
+    {
+      "id": "T0003.2.7",
+      "title": "Tune iPhone screen profiles to portrait Pyxel viewport",
+      "completed_on": "2026-06-24",
+      "summary": "Changed iPhone-style Pyxel screen profiles from landscape to portrait while preserving the tall firework volume and classic default."
     }
   ]
 }

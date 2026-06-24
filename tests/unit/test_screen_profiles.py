@@ -23,13 +23,13 @@ def test_classic_profile_is_default() -> None:
         ("classic", (256, 144), (120.0, 80.0, 120.0), 180.0, 180.0, 400),
         (
             "iphone16_balanced",
-            (512, 236),
+            (236, 512),
             (120.0, 260.0, 120.0),
             260.0,
             340.0,
             600,
         ),
-        ("iphone16_large", (852, 393), (200.0, 440.0, 200.0), 430.0, 560.0, 900),
+        ("iphone16_large", (393, 852), (200.0, 440.0, 200.0), 430.0, 560.0, 900),
     ],
 )
 def test_profiles_match_documented_values(
@@ -56,9 +56,10 @@ def test_profiles_are_registered_by_name() -> None:
 @pytest.mark.parametrize("name", ["iphone16_balanced", "iphone16_large"])
 def test_iphone_profiles_use_portrait_firework_volume(name: str) -> None:
     profile = get_screen_profile(name)
-    screen_ratio = profile.width / profile.height
+    screen_ratio = profile.height / profile.width
     box_ratio = profile.box_height / profile.box_width
 
+    assert profile.height > profile.width
     assert profile.box_height > profile.box_width
     assert profile.box_height > profile.box_depth
     assert box_ratio == pytest.approx(screen_ratio, rel=0.04)

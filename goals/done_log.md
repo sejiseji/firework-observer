@@ -86,3 +86,19 @@ Record completed tasks here.
 - Preservation: `main.py` was unchanged. `src` gameplay behavior was unchanged. No new firework presets were implemented. No scenery rendering was implemented.
 - Risks: Future scenery must remain 3D line geometry inside the observation box; drawing scenery as a 2D screen-space background would violate the recorded design.
 - Follow-up: Keep `T0002.5` as the next reconciliation task before package-side gameplay migration. Start `T0002.8` only after `T0002.5` is complete.
+
+## 2026-06-24 T0002 Validation reconciliation after baseline commit
+
+- Summary: Re-ran T0002 validation against baseline commit `f9f7e0e` because roadmap and task queue mark T0002 complete. Confirmed the project validation path is consistent when using the project-managed `uv` environment.
+- Pre-task git state: branch `main`; worktree clean; baseline commit `f9f7e0e Initialize Firework Observer planning docs` exists.
+- Task state: `goals/task_queue.json` records T0002 in `done`; `goals/roadmap.md` marks package import/test verification complete.
+- Tests:
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `python3 -m pytest` failed because `/opt/homebrew/opt/python@3.14/bin/python3.14` does not have `pytest` installed.
+  - `python3 -m ruff check .` failed because `/opt/homebrew/opt/python@3.14/bin/python3.14` does not have `ruff` installed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when rerun with approved cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 9 passed.
+- Missing dependency note: global `python3` is Python 3.14 and lacks `pytest` and `ruff`. Use the project-managed path via `python3 scripts/check_all.py`, or install/sync the dev environment with `uv sync --extra dev`.
+- User-visible behavior: No gameplay behavior changed.
+- Preservation: `main.py` was unchanged. `src` gameplay behavior was unchanged. No screen profiles, scenery rendering, or firework presets were implemented.
+- Follow-up: Start `T0002.5` next.

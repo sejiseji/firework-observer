@@ -211,3 +211,21 @@ Record completed tasks here.
 - User-visible behavior: No visible gameplay behavior changed.
 - Preservation: `main.py` was unchanged. Default profile remains `classic`. No runtime Rocket or Particle migration, Pyxel rendering connection, Spiral/Willow/Peony/Multi-ring/Halo/Senrin implementation, scenery rendering, or external Firework.py code was added.
 - Follow-up: Start `T0003.3` next to implement the Spiral preset using the same pure generation pattern.
+
+## 2026-06-24 T0003.2.5 Add manual Pyxel preview for Kiku and Ring bursts
+
+- Summary: Added `tools/preview_firework_box.py`, a manual Pyxel preview harness that uses package-side `ScreenProfile`, `Camera3D`, `WireBox`, `generate_kiku_burst`, and `generate_ring_burst` to inspect Kiku/Ring visual feel before Spiral work.
+- Pre-task git state: branch `main`; worktree clean; latest commit `5952c1e Add deterministic Ring burst generation`.
+- Files changed: `tools/preview_firework_box.py`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Manual run command: `.venv/bin/python tools/preview_firework_box.py`
+- Optional profile run command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
+- Preview controls: `Z` launches, `SPACE` switches Kiku/Ring, arrow keys rotate, `A`/`S` zoom, `C` resets camera, `X` toggles auto-rotate, `V` toggles auto-launch, and `D` toggles debug HUD.
+- Tests:
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 52 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 52 passed.
+- User-visible behavior: No production gameplay behavior changed. The preview opens a Pyxel window only when run manually.
+- Preservation: `main.py` was unchanged. Default profile remains `classic`. No Spiral/Willow/Peony/Multi-ring/Halo/Senrin implementation, scenery rendering, production runtime migration, or external Firework.py code was added.
+- Follow-up: Run the manual preview, record visual tuning notes if needed, then start `T0003.3` to implement Spiral.

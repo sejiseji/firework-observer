@@ -8,7 +8,7 @@
       "goal": "Add one spiral firework preset that shows readable twist in the 3D observation box.",
       "status": "todo",
       "depends_on": [
-        "T0003.2"
+        "T0003.2.5"
       ],
       "constraints": [
         "Implement only spiral",
@@ -363,6 +363,12 @@
       "title": "Implement ring preset",
       "completed_on": "2026-06-24",
       "summary": "Added RING_PRESET and deterministic Pyxel-independent ring burst generation with mostly planar velocities, small z thickness, and partial trail data."
+    },
+    {
+      "id": "T0003.2.5",
+      "title": "Add manual Pyxel preview for Kiku and Ring bursts",
+      "completed_on": "2026-06-24",
+      "summary": "Added a manual tools/preview_firework_box.py Pyxel preview harness for visually inspecting package-side Camera3D, WireBox, Kiku, and Ring burst behavior before Spiral work."
     }
   ]
 }

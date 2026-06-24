@@ -212,6 +212,10 @@ After the task:
 - Treat `docs/` and `goals/` as durable project memory.
 - Keep task patches small and focused.
 - Do not hide product decisions in chat history.
+- `T0003.2.5` added a manual Kiku/Ring visual preview at `tools/preview_firework_box.py`.
+- Run the preview with `.venv/bin/python tools/preview_firework_box.py`; use `--profile iphone16_balanced` to inspect the larger balanced profile without changing defaults.
+- Preview controls: `Z` launches, `SPACE` switches Kiku/Ring, arrow keys rotate, `A`/`S` zoom, `C` resets camera, `X` toggles auto-rotate, `V` toggles auto-launch, and `D` toggles debug HUD.
+- The preview is a development tool only. It does not migrate `main.py`, production runtime particles, scenery, or future firework presets.
 - If the user changes the game direction, update `project_brief.json` and regenerate or manually update the related docs.
 - Review whether the standalone `main.py` should be migrated into `src/pyxel_goal_game/` or kept only as a reference prototype.
 - Before implementing `T0003.0`, inspect `main.py`, identify behavior to preserve, and document the migration strategy in `T0002.5`.

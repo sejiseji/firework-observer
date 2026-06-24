@@ -24,6 +24,7 @@
 - [x] establish firework preset scaffold
 - [x] add radial/kiku preset
 - [x] add ring preset
+- [x] add manual Kiku/Ring visual preview before spiral tuning
 - [ ] add spiral preset
 - [ ] add willow preset
 - [ ] add peony preset

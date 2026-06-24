@@ -166,3 +166,17 @@ Wait until rendering integration, implement a tilted or multi-ring variant immed
 
 Impact:
 `T0003.3` can add Spiral generation using the same generation pattern. Runtime particle conversion, Pyxel rendering, preset cycling, and scenery remain future work.
+
+## 2026-06-24 Add manual Kiku/Ring Pyxel preview before Spiral
+
+Decision:
+Add `tools/preview_firework_box.py` as a manual development preview harness that uses package-side `ScreenProfile`, `Camera3D`, `WireBox`, `generate_kiku_burst`, and `generate_ring_burst`.
+
+Reason:
+Kiku and Ring should be visually inspected before adding Spiral so trail density, box readability, camera feel, and ring planarity can be evaluated with the current pure generation data. Keeping the preview in `tools/` avoids mixing temporary visual inspection code into production runtime.
+
+Alternatives:
+Connect Kiku/Ring directly to the main runtime, continue adding Spiral without visual inspection, or modify the protected standalone `main.py`.
+
+Impact:
+The preview is manual-only and opens Pyxel only when executed directly. It does not change runtime gameplay, `main.py`, default profile selection, firework preset generation, or scenery behavior. After visual inspection, `T0003.3` remains the next preset task.

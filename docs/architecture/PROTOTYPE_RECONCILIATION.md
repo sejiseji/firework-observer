@@ -340,3 +340,11 @@ This scaffold is not yet wired into runtime particles, rockets, rendering, or pr
 - Trail eligibility is deterministic and partial, using `TrailPreset`.
 
 This generator is not yet wired into runtime particles, rockets, rendering, or preset cycling.
+
+`T0003.2` added deterministic Ring burst generation in `src/pyxel_goal_game/firework_bursts.py`.
+
+- `RING_PRESET` stores the documented ring values.
+- `generate_ring_burst()` produces ring-plane initial velocity specs with small deterministic `z` thickness.
+- `generate_burst()` now supports `FireworkShape.SPHERE` and `FireworkShape.RING`.
+
+This generator is not yet wired into runtime particles, rockets, rendering, or preset cycling.

@@ -3,28 +3,6 @@
   "policy": "Keep tasks small enough for one Codex patch. Split ambiguous tasks before implementation.",
   "current": [
     {
-      "id": "T0003.2",
-      "title": "Implement ring preset",
-      "goal": "Add a ring-shaped firework preset that benefits from rotating the observation box.",
-      "status": "todo",
-      "depends_on": [
-        "T0003.1"
-      ],
-      "constraints": [
-        "Implement only ring",
-        "Keep the ring as a 3D-box-compatible preset, not a direct 2D copy",
-        "Do not modify standalone main.py",
-        "Do not copy external Firework.py code"
-      ],
-      "acceptance": [
-        "Ring preset forms a readable circular or elliptic structure depending on camera angle",
-        "Same seed gives same particle initial states",
-        "Trail density is controlled and partial",
-        "Existing kiku preset still works",
-        "Validation results are recorded"
-      ]
-    },
-    {
       "id": "T0003.3",
       "title": "Implement spiral preset",
       "goal": "Add one spiral firework preset that shows readable twist in the 3D observation box.",
@@ -379,6 +357,12 @@
       "title": "Implement deterministic radial / kiku preset",
       "completed_on": "2026-06-24",
       "summary": "Added KIKU_PRESET and deterministic Pyxel-independent spherical burst generation that returns ParticleSpawnSpec values with partial trail data."
+    },
+    {
+      "id": "T0003.2",
+      "title": "Implement ring preset",
+      "completed_on": "2026-06-24",
+      "summary": "Added RING_PRESET and deterministic Pyxel-independent ring burst generation with mostly planar velocities, small z thickness, and partial trail data."
     }
   ]
 }

@@ -152,3 +152,17 @@ Connect Kiku directly to the current runtime particle system, copy the standalon
 
 Impact:
 `T0003.2` can add Ring generation using the same pure generation pattern. Runtime particle conversion and Pyxel rendering remain future work.
+
+## 2026-06-24 Add deterministic Ring burst generation as spawn specs
+
+Decision:
+Implement Ring as `RING_PRESET` plus deterministic `ParticleSpawnSpec` generation in the existing Pyxel-independent `firework_bursts.py` module.
+
+Reason:
+Ring is the first planar structure that benefits strongly from the 3D observation box. Adding it as pure initial velocity specs keeps it testable while preserving the staged boundary before runtime rendering.
+
+Alternatives:
+Wait until rendering integration, implement a tilted or multi-ring variant immediately, or copy ring logic from the external reference file.
+
+Impact:
+`T0003.3` can add Spiral generation using the same generation pattern. Runtime particle conversion, Pyxel rendering, preset cycling, and scenery remain future work.

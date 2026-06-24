@@ -107,3 +107,27 @@ KIKU_PRESET = FireworkPreset(
     gravity=-0.025,
     trail=KIKU_TRAIL_PRESET,
 )
+
+
+RING_TRAIL_PRESET = TrailPreset(
+    rate=0.38,
+    speed_threshold=0.90,
+    early_ratio=0.46,
+    strong_speed=1.25,
+)
+
+RING_PRESET = FireworkPreset(
+    kind=FireworkKind.RING,
+    label="Ring",
+    shape=FireworkShape.RING,
+    particle_count=104,
+    speed_range=(1.05, 1.45),
+    life_range=(58, 82),
+    palette=(12, 6, 7),
+    fade_mid=6,
+    fade_dark=1,
+    tip_color=7,
+    drag=0.987,
+    gravity=-0.018,
+    trail=RING_TRAIL_PRESET,
+)

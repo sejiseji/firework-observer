@@ -13,16 +13,25 @@ Screen size affects the observation box, camera projection, UI placement, max pa
 - Keep `852x393` as an optional larger profile.
 - Do not use native `2556x1179` as the default Pyxel internal resolution.
 - Treat Pyxel internal resolution and display scale as separate concerns.
+- For iPhone-style profiles, use a landscape viewport with a portrait firework volume.
 
 The internal Pyxel resolution defines simulation-to-screen composition and drawing cost. Display scaling can enlarge the window or browser canvas without requiring native phone-pixel rendering.
+
+## Landscape Viewport / Portrait Firework Volume
+
+Fireworks depend on vertical motion: launch height, altitude variation, burst placement, gravity, and falling trails. Larger iPhone-style profiles should keep the screen canvas landscape while making the internal observation box tall.
+
+For these profiles, the box height-to-width ratio should roughly mirror the screen width-to-height ratio. Width and depth should remain relatively narrow so the rotated box reads as a vertical firework chamber rather than a wide slab.
+
+The classic profile remains unchanged as the protected comparison baseline.
 
 ## Initial Profiles
 
 | Profile | Screen | Box | Focal | Camera Distance | Max Particles |
 | --- | --- | --- | --- | --- | --- |
 | `classic` | `256x144` | `120x80x120` | `180.0` | `180.0` | `400` |
-| `iphone16_balanced` | `512x236` | `220x120x220` | `260.0` | `300.0` | `600` |
-| `iphone16_large` | `852x393` | `360x190x360` | `430.0` | `500.0` | `900` |
+| `iphone16_balanced` | `512x236` | `120x260x120` | `260.0` | `340.0` | `600` |
+| `iphone16_large` | `852x393` | `200x440x200` | `430.0` | `560.0` | `900` |
 
 These values are starting points for visual tuning, not final proof that every effect reads well.
 

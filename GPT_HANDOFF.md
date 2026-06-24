@@ -216,6 +216,8 @@ After the task:
 - Run the preview with `.venv/bin/python tools/preview_firework_box.py`; use `--profile iphone16_balanced` to inspect the larger balanced profile without changing defaults.
 - Preview controls: `Z` launches, `SPACE` switches Kiku/Ring, arrow keys rotate, `A`/`S` zoom, `C` resets camera, `X` toggles auto-rotate, `V` toggles auto-launch, and `D` toggles debug HUD.
 - The preview is a development tool only. It does not migrate `main.py`, production runtime particles, scenery, or future firework presets.
+- `T0003.2.6` tuned iPhone-style profiles to use landscape viewport / portrait firework volume: `iphone16_balanced` is now screen `512x236`, box `120x260x120`, camera distance `340.0`; `iphone16_large` is screen `852x393`, box `200x440x200`, camera distance `560.0`.
+- `classic` remains unchanged and remains the default profile.
 - If the user changes the game direction, update `project_brief.json` and regenerate or manually update the related docs.
 - Review whether the standalone `main.py` should be migrated into `src/pyxel_goal_game/` or kept only as a reference prototype.
 - Before implementing `T0003.0`, inspect `main.py`, identify behavior to preserve, and document the migration strategy in `T0002.5`.

@@ -23,9 +23,9 @@ def test_classic_wire_box_uses_profile_dimensions() -> None:
 def test_iphone16_balanced_wire_box_uses_profile_dimensions() -> None:
     box = WireBox.from_profile(IPHONE16_BALANCED_PROFILE)
 
-    assert axis_span([vertex.x for vertex in box.vertices]) == 220.0
-    assert axis_span([vertex.y for vertex in box.vertices]) == 120.0
-    assert axis_span([vertex.z for vertex in box.vertices]) == 220.0
+    assert axis_span([vertex.x for vertex in box.vertices]) == 120.0
+    assert axis_span([vertex.y for vertex in box.vertices]) == 260.0
+    assert axis_span([vertex.z for vertex in box.vertices]) == 120.0
 
 
 def test_wire_box_has_eight_vertices_and_twelve_edges() -> None:

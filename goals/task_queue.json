@@ -8,7 +8,7 @@
       "goal": "Add one spiral firework preset that shows readable twist in the 3D observation box.",
       "status": "todo",
       "depends_on": [
-        "T0003.2.5"
+        "T0003.2.6"
       ],
       "constraints": [
         "Implement only spiral",
@@ -369,6 +369,12 @@
       "title": "Add manual Pyxel preview for Kiku and Ring bursts",
       "completed_on": "2026-06-24",
       "summary": "Added a manual tools/preview_firework_box.py Pyxel preview harness for visually inspecting package-side Camera3D, WireBox, Kiku, and Ring burst behavior before Spiral work."
+    },
+    {
+      "id": "T0003.2.6",
+      "title": "Tune iPhone screen profiles to portrait firework volume",
+      "completed_on": "2026-06-24",
+      "summary": "Adjusted iPhone-style profiles so the screen remains landscape while the internal observation box becomes a tall portrait firework volume."
     }
   ]
 }

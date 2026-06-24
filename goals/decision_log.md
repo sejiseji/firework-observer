@@ -180,3 +180,17 @@ Connect Kiku/Ring directly to the main runtime, continue adding Spiral without v
 
 Impact:
 The preview is manual-only and opens Pyxel only when executed directly. It does not change runtime gameplay, `main.py`, default profile selection, firework preset generation, or scenery behavior. After visual inspection, `T0003.3` remains the next preset task.
+
+## 2026-06-24 Tune iPhone profiles to portrait firework volume
+
+Decision:
+Keep iPhone-style screen profiles as landscape canvases, but make their internal observation boxes tall portrait firework volumes. `classic` remains unchanged and remains the default.
+
+Reason:
+Firework composition depends on vertical launch space, altitude variation, gravity, and falling trails. A landscape viewport with a tall internal box makes better use of the wide screen by keeping the central firework chamber vertical and leaving horizontal quiet space for HUD and composition.
+
+Alternatives:
+Keep iPhone boxes horizontally oriented, switch the whole internal resolution to portrait, or delay profile tuning until after Spiral.
+
+Impact:
+`iphone16_balanced` now uses `120x260x120` with camera distance `340.0`, and `iphone16_large` uses `200x440x200` with camera distance `560.0`. Future Spiral, Willow, and scenery tuning should assume landscape viewport / portrait firework volume for iPhone-style profiles.

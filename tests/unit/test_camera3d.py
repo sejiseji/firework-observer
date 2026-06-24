@@ -35,10 +35,10 @@ def test_profile_controls_projection_center_and_camera_values() -> None:
     assert camera.width == 512
     assert camera.height == 236
     assert camera.focal == 260.0
-    assert camera.camera_distance == 300.0
+    assert camera.camera_distance == 340.0
     assert projected.x == 256
     assert projected.y == 118
-    assert projected.depth == 300.0
+    assert projected.depth == 340.0
 
 
 def test_projection_is_deterministic() -> None:

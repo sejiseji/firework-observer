@@ -32,11 +32,11 @@ IPHONE16_BALANCED_PROFILE = ScreenProfile(
     name="iphone16_balanced",
     width=512,
     height=236,
-    box_width=220.0,
-    box_height=120.0,
-    box_depth=220.0,
+    box_width=120.0,
+    box_height=260.0,
+    box_depth=120.0,
     focal=260.0,
-    camera_distance=300.0,
+    camera_distance=340.0,
     max_particles=600,
 )
 
@@ -44,11 +44,11 @@ IPHONE16_LARGE_PROFILE = ScreenProfile(
     name="iphone16_large",
     width=852,
     height=393,
-    box_width=360.0,
-    box_height=190.0,
-    box_depth=360.0,
+    box_width=200.0,
+    box_height=440.0,
+    box_depth=200.0,
     focal=430.0,
-    camera_distance=500.0,
+    camera_distance=560.0,
     max_particles=900,
 )
 

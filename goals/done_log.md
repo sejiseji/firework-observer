@@ -163,3 +163,19 @@ Record completed tasks here.
 - User-visible behavior: No visible gameplay behavior changed.
 - Preservation: `main.py` was unchanged. Default profile remains `classic`. No firework presets, scenery rendering, rocket migration, particle migration, or external Firework.py code was added.
 - Follow-up: Start `T0003.0` next unless the user chooses to insert a render-only classic box integration task first.
+
+## 2026-06-24 T0003.0 Establish firework preset scaffold
+
+- Summary: Added Pyxel-independent firework preset scaffold with `FireworkKind`, `FireworkShape`, `TrailPreset`, `SecondaryPreset`, and `FireworkPreset`. The scaffold can represent future Kiku, Peony, Ring, Willow, Spiral, Multi-ring, Halo, and Senrin presets without runtime generation or rendering.
+- Pre-task git state: branch `main`; worktree clean; latest commit `87ceefa Add wire box geometry scaffold`.
+- Files changed: `src/pyxel_goal_game/firework_presets.py`, `tests/unit/test_firework_presets.py`, `docs/architecture/PROTOTYPE_RECONCILIATION.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Tests:
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest tests/unit/test_firework_presets.py` passed: 7 tests passed.
+  - `.venv/bin/python -m pytest` passed: 34 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 34 passed.
+- User-visible behavior: No visible gameplay behavior changed.
+- Preservation: `main.py` was unchanged. Default profile remains `classic`. No runtime firework behavior, scenery rendering, rocket migration, particle migration, or external Firework.py code was added.
+- Follow-up: Start `T0003.1` next to implement deterministic radial/Kiku generation.

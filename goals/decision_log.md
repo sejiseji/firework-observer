@@ -124,3 +124,17 @@ Hard-code box vertices in a renderer, delay box geometry until visual rendering,
 
 Impact:
 Future render tasks can draw the box from projected edge data without duplicating geometry or projection math. This task does not add Pyxel drawing, firework presets, scenery rendering, rocket migration, or particle migration.
+
+## 2026-06-24 Add Pyxel-independent firework preset scaffold
+
+Decision:
+Add package-side `FireworkKind`, `FireworkShape`, `TrailPreset`, `SecondaryPreset`, and `FireworkPreset` in `src/pyxel_goal_game/firework_presets.py` as pure data/config.
+
+Reason:
+Future firework types should be added one at a time from explicit preset data rather than ad hoc runtime branches. Keeping the scaffold Pyxel-independent makes conventions testable before generation, rendering, or preset cycling is connected.
+
+Alternatives:
+Extend the existing 2D template `model.firework.FireworkPreset`, implement Kiku generation immediately, or copy concepts directly from the external `Firework.py`.
+
+Impact:
+`T0003.1` can implement deterministic radial/Kiku generation against this scaffold. This task intentionally does not change runtime gameplay, add visible presets, migrate rockets/particles, or connect Pyxel rendering.

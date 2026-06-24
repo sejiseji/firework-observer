@@ -21,7 +21,7 @@
 
 ## Phase 2: Core experience
 
-- [ ] establish firework preset scaffold
+- [x] establish firework preset scaffold
 - [ ] add radial/kiku preset
 - [ ] add ring preset
 - [ ] add spiral preset

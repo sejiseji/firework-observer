@@ -3,30 +3,6 @@
   "policy": "Keep tasks small enough for one Codex patch. Split ambiguous tasks before implementation.",
   "current": [
     {
-      "id": "T0003.0",
-      "title": "Establish firework preset scaffold",
-      "goal": "Create a data-driven foundation for adding firework presets one at a time.",
-      "status": "todo",
-      "depends_on": [
-        "T0002.10"
-      ],
-      "constraints": [
-        "Do not modify standalone main.py",
-        "Do not copy external Firework.py code",
-        "Keep Pyxel API outside pure simulation/model code",
-        "Respect y-up coordinates and negative gravity",
-        "Keep partial trail behavior",
-        "Do not make large visual behavior changes yet"
-      ],
-      "acceptance": [
-        "FireworkKind and FireworkShape or equivalent explicit preset identifiers are defined",
-        "TrailPreset and FireworkPreset are defined or extended for staged preset work",
-        "Burst generation can use deterministic RNG",
-        "At least one test verifies deterministic particle generation",
-        "Existing compile checks pass or environment gaps are documented"
-      ]
-    },
-    {
       "id": "T0003.1",
       "title": "Implement deterministic radial / kiku preset",
       "goal": "Implement the first basic spherical firework preset as the reference burst.",
@@ -413,6 +389,12 @@
       "title": "Add package-side wire box scaffold",
       "completed_on": "2026-06-24",
       "summary": "Added Pyxel-independent WireBox geometry scaffold using ScreenProfile box dimensions and Camera3D projection, with tests for dimensions, vertices, edges, centering, edge groups, and deterministic projected edges."
+    },
+    {
+      "id": "T0003.0",
+      "title": "Establish firework preset scaffold",
+      "completed_on": "2026-06-24",
+      "summary": "Added Pyxel-independent firework preset scaffold with FireworkKind, FireworkShape, TrailPreset, SecondaryPreset, and FireworkPreset data types."
     }
   ]
 }

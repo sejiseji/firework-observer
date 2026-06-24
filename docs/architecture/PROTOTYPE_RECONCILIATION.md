@@ -322,3 +322,12 @@ This scaffold is not yet wired into Pyxel rendering, box drawing, particles, roc
 - `WireBox.project_edges()` projects edges through `Camera3D` and records average depth for future render ordering.
 
 This scaffold is not yet wired into Pyxel rendering and does not implement full renderer-level depth sorting.
+
+`T0003.0` added `src/pyxel_goal_game/firework_presets.py` as a Pyxel-independent firework preset scaffold.
+
+- `FireworkKind` and `FireworkShape` define staged preset identifiers.
+- `TrailPreset`, `SecondaryPreset`, and `FireworkPreset` represent future preset data.
+- Downward gravity remains negative in the data model.
+- Partial trail policy is represented by `TrailPreset`.
+
+This scaffold is not yet wired into runtime particles, rockets, rendering, or preset cycling.

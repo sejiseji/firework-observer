@@ -87,10 +87,11 @@ Completed work:
 - Completed `T0002.5`: standalone `main.py` behavior is inventoried and mapped to package architecture in `docs/architecture/PROTOTYPE_RECONCILIATION.md`.
 - Completed `T0002.8`: package-side `ScreenProfile` scaffold exists in `src/pyxel_goal_game/screen_profiles.py`; `classic` is the default profile, with `iphone16_balanced` and `iphone16_large` available as data.
 - Completed `T0002.9`: package-side Pyxel-independent `Camera3D` projection scaffold exists in `src/pyxel_goal_game/camera3d.py` with tests for classic center projection, y-up projection, profile-dependent centers, depth guard, determinism, and smoothing.
+- Completed `T0002.10`: package-side Pyxel-independent `WireBox` scaffold exists in `src/pyxel_goal_game/wire_box.py` with tests for profile dimensions, 8 vertices, 12 edges, origin centering, edge groups, and `Camera3D` projection.
 
 Current next task:
 
-- `T0002.10: Add package-side wire box scaffold`
+- `T0003.0: Establish firework preset scaffold`
 
 Remaining queued tasks:
 

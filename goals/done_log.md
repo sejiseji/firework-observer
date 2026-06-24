@@ -147,3 +147,19 @@ Record completed tasks here.
 - User-visible behavior: No visible gameplay behavior changed.
 - Preservation: `main.py` was unchanged. Default profile remains `classic`. No firework presets, scenery rendering, rocket migration, particle migration, or external Firework.py code was added.
 - Follow-up: Start `T0002.10` next to add package-side wire box scaffold.
+
+## 2026-06-24 T0002.10 Add package-side wire box scaffold
+
+- Summary: Added Pyxel-independent package-side `WireBox`, `Edge3D`, and `ProjectedEdge` geometry scaffold using `ScreenProfile` box dimensions and `Camera3D` projection. The scaffold generates 8 origin-centered vertices, 12 prototype-compatible edges, edge groups, and projected edges with average depth for future render ordering.
+- Pre-task git state: branch `main`; worktree clean; latest commit `987086d Add Camera3D projection scaffold`.
+- Files changed: `src/pyxel_goal_game/wire_box.py`, `tests/unit/test_wire_box.py`, `docs/architecture/PROTOTYPE_RECONCILIATION.md`, `docs/architecture/SCREEN_PROFILES.md`, `docs/architecture/SCENERY_OBJECTS.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Tests:
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest tests/unit/test_wire_box.py` passed: 7 tests passed.
+  - `.venv/bin/python -m pytest` passed: 27 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 27 passed.
+- User-visible behavior: No visible gameplay behavior changed.
+- Preservation: `main.py` was unchanged. Default profile remains `classic`. No firework presets, scenery rendering, rocket migration, particle migration, or external Firework.py code was added.
+- Follow-up: Start `T0003.0` next unless the user chooses to insert a render-only classic box integration task first.

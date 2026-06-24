@@ -110,3 +110,17 @@ Embed projection math directly in render modules, extend the existing 2D `Camera
 
 Impact:
 Future package-side box geometry, particle rendering, and scenery rendering should use this projection scaffold. This task does not bind keyboard input, migrate particles or rockets, add scenery, or change the default profile.
+
+## 2026-06-24 Add Pyxel-independent WireBox geometry scaffold
+
+Decision:
+Add package-side `WireBox`, `Edge3D`, and `ProjectedEdge` as pure geometry/projection data in `src/pyxel_goal_game/wire_box.py`.
+
+Reason:
+The transparent observation cuboid is a core visual anchor. It should share `ScreenProfile` dimensions and `Camera3D` projection before firework or scenery rendering is migrated.
+
+Alternatives:
+Hard-code box vertices in a renderer, delay box geometry until visual rendering, or couple the box directly to Pyxel draw calls.
+
+Impact:
+Future render tasks can draw the box from projected edge data without duplicating geometry or projection math. This task does not add Pyxel drawing, firework presets, scenery rendering, rocket migration, or particle migration.

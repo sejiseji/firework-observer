@@ -78,5 +78,6 @@ This applies to fireworks, scenery, and any future visual guide lines inside the
 - `ObserverScene` uses profile width, height, and max particle count.
 - HUD bottom text anchors to the active profile height instead of the old fixed `120px` template coordinate.
 - `Camera3D.from_profile()` can now read profile width, height, focal length, and camera distance for pure projection tests.
+- `WireBox.from_profile()` can now read profile box width, height, and depth for pure geometry tests.
 
 This task did not implement scenery rendering, new firework presets, or `main.py` migration.

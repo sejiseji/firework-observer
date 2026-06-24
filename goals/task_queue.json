@@ -3,29 +3,6 @@
   "policy": "Keep tasks small enough for one Codex patch. Split ambiguous tasks before implementation.",
   "current": [
     {
-      "id": "T0002.10",
-      "title": "Add package-side wire box scaffold",
-      "goal": "Introduce package-side wire observation box geometry and rear/front render planning for the classic profile.",
-      "status": "todo",
-      "depends_on": [
-        "T0002.9"
-      ],
-      "constraints": [
-        "Do not modify standalone main.py",
-        "Do not migrate full firework behavior yet",
-        "Use classic 120x80x120 box values from PROTOTYPE_RECONCILIATION.md",
-        "Do not implement scenery rendering",
-        "Do not add new firework presets"
-      ],
-      "acceptance": [
-        "Wire box geometry has 8 vertices and 12 edges package-side",
-        "Rear/front edge classification is represented or documented in code",
-        "Classic profile remains available",
-        "No unrelated gameplay behavior changes are introduced",
-        "Validation results are recorded"
-      ]
-    },
-    {
       "id": "T0003.0",
       "title": "Establish firework preset scaffold",
       "goal": "Create a data-driven foundation for adding firework presets one at a time.",
@@ -430,6 +407,12 @@
       "title": "Add package-side Camera3D and projection scaffold",
       "completed_on": "2026-06-24",
       "summary": "Added Pyxel-independent Camera3D projection scaffold using ScreenProfile values and tests for y-up projection, profile-dependent centers, depth guard, determinism, and smoothing."
+    },
+    {
+      "id": "T0002.10",
+      "title": "Add package-side wire box scaffold",
+      "completed_on": "2026-06-24",
+      "summary": "Added Pyxel-independent WireBox geometry scaffold using ScreenProfile box dimensions and Camera3D projection, with tests for dimensions, vertices, edges, centering, edge groups, and deterministic projected edges."
     }
   ]
 }

@@ -112,3 +112,8 @@ Do not implement full line-level depth sorting in the first scenery pass. Full s
 - preset cycling UI
 
 No scenery rendering should be implemented as part of the documentation task.
+
+## Shared Box Geometry
+
+Package-side box geometry now exists as `WireBox` in `src/pyxel_goal_game/wire_box.py`.
+Future scenery presets should use the same `ScreenProfile` box dimensions and y-up coordinate convention rather than defining their own screen-space bounds.

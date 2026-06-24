@@ -313,3 +313,12 @@ Preserve these exactly or with explicitly documented tuning deltas:
 - `Camera3D.step_toward_target()` preserves the prototype smoothing coefficients without binding keyboard input.
 
 This scaffold is not yet wired into Pyxel rendering, box drawing, particles, rockets, or scenery.
+
+`T0002.10` added `src/pyxel_goal_game/wire_box.py` as a Pyxel-independent observation box geometry scaffold.
+
+- `WireBox.from_profile()` reads box dimensions from `ScreenProfile`.
+- The generated box has 8 vertices centered on the origin and 12 edge index pairs.
+- Edge groups record prototype-compatible initial geometry groups: `rear`, `front`, and `connector`.
+- `WireBox.project_edges()` projects edges through `Camera3D` and records average depth for future render ordering.
+
+This scaffold is not yet wired into Pyxel rendering and does not implement full renderer-level depth sorting.

@@ -460,3 +460,17 @@ Keep type-colored shell tails, keep the filled teardrop shape, draw a full traje
 
 Impact:
 The preview no longer varies rising shell tail shape or color by burst type. It draws only recent history samples with the fixed white/yellow/brown gradient and keeps burst accent rays separate. `main.py`, production gameplay, preset parameters, pure generation behavior, Halo, and scenery remain unchanged.
+
+## 2026-06-25 Add preview in-box scenery scaffold
+
+Decision:
+Add preview-selectable scenery as static, low-detail 3D line geometry inside the observation box, starting with `EMPTY`, `MOUNTAINS`, `CITY`, and `RIVERBANK`.
+
+Reason:
+Scenery should establish a place under the fireworks without becoming a 2D screen-space background. Keeping it as `Vec3` line/polyline data lets it rotate and project through the same `Camera3D` pipeline as the box and fireworks.
+
+Alternatives:
+Draw a flat background, wait for production runtime integration, or implement all future scenery kinds at once.
+
+Impact:
+`src/pyxel_goal_game/scenery_presets.py` now provides Pyxel-independent scenery data. The manual preview can cycle scenery with `G` and toggle it with `B`. `main.py`, production gameplay, firework preset parameters, pure firework generation behavior, Halo, and external Firework.py integration remain unchanged.

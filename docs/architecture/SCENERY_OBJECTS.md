@@ -117,3 +117,36 @@ No scenery rendering should be implemented as part of the documentation task.
 
 Package-side box geometry now exists as `WireBox` in `src/pyxel_goal_game/wire_box.py`.
 Future scenery presets should use the same `ScreenProfile` box dimensions and y-up coordinate convention rather than defining their own screen-space bounds.
+
+## Implemented Preview Scaffold
+
+`T0004.0` added a preview-first scenery scaffold:
+
+- Data module: `src/pyxel_goal_game/scenery_presets.py`
+- Preview integration: `tools/preview_firework_box.py`
+- Controls:
+  - `G`: cycle scenery preset
+  - `B`: toggle scenery visibility
+
+Implemented initial presets:
+
+- `EMPTY`
+- `MOUNTAINS`
+- `CITY`
+- `RIVERBANK`
+
+The data module is Pyxel-independent. It generates static 3D line and polyline geometry from `ScreenProfile` box dimensions, using box-relative ratios converted into `Vec3` points.
+
+The manual preview projects scenery through the same `Camera3D` pipeline as the box and firework particles. Scenery remains inside the observation box and is rendered as low-detail line geometry, not as a 2D screen-space background.
+
+Current preview render order:
+
+1. Background
+2. Rear/far box edges
+3. Back scenery
+4. Rising firework shells and particles
+5. Front scenery
+6. Front/near box edges
+7. HUD
+
+This is still a preview/development layer. Production runtime scenery integration remains a later task.

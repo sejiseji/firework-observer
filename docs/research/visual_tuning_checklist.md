@@ -41,6 +41,8 @@ Use `iphone16_balanced` for most visual judgement. Use `classic` to confirm comp
 | `2`-`5` | Start persistent fixed-count salvo loop |
 | `0` | Start persistent random-count salvo loop |
 | `H` | Toggle salvo burst height variation |
+| `G` | Cycle scenery preset |
+| `B` | Toggle scenery visibility |
 | `X` | Toggle auto rotate |
 | `D` | Toggle debug HUD |
 | `A` / `S` | Zoom in / out |
@@ -61,6 +63,9 @@ Interaction rules:
 - `R + 0 + H` is the main fireworks-show stress mode.
 - `V` auto launch and persistent salvo loops are mutually exclusive.
 - `Z` remains a single immediate launch and does not change persistent salvo state.
+- `G` cycles low-detail in-box 3D scenery presets.
+- `B` hides or shows scenery without changing firework behavior.
+- Scenery must rotate with the box. It is not a 2D screen-space background.
 
 ## Per-Firework Checks
 
@@ -172,6 +177,13 @@ Interaction rules:
    - Press `0`.
    - Observe combined type, count, and height variation.
 
+10. Scenery readability check:
+   - Press `G` to cycle `Empty`, `Mountains`, `City`, and `Riverbank`.
+   - Press `B` to confirm scenery can be hidden.
+   - Rotate the camera and confirm scenery projects with the box.
+   - Confirm scenery stays in the lower part of the observation volume.
+   - Confirm `R + H + 0` remains readable with scenery enabled.
+
 ## Density Risk Thresholds
 
 If 5-shot Senrin overwhelms the preview:
@@ -215,6 +227,13 @@ If burst accent rays dominate:
 - Darken accent ray colors.
 - Disable accent rays for Senrin or Multi-ring first.
 
+If scenery dominates:
+
+- Reduce line count.
+- Use darker colors.
+- Move scenery lower in the box.
+- Prefer fewer back-phase lines before adding front-phase details.
+
 ## Depth And Box Readability
 
 For every check:
@@ -224,6 +243,7 @@ For every check:
 - Rotating the camera should reveal shape differences.
 - Trails should not erase the front box edges.
 - Firework shell tails and accent rays should not erase front box edges.
+- Scenery should remain quieter than fireworks and should not occupy the upper bloom space.
 - Dense salvos should not hide the current firework type.
 
 ## Frame Pacing And Particle Budget
@@ -244,6 +264,8 @@ Watch the debug HUD in stress modes:
 - `T0003.8.5`: Tune firework shell tail readability.
 - `T0003.8.6`: Tune persistent salvo repeat interval.
 - `T0003.8.8`: Tune burst accent ray density.
+- `T0004.1`: Add forest, coast, and dike scenery presets.
+- `T0004.2`: Tune scenery readability against fireworks.
 - `T0003.9`: Add Halo preset if density is stable.
 
 Runtime integration planning should wait until visual tuning is stable enough that the preview no longer needs large parameter corrections.

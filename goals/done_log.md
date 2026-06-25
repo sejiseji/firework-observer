@@ -651,3 +651,26 @@ Record completed tasks here.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 132 passed.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` was unchanged. Production runtime, preset parameters, pure generation behavior, Halo, and scenery were unchanged.
+
+## 2026-06-25 T0004.0 Add preview scenery preset scaffold and switching
+
+- Summary: Added preview-selectable low-detail 3D scenery inside the observation box.
+- Files changed: `src/pyxel_goal_game/scenery_presets.py`, `tests/unit/test_scenery_presets.py`, `tools/preview_firework_box.py`, `docs/architecture/SCENERY_OBJECTS.md`, `docs/research/visual_tuning_checklist.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Behavior:
+  - Added Pyxel-independent scenery data for `EMPTY`, `MOUNTAINS`, `CITY`, and `RIVERBANK`.
+  - Scenery uses box-relative y-up 3D coordinates converted to `Vec3`.
+  - Preview renders scenery through `Camera3D.project()`.
+  - `G` cycles scenery presets.
+  - `B` toggles scenery visibility.
+  - Scenery is rendered as quiet line/polyline geometry, not as a 2D background.
+- Tests:
+  - `.venv/bin/python -m json.tool goals/task_queue.json` passed.
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 151 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 151 passed.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260625_230244.txt`.
+- Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
+- Preservation: `main.py` was unchanged. Production runtime, firework preset parameters, pure firework generation behavior, Halo, and external Firework.py integration were unchanged.

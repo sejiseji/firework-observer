@@ -31,6 +31,13 @@ from pyxel_goal_game.firework_bursts import (  # noqa: E402
     generate_willow_burst,
 )
 from pyxel_goal_game.salvo_patterns import SalvoPlan, build_salvo_plan  # noqa: E402
+from pyxel_goal_game.scenery_presets import (  # noqa: E402
+    SCENERY_PRESET_NAMES,
+    SceneryLine,
+    SceneryPolyline,
+    SceneryPreset,
+    get_scenery_preset,
+)
 from pyxel_goal_game.screen_profiles import (  # noqa: E402
     DEFAULT_SCREEN_PROFILE_NAME,
     get_screen_profile,
@@ -209,6 +216,9 @@ class PreviewApp:
         self.auto_rotate = False
         self.auto_launch = False
         self.debug = True
+        self.scenery_index = 0
+        self.scenery_visible = True
+        self.scenery = self.load_scenery()
         pyxel.init(
             self.profile.width,
             self.profile.height,
@@ -293,6 +303,17 @@ class PreviewApp:
             self.debug = not self.debug
         if pyxel.btnp(pyxel.KEY_H):
             self.height_variation = not self.height_variation
+        if pyxel.btnp(pyxel.KEY_G):
+            self.scenery_index = (self.scenery_index + 1) % len(SCENERY_PRESET_NAMES)
+            self.scenery = self.load_scenery()
+        if pyxel.btnp(pyxel.KEY_B):
+            self.scenery_visible = not self.scenery_visible
+
+    def load_scenery(self) -> SceneryPreset:
+        return get_scenery_preset(
+            SCENERY_PRESET_NAMES[self.scenery_index],
+            profile=self.profile,
+        )
 
     def reset_camera(self) -> None:
         self.camera.yaw = 0.6
@@ -549,8 +570,10 @@ class PreviewApp:
             reverse=True,
         )
         self.draw_edges(projected_edges[:8], far=True)
+        self.draw_scenery_phase("back")
         self.draw_firework_shells()
         self.draw_particles()
+        self.draw_scenery_phase("front")
         self.draw_edges(projected_edges[8:], far=False)
         self.draw_hud()
 
@@ -572,6 +595,30 @@ class PreviewApp:
         draw_items.sort(key=lambda item: item[0].depth, reverse=True)
         for projected, particle in draw_items:
             self.draw_particle(particle=particle, projected=projected)
+
+    def draw_scenery_phase(self, phase: str) -> None:
+        if not self.scenery_visible:
+            return
+        for polyline in self.scenery.polylines:
+            if polyline.phase == phase:
+                self.draw_scenery_polyline(polyline)
+        for line in self.scenery.lines:
+            if line.phase == phase:
+                self.draw_scenery_line(line)
+
+    def draw_scenery_polyline(self, polyline: SceneryPolyline) -> None:
+        if len(polyline.points) < 2:
+            return
+        projected = tuple(self.camera.project(point) for point in polyline.points)
+        for index in range(len(projected) - 1):
+            start = projected[index]
+            end = projected[index + 1]
+            pyxel.line(start.sx, start.sy, end.sx, end.sy, polyline.color)
+
+    def draw_scenery_line(self, line: SceneryLine) -> None:
+        start = self.camera.project(line.start)
+        end = self.camera.project(line.end)
+        pyxel.line(start.sx, start.sy, end.sx, end.sy, line.color)
 
     def draw_firework_shells(self) -> None:
         for rocket in self.rockets:
@@ -639,6 +686,7 @@ class PreviewApp:
         label = self.last_launched_label if self.random_mode else self.burst_label
         pyxel.text(4, 4, f"Z:launch {self.mode_label}:{label}", 5)
         pyxel.text(4, 12, "1-5:salvo 0:rand-count H:height", 5)
+        pyxel.text(4, 20, f"G:scene {self.scenery.label} B:{self.scenery_visible}", 5)
         if not self.debug:
             return
         pyxel.text(4, self.profile.height - 30, f"profile {self.profile.name}", 5)

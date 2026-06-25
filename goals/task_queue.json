@@ -334,6 +334,12 @@
       "title": "Restore simple gradient firework shell tail",
       "completed_on": "2026-06-25",
       "summary": "Restored the preview rising launch visual to a shared firework shell tail using a short white/yellow/brown gradient and removed type-specific shell tail geometry."
+    },
+    {
+      "id": "T0004.0",
+      "title": "Add preview scenery preset scaffold and switching",
+      "completed_on": "2026-06-25",
+      "summary": "Added Pyxel-independent in-box 3D scenery preset data for EMPTY, MOUNTAINS, CITY, and RIVERBANK, plus preview G cycling and B visibility toggle."
     }
   ]
 }

@@ -227,6 +227,7 @@ After the task:
 - `T0003.8.5` added `docs/research/external_firework_candidates_20260625.md`. It treats external `Firework.py` as reference only and recommends Halo, Orbit/Elliptical, Golden Bloom/Fibonacci, and Counter Ring as the next safest candidate families.
 - `T0003.8.6` added preview-only VFX accents: rocket tails now use burst-type colors, and selected particles draw short-lived center-outward accent rays at explosion start.
 - `T0003.8.7` corrected the rising launch visual terminology and rendering: treat it as a firework shell/fireball, not a rocket. The canonical preview shell tail is shared across all burst types and uses the fixed recent-motion gradient `7, 7, 7, 10, 10, 4, 4` from newest/head to oldest. Do not reintroduce launch-to-current guide lines, booster-like geometry, or type-specific shell tail shapes without a new explicit task.
+- `T0004.0` added preview-only in-box 3D scenery: `EMPTY`, `MOUNTAINS`, `CITY`, and `RIVERBANK` are defined in Pyxel-independent `src/pyxel_goal_game/scenery_presets.py`; preview controls are `G` to cycle scenery and `B` to show/hide scenery. Scenery must remain 3D line/polyline geometry inside the observation box, never a 2D screen-space background.
 - Recommended visual review command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`.
 - Main stress sequence: press `R`, `H`, then `0` to combine random burst type, height variation, and random-count persistent salvos.
 - `classic` remains unchanged and remains the default profile.

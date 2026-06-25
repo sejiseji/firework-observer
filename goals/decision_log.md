@@ -250,3 +250,17 @@ Tune Willow directly in the preview runtime, implement Peony first, or defer fal
 
 Impact:
 `generate_burst()` now supports `FireworkShape.WILLOW`. Willow uses loose radial horizontal velocity, varied initial vertical velocity, stronger negative gravity, and longer partial trail settings. Kiku, Ring, Spiral, production runtime, `main.py`, profiles, and scenery remain unchanged.
+
+## 2026-06-25 Add deterministic Peony burst generation
+
+Decision:
+Add `PEONY_PRESET` and `generate_peony_burst()` as Pyxel-independent preset data and burst generation. The manual preview now cycles Kiku, Ring, Spiral, Willow, and Peony.
+
+Reason:
+Peony should contrast with Willow by being a short-lived, bright, round bloom with restrained trails. Keeping it as deterministic spawn specs preserves testability and avoids mixing visual tuning with production runtime migration.
+
+Alternatives:
+Tune Kiku to double as Peony, connect Peony directly to production gameplay, or delay short bright blooms until after Multi-ring/Halo.
+
+Impact:
+`generate_burst()` already supports Peony through `FireworkShape.SPHERE`. Peony reuses the sphere generator with lower particle count, shorter life, brighter palette, and lower trail rate. Kiku, Ring, Spiral, Willow, production runtime, `main.py`, profiles, and scenery remain unchanged.

@@ -328,3 +328,23 @@ Record completed tasks here.
 - User-visible behavior: Production gameplay remains unchanged. Manual preview can now inspect Willow.
 - Preservation: `main.py` was unchanged. Default profile remains `classic`. `iphone16_balanced` remains screen `236x512` and box `120x260x120`. No Peony/Multi-ring/Halo/Senrin implementation, scenery rendering, production runtime migration, or external Firework.py code was added.
 - Follow-up: Use the manual preview to inspect Willow trail density in the portrait profile, then start `T0003.5` to implement Peony.
+
+## 2026-06-25 T0003.5 Implement peony preset
+
+- Summary: Added `PEONY_PRESET` and deterministic Pyxel-independent Peony burst generation. Peony reuses the sphere burst path with shorter life, bright palette values, fewer particles than Kiku, and restrained partial trail fields from `TrailPreset`.
+- Pre-task git state: branch `main`; worktree clean; latest commit `a1f82aa Add deterministic Willow burst generation`.
+- Files changed: `src/pyxel_goal_game/firework_presets.py`, `src/pyxel_goal_game/firework_bursts.py`, `tests/unit/test_firework_bursts.py`, `tools/preview_firework_box.py`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Behavior:
+  - `generate_peony_burst(origin=..., seed=...)` creates deterministic Peony spawn specs.
+  - `generate_burst()` supports Peony through the existing `FireworkShape.SPHERE` path.
+  - Preview `SPACE` cycles Kiku, Ring, Spiral, Willow, and Peony.
+  - Peony uses shorter life and lower trail tendency than Kiku/Willow.
+- Tests:
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 91 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 91 passed.
+- User-visible behavior: Production gameplay remains unchanged. Manual preview can now inspect Peony.
+- Preservation: `main.py` was unchanged. Default profile remains `classic`. `iphone16_balanced` remains screen `236x512` and box `120x260x120`. No Multi-ring/Halo/Senrin implementation, scenery rendering, production runtime migration, or external Firework.py code was added.
+- Follow-up: Use the manual preview to inspect Peony brightness and trail restraint, then start `T0003.6` to implement Multi-ring or Halo.

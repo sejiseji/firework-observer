@@ -91,20 +91,16 @@ Completed work:
 - Completed `T0003.0`: package-side Pyxel-independent firework preset scaffold exists in `src/pyxel_goal_game/firework_presets.py` with `FireworkKind`, `FireworkShape`, `TrailPreset`, `SecondaryPreset`, and `FireworkPreset`.
 - Completed `T0003.1`: deterministic Kiku/radial burst generation exists in `src/pyxel_goal_game/firework_bursts.py`, producing immutable `ParticleSpawnSpec` values from `KIKU_PRESET`.
 - Completed `T0003.2`: deterministic Ring burst generation exists in `src/pyxel_goal_game/firework_bursts.py`, producing mostly planar ring velocity specs from `RING_PRESET`.
+- Completed `T0003.3`: deterministic Spiral burst generation exists in `src/pyxel_goal_game/firework_bursts.py`, producing 3D twisted `ParticleSpawnSpec` values from `SPIRAL_PRESET`.
+- Completed `T0003.4`: deterministic Willow burst generation exists in `src/pyxel_goal_game/firework_bursts.py`, producing falling-tail `ParticleSpawnSpec` values from `WILLOW_PRESET`.
+- Completed `T0003.5`: deterministic Peony burst generation exists in `src/pyxel_goal_game/firework_bursts.py`, producing short bright sphere `ParticleSpawnSpec` values from `PEONY_PRESET`.
 
 Current next task:
 
-- `T0003.3: Implement spiral preset`
+- `T0003.6: Implement multi-ring or halo preset`
 
 Remaining queued tasks:
 
-- `T0002.8: Add screen profile configuration scaffold`
-- `T0003.0: Establish firework preset scaffold`
-- `T0003.1: Implement deterministic radial / kiku preset`
-- `T0003.2: Implement ring preset`
-- `T0003.3: Implement spiral preset`
-- `T0003.4: Implement willow preset`
-- `T0003.5: Implement peony preset`
 - `T0003.6: Implement multi-ring or halo preset`
 - `T0003.7: Implement senrin / secondary burst preset`
 - `T0003.8: Add preset cycling and visual tuning checklist`
@@ -214,12 +210,13 @@ After the task:
 - Do not hide product decisions in chat history.
 - `T0003.2.5` added a manual Kiku/Ring visual preview at `tools/preview_firework_box.py`.
 - Run the preview with `.venv/bin/python tools/preview_firework_box.py`; use `--profile iphone16_balanced` to inspect the larger balanced profile without changing defaults.
-- Preview controls: `Z` launches, `SPACE` switches Kiku/Ring, arrow keys rotate, `A`/`S` zoom, `C` resets camera, `X` toggles auto-rotate, `V` toggles auto-launch, and `D` toggles debug HUD.
+- Preview controls: `Z` launches, `SPACE` switches Kiku/Ring/Spiral/Willow/Peony, arrow keys rotate, `A`/`S` zoom, `C` resets camera, `X` toggles auto-rotate, `V` toggles auto-launch, and `D` toggles debug HUD.
 - The preview is a development tool only. It does not migrate `main.py`, production runtime particles, scenery, or future firework presets.
 - `T0003.2.7` tuned iPhone-style profiles to use portrait viewport / portrait firework volume: `iphone16_balanced` is now screen `236x512`, box `120x260x120`, camera distance `340.0`; `iphone16_large` is screen `393x852`, box `200x440x200`, camera distance `560.0`.
 - `T0003.2.8` added deterministic Ring orientation bank support in `firework_bursts.py`; the manual preview now builds a 24-orientation bank from seed `20260623` for Ring bursts.
 - `T0003.3` added `SPIRAL_PRESET` and deterministic 3D Spiral burst generation; the manual preview now cycles Kiku, Ring, and Spiral.
 - `T0003.4` added `WILLOW_PRESET` and deterministic Willow burst generation; the manual preview now cycles Kiku, Ring, Spiral, and Willow.
+- `T0003.5` added `PEONY_PRESET` and deterministic Peony burst generation; the manual preview now cycles Kiku, Ring, Spiral, Willow, and Peony.
 - `classic` remains unchanged and remains the default profile.
 - If the user changes the game direction, update `project_brief.json` and regenerate or manually update the related docs.
 - Review whether the standalone `main.py` should be migrated into `src/pyxel_goal_game/` or kept only as a reference prototype.

@@ -109,6 +109,30 @@ KIKU_PRESET = FireworkPreset(
 )
 
 
+PEONY_TRAIL_PRESET = TrailPreset(
+    rate=0.18,
+    speed_threshold=1.10,
+    early_ratio=0.32,
+    strong_speed=1.30,
+)
+
+PEONY_PRESET = FireworkPreset(
+    kind=FireworkKind.PEONY,
+    label="Peony",
+    shape=FireworkShape.SPHERE,
+    particle_count=96,
+    speed_range=(0.80, 1.35),
+    life_range=(42, 68),
+    palette=(14, 8, 10),
+    fade_mid=8,
+    fade_dark=2,
+    tip_color=7,
+    drag=0.982,
+    gravity=-0.022,
+    trail=PEONY_TRAIL_PRESET,
+)
+
+
 RING_TRAIL_PRESET = TrailPreset(
     rate=0.38,
     speed_threshold=0.90,

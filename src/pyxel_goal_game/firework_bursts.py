@@ -7,6 +7,7 @@ from random import Random
 from pyxel_goal_game.camera3d import Vec3
 from pyxel_goal_game.firework_presets import (
     KIKU_PRESET,
+    PEONY_PRESET,
     RING_PRESET,
     SPIRAL_PRESET,
     WILLOW_PRESET,
@@ -86,6 +87,15 @@ def generate_ring_burst(
         seed=seed,
         orientation_bank=orientation_bank,
     )
+
+
+def generate_peony_burst(
+    *,
+    origin: Vec3,
+    seed: int,
+    preset: FireworkPreset = PEONY_PRESET,
+) -> tuple[ParticleSpawnSpec, ...]:
+    return generate_burst(preset=preset, origin=origin, seed=seed)
 
 
 def generate_spiral_burst(

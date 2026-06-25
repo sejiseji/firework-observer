@@ -13,6 +13,7 @@ from pyxel_goal_game.firework_bursts import (
     dot_vec3,
     generate_burst,
     generate_kiku_burst,
+    generate_peony_burst,
     generate_ring_burst,
     generate_spiral_burst,
     generate_willow_burst,
@@ -20,6 +21,7 @@ from pyxel_goal_game.firework_bursts import (
 )
 from pyxel_goal_game.firework_presets import (
     KIKU_PRESET,
+    PEONY_PRESET,
     RING_PRESET,
     SPIRAL_PRESET,
     WILLOW_PRESET,
@@ -458,3 +460,95 @@ def test_generate_burst_supports_willow_shape() -> None:
     particles = generate_burst(preset=WILLOW_PRESET, origin=ORIGIN, seed=0)
 
     assert particles == generate_willow_burst(origin=ORIGIN, seed=0)
+
+
+def test_peony_preset_uses_documented_values() -> None:
+    assert PEONY_PRESET.kind is FireworkKind.PEONY
+    assert PEONY_PRESET.shape is FireworkShape.SPHERE
+    assert PEONY_PRESET.particle_count == 96
+    assert PEONY_PRESET.speed_range == (0.80, 1.35)
+    assert PEONY_PRESET.life_range == (42, 68)
+    assert PEONY_PRESET.palette == (14, 8, 10)
+    assert PEONY_PRESET.fade_mid == 8
+    assert PEONY_PRESET.fade_dark == 2
+    assert PEONY_PRESET.tip_color == 7
+    assert PEONY_PRESET.drag == 0.982
+    assert PEONY_PRESET.gravity == -0.022
+    assert PEONY_PRESET.trail.rate == 0.18
+    assert PEONY_PRESET.trail.early_ratio == 0.32
+
+
+def test_same_seed_generates_identical_peony_specs() -> None:
+    first = generate_peony_burst(origin=ORIGIN, seed=123)
+    second = generate_peony_burst(origin=ORIGIN, seed=123)
+
+    assert first == second
+
+
+def test_different_seeds_generate_different_peony_specs() -> None:
+    first = generate_peony_burst(origin=ORIGIN, seed=123)
+    second = generate_peony_burst(origin=ORIGIN, seed=124)
+
+    assert first != second
+
+
+def test_peony_particle_count_life_and_speed_ranges() -> None:
+    particles = generate_peony_burst(origin=ORIGIN, seed=0)
+
+    assert len(particles) == PEONY_PRESET.particle_count
+    assert all(
+        PEONY_PRESET.life_range[0] <= particle.life <= PEONY_PRESET.life_range[1]
+        for particle in particles
+    )
+    assert all(
+        PEONY_PRESET.speed_range[0]
+        <= speed_of(particle.velocity)
+        <= PEONY_PRESET.speed_range[1]
+        for particle in particles
+    )
+
+
+def test_peony_specs_preserve_physics_and_colors() -> None:
+    particles = generate_peony_burst(origin=ORIGIN, seed=0)
+
+    assert all(particle.position == ORIGIN for particle in particles)
+    assert all(particle.gravity == PEONY_PRESET.gravity for particle in particles)
+    assert all(particle.gravity < 0.0 for particle in particles)
+    assert all(particle.drag == PEONY_PRESET.drag for particle in particles)
+    assert all(particle.color in PEONY_PRESET.palette for particle in particles)
+    assert all(particle.fade_mid == PEONY_PRESET.fade_mid for particle in particles)
+    assert all(particle.fade_dark == PEONY_PRESET.fade_dark for particle in particles)
+    assert all(particle.tip_color == PEONY_PRESET.tip_color for particle in particles)
+
+
+def test_peony_trails_are_partial_for_known_seed() -> None:
+    particles = generate_peony_burst(origin=ORIGIN, seed=0)
+    trail_count = sum(particle.has_trail for particle in particles)
+
+    assert 0 < trail_count < len(particles)
+    assert all(
+        particle.trail_until_age == int(particle.life * PEONY_PRESET.trail.early_ratio)
+        for particle in particles
+    )
+    assert all(particle.trail_draw_every == PEONY_PRESET.trail.draw_every for particle in particles)
+
+
+def test_peony_is_shorter_and_less_trailed_than_existing_presets() -> None:
+    assert PEONY_PRESET.life_range[1] < KIKU_PRESET.life_range[1]
+    assert PEONY_PRESET.trail.rate < KIKU_PRESET.trail.rate
+    assert PEONY_PRESET.trail.early_ratio < WILLOW_PRESET.trail.early_ratio
+
+
+def test_peony_uses_y_up_sphere_distribution() -> None:
+    particles = generate_peony_burst(origin=ORIGIN, seed=0)
+
+    assert any(particle.velocity.y > 0.0 for particle in particles)
+    assert any(particle.velocity.y < 0.0 for particle in particles)
+    assert any(abs(particle.velocity.x) > 0.01 for particle in particles)
+    assert any(abs(particle.velocity.z) > 0.01 for particle in particles)
+
+
+def test_generate_burst_supports_peony_shape() -> None:
+    particles = generate_burst(preset=PEONY_PRESET, origin=ORIGIN, seed=0)
+
+    assert particles == generate_peony_burst(origin=ORIGIN, seed=0)

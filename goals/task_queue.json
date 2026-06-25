@@ -3,28 +3,6 @@
   "policy": "Keep tasks small enough for one Codex patch. Split ambiguous tasks before implementation.",
   "current": [
     {
-      "id": "T0003.5",
-      "title": "Implement peony preset",
-      "goal": "Add one bright short-lived peony-style preset with restrained trails.",
-      "status": "todo",
-      "depends_on": [
-        "T0003.4"
-      ],
-      "constraints": [
-        "Implement only peony",
-        "Favor bright points over dense trails",
-        "Do not modify standalone main.py",
-        "Do not copy external Firework.py code"
-      ],
-      "acceptance": [
-        "Peony preset is visually distinct from kiku through life, brightness, or spread tuning",
-        "Trail usage remains restrained and partial",
-        "Same seed gives same particle initial states",
-        "Existing presets still work",
-        "Validation results are recorded"
-      ]
-    },
-    {
       "id": "T0003.6",
       "title": "Implement multi-ring or halo preset",
       "goal": "Add one layered ring or halo preset without obscuring the transparent box.",
@@ -355,6 +333,12 @@
       "title": "Implement willow preset",
       "completed_on": "2026-06-25",
       "summary": "Added WILLOW_PRESET and deterministic Pyxel-independent willow burst generation with stronger negative gravity, longer partial trails, and manual preview cycling."
+    },
+    {
+      "id": "T0003.5",
+      "title": "Implement peony preset",
+      "completed_on": "2026-06-25",
+      "summary": "Added PEONY_PRESET and deterministic Pyxel-independent peony burst generation with short life, bright palette, restrained trails, and manual preview cycling."
     }
   ]
 }

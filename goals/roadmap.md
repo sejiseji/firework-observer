@@ -29,7 +29,7 @@
 - [x] add deterministic Ring orientation bank
 - [x] add spiral preset
 - [x] add willow preset
-- [ ] add peony preset
+- [x] add peony preset
 - [ ] add multi-ring or halo preset
 - [ ] add senrin / secondary burst preset
 - [ ] add preset cycling and visual tuning checklist

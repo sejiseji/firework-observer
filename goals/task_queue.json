@@ -3,27 +3,6 @@
   "policy": "Keep tasks small enough for one Codex patch. Split ambiguous tasks before implementation.",
   "current": [
     {
-      "id": "T0003.8",
-      "title": "Add preset cycling and visual tuning checklist",
-      "goal": "Add a minimal way to cycle available presets and document visual tuning checks.",
-      "status": "todo",
-      "depends_on": [
-        "T0003.7.5"
-      ],
-      "constraints": [
-        "Do not add scoring, objectives, characters, maps, or unrelated gameplay",
-        "Do not rewrite renderer or camera architecture",
-        "Do not modify standalone main.py unless explicitly approved",
-        "Keep controls and checklist minimal"
-      ],
-      "acceptance": [
-        "Available presets can be selected or cycled without breaking existing controls",
-        "Visual tuning checklist covers trails, box readability, frame pacing, and depth ordering",
-        "No unrelated gameplay features were added",
-        "Validation results are recorded"
-      ]
-    },
-    {
       "id": "T0004",
       "title": "Recreate protected prototype viewpoint controls in package",
       "goal": "Add package-side viewpoint/camera adjustment matching the protected main.py prototype behavior.",
@@ -325,6 +304,12 @@
       "title": "Add persistent preview salvo controls",
       "completed_on": "2026-06-25",
       "summary": "Changed preview number keys into persistent salvo loops, added 0 as random-count salvo mode, added H height variation, and drew preview-only launch-to-burst rocket trajectories."
+    },
+    {
+      "id": "T0003.8",
+      "title": "Add preset cycling and visual tuning checklist",
+      "completed_on": "2026-06-25",
+      "summary": "Added docs/research/visual_tuning_checklist.md to define profile targets, preview commands, controls, per-preset visual checks, stress sequences, density risks, and follow-up tuning candidates."
     }
   ]
 }

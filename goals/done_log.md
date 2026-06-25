@@ -463,3 +463,26 @@ Record completed tasks here.
 - User-visible behavior: Production gameplay remains unchanged. Manual preview can now run repeated fixed-count or random-count salvo compositions.
 - Preservation: `main.py` was unchanged. Default profile remains `classic`. No Halo implementation, scenery rendering, production runtime migration, pure firework generation changes, or external Firework.py code was added.
 - Follow-up: Continue to `T0003.8` for preset cycling and visual tuning checklist work.
+
+## 2026-06-25 T0003.8 Add preset cycling and visual tuning checklist
+
+- Summary: Added `docs/research/visual_tuning_checklist.md` to define the manual visual review procedure for all implemented firework presets and preview controls.
+- Pre-task git state: branch `main`; worktree clean; latest commit `a257131 Add persistent preview salvo controls`.
+- Files changed: `docs/research/visual_tuning_checklist.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Checklist coverage:
+  - Profile policy: `classic` as compatibility baseline, `iphone16_balanced` as primary visual tuning target, and `iphone16_large` as optional stress check.
+  - Preview commands and controls.
+  - Kiku, Ring, Spiral, Willow, Peony, Multi-ring, and Senrin visual criteria.
+  - `R` random type mode, `0` random-count salvo mode, `H` height variation, persistent `1`-`5` salvo loops, rocket trajectory readability, and the `R + H + 0` stress sequence.
+  - Density risks for Senrin, Multi-ring, and Willow.
+  - Follow-up tuning candidates before Halo or runtime integration.
+- Tests:
+  - `.venv/bin/python -m json.tool goals/task_queue.json` passed.
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 132 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 132 passed.
+- User-visible behavior: None. This was a documentation/checklist task.
+- Preservation: `main.py` was unchanged. Production runtime, preset parameters, pure generation behavior, Halo, and scenery were unchanged.
+- Follow-up: Run the manual visual review with `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`, then choose density tuning, Halo planning, or runtime integration planning based on the checklist results.

@@ -222,6 +222,9 @@ After the task:
 - `T0003.6` added `MULTI_RING_PRESET` and deterministic 3-layer Multi-ring burst generation; preview sequential, random, and salvo modes now include Multi-ring.
 - `T0003.7` added `SENRIN_PRESET`, deterministic secondary burst specs, and preview-only secondary execution; preview sequential, random, and salvo modes now include Senrin.
 - `T0003.7.5` changed preview salvo controls into persistent loops: `1` is the default one-shot loop, `2`-`5` are fixed-count loops, `0` is random-count salvo mode, `H` toggles height variation, and preview salvo launches draw launch-to-burst rocket trajectories.
+- `T0003.8` added `docs/research/visual_tuning_checklist.md`. Use it for manual visual review before changing preset parameters, adding Halo, or planning runtime integration.
+- Recommended visual review command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`.
+- Main stress sequence: press `R`, `H`, then `0` to combine random burst type, height variation, and random-count persistent salvos.
 - `classic` remains unchanged and remains the default profile.
 - If the user changes the game direction, update `project_brief.json` and regenerate or manually update the related docs.
 - Review whether the standalone `main.py` should be migrated into `src/pyxel_goal_game/` or kept only as a reference prototype.

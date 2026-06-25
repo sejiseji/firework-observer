@@ -334,3 +334,17 @@ Keep one-off number-key salvos, use `0` as a stop command, or move repeated salv
 
 Impact:
 `R` randomizes burst type independently from `0` randomizing salvo count. `V` auto-launch and persistent salvo mode are mutually exclusive. `Z` remains a single immediate launch. `main.py`, production gameplay, pure firework generation outputs, profiles, and scenery remain unchanged.
+
+## 2026-06-25 Add visual tuning checklist
+
+Decision:
+Add `docs/research/visual_tuning_checklist.md` before further preset expansion or runtime integration.
+
+Reason:
+The preview now supports seven deterministic firework types plus random type, random count, height variation, persistent salvos, auto launch, and auto rotate. Parameter tuning should be judged against a documented checklist instead of ad hoc visual impressions.
+
+Alternatives:
+Proceed directly to Halo, tune Senrin or Multi-ring immediately, or begin runtime integration before locking evaluation criteria.
+
+Impact:
+The checklist records profile policy, commands, controls, per-preset visual criteria, stress sequences, density-risk thresholds, and follow-up tuning candidates. No preset parameters, pure generation behavior, production runtime behavior, scenery, or `main.py` were changed.

@@ -578,3 +578,21 @@ Record completed tasks here.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 132 passed.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` was unchanged. Production runtime, preset parameters, pure generation behavior, Halo, and scenery were unchanged.
+
+## 2026-06-25 Replace fireball stick tail with ember trail
+
+- Summary: Changed the launch fireball trail from connected line segments to separated ember pixels so it no longer reads as a rigid attached booster or stick.
+- Files changed: `tools/preview_firework_box.py`, `goals/decision_log.md`, and `goals/done_log.md`.
+- Behavior:
+  - Type-colored palette remains unchanged.
+  - Fireball head remains a compact pixel cluster.
+  - Trailing effect now uses disconnected ember points from older history positions.
+  - The newest history near the fireball head is skipped to leave a small visual gap.
+- Tests:
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 132 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 132 passed.
+- Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
+- Preservation: `main.py` was unchanged. Production runtime, preset parameters, pure generation behavior, Halo, and scenery were unchanged.

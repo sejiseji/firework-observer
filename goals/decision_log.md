@@ -404,3 +404,17 @@ Revert all rocket VFX color work, enlarge the entire rocket tail, or add a heavi
 
 Impact:
 Only `tools/preview_firework_box.py` rocket head drawing changed. `main.py`, production gameplay, preset parameters, pure generation behavior, Halo, and scenery remain unchanged.
+
+## 2026-06-25 Replace fireball stick tail with ember trail
+
+Decision:
+Draw the launch fireball's trailing effect as separated ember pixels instead of connected line segments.
+
+Reason:
+Connected line segments made the launch fireball look like it had a rigid booster or stick attached. The object is a launched firework shell, so its trail should read as residual sparks behind the fireball, not attached propulsion hardware.
+
+Alternatives:
+Remove the trail entirely, shorten the connected line further, or keep the line and only change colors.
+
+Impact:
+The preview keeps the current type-colored palette and compact fireball head, but the trail is now disconnected recent ember points with a small gap behind the head. `main.py`, production gameplay, preset parameters, pure generation behavior, Halo, and scenery remain unchanged.

@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import math
 import sys
+from collections import deque
 from dataclasses import dataclass
 from pathlib import Path
 from random import Random
@@ -42,7 +43,10 @@ MIN_ZOOM = 0.45
 MAX_PITCH = 1.2
 MIN_PITCH = -1.2
 AUTO_LAUNCH_FRAMES = 120
-PERSISTENT_SALVO_FRAMES = 132
+PERSISTENT_SALVO_FRAMES = 210
+ROCKET_MIN_FLIGHT_FRAMES = 96
+ROCKET_MAX_FLIGHT_FRAMES = 180
+ROCKET_TAIL_LENGTH = 7
 RING_ORIENTATION_BANK_SEED = 20260623
 PREVIEW_RANDOM_SEED = 20260625
 HEIGHT_VARIATION_RATIO = 0.16
@@ -50,20 +54,32 @@ BURST_LABELS = ("Kiku", "Ring", "Spiral", "Willow", "Peony", "Multi-ring", "Senr
 
 
 @dataclass(frozen=True)
-class ScheduledBurst:
-    frame: int
+class PreviewRocket:
+    launch_frame: int
+    flight_frames: int
     burst_index: int
     launch_position: Vec3
-    origin: Vec3
+    burst_position: Vec3
     seed: int
+    history: deque[Vec3]
 
+    def has_started(self, frame: int) -> bool:
+        return frame >= self.launch_frame
 
-@dataclass(frozen=True)
-class PreviewRocketTrail:
-    start: Vec3
-    end: Vec3
-    start_frame: int
-    end_frame: int
+    def is_complete(self, frame: int) -> bool:
+        return frame >= self.launch_frame + self.flight_frames
+
+    def current_position(self, frame: int) -> Vec3:
+        elapsed = max(0, frame - self.launch_frame)
+        progress = min(1.0, elapsed / self.flight_frames)
+        return Vec3(
+            x=self.launch_position.x
+            + (self.burst_position.x - self.launch_position.x) * progress,
+            y=self.launch_position.y
+            + (self.burst_position.y - self.launch_position.y) * progress,
+            z=self.launch_position.z
+            + (self.burst_position.z - self.launch_position.z) * progress,
+        )
 
 
 @dataclass
@@ -158,8 +174,7 @@ class PreviewApp:
         self.last_launched_index = 0
         self.random_mode = False
         self.preview_rng = Random(PREVIEW_RANDOM_SEED)
-        self.scheduled_bursts: list[ScheduledBurst] = []
-        self.rocket_trails: list[PreviewRocketTrail] = []
+        self.rockets: list[PreviewRocket] = []
         self.persistent_salvo_enabled = False
         self.random_salvo_count = False
         self.persistent_salvo_count = 1
@@ -197,7 +212,7 @@ class PreviewApp:
         if self.auto_launch and pyxel.frame_count % AUTO_LAUNCH_FRAMES == 0:
             self.launch()
         self.schedule_persistent_salvo_if_needed()
-        self.launch_scheduled_bursts()
+        self.update_rockets()
         self.camera.step_toward_target()
         for particle in self.particles:
             particle.step()
@@ -265,7 +280,13 @@ class PreviewApp:
     def launch(self) -> None:
         origin = Vec3(0.0, 0.0, 0.0)
         burst_index = self.choose_launch_index()
-        self.launch_burst(burst_index=burst_index, origin=origin, seed=self.seed)
+        self.schedule_rocket(
+            launch_frame=pyxel.frame_count,
+            burst_index=burst_index,
+            launch_position=self.default_launch_position(origin),
+            burst_position=origin,
+            seed=self.seed,
+        )
         self.seed += 1
 
     def launch_burst(self, *, burst_index: int, origin: Vec3, seed: int) -> None:
@@ -333,23 +354,61 @@ class PreviewApp:
             strict=True,
         ):
             burst_position = self.apply_height_variation(slot.burst_position)
-            self.scheduled_bursts.append(
-                ScheduledBurst(
-                    frame=pyxel.frame_count + slot.delay_frames,
-                    burst_index=burst_index,
-                    launch_position=slot.launch_position,
-                    origin=burst_position,
-                    seed=base_seed + slot.seed_offset,
-                )
+            self.schedule_rocket(
+                launch_frame=pyxel.frame_count + slot.delay_frames,
+                burst_index=burst_index,
+                launch_position=slot.launch_position,
+                burst_position=burst_position,
+                seed=base_seed + slot.seed_offset,
             )
-            self.rocket_trails.append(
-                PreviewRocketTrail(
-                    start=slot.launch_position,
-                    end=burst_position,
-                    start_frame=pyxel.frame_count,
-                    end_frame=pyxel.frame_count + max(1, slot.delay_frames),
-                )
+
+    def default_launch_position(self, burst_position: Vec3) -> Vec3:
+        return Vec3(
+            x=burst_position.x,
+            y=-self.profile.box_height * 0.46,
+            z=burst_position.z,
+        )
+
+    def schedule_rocket(
+        self,
+        *,
+        launch_frame: int,
+        burst_index: int,
+        launch_position: Vec3,
+        burst_position: Vec3,
+        seed: int,
+    ) -> None:
+        self.rockets.append(
+            PreviewRocket(
+                launch_frame=launch_frame,
+                flight_frames=self.choose_rocket_flight_frames(
+                    launch_position=launch_position,
+                    burst_position=burst_position,
+                ),
+                burst_index=burst_index,
+                launch_position=launch_position,
+                burst_position=burst_position,
+                seed=seed,
+                history=deque(maxlen=ROCKET_TAIL_LENGTH),
             )
+        )
+
+    def choose_rocket_flight_frames(
+        self,
+        *,
+        launch_position: Vec3,
+        burst_position: Vec3,
+    ) -> int:
+        vertical_distance = max(0.0, burst_position.y - launch_position.y)
+        height_ratio = vertical_distance / self.profile.box_height
+        base_frames = 92 + height_ratio * 64
+        speed_factor = self.preview_rng.uniform(0.78, 1.28)
+        jitter = self.preview_rng.randint(-8, 8)
+        flight_frames = int(base_frames / speed_factor + jitter)
+        return max(
+            ROCKET_MIN_FLIGHT_FRAMES,
+            min(ROCKET_MAX_FLIGHT_FRAMES, flight_frames),
+        )
 
     def apply_height_variation(self, position: Vec3) -> Vec3:
         if not self.height_variation:
@@ -406,20 +465,24 @@ class PreviewApp:
             self.schedule_salvo(self.choose_salvo_count())
             self.next_persistent_salvo_frame = pyxel.frame_count + PERSISTENT_SALVO_FRAMES
 
-    def launch_scheduled_bursts(self) -> None:
-        if not self.scheduled_bursts:
+    def update_rockets(self) -> None:
+        if not self.rockets:
             return
-        pending: list[ScheduledBurst] = []
-        for burst in self.scheduled_bursts:
-            if burst.frame <= pyxel.frame_count:
+        active: list[PreviewRocket] = []
+        for rocket in self.rockets:
+            if not rocket.has_started(pyxel.frame_count):
+                active.append(rocket)
+                continue
+            if rocket.is_complete(pyxel.frame_count):
                 self.launch_burst(
-                    burst_index=burst.burst_index,
-                    origin=burst.origin,
-                    seed=burst.seed,
+                    burst_index=rocket.burst_index,
+                    origin=rocket.burst_position,
+                    seed=rocket.seed,
                 )
-            else:
-                pending.append(burst)
-        self.scheduled_bursts = pending
+                continue
+            rocket.history.append(rocket.current_position(pyxel.frame_count))
+            active.append(rocket)
+        self.rockets = active
 
     def draw(self) -> None:
         pyxel.cls(0)
@@ -454,27 +517,26 @@ class PreviewApp:
             self.draw_particle(particle=particle, projected=projected)
 
     def draw_rocket_trails(self) -> None:
-        live_trails: list[PreviewRocketTrail] = []
-        for trail in self.rocket_trails:
-            if pyxel.frame_count <= trail.end_frame + 10:
-                live_trails.append(trail)
-                start = self.camera.project(trail.start)
-                end = self.camera.project(trail.end)
-                pyxel.line(start.sx, start.sy, end.sx, end.sy, 5)
-                if pyxel.frame_count <= trail.end_frame:
-                    progress = (pyxel.frame_count - trail.start_frame) / max(
-                        1,
-                        trail.end_frame - trail.start_frame,
-                    )
-                    progress = max(0.0, min(1.0, progress))
-                    head = Vec3(
-                        x=trail.start.x + (trail.end.x - trail.start.x) * progress,
-                        y=trail.start.y + (trail.end.y - trail.start.y) * progress,
-                        z=trail.start.z + (trail.end.z - trail.start.z) * progress,
-                    )
-                    projected_head = self.camera.project(head)
-                    pyxel.pset(projected_head.sx, projected_head.sy, 10)
-        self.rocket_trails = live_trails
+        for rocket in self.rockets:
+            if not rocket.has_started(pyxel.frame_count):
+                continue
+            history = tuple(rocket.history)
+            if len(history) >= 2:
+                last_segment_index = len(history) - 2
+                for index in range(len(history) - 1):
+                    start = self.camera.project(history[index])
+                    end = self.camera.project(history[index + 1])
+                    color = self.rocket_tail_color(index, last_segment_index)
+                    pyxel.line(start.sx, start.sy, end.sx, end.sy, color)
+            head = self.camera.project(rocket.current_position(pyxel.frame_count))
+            pyxel.pset(head.sx, head.sy, 10)
+
+    def rocket_tail_color(self, index: int, last_segment_index: int) -> int:
+        if index == last_segment_index:
+            return 10
+        if index >= last_segment_index - 2:
+            return 9
+        return 4
 
     def draw_particle(
         self,

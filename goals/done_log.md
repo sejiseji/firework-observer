@@ -473,7 +473,7 @@ Record completed tasks here.
   - Profile policy: `classic` as compatibility baseline, `iphone16_balanced` as primary visual tuning target, and `iphone16_large` as optional stress check.
   - Preview commands and controls.
   - Kiku, Ring, Spiral, Willow, Peony, Multi-ring, and Senrin visual criteria.
-  - `R` random type mode, `0` random-count salvo mode, `H` height variation, persistent `1`-`5` salvo loops, rocket trajectory readability, and the `R + H + 0` stress sequence.
+  - `R` random type mode, `0` random-count salvo mode, `H` height variation, persistent `1`-`5` salvo loops, rocket tail readability, and the `R + H + 0` stress sequence.
   - Density risks for Senrin, Multi-ring, and Willow.
   - Follow-up tuning candidates before Halo or runtime integration.
 - Tests:
@@ -486,3 +486,27 @@ Record completed tasks here.
 - User-visible behavior: None. This was a documentation/checklist task.
 - Preservation: `main.py` was unchanged. Production runtime, preset parameters, pure generation behavior, Halo, and scenery were unchanged.
 - Follow-up: Run the manual visual review with `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`, then choose density tuning, Halo planning, or runtime integration planning based on the checklist results.
+
+## 2026-06-25 T0003.7.6 Fix preview rocket tail, flight pacing, and launch speed variation
+
+- Summary: Corrected preview rocket launch visuals so rockets launch before bursting, draw only short recent-motion tails, use longer distance-aware flight timing, and vary launch speed per rocket.
+- Pre-task git state: branch `main`; worktree clean; latest commit `cc6027d Add visual tuning checklist`.
+- Files changed: `tools/preview_firework_box.py`, `docs/research/visual_tuning_checklist.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Behavior:
+  - `Z` now schedules a preview rocket and bursts after arrival instead of exploding immediately.
+  - Salvo slot delay now means rocket launch start delay.
+  - Rockets keep a short 3D history tail and no longer draw a full launch-to-current path line.
+  - Rocket flight duration depends on vertical distance, deterministic speed factor, and small jitter, clamped to 96 through 180 frames.
+  - Persistent salvo repeat interval was increased to 210 frames to fit longer launches.
+  - Random type mode, random-count salvo mode, height variation, auto launch, and persistent salvos continue to use preview-only rocket scheduling.
+- Tests:
+  - `.venv/bin/python -m json.tool goals/task_queue.json` passed.
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 132 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 132 passed.
+- Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
+- User-visible behavior: Production gameplay remains unchanged. Manual preview rocket launches are slower, less uniform, and draw short tails.
+- Preservation: `main.py` was unchanged. Production runtime, preset parameters, pure generation behavior, Halo, scenery, and profile values were unchanged.
+- Follow-up: Use the manual visual checklist and inspect `R + H + 0` stress mode before choosing density tuning, Halo planning, or runtime integration planning.

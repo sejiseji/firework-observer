@@ -306,6 +306,12 @@
       "summary": "Changed preview number keys into persistent salvo loops, added 0 as random-count salvo mode, added H height variation, and drew preview-only launch-to-burst rocket trajectories."
     },
     {
+      "id": "T0003.7.6",
+      "title": "Fix preview rocket tail, flight pacing, and launch speed variation",
+      "completed_on": "2026-06-25",
+      "summary": "Changed preview rockets to launch before bursting, draw only short recent-motion tails, use longer distance-aware flight times, and vary launch speeds per rocket."
+    },
+    {
       "id": "T0003.8",
       "title": "Add preset cycling and visual tuning checklist",
       "completed_on": "2026-06-25",

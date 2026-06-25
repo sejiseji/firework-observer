@@ -51,6 +51,7 @@ Interaction rules:
 - `R` randomizes burst type.
 - `0` randomizes salvo count.
 - `H` randomizes explosion height within the box.
+- Rockets should show short tails behind their heads, not full launch-to-current path lines.
 - `R` and `0` are independent.
 - `R + 0` randomizes both type and count.
 - `R + 0 + H` is the main fireworks-show stress mode.
@@ -121,9 +122,11 @@ Interaction rules:
    - Press `Z` several times and use `1`-`5` loops.
    - Confirm burst heights vary without leaving the box.
 
-3. Rocket trajectory check:
+3. Rocket tail check:
    - Use `1`-`5` salvo loops.
-   - Confirm launch-to-burst trajectory lines are readable but not dominant.
+   - Confirm rocket heads rise before bursts.
+   - Confirm tails are short and follow recent motion only.
+   - Confirm rockets in a salvo have visible speed variation.
 
 4. Random variety check:
    - Press `R`.
@@ -180,11 +183,11 @@ If Peony and Kiku look too similar:
 - Brighten or adjust Peony palette.
 - Adjust Peony speed range.
 
-If rocket trajectories dominate:
+If rocket tails dominate:
 
-- Darken rocket trajectory color.
-- Shorten trajectory persistence after burst.
-- Draw only the moving head for dense salvos.
+- Darken tail colors.
+- Shorten tail history length.
+- Draw only previous-to-current motion for dense salvos.
 
 ## Depth And Box Readability
 
@@ -211,7 +214,7 @@ Watch the debug HUD in stress modes:
 - `T0003.8.2`: Tune Multi-ring density for salvo preview.
 - `T0003.8.3`: Tune Willow trail density.
 - `T0003.8.4`: Tune Peony/Kiku distinction.
-- `T0003.8.5`: Tune rocket trajectory readability.
+- `T0003.8.5`: Tune rocket tail readability.
 - `T0003.8.6`: Tune persistent salvo repeat interval.
 - `T0003.9`: Add Halo preset if density is stable.
 

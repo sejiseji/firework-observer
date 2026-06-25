@@ -348,3 +348,17 @@ Proceed directly to Halo, tune Senrin or Multi-ring immediately, or begin runtim
 
 Impact:
 The checklist records profile policy, commands, controls, per-preset visual criteria, stress sequences, density-risk thresholds, and follow-up tuning candidates. No preset parameters, pure generation behavior, production runtime behavior, scenery, or `main.py` were changed.
+
+## 2026-06-25 Fix preview rocket tail and pacing
+
+Decision:
+Change manual preview rockets from full launch-to-burst path lines to short recent-motion tails, make rockets fly for a longer distance-aware duration before exploding, and vary each rocket's speed deterministically.
+
+Reason:
+The previous preview made rockets look like a growing straight line from launch to burst, and explosions happened too quickly and too uniformly. The preview should show a readable launch phase without pretending to be the production runtime particle system.
+
+Alternatives:
+Keep full trajectory lines, only lengthen the previous trajectory animation, or implement a full runtime rocket physics model.
+
+Impact:
+The preview now schedules rockets that launch, move, keep a short 3D history tail, and then spawn the selected burst at arrival. `Z`, auto-launch, persistent fixed-count salvos, random-count salvos, random type mode, and height variation all use this preview rocket path. `main.py`, production gameplay, pure burst generation outputs, preset parameters, profiles, and scenery remain unchanged.

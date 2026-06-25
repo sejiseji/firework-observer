@@ -516,3 +516,17 @@ Change particle positions, add preview-only visual noise, tune preset speed rang
 
 Impact:
 Pure burst generation now varies effective velocity magnitudes slightly within each preset's existing speed range. Shell tail rendering, CITY scenery, preview controls, `main.py`, production runtime, preset parameter constants, Halo, and external Firework.py integration remain unchanged.
+
+## 2026-06-26 Add CITY landmark and utility lines
+
+Decision:
+Extend the CITY scenery with one low-detail 3D landmark tower, a few utility poles, and slightly sagging overhead wire polylines.
+
+Reason:
+The city should feel like a lived-in urban stage beneath the fireworks, not only a set of anonymous building blocks. A small tower and utility lines add scale and human presence with limited line cost.
+
+Alternatives:
+Add Halo first, add more building blocks, reintroduce natural scenery presets, or defer city details until production runtime integration.
+
+Impact:
+Only Pyxel-independent CITY scenery data changed. `main.py`, production runtime, firework presets, pure firework generation, shell tail behavior, preview controls, Halo, and external Firework.py integration remain unchanged.

@@ -191,6 +191,8 @@ Interaction rules:
    - Confirm scenery stays in the lower part of the observation volume.
    - Confirm City reads as small 3D cuboid buildings, not a flat wall skyline.
    - Confirm sparse lit windows are visible without outshining fireworks.
+   - Confirm the landmark tower reads as a quiet city marker, not a second main subject.
+   - Confirm utility poles and sagging wires add scale cues without cluttering the lower box.
    - Confirm `R + H + 0` remains readable with scenery enabled.
 
 ## Density Risk Thresholds
@@ -252,6 +254,7 @@ If scenery dominates:
 - Reduce bright window count before removing building outlines.
 - For CITY, keep building bottom-face perimeter edges omitted so buildings feel grounded into the cut floor plane instead of separate boxes.
 - For CITY, preserve vertical and top edges plus sparse windows; do not weaken the buildings by removing all structure.
+- If CITY tower, poles, or wires dominate, reduce their line count or darken them before removing building windows.
 
 ## Depth And Box Readability
 

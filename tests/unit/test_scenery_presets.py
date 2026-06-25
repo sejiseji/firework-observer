@@ -109,7 +109,17 @@ def test_city_stays_low_in_observation_box() -> None:
     city = get_scenery_preset("city", profile=CLASSIC_PROFILE)
     y_values = tuple(point.y for point in city.all_points)
 
-    assert max(y_values) - min(y_values) <= CLASSIC_PROFILE.box_height * 0.20
+    assert max(y_values) - min(y_values) <= CLASSIC_PROFILE.box_height * 0.30
+
+
+def test_city_includes_quiet_urban_landmarks() -> None:
+    city = get_scenery_preset("city", profile=CLASSIC_PROFILE)
+
+    assert city.polylines
+    assert any(polyline.phase == "front" for polyline in city.polylines)
+    assert any(len(polyline.points) == 3 for polyline in city.polylines)
+    assert any(line.phase == "front" for line in city.lines)
+    assert any(line.color == 10 for line in city.lines)
 
 
 def test_city_has_sparse_lit_windows() -> None:

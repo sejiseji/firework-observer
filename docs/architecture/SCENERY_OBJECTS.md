@@ -194,3 +194,15 @@ CITY building cuboids should:
 - Stay slightly smaller and lower than the initial `T0004.1` block sizes
 
 This rule is intentional. Do not restore full 12-edge cuboids for CITY buildings unless a later task explicitly changes the city staging direction.
+
+## City Landmarks And Wires
+
+`T0004.2` added a small set of CITY-only urban details:
+
+- One low-detail 3D landmark tower inspired by Tokyo Tower
+- A few utility poles
+- Slightly sagging overhead wire polylines
+
+These details are still preview scenery data, not production runtime scenery. They remain static `Vec3` line/polyline geometry inside the observation box.
+
+The tower should stay below the main firework bloom region. Utility poles and wires should remain visually quiet and should not become a dense line network. Future city work should tune readability before adding more urban detail.

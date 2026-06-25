@@ -44,7 +44,7 @@
 - [x] refocus scenery to city-only 3D urban kit
 - [x] ground city building wireframes into the cut floor plane
 - [x] add subtle burst radius variation
-- [ ] add city landmark tower, utility poles, and overhead wires
+- [x] add city landmark tower, utility poles, and overhead wires
 - [ ] tune city scenery readability against fireworks
 - [ ] add scenery preset data scaffold
 - [ ] add EMPTY and MOUNTAINS scenery presets

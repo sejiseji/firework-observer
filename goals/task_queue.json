@@ -358,6 +358,12 @@
       "title": "Add subtle burst radius variation",
       "completed_on": "2026-06-26",
       "summary": "Added bounded deterministic per-particle velocity magnitude wobble to pure burst generation so explosion radii feel less mechanically uniform while preserving preset identities."
+    },
+    {
+      "id": "T0004.2",
+      "title": "Add city landmark, utility poles, and wires",
+      "completed_on": "2026-06-26",
+      "summary": "Added CITY-only low-detail 3D urban details: a landmark tower, utility poles, and sagging overhead wire polylines, while keeping scenery Pyxel-independent and subordinate to fireworks."
     }
   ]
 }

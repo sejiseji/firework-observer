@@ -52,6 +52,8 @@ Interaction rules:
 - `0` randomizes salvo count.
 - `H` randomizes explosion height within the box.
 - Rockets should show short tails behind their heads, not full launch-to-current path lines.
+- Rocket tail colors should match the scheduled burst type.
+- Burst accent rays should appear only briefly and only on a limited subset of particles.
 - `R` and `0` are independent.
 - `R + 0` randomizes both type and count.
 - `R + 0 + H` is the main fireworks-show stress mode.
@@ -65,6 +67,7 @@ Interaction rules:
 - Reads as the baseline sphere.
 - Density is full but not opaque.
 - Trails show motion without turning every particle into a line.
+- Gold/white rocket tail and a few center accent rays make the opening readable.
 - Works as the reference preset for comparison with Peony and Senrin.
 
 ### Ring
@@ -72,6 +75,7 @@ Interaction rules:
 - Orientation varies across launches.
 - No obvious fixed-direction bias appears during repeated random launches.
 - The ring plane is readable when rotating the camera.
+- Blue/cyan rocket tail and accent rays do not obscure the ring plane.
 - It remains distinct from Multi-ring.
 
 ### Spiral
@@ -79,6 +83,7 @@ Interaction rules:
 - Reads as a 3D twisted structure, not a flat circle.
 - Rotation reveals depth and twist.
 - It does not overextend vertically in `iphone16_balanced`.
+- Green/gold rocket tail and accent rays reinforce the twist without over-drawing it.
 - It remains distinct from Ring.
 
 ### Willow
@@ -86,12 +91,14 @@ Interaction rules:
 - Tails visibly fall under gravity.
 - The portrait volume gives the falling trails enough space.
 - Trail density is high enough for afterglow but not high enough to cover later salvos.
+- Gold rocket tail and accent rays do not compete with Willow's falling particle trails.
 - It remains distinct from Kiku and Peony.
 
 ### Peony
 
 - Looks shorter and brighter than Kiku.
 - Trails are restrained and points remain the main visual.
+- Pink/red rocket tail and brief accent rays make the first bloom feel bright.
 - It is not too similar to Kiku.
 - It does not read like Willow or Ring.
 
@@ -100,6 +107,7 @@ Interaction rules:
 - Multiple layers are readable as nested rings.
 - It is clearly different from a single Ring.
 - A 5-shot salvo does not fully obscure the box.
+- Accent rays do not hide layer separation.
 - Random mode density remains acceptable when Multi-ring appears with other presets.
 
 ### Senrin
@@ -107,6 +115,7 @@ Interaction rules:
 - Primary particles scatter first, then delayed secondary bursts appear.
 - Secondary bursts are visible but not too dense.
 - Secondary trails remain sparse.
+- Primary accent rays are limited, and secondary bursts do not gain dense extra rays.
 - A 5-shot salvo does not overwhelm the preview.
 - Random-count salvos remain readable when Senrin appears.
 
@@ -127,27 +136,34 @@ Interaction rules:
    - Confirm rocket heads rise before bursts.
    - Confirm tails are short and follow recent motion only.
    - Confirm rockets in a salvo have visible speed variation.
+   - Confirm rocket tail colors match the selected or random burst type.
 
-4. Random variety check:
+4. Burst accent check:
+   - Press `Z` for each type.
+   - Confirm only a few center-outward rays appear.
+   - Confirm accent rays disappear quickly.
+   - Confirm Senrin secondary bursts do not become over-dense.
+
+5. Random variety check:
    - Press `R`.
    - Press `Z` repeatedly.
    - Confirm random type selection gives varied, recognizable bursts.
 
-5. Auto random check:
+6. Auto random check:
    - Press `R`.
    - Press `V`.
    - Confirm auto launch uses random types and remains readable.
 
-6. Fixed salvo check:
+7. Fixed salvo check:
    - Select each type.
    - Press `1`, `2`, `3`, `4`, and `5`.
    - Confirm fixed-count loops are readable for each type.
 
-7. Random-count check:
+8. Random-count check:
    - Press `0`.
    - Confirm repeated salvos choose changing shot counts from 1 to 5.
 
-8. Fireworks-show stress check:
+9. Fireworks-show stress check:
    - Press `R`.
    - Press `H`.
    - Press `0`.
@@ -189,6 +205,13 @@ If rocket tails dominate:
 - Shorten tail history length.
 - Draw only previous-to-current motion for dense salvos.
 
+If burst accent rays dominate:
+
+- Lower per-type accent counts.
+- Shorten accent ray lifetime.
+- Darken accent ray colors.
+- Disable accent rays for Senrin or Multi-ring first.
+
 ## Depth And Box Readability
 
 For every check:
@@ -197,6 +220,7 @@ For every check:
 - Particles should appear inside the 3D volume.
 - Rotating the camera should reveal shape differences.
 - Trails should not erase the front box edges.
+- Rocket tails and accent rays should not erase front box edges.
 - Dense salvos should not hide the current firework type.
 
 ## Frame Pacing And Particle Budget
@@ -216,6 +240,7 @@ Watch the debug HUD in stress modes:
 - `T0003.8.4`: Tune Peony/Kiku distinction.
 - `T0003.8.5`: Tune rocket tail readability.
 - `T0003.8.6`: Tune persistent salvo repeat interval.
+- `T0003.8.7`: Tune burst accent ray density.
 - `T0003.9`: Add Halo preset if density is stable.
 
 Runtime integration planning should wait until visual tuning is stable enough that the preview no longer needs large parameter corrections.

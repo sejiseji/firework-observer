@@ -322,6 +322,12 @@
       "title": "Review external Firework.py for future preset candidates",
       "completed_on": "2026-06-25",
       "summary": "Reviewed external Firework.py as reference material only and documented future preset candidates, 3D translation strategy, risks, and recommended order in docs/research/external_firework_candidates_20260625.md."
+    },
+    {
+      "id": "T0003.8.6",
+      "title": "Add type-colored rocket tails and burst accent rays",
+      "completed_on": "2026-06-25",
+      "summary": "Added preview-only burst-type rocket tail colors and short-lived center-outward accent rays for selected explosion particles without changing pure generation or production runtime behavior."
     }
   ]
 }

@@ -51,6 +51,17 @@ RING_ORIENTATION_BANK_SEED = 20260623
 PREVIEW_RANDOM_SEED = 20260625
 HEIGHT_VARIATION_RATIO = 0.16
 BURST_LABELS = ("Kiku", "Ring", "Spiral", "Willow", "Peony", "Multi-ring", "Senrin")
+ROCKET_STYLES = (
+    (10, 9, 7),
+    (12, 6, 7),
+    (11, 10, 7),
+    (10, 9, 4),
+    (14, 8, 10),
+    (12, 6, 10),
+    (7, 10, 14),
+)
+ACCENT_COUNTS = (8, 6, 8, 5, 10, 6, 4)
+ACCENT_RAY_FRAMES = 12
 
 
 @dataclass(frozen=True)
@@ -62,6 +73,7 @@ class PreviewRocket:
     burst_position: Vec3
     seed: int
     history: deque[Vec3]
+    tail_colors: tuple[int, int, int]
 
     def has_started(self, frame: int) -> bool:
         return frame >= self.launch_frame
@@ -101,9 +113,19 @@ class PreviewParticle:
     trail_draw_every: int
     secondary_burst: SecondaryBurstSpec | None = None
     secondary_triggered: bool = False
+    accent_origin: Vec3 | None = None
+    accent_until_age: int = 0
+    accent_color: int = 0
 
     @classmethod
-    def from_spawn(cls, spec: ParticleSpawnSpec) -> PreviewParticle:
+    def from_spawn(
+        cls,
+        spec: ParticleSpawnSpec,
+        *,
+        accent_origin: Vec3 | None = None,
+        accent_until_age: int = 0,
+        accent_color: int = 0,
+    ) -> PreviewParticle:
         return cls(
             position=spec.position,
             previous_position=spec.position,
@@ -121,6 +143,9 @@ class PreviewParticle:
             trail_strength=spec.trail_strength,
             trail_draw_every=spec.trail_draw_every,
             secondary_burst=spec.secondary_burst,
+            accent_origin=accent_origin,
+            accent_until_age=accent_until_age,
+            accent_color=accent_color,
         )
 
     @property
@@ -313,9 +338,41 @@ class PreviewApp:
         else:
             specs = generate_senrin_burst(origin=origin, seed=seed)
         self.last_launched_index = burst_index
-        self.particles.extend(PreviewParticle.from_spawn(spec) for spec in specs)
+        accent_indexes = self.choose_accent_indexes(
+            burst_index=burst_index,
+            seed=seed,
+            particle_count=len(specs),
+        )
+        accent_color = ROCKET_STYLES[burst_index][2]
+        self.particles.extend(
+            PreviewParticle.from_spawn(
+                spec,
+                accent_origin=origin if index in accent_indexes else None,
+                accent_until_age=ACCENT_RAY_FRAMES if index in accent_indexes else 0,
+                accent_color=accent_color if index in accent_indexes else 0,
+            )
+            for index, spec in enumerate(specs)
+        )
         if len(self.particles) > self.profile.max_particles:
             self.particles = self.particles[-self.profile.max_particles :]
+
+    def choose_accent_indexes(
+        self,
+        *,
+        burst_index: int,
+        seed: int,
+        particle_count: int,
+    ) -> set[int]:
+        accent_count = min(ACCENT_COUNTS[burst_index], particle_count)
+        if accent_count <= 0:
+            return set()
+        rng = Random(seed ^ ((burst_index + 1) * 0x9E3779B1))
+        stride = max(1, particle_count // accent_count)
+        offset = rng.randrange(stride)
+        return {
+            (offset + index * particle_count // accent_count) % particle_count
+            for index in range(accent_count)
+        }
 
     def launch_secondary_bursts(self) -> None:
         new_particles: list[PreviewParticle] = []
@@ -390,6 +447,7 @@ class PreviewApp:
                 burst_position=burst_position,
                 seed=seed,
                 history=deque(maxlen=ROCKET_TAIL_LENGTH),
+                tail_colors=ROCKET_STYLES[burst_index],
             )
         )
 
@@ -526,17 +584,26 @@ class PreviewApp:
                 for index in range(len(history) - 1):
                     start = self.camera.project(history[index])
                     end = self.camera.project(history[index + 1])
-                    color = self.rocket_tail_color(index, last_segment_index)
+                    color = self.rocket_tail_color(
+                        index,
+                        last_segment_index,
+                        rocket.tail_colors,
+                    )
                     pyxel.line(start.sx, start.sy, end.sx, end.sy, color)
             head = self.camera.project(rocket.current_position(pyxel.frame_count))
-            pyxel.pset(head.sx, head.sy, 10)
+            pyxel.pset(head.sx, head.sy, rocket.tail_colors[2])
 
-    def rocket_tail_color(self, index: int, last_segment_index: int) -> int:
+    def rocket_tail_color(
+        self,
+        index: int,
+        last_segment_index: int,
+        colors: tuple[int, int, int],
+    ) -> int:
         if index == last_segment_index:
-            return 10
+            return colors[2]
         if index >= last_segment_index - 2:
-            return 9
-        return 4
+            return colors[1]
+        return colors[0]
 
     def draw_particle(
         self,
@@ -545,6 +612,15 @@ class PreviewApp:
         projected: ProjectedPoint,
     ) -> None:
         color = particle.draw_color()
+        if particle.accent_origin is not None and particle.age < particle.accent_until_age:
+            origin = self.camera.project(particle.accent_origin)
+            pyxel.line(
+                origin.sx,
+                origin.sy,
+                projected.sx,
+                projected.sy,
+                self.accent_ray_color(particle),
+            )
         if particle.should_draw_trail():
             previous = self.camera.project(particle.previous_position)
             pyxel.line(previous.sx, previous.sy, projected.sx, projected.sy, color)
@@ -552,6 +628,11 @@ class PreviewApp:
                 pyxel.pset(projected.sx, projected.sy, particle.tip_color)
             return
         pyxel.pset(projected.sx, projected.sy, color)
+
+    def accent_ray_color(self, particle: PreviewParticle) -> int:
+        if particle.age < particle.accent_until_age // 2:
+            return particle.accent_color
+        return particle.fade_mid
 
     def draw_hud(self) -> None:
         label = self.last_launched_label if self.random_mode else self.burst_label

@@ -225,6 +225,7 @@ After the task:
 - `T0003.7.6` corrected preview rocket behavior: rockets now launch before bursting, draw only short recent-motion tails, use longer distance-aware flight timing, and vary speed per rocket.
 - `T0003.8` added `docs/research/visual_tuning_checklist.md`. Use it for manual visual review before changing preset parameters, adding Halo, or planning runtime integration.
 - `T0003.8.5` added `docs/research/external_firework_candidates_20260625.md`. It treats external `Firework.py` as reference only and recommends Halo, Orbit/Elliptical, Golden Bloom/Fibonacci, and Counter Ring as the next safest candidate families.
+- `T0003.8.6` added preview-only VFX accents: rocket tails now use burst-type colors, and selected particles draw short-lived center-outward accent rays at explosion start.
 - Recommended visual review command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`.
 - Main stress sequence: press `R`, `H`, then `0` to combine random burst type, height variation, and random-count persistent salvos.
 - `classic` remains unchanged and remains the default profile.

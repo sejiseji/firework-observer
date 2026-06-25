@@ -538,3 +538,26 @@ Record completed tasks here.
 - User-visible behavior: None. This was a documentation-only research task.
 - Preservation: `main.py` was unchanged. Production runtime, preset parameters, pure generation behavior, preview behavior, Halo implementation, and scenery were unchanged. No external code was copied.
 - Follow-up: Run visual density review first. If stable, implement Halo next; otherwise tune Senrin, Multi-ring, or Willow density before adding presets.
+
+## 2026-06-25 T0003.8.6 Add type-colored rocket tails and burst accent rays
+
+- Summary: Added preview-only VFX accents: rockets now use burst-type tail colors, and selected explosion particles draw short-lived center-outward accent rays.
+- Pre-task git state: branch `main`; worktree clean; latest commit `5fc3709 Document external firework preset candidates`.
+- Files changed: `tools/preview_firework_box.py`, `docs/research/visual_tuning_checklist.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Behavior:
+  - Rocket tail colors are frozen by scheduled burst type.
+  - `Z`, random mode, auto launch, fixed-count salvos, and random-count salvos all use type-colored rocket tails.
+  - A deterministic limited subset of primary burst particles draws short-lived accent rays from the burst origin.
+  - Senrin secondary bursts do not get added accent rays.
+  - Existing particle trail behavior remains unchanged.
+- Tests:
+  - `.venv/bin/python -m json.tool goals/task_queue.json` passed.
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 132 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 132 passed.
+- Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
+- User-visible behavior: Production gameplay remains unchanged. Manual preview launches and burst starts are more readable and type-aware.
+- Preservation: `main.py` was unchanged. Production runtime, preset parameters, pure generation behavior, Halo, scenery, and external Firework.py integration were unchanged.
+- Follow-up: Use `R + H + 0` to check accent density. If stable, proceed to Halo; if not, tune accent ray density or high-risk presets first.

@@ -376,3 +376,17 @@ Implement Halo immediately, ignore the external file, or expand the existing old
 
 Impact:
 The new research document recommends Halo as the next safest preset if density is stable, followed by Orbit/Elliptical, Golden Bloom/Fibonacci, Counter Ring, and later shape-plane presets. `main.py`, production gameplay, preset parameters, pure generation behavior, preview behavior, and scenery remain unchanged.
+
+## 2026-06-25 Add preview VFX accents
+
+Decision:
+Add preview-only burst-type rocket tail colors and short-lived center-outward burst accent rays.
+
+Reason:
+The preview already supports rocket launches and seven burst types. Coloring rocket tails by scheduled burst type improves launch readability, and a few early accent rays make explosion starts clearer without changing deterministic pure burst generation.
+
+Alternatives:
+Change `ParticleSpawnSpec`, add accent rays to all particles, add production runtime VFX immediately, or wait until Halo.
+
+Impact:
+Rocket styles are frozen when rockets are scheduled, so random mode and salvos show the color of the actual selected type. Accent rays are assigned to a deterministic limited subset of preview particles at burst spawn time. Senrin secondary bursts keep no added accent rays. `main.py`, production gameplay, pure generation outputs, preset parameters, Halo, and scenery remain unchanged.

@@ -42,8 +42,10 @@ MIN_ZOOM = 0.45
 MAX_PITCH = 1.2
 MIN_PITCH = -1.2
 AUTO_LAUNCH_FRAMES = 120
+PERSISTENT_SALVO_FRAMES = 132
 RING_ORIENTATION_BANK_SEED = 20260623
 PREVIEW_RANDOM_SEED = 20260625
+HEIGHT_VARIATION_RATIO = 0.16
 BURST_LABELS = ("Kiku", "Ring", "Spiral", "Willow", "Peony", "Multi-ring", "Senrin")
 
 
@@ -51,8 +53,17 @@ BURST_LABELS = ("Kiku", "Ring", "Spiral", "Willow", "Peony", "Multi-ring", "Senr
 class ScheduledBurst:
     frame: int
     burst_index: int
+    launch_position: Vec3
     origin: Vec3
     seed: int
+
+
+@dataclass(frozen=True)
+class PreviewRocketTrail:
+    start: Vec3
+    end: Vec3
+    start_frame: int
+    end_frame: int
 
 
 @dataclass
@@ -148,6 +159,12 @@ class PreviewApp:
         self.random_mode = False
         self.preview_rng = Random(PREVIEW_RANDOM_SEED)
         self.scheduled_bursts: list[ScheduledBurst] = []
+        self.rocket_trails: list[PreviewRocketTrail] = []
+        self.persistent_salvo_enabled = False
+        self.random_salvo_count = False
+        self.persistent_salvo_count = 1
+        self.next_persistent_salvo_frame = 0
+        self.height_variation = False
         self.seed = 0
         self.auto_rotate = False
         self.auto_launch = False
@@ -179,6 +196,7 @@ class PreviewApp:
             self.camera.target_pitch = math.sin(pyxel.frame_count * 0.015) * 0.35
         if self.auto_launch and pyxel.frame_count % AUTO_LAUNCH_FRAMES == 0:
             self.launch()
+        self.schedule_persistent_salvo_if_needed()
         self.launch_scheduled_bursts()
         self.camera.step_toward_target()
         for particle in self.particles:
@@ -203,16 +221,18 @@ class PreviewApp:
             self.camera.target_zoom = max(MIN_ZOOM, self.camera.target_zoom - 0.025)
         if pyxel.btnp(pyxel.KEY_Z):
             self.launch()
+        if pyxel.btnp(pyxel.KEY_0):
+            self.start_random_salvo_loop()
         if pyxel.btnp(pyxel.KEY_1):
-            self.schedule_salvo(1)
+            self.start_fixed_salvo_loop(1)
         if pyxel.btnp(pyxel.KEY_2):
-            self.schedule_salvo(2)
+            self.start_fixed_salvo_loop(2)
         if pyxel.btnp(pyxel.KEY_3):
-            self.schedule_salvo(3)
+            self.start_fixed_salvo_loop(3)
         if pyxel.btnp(pyxel.KEY_4):
-            self.schedule_salvo(4)
+            self.start_fixed_salvo_loop(4)
         if pyxel.btnp(pyxel.KEY_5):
-            self.schedule_salvo(5)
+            self.start_fixed_salvo_loop(5)
         if pyxel.btnp(pyxel.KEY_SPACE):
             if self.random_mode:
                 self.random_mode = False
@@ -227,8 +247,12 @@ class PreviewApp:
             self.auto_rotate = not self.auto_rotate
         if pyxel.btnp(pyxel.KEY_V):
             self.auto_launch = not self.auto_launch
+            if self.auto_launch:
+                self.persistent_salvo_enabled = False
         if pyxel.btnp(pyxel.KEY_D):
             self.debug = not self.debug
+        if pyxel.btnp(pyxel.KEY_H):
+            self.height_variation = not self.height_variation
 
     def reset_camera(self) -> None:
         self.camera.yaw = 0.6
@@ -308,14 +332,38 @@ class PreviewApp:
             self.choose_salvo_burst_indexes(plan),
             strict=True,
         ):
+            burst_position = self.apply_height_variation(slot.burst_position)
             self.scheduled_bursts.append(
                 ScheduledBurst(
                     frame=pyxel.frame_count + slot.delay_frames,
                     burst_index=burst_index,
-                    origin=slot.burst_position,
+                    launch_position=slot.launch_position,
+                    origin=burst_position,
                     seed=base_seed + slot.seed_offset,
                 )
             )
+            self.rocket_trails.append(
+                PreviewRocketTrail(
+                    start=slot.launch_position,
+                    end=burst_position,
+                    start_frame=pyxel.frame_count,
+                    end_frame=pyxel.frame_count + max(1, slot.delay_frames),
+                )
+            )
+
+    def apply_height_variation(self, position: Vec3) -> Vec3:
+        if not self.height_variation:
+            return position
+        half_height = self.profile.box_height / 2
+        varied_y = position.y + self.preview_rng.uniform(
+            -HEIGHT_VARIATION_RATIO,
+            HEIGHT_VARIATION_RATIO,
+        ) * half_height
+        return Vec3(
+            x=position.x,
+            y=max(-half_height, min(half_height, varied_y)),
+            z=position.z,
+        )
 
     def choose_salvo_burst_indexes(self, plan: SalvoPlan) -> tuple[int, ...]:
         if not self.random_mode:
@@ -329,6 +377,34 @@ class PreviewApp:
             indexes.append(index)
             previous = index
         return tuple(indexes)
+
+    def start_fixed_salvo_loop(self, count: int) -> None:
+        self.auto_launch = False
+        self.persistent_salvo_enabled = True
+        self.random_salvo_count = False
+        self.persistent_salvo_count = count
+        self.schedule_salvo(count)
+        self.next_persistent_salvo_frame = pyxel.frame_count + PERSISTENT_SALVO_FRAMES
+
+    def start_random_salvo_loop(self) -> None:
+        self.auto_launch = False
+        self.persistent_salvo_enabled = True
+        self.random_salvo_count = True
+        self.schedule_salvo(self.choose_salvo_count())
+        self.next_persistent_salvo_frame = pyxel.frame_count + PERSISTENT_SALVO_FRAMES
+
+    def choose_salvo_count(self) -> int:
+        if self.random_salvo_count:
+            return self.preview_rng.randint(1, 5)
+        return self.persistent_salvo_count
+
+    def schedule_persistent_salvo_if_needed(self) -> None:
+        if (
+            self.persistent_salvo_enabled
+            and pyxel.frame_count >= self.next_persistent_salvo_frame
+        ):
+            self.schedule_salvo(self.choose_salvo_count())
+            self.next_persistent_salvo_frame = pyxel.frame_count + PERSISTENT_SALVO_FRAMES
 
     def launch_scheduled_bursts(self) -> None:
         if not self.scheduled_bursts:
@@ -353,6 +429,7 @@ class PreviewApp:
             reverse=True,
         )
         self.draw_edges(projected_edges[:8], far=True)
+        self.draw_rocket_trails()
         self.draw_particles()
         self.draw_edges(projected_edges[8:], far=False)
         self.draw_hud()
@@ -376,6 +453,29 @@ class PreviewApp:
         for projected, particle in draw_items:
             self.draw_particle(particle=particle, projected=projected)
 
+    def draw_rocket_trails(self) -> None:
+        live_trails: list[PreviewRocketTrail] = []
+        for trail in self.rocket_trails:
+            if pyxel.frame_count <= trail.end_frame + 10:
+                live_trails.append(trail)
+                start = self.camera.project(trail.start)
+                end = self.camera.project(trail.end)
+                pyxel.line(start.sx, start.sy, end.sx, end.sy, 5)
+                if pyxel.frame_count <= trail.end_frame:
+                    progress = (pyxel.frame_count - trail.start_frame) / max(
+                        1,
+                        trail.end_frame - trail.start_frame,
+                    )
+                    progress = max(0.0, min(1.0, progress))
+                    head = Vec3(
+                        x=trail.start.x + (trail.end.x - trail.start.x) * progress,
+                        y=trail.start.y + (trail.end.y - trail.start.y) * progress,
+                        z=trail.start.z + (trail.end.z - trail.start.z) * progress,
+                    )
+                    projected_head = self.camera.project(head)
+                    pyxel.pset(projected_head.sx, projected_head.sy, 10)
+        self.rocket_trails = live_trails
+
     def draw_particle(
         self,
         *,
@@ -394,11 +494,17 @@ class PreviewApp:
     def draw_hud(self) -> None:
         label = self.last_launched_label if self.random_mode else self.burst_label
         pyxel.text(4, 4, f"Z:launch {self.mode_label}:{label}", 5)
-        pyxel.text(4, 12, "1-5:salvo SPACE:seq/next R:random", 5)
+        pyxel.text(4, 12, "1-5:salvo 0:rand-count H:height", 5)
         if not self.debug:
             return
         pyxel.text(4, self.profile.height - 30, f"profile {self.profile.name}", 5)
         pyxel.text(4, self.profile.height - 22, f"particles {len(self.particles)}", 5)
+        pyxel.text(
+            4,
+            self.profile.height - 38,
+            f"salvo {self.salvo_label()} height {self.height_variation}",
+            5,
+        )
         pyxel.text(
             4,
             self.profile.height - 14,
@@ -411,6 +517,13 @@ class PreviewApp:
             f"zoom {self.camera.zoom:.2f} auto {self.auto_rotate}/{self.auto_launch}",
             5,
         )
+
+    def salvo_label(self) -> str:
+        if not self.persistent_salvo_enabled:
+            return "off"
+        if self.random_salvo_count:
+            return "random"
+        return str(self.persistent_salvo_count)
 
 
 def parse_args() -> argparse.Namespace:

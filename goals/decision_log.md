@@ -320,3 +320,17 @@ Implement runtime secondary particles immediately, fake Senrin as a dense single
 
 Impact:
 `generate_burst()` now supports `FireworkShape.SENRIN_SEED`. Non-secondary presets keep `secondary_burst=None`. Preview sequential, random, and salvo modes include Senrin and execute secondary bursts locally. `main.py`, production gameplay, profiles, scenery, and existing preset outputs remain unchanged.
+
+## 2026-06-25 Add persistent preview salvo controls
+
+Decision:
+Change preview number keys `1` through `5` from one-off salvo scheduling to persistent fixed-count salvo loops, assign `0` to persistent random-count salvo mode, add `H` height variation, and draw preview-only launch-to-burst rocket trajectories.
+
+Reason:
+The preview now needs to inspect repeated show-like compositions, not only individual salvos. `0` is more useful as a random-count control than as stop, while `1` provides the default one-shot loop. Keeping this preview-only avoids changing production runtime behavior.
+
+Alternatives:
+Keep one-off number-key salvos, use `0` as a stop command, or move repeated salvo behavior into production runtime.
+
+Impact:
+`R` randomizes burst type independently from `0` randomizing salvo count. `V` auto-launch and persistent salvo mode are mutually exclusive. `Z` remains a single immediate launch. `main.py`, production gameplay, pure firework generation outputs, profiles, and scenery remain unchanged.

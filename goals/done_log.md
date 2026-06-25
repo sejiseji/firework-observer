@@ -437,3 +437,29 @@ Record completed tasks here.
 - User-visible behavior: Production gameplay remains unchanged. Manual preview can now inspect Senrin primary and secondary burst behavior.
 - Preservation: `main.py` was unchanged. Default profile remains `classic`. `iphone16_balanced` remains screen `236x512` and box `120x260x120`. No Halo implementation, scenery rendering, production runtime migration, or external Firework.py code was added.
 - Follow-up: Use the manual preview to inspect Senrin secondary density, then continue to `T0003.8` or insert a tuning task if needed.
+
+## 2026-06-25 T0003.7.5 Add persistent preview salvo controls
+
+- Summary: Changed manual preview number keys into persistent salvo loops, added `0` as random-count salvo mode, added `H` height variation, and drew preview-only launch-to-burst rocket trajectories for salvos.
+- Pre-task git state: branch `main`; worktree clean; latest commit `3af6273 Add deterministic Senrin secondary bursts`.
+- Files changed: `tools/preview_firework_box.py`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Behavior:
+  - `1` starts persistent fixed one-shot salvo mode.
+  - `2` through `5` start persistent fixed-count salvo modes.
+  - `0` starts persistent random-count salvo mode, choosing a fresh count from 1 to 5 for each repeated salvo.
+  - `R` randomizes burst type independently from `0` randomizing salvo count.
+  - `H` toggles box-relative height variation for salvo burst positions.
+  - `V` auto-launch and persistent salvo mode are mutually exclusive.
+  - `Z` remains a single immediate launch and does not toggle persistent salvo mode.
+  - Salvo launches draw preview-only launch-to-burst rocket trajectories.
+- Tests:
+  - `.venv/bin/python -m json.tool goals/task_queue.json` passed.
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 132 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 132 passed.
+- Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
+- User-visible behavior: Production gameplay remains unchanged. Manual preview can now run repeated fixed-count or random-count salvo compositions.
+- Preservation: `main.py` was unchanged. Default profile remains `classic`. No Halo implementation, scenery rendering, production runtime migration, pure firework generation changes, or external Firework.py code was added.
+- Follow-up: Continue to `T0003.8` for preset cycling and visual tuning checklist work.

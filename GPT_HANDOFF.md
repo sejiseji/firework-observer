@@ -210,7 +210,7 @@ After the task:
 - Do not hide product decisions in chat history.
 - `T0003.2.5` added a manual Kiku/Ring visual preview at `tools/preview_firework_box.py`.
 - Run the preview with `.venv/bin/python tools/preview_firework_box.py`; use `--profile iphone16_balanced` to inspect the larger balanced profile without changing defaults.
-- Preview controls: `Z` launches one burst, `1`-`5` schedule fixed-position salvos, `SPACE` switches Kiku/Ring/Spiral/Willow/Peony/Multi-ring/Senrin in sequential mode, `R` enters random burst mode, `SPACE` exits random mode, arrow keys rotate, `A`/`S` zoom, `C` resets camera, `X` toggles auto-rotate, `V` toggles auto-launch, and `D` toggles debug HUD.
+- Preview controls: `Z` launches one immediate burst, `1` starts a persistent one-shot salvo loop, `2`-`5` start persistent fixed-count salvo loops, `0` starts persistent random-count salvo mode, `H` toggles salvo height variation, `SPACE` switches Kiku/Ring/Spiral/Willow/Peony/Multi-ring/Senrin in sequential mode, `R` enters random burst type mode, `SPACE` exits random type mode, arrow keys rotate, `A`/`S` zoom, `C` resets camera, `X` toggles auto-rotate, `V` toggles auto-launch, and `D` toggles debug HUD. `V` auto-launch and persistent salvo mode are mutually exclusive.
 - The preview is a development tool only. It does not migrate `main.py`, production runtime particles, scenery, or future firework presets.
 - `T0003.2.7` tuned iPhone-style profiles to use portrait viewport / portrait firework volume: `iphone16_balanced` is now screen `236x512`, box `120x260x120`, camera distance `340.0`; `iphone16_large` is screen `393x852`, box `200x440x200`, camera distance `560.0`.
 - `T0003.2.8` added deterministic Ring orientation bank support in `firework_bursts.py`; the manual preview now builds a 24-orientation bank from seed `20260623` for Ring bursts.
@@ -221,6 +221,7 @@ After the task:
 - `T0003.5.6` added Pyxel-independent fixed-position salvo plans and preview number-key scheduling for 1-5 burst compositions.
 - `T0003.6` added `MULTI_RING_PRESET` and deterministic 3-layer Multi-ring burst generation; preview sequential, random, and salvo modes now include Multi-ring.
 - `T0003.7` added `SENRIN_PRESET`, deterministic secondary burst specs, and preview-only secondary execution; preview sequential, random, and salvo modes now include Senrin.
+- `T0003.7.5` changed preview salvo controls into persistent loops: `1` is the default one-shot loop, `2`-`5` are fixed-count loops, `0` is random-count salvo mode, `H` toggles height variation, and preview salvo launches draw launch-to-burst rocket trajectories.
 - `classic` remains unchanged and remains the default profile.
 - If the user changes the game direction, update `project_brief.json` and regenerate or manually update the related docs.
 - Review whether the standalone `main.py` should be migrated into `src/pyxel_goal_game/` or kept only as a reference prototype.

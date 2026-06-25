@@ -34,6 +34,7 @@
 - [x] add fixed-position preview salvo launch plans
 - [x] add multi-ring or halo preset
 - [x] add senrin / secondary burst preset
+- [x] add persistent preview salvo controls
 - [ ] add preset cycling and visual tuning checklist
 - [ ] add scenery preset data scaffold
 - [ ] add EMPTY and MOUNTAINS scenery presets

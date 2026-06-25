@@ -8,7 +8,7 @@
       "goal": "Add a minimal way to cycle available presets and document visual tuning checks.",
       "status": "todo",
       "depends_on": [
-        "T0003.7"
+        "T0003.7.5"
       ],
       "constraints": [
         "Do not add scoring, objectives, characters, maps, or unrelated gameplay",
@@ -319,6 +319,12 @@
       "title": "Implement senrin / secondary burst preset",
       "completed_on": "2026-06-25",
       "summary": "Added SENRIN_PRESET, deterministic primary seed generation, optional SecondaryBurstSpec data, deterministic secondary burst generation, and preview-only secondary execution."
+    },
+    {
+      "id": "T0003.7.5",
+      "title": "Add persistent preview salvo controls",
+      "completed_on": "2026-06-25",
+      "summary": "Changed preview number keys into persistent salvo loops, added 0 as random-count salvo mode, added H height variation, and drew preview-only launch-to-burst rocket trajectories."
     }
   ]
 }

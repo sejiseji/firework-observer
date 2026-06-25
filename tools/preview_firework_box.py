@@ -579,42 +579,29 @@ class PreviewApp:
             if not rocket.has_started(pyxel.frame_count):
                 continue
             history = tuple(rocket.history)
-            if len(history) >= 4:
-                self.draw_fireball_embers(history[:-2], rocket.tail_colors)
+            if len(history) >= 2:
+                last_segment_index = len(history) - 2
+                for index in range(len(history) - 1):
+                    start = self.camera.project(history[index])
+                    end = self.camera.project(history[index + 1])
+                    color = self.rocket_tail_color(
+                        index,
+                        last_segment_index,
+                        rocket.tail_colors,
+                    )
+                    pyxel.line(start.sx, start.sy, end.sx, end.sy, color)
             head = self.camera.project(rocket.current_position(pyxel.frame_count))
-            self.draw_rocket_head(head, rocket.tail_colors)
+            pyxel.pset(head.sx, head.sy, rocket.tail_colors[2])
 
-    def draw_fireball_embers(
-        self,
-        history: tuple[Vec3, ...],
-        colors: tuple[int, int, int],
-    ) -> None:
-        last_ember_index = len(history) - 1
-        for index, position in enumerate(history):
-            ember = self.camera.project(position)
-            color = self.fireball_ember_color(index, last_ember_index, colors)
-            pyxel.pset(ember.sx, ember.sy, color)
-            if index >= last_ember_index - 1 and index % 2 == 0:
-                pyxel.pset(ember.sx, ember.sy + 1, colors[0])
-
-    def draw_rocket_head(
-        self,
-        head: ProjectedPoint,
-        colors: tuple[int, int, int],
-    ) -> None:
-        pyxel.pset(head.sx, head.sy, colors[2])
-        pyxel.pset(head.sx - 1, head.sy, colors[1])
-        pyxel.pset(head.sx + 1, head.sy, colors[1])
-        pyxel.pset(head.sx, head.sy - 1, colors[2])
-        pyxel.pset(head.sx, head.sy + 1, colors[0])
-
-    def fireball_ember_color(
+    def rocket_tail_color(
         self,
         index: int,
-        last_ember_index: int,
+        last_segment_index: int,
         colors: tuple[int, int, int],
     ) -> int:
-        if index >= last_ember_index - 1:
+        if index == last_segment_index:
+            return colors[2]
+        if index >= last_segment_index - 2:
             return colors[1]
         return colors[0]
 

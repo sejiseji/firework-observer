@@ -418,3 +418,17 @@ Remove the trail entirely, shorten the connected line further, or keep the line 
 
 Impact:
 The preview keeps the current type-colored palette and compact fireball head, but the trail is now disconnected recent ember points with a small gap behind the head. `main.py`, production gameplay, preset parameters, pure generation behavior, Halo, and scenery remain unchanged.
+
+## 2026-06-25 Restore pre-color-change launch shape
+
+Decision:
+Restore the manual preview launch shape to the version used before burst-type rocket colors were added, while keeping the burst-type color palette.
+
+Reason:
+The type-specific colors are useful, but the later compact fireball and ember-trail shapes did not match the preferred launch appearance. The requested target is the earlier launch silhouette, not a full rollback of color styling.
+
+Alternatives:
+Revert all preview VFX color work, keep the ember trail, or make another new launch sprite.
+
+Impact:
+The preview launch now uses the earlier connected recent-history trail and single head point, mapped through each burst type's palette. `main.py`, production gameplay, preset parameters, pure generation behavior, Halo, and scenery remain unchanged.

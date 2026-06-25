@@ -292,3 +292,17 @@ Implement salvo behavior directly in production runtime, keep only manual single
 
 Impact:
 `src/pyxel_goal_game/salvo_patterns.py` provides pure `SalvoPlan` data based on `ScreenProfile` box dimensions. The preview schedules bursts at fixed box-relative positions with 12-frame spacing. `main.py`, production gameplay, pure firework generation outputs, profiles, and scenery remain unchanged.
+
+## 2026-06-25 Add deterministic Multi-ring burst generation
+
+Decision:
+Add `MULTI_RING_PRESET` and `generate_multi_ring_burst()` as Pyxel-independent preset data and burst generation. The manual preview now includes Multi-ring in sequential cycling, random mode, and fixed-position salvos.
+
+Reason:
+Multi-ring should provide a layered ring structure without immediately moving into Halo or Senrin complexity. Implementing it as deterministic spawn specs keeps it testable and makes preview density checks possible before production runtime migration.
+
+Alternatives:
+Implement Halo first, make Multi-ring a production-only runtime effect, or increase the existing Ring particle count instead of adding layered behavior.
+
+Impact:
+`generate_burst()` now supports `FireworkShape.MULTI_RING`. Multi-ring uses three deterministic ring layers sharing a coherent orientation with clamped speed bands and restrained partial trails. Kiku, Ring, Spiral, Willow, Peony, production runtime, `main.py`, profiles, and scenery remain unchanged.

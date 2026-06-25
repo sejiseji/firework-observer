@@ -157,6 +157,30 @@ RING_PRESET = FireworkPreset(
 )
 
 
+MULTI_RING_TRAIL_PRESET = TrailPreset(
+    rate=0.30,
+    speed_threshold=0.85,
+    early_ratio=0.44,
+    strong_speed=1.25,
+)
+
+MULTI_RING_PRESET = FireworkPreset(
+    kind=FireworkKind.MULTI_RING,
+    label="Multi-ring",
+    shape=FireworkShape.MULTI_RING,
+    particle_count=120,
+    speed_range=(0.85, 1.55),
+    life_range=(58, 90),
+    palette=(12, 6, 7, 10),
+    fade_mid=6,
+    fade_dark=1,
+    tip_color=7,
+    drag=0.987,
+    gravity=-0.017,
+    trail=MULTI_RING_TRAIL_PRESET,
+)
+
+
 SPIRAL_TRAIL_PRESET = TrailPreset(
     rate=0.45,
     speed_threshold=0.70,

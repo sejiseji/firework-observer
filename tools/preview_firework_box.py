@@ -20,6 +20,7 @@ from pyxel_goal_game.firework_bursts import (  # noqa: E402
     RingOrientationBank,
     build_ring_orientation_bank,
     generate_kiku_burst,
+    generate_multi_ring_burst,
     generate_peony_burst,
     generate_ring_burst,
     generate_spiral_burst,
@@ -40,7 +41,7 @@ MIN_PITCH = -1.2
 AUTO_LAUNCH_FRAMES = 120
 RING_ORIENTATION_BANK_SEED = 20260623
 PREVIEW_RANDOM_SEED = 20260625
-BURST_LABELS = ("Kiku", "Ring", "Spiral", "Willow", "Peony")
+BURST_LABELS = ("Kiku", "Ring", "Spiral", "Willow", "Peony", "Multi-ring")
 
 
 @dataclass(frozen=True)
@@ -249,8 +250,14 @@ class PreviewApp:
             specs = generate_spiral_burst(origin=origin, seed=seed)
         elif burst_index == 3:
             specs = generate_willow_burst(origin=origin, seed=seed)
-        else:
+        elif burst_index == 4:
             specs = generate_peony_burst(origin=origin, seed=seed)
+        else:
+            specs = generate_multi_ring_burst(
+                origin=origin,
+                seed=seed,
+                orientation_bank=self.ring_orientation_bank,
+            )
         self.last_launched_index = burst_index
         self.particles.extend(PreviewParticle.from_spawn(spec) for spec in specs)
         if len(self.particles) > self.profile.max_particles:

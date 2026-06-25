@@ -13,6 +13,7 @@ from pyxel_goal_game.firework_bursts import (
     dot_vec3,
     generate_burst,
     generate_kiku_burst,
+    generate_multi_ring_burst,
     generate_peony_burst,
     generate_ring_burst,
     generate_spiral_burst,
@@ -21,6 +22,7 @@ from pyxel_goal_game.firework_bursts import (
 )
 from pyxel_goal_game.firework_presets import (
     KIKU_PRESET,
+    MULTI_RING_PRESET,
     PEONY_PRESET,
     RING_PRESET,
     SPIRAL_PRESET,
@@ -110,9 +112,9 @@ def test_kiku_velocity_distribution_is_3d_not_flat() -> None:
 
 def test_generate_burst_rejects_unsupported_shapes() -> None:
     unsupported = FireworkPreset(
-        kind=FireworkKind.MULTI_RING,
-        label="Multi-ring",
-        shape=FireworkShape.MULTI_RING,
+        kind=FireworkKind.HALO,
+        label="Halo",
+        shape=FireworkShape.HALO,
         particle_count=1,
         speed_range=(1.0, 1.0),
         life_range=(1, 1),
@@ -125,7 +127,7 @@ def test_generate_burst_rejects_unsupported_shapes() -> None:
         trail=KIKU_PRESET.trail,
     )
 
-    with pytest.raises(NotImplementedError, match="MULTI_RING"):
+    with pytest.raises(NotImplementedError, match="HALO"):
         generate_burst(preset=unsupported, origin=ORIGIN, seed=0)
 
 
@@ -552,3 +554,120 @@ def test_generate_burst_supports_peony_shape() -> None:
     particles = generate_burst(preset=PEONY_PRESET, origin=ORIGIN, seed=0)
 
     assert particles == generate_peony_burst(origin=ORIGIN, seed=0)
+
+
+def test_multi_ring_preset_uses_documented_values() -> None:
+    assert MULTI_RING_PRESET.kind is FireworkKind.MULTI_RING
+    assert MULTI_RING_PRESET.shape is FireworkShape.MULTI_RING
+    assert MULTI_RING_PRESET.particle_count == 120
+    assert MULTI_RING_PRESET.speed_range == (0.85, 1.55)
+    assert MULTI_RING_PRESET.life_range == (58, 90)
+    assert MULTI_RING_PRESET.palette == (12, 6, 7, 10)
+    assert MULTI_RING_PRESET.fade_mid == 6
+    assert MULTI_RING_PRESET.fade_dark == 1
+    assert MULTI_RING_PRESET.tip_color == 7
+    assert MULTI_RING_PRESET.drag == 0.987
+    assert MULTI_RING_PRESET.gravity == -0.017
+    assert MULTI_RING_PRESET.trail.rate == 0.30
+
+
+def test_same_seed_generates_identical_multi_ring_specs() -> None:
+    first = generate_multi_ring_burst(origin=ORIGIN, seed=123)
+    second = generate_multi_ring_burst(origin=ORIGIN, seed=123)
+
+    assert first == second
+
+
+def test_same_seed_and_bank_generate_identical_multi_ring_specs() -> None:
+    bank = build_ring_orientation_bank(seed=20260623)
+    first = generate_multi_ring_burst(origin=ORIGIN, seed=123, orientation_bank=bank)
+    second = generate_multi_ring_burst(origin=ORIGIN, seed=123, orientation_bank=bank)
+
+    assert first == second
+
+
+def test_different_seeds_generate_different_multi_ring_specs() -> None:
+    first = generate_multi_ring_burst(origin=ORIGIN, seed=123)
+    second = generate_multi_ring_burst(origin=ORIGIN, seed=124)
+
+    assert first != second
+
+
+def test_multi_ring_particle_count_life_and_speed_ranges() -> None:
+    particles = generate_multi_ring_burst(origin=ORIGIN, seed=0)
+
+    assert len(particles) == MULTI_RING_PRESET.particle_count
+    assert all(
+        MULTI_RING_PRESET.life_range[0] <= particle.life <= MULTI_RING_PRESET.life_range[1]
+        for particle in particles
+    )
+    assert all(
+        MULTI_RING_PRESET.speed_range[0] - 1e-9
+        <= speed_of(particle.velocity)
+        <= MULTI_RING_PRESET.speed_range[1] + 1e-9
+        for particle in particles
+    )
+
+
+def test_multi_ring_specs_preserve_physics_and_colors() -> None:
+    particles = generate_multi_ring_burst(origin=ORIGIN, seed=0)
+
+    assert all(particle.position == ORIGIN for particle in particles)
+    assert all(particle.gravity == MULTI_RING_PRESET.gravity for particle in particles)
+    assert all(particle.gravity < 0.0 for particle in particles)
+    assert all(particle.drag == MULTI_RING_PRESET.drag for particle in particles)
+    assert all(particle.color in MULTI_RING_PRESET.palette for particle in particles)
+
+
+def test_multi_ring_trails_are_partial_for_known_seed() -> None:
+    particles = generate_multi_ring_burst(origin=ORIGIN, seed=0)
+    trail_count = sum(particle.has_trail for particle in particles)
+
+    assert 0 < trail_count < len(particles)
+    assert all(
+        particle.trail_until_age == int(
+            particle.life * MULTI_RING_PRESET.trail.early_ratio
+        )
+        for particle in particles
+    )
+
+
+def test_multi_ring_uses_3d_oriented_ring_distribution() -> None:
+    particles = generate_multi_ring_burst(origin=ORIGIN, seed=0)
+
+    assert any(particle.velocity.y > 0.0 for particle in particles)
+    assert any(particle.velocity.y < 0.0 for particle in particles)
+    assert any(abs(particle.velocity.x) > 0.1 for particle in particles)
+    assert any(abs(particle.velocity.z) > 0.1 for particle in particles)
+
+
+def test_multi_ring_has_layered_speed_bands() -> None:
+    particles = generate_multi_ring_burst(origin=ORIGIN, seed=0)
+    inner = [speed_of(particle.velocity) for particle in particles[:32]]
+    middle = [speed_of(particle.velocity) for particle in particles[32:72]]
+    outer = [speed_of(particle.velocity) for particle in particles[72:]]
+
+    assert sum(inner) / len(inner) < sum(middle) / len(middle)
+    assert sum(middle) / len(middle) < sum(outer) / len(outer)
+
+
+def test_generate_burst_supports_multi_ring_shape() -> None:
+    particles = generate_burst(preset=MULTI_RING_PRESET, origin=ORIGIN, seed=0)
+
+    assert particles == generate_multi_ring_burst(origin=ORIGIN, seed=0)
+
+
+def test_generate_burst_supports_multi_ring_orientation_bank() -> None:
+    bank = build_ring_orientation_bank(seed=20260623)
+    particles = generate_burst(
+        preset=MULTI_RING_PRESET,
+        origin=ORIGIN,
+        seed=0,
+        orientation_bank=bank,
+    )
+
+    assert particles == generate_multi_ring_burst(
+        origin=ORIGIN,
+        seed=0,
+        orientation_bank=bank,
+    )

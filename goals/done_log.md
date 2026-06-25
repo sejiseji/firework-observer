@@ -392,3 +392,25 @@ Record completed tasks here.
 - User-visible behavior: Production gameplay remains unchanged. Manual preview can now inspect 1-5 burst compositions.
 - Preservation: `main.py` was unchanged. Default profile remains `classic`. No Multi-ring/Halo/Senrin implementation, scenery rendering, production runtime migration, firework generation behavior changes, or external Firework.py code was added.
 - Follow-up: Use salvo preview mode to assess multi-burst density, then start `T0003.6` to implement Multi-ring or Halo.
+
+## 2026-06-25 T0003.6 Implement multi-ring preset
+
+- Summary: Added `MULTI_RING_PRESET` and deterministic Pyxel-independent Multi-ring burst generation. Multi-ring creates 3 ring layers with counts 32/40/48, clamped speed multipliers, shared deterministic orientation, and restrained partial trails.
+- Pre-task git state: branch `main`; worktree clean; latest commit `350d0ca Add preview salvo launch plans`.
+- Files changed: `src/pyxel_goal_game/firework_presets.py`, `src/pyxel_goal_game/firework_bursts.py`, `tests/unit/test_firework_bursts.py`, `tools/preview_firework_box.py`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Behavior:
+  - `generate_multi_ring_burst(origin=..., seed=...)` creates deterministic Multi-ring spawn specs.
+  - `generate_burst()` now supports `FireworkShape.MULTI_RING`.
+  - Multi-ring supports optional `RingOrientationBank`, matching Ring generation style.
+  - Preview `SPACE` cycles Kiku, Ring, Spiral, Willow, Peony, and Multi-ring.
+  - Preview random mode and 1-5 salvo scheduling include Multi-ring.
+- Tests:
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 119 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 119 passed.
+- Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
+- User-visible behavior: Production gameplay remains unchanged. Manual preview can now inspect Multi-ring alone, in random mode, and in 1-5 salvos.
+- Preservation: `main.py` was unchanged. Default profile remains `classic`. `iphone16_balanced` remains screen `236x512` and box `120x260x120`. No Halo/Senrin implementation, scenery rendering, production runtime migration, or external Firework.py code was added.
+- Follow-up: Use the manual preview to inspect 5-shot Multi-ring density, then start `T0003.7` or insert a small density-tuning task if needed.

@@ -7,6 +7,7 @@ from random import Random
 from pyxel_goal_game.camera3d import Vec3
 from pyxel_goal_game.firework_presets import (
     KIKU_PRESET,
+    MULTI_RING_PRESET,
     PEONY_PRESET,
     RING_PRESET,
     SPIRAL_PRESET,
@@ -21,6 +22,11 @@ RING_ORIENTATION_BANDS = (
     (0.00, 0.30, 8),
     (0.30, 0.75, 10),
     (0.75, 0.98, 6),
+)
+MULTI_RING_LAYERS = (
+    (32, 0.78, 0.00),
+    (40, 1.00, 0.17),
+    (48, 1.18, 0.34),
 )
 
 
@@ -89,6 +95,21 @@ def generate_ring_burst(
     )
 
 
+def generate_multi_ring_burst(
+    *,
+    origin: Vec3,
+    seed: int,
+    preset: FireworkPreset = MULTI_RING_PRESET,
+    orientation_bank: RingOrientationBank | None = None,
+) -> tuple[ParticleSpawnSpec, ...]:
+    return generate_burst(
+        preset=preset,
+        origin=origin,
+        seed=seed,
+        orientation_bank=orientation_bank,
+    )
+
+
 def generate_peony_burst(
     *,
     origin: Vec3,
@@ -132,6 +153,17 @@ def generate_burst(
             orientation_bank=orientation_bank,
         )
         return generate_ring_shape_burst(
+            preset=preset,
+            origin=origin,
+            rng=rng,
+            orientation=orientation,
+        )
+    if preset.shape is FireworkShape.MULTI_RING:
+        orientation = choose_ring_orientation(
+            seed=seed,
+            orientation_bank=orientation_bank,
+        )
+        return generate_multi_ring_shape_burst(
             preset=preset,
             origin=origin,
             rng=rng,
@@ -194,6 +226,46 @@ def generate_ring_shape_burst(
                 rng=rng,
             )
         )
+    return tuple(particles)
+
+
+def generate_multi_ring_shape_burst(
+    *,
+    preset: FireworkPreset,
+    origin: Vec3,
+    rng: Random,
+    orientation: RingOrientation,
+) -> tuple[ParticleSpawnSpec, ...]:
+    particles: list[ParticleSpawnSpec] = []
+    for layer_count, speed_multiplier, theta_offset in MULTI_RING_LAYERS:
+        for index in range(layer_count):
+            base_speed = rng.uniform(*preset.speed_range)
+            speed = clamp_float(
+                base_speed * speed_multiplier,
+                minimum=preset.speed_range[0],
+                maximum=preset.speed_range[1],
+            )
+            velocity = ring_velocity(
+                index=index,
+                count=layer_count,
+                speed=speed,
+                rng=rng,
+                orientation=orientation,
+                theta_offset=theta_offset,
+                thickness_scale=0.045,
+            )
+            particles.append(
+                make_particle_spec(
+                    origin=origin,
+                    velocity=velocity,
+                    speed=speed,
+                    preset=preset,
+                    rng=rng,
+                )
+            )
+    if len(particles) != preset.particle_count:
+        msg = "Multi-ring layer counts must match particle_count"
+        raise ValueError(msg)
     return tuple(particles)
 
 
@@ -294,10 +366,13 @@ def ring_velocity(
     speed: float,
     rng: Random,
     orientation: RingOrientation,
+    theta_offset: float = 0.0,
+    thickness_scale: float = 0.06,
 ) -> Vec3:
     theta = index / count * math.tau
+    theta += theta_offset
     theta += rng.uniform(-0.025, 0.025)
-    thickness = rng.uniform(-0.06, 0.06)
+    thickness = rng.uniform(-thickness_scale, thickness_scale)
     planar_scale = math.sqrt(max(0.0, 1.0 - thickness * thickness))
     plane_direction = add_vec3(
         scale_vec3(orientation.basis_u, math.cos(theta)),
@@ -308,6 +383,10 @@ def ring_velocity(
         scale_vec3(orientation.normal, thickness),
     )
     return scale_vec3(direction, speed)
+
+
+def clamp_float(value: float, *, minimum: float, maximum: float) -> float:
+    return max(minimum, min(maximum, value))
 
 
 def spiral_velocity(*, index: int, count: int, speed: float, rng: Random) -> Vec3:

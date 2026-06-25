@@ -3,28 +3,6 @@
   "policy": "Keep tasks small enough for one Codex patch. Split ambiguous tasks before implementation.",
   "current": [
     {
-      "id": "T0003.6",
-      "title": "Implement multi-ring or halo preset",
-      "goal": "Add one layered ring or halo preset without obscuring the transparent box.",
-      "status": "todo",
-      "depends_on": [
-        "T0003.5.6"
-      ],
-      "constraints": [
-        "Implement only multi-ring or halo",
-        "Keep layers readable and particle counts capped",
-        "Do not modify standalone main.py",
-        "Do not copy external Firework.py code"
-      ],
-      "acceptance": [
-        "Multiple layers are readable without crushing frame pacing or box readability",
-        "Trail density is controlled and partial",
-        "Same seed gives same particle initial states",
-        "Existing presets still work",
-        "Validation results are recorded"
-      ]
-    },
-    {
       "id": "T0003.7",
       "title": "Implement senrin / secondary burst preset",
       "goal": "Add one small-shell cluster or secondary-burst preset with restrained secondary trails.",
@@ -351,6 +329,12 @@
       "title": "Add fixed-position salvo launch plans to preview",
       "completed_on": "2026-06-25",
       "summary": "Added Pyxel-independent fixed-position salvo plans and preview number-key scheduling for 1 through 5 profile-scaled burst launches."
+    },
+    {
+      "id": "T0003.6",
+      "title": "Implement multi-ring preset",
+      "completed_on": "2026-06-25",
+      "summary": "Added MULTI_RING_PRESET and deterministic Pyxel-independent three-layer multi-ring burst generation, with preview random and salvo support."
     }
   ]
 }

@@ -31,6 +31,7 @@
 - [x] add willow preset
 - [x] add peony preset
 - [x] add preview random burst selection mode
+- [x] add fixed-position preview salvo launch plans
 - [ ] add multi-ring or halo preset
 - [ ] add senrin / secondary burst preset
 - [ ] add preset cycling and visual tuning checklist

@@ -369,3 +369,26 @@ Record completed tasks here.
 - User-visible behavior: Production gameplay remains unchanged. Manual preview can now randomize existing burst types for visual inspection.
 - Preservation: `main.py` was unchanged. Default profile remains `classic`. No Multi-ring/Halo/Senrin implementation, scenery rendering, production runtime migration, pure generation behavior changes, or external Firework.py code was added.
 - Follow-up: Use random preview mode for visual comparison, then start `T0003.6` to implement Multi-ring or Halo.
+
+## 2026-06-25 T0003.5.6 Add fixed-position salvo launch plans to preview
+
+- Summary: Added Pyxel-independent fixed-position salvo plan data and connected number keys `1` through `5` in the manual preview to schedule consecutive profile-scaled burst launches.
+- Pre-task git state: branch `main`; worktree clean; latest commit `b11f70b Add preview random burst mode`.
+- Files changed: `src/pyxel_goal_game/salvo_patterns.py`, `tests/unit/test_salvo_patterns.py`, `tools/preview_firework_box.py`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Behavior:
+  - Number keys `1` through `5` schedule fixed-position salvo plans.
+  - Salvo positions are box-relative and scale from each `ScreenProfile` box dimension.
+  - Sequential mode uses the current selected burst type for every salvo slot.
+  - Random mode chooses fixed random burst types when the salvo is scheduled.
+  - Scheduled slots launch with 12-frame spacing and retain their chosen type.
+  - `Z` single-launch behavior remains available.
+- Tests:
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 108 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 108 passed.
+- Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
+- User-visible behavior: Production gameplay remains unchanged. Manual preview can now inspect 1-5 burst compositions.
+- Preservation: `main.py` was unchanged. Default profile remains `classic`. No Multi-ring/Halo/Senrin implementation, scenery rendering, production runtime migration, firework generation behavior changes, or external Firework.py code was added.
+- Follow-up: Use salvo preview mode to assess multi-burst density, then start `T0003.6` to implement Multi-ring or Halo.

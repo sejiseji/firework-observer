@@ -8,7 +8,7 @@
       "goal": "Add one layered ring or halo preset without obscuring the transparent box.",
       "status": "todo",
       "depends_on": [
-        "T0003.5"
+        "T0003.5.6"
       ],
       "constraints": [
         "Implement only multi-ring or halo",
@@ -345,6 +345,12 @@
       "title": "Add random burst selection mode to preview",
       "completed_on": "2026-06-25",
       "summary": "Added preview-only random burst selection mode with R to enter random mode, SPACE to return to sequential mode, and deterministic random choices for manual and auto launches."
+    },
+    {
+      "id": "T0003.5.6",
+      "title": "Add fixed-position salvo launch plans to preview",
+      "completed_on": "2026-06-25",
+      "summary": "Added Pyxel-independent fixed-position salvo plans and preview number-key scheduling for 1 through 5 profile-scaled burst launches."
     }
   ]
 }

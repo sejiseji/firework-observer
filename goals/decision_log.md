@@ -278,3 +278,17 @@ Wait for production preset cycling, add random selection to runtime, or keep onl
 
 Impact:
 The preview owns a local seeded RNG and avoids global random state. `main.py`, production gameplay, firework generation outputs, profiles, and scenery remain unchanged. The next implementation task remains `T0003.6`.
+
+## 2026-06-25 Add fixed-position salvo launch plans to preview
+
+Decision:
+Add Pyxel-independent fixed-position salvo plan data and connect number keys `1` through `5` in the manual preview to schedule consecutive profile-scaled burst launches.
+
+Reason:
+The preview can now inspect individual and random burst types. Before adding Multi-ring or Halo, fixed multi-shot salvos make it possible to inspect density, height variation, and composition inside the portrait observation box.
+
+Alternatives:
+Implement salvo behavior directly in production runtime, keep only manual single-shot launch, or wait until after Multi-ring/Halo to assess multi-burst density.
+
+Impact:
+`src/pyxel_goal_game/salvo_patterns.py` provides pure `SalvoPlan` data based on `ScreenProfile` box dimensions. The preview schedules bursts at fixed box-relative positions with 12-frame spacing. `main.py`, production gameplay, pure firework generation outputs, profiles, and scenery remain unchanged.

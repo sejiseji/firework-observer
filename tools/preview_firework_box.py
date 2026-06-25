@@ -25,6 +25,7 @@ from pyxel_goal_game.firework_bursts import (  # noqa: E402
     generate_spiral_burst,
     generate_willow_burst,
 )
+from pyxel_goal_game.salvo_patterns import SalvoPlan, build_salvo_plan  # noqa: E402
 from pyxel_goal_game.screen_profiles import (  # noqa: E402
     DEFAULT_SCREEN_PROFILE_NAME,
     get_screen_profile,
@@ -40,6 +41,14 @@ AUTO_LAUNCH_FRAMES = 120
 RING_ORIENTATION_BANK_SEED = 20260623
 PREVIEW_RANDOM_SEED = 20260625
 BURST_LABELS = ("Kiku", "Ring", "Spiral", "Willow", "Peony")
+
+
+@dataclass(frozen=True)
+class ScheduledBurst:
+    frame: int
+    burst_index: int
+    origin: Vec3
+    seed: int
 
 
 @dataclass
@@ -131,6 +140,7 @@ class PreviewApp:
         self.last_launched_index = 0
         self.random_mode = False
         self.preview_rng = Random(PREVIEW_RANDOM_SEED)
+        self.scheduled_bursts: list[ScheduledBurst] = []
         self.seed = 0
         self.auto_rotate = False
         self.auto_launch = False
@@ -162,6 +172,7 @@ class PreviewApp:
             self.camera.target_pitch = math.sin(pyxel.frame_count * 0.015) * 0.35
         if self.auto_launch and pyxel.frame_count % AUTO_LAUNCH_FRAMES == 0:
             self.launch()
+        self.launch_scheduled_bursts()
         self.camera.step_toward_target()
         for particle in self.particles:
             particle.step()
@@ -184,6 +195,16 @@ class PreviewApp:
             self.camera.target_zoom = max(MIN_ZOOM, self.camera.target_zoom - 0.025)
         if pyxel.btnp(pyxel.KEY_Z):
             self.launch()
+        if pyxel.btnp(pyxel.KEY_1):
+            self.schedule_salvo(1)
+        if pyxel.btnp(pyxel.KEY_2):
+            self.schedule_salvo(2)
+        if pyxel.btnp(pyxel.KEY_3):
+            self.schedule_salvo(3)
+        if pyxel.btnp(pyxel.KEY_4):
+            self.schedule_salvo(4)
+        if pyxel.btnp(pyxel.KEY_5):
+            self.schedule_salvo(5)
         if pyxel.btnp(pyxel.KEY_SPACE):
             if self.random_mode:
                 self.random_mode = False
@@ -212,22 +233,25 @@ class PreviewApp:
     def launch(self) -> None:
         origin = Vec3(0.0, 0.0, 0.0)
         burst_index = self.choose_launch_index()
+        self.launch_burst(burst_index=burst_index, origin=origin, seed=self.seed)
+        self.seed += 1
+
+    def launch_burst(self, *, burst_index: int, origin: Vec3, seed: int) -> None:
         if burst_index == 0:
-            specs = generate_kiku_burst(origin=origin, seed=self.seed)
+            specs = generate_kiku_burst(origin=origin, seed=seed)
         elif burst_index == 1:
             specs = generate_ring_burst(
                 origin=origin,
-                seed=self.seed,
+                seed=seed,
                 orientation_bank=self.ring_orientation_bank,
             )
         elif burst_index == 2:
-            specs = generate_spiral_burst(origin=origin, seed=self.seed)
+            specs = generate_spiral_burst(origin=origin, seed=seed)
         elif burst_index == 3:
-            specs = generate_willow_burst(origin=origin, seed=self.seed)
+            specs = generate_willow_burst(origin=origin, seed=seed)
         else:
-            specs = generate_peony_burst(origin=origin, seed=self.seed)
+            specs = generate_peony_burst(origin=origin, seed=seed)
         self.last_launched_index = burst_index
-        self.seed += 1
         self.particles.extend(PreviewParticle.from_spawn(spec) for spec in specs)
         if len(self.particles) > self.profile.max_particles:
             self.particles = self.particles[-self.profile.max_particles :]
@@ -239,6 +263,52 @@ class PreviewApp:
         if len(BURST_LABELS) > 1 and index == self.last_launched_index:
             return (index + 1) % len(BURST_LABELS)
         return index
+
+    def schedule_salvo(self, count: int) -> None:
+        plan = build_salvo_plan(count=count, profile=self.profile)
+        base_seed = self.seed
+        self.seed += len(plan.slots)
+        for slot, burst_index in zip(
+            plan.slots,
+            self.choose_salvo_burst_indexes(plan),
+            strict=True,
+        ):
+            self.scheduled_bursts.append(
+                ScheduledBurst(
+                    frame=pyxel.frame_count + slot.delay_frames,
+                    burst_index=burst_index,
+                    origin=slot.burst_position,
+                    seed=base_seed + slot.seed_offset,
+                )
+            )
+
+    def choose_salvo_burst_indexes(self, plan: SalvoPlan) -> tuple[int, ...]:
+        if not self.random_mode:
+            return tuple(self.burst_index for _ in plan.slots)
+        indexes: list[int] = []
+        previous = self.last_launched_index
+        for _ in plan.slots:
+            index = self.preview_rng.randrange(len(BURST_LABELS))
+            if len(BURST_LABELS) > 1 and index == previous:
+                index = (index + 1) % len(BURST_LABELS)
+            indexes.append(index)
+            previous = index
+        return tuple(indexes)
+
+    def launch_scheduled_bursts(self) -> None:
+        if not self.scheduled_bursts:
+            return
+        pending: list[ScheduledBurst] = []
+        for burst in self.scheduled_bursts:
+            if burst.frame <= pyxel.frame_count:
+                self.launch_burst(
+                    burst_index=burst.burst_index,
+                    origin=burst.origin,
+                    seed=burst.seed,
+                )
+            else:
+                pending.append(burst)
+        self.scheduled_bursts = pending
 
     def draw(self) -> None:
         pyxel.cls(0)
@@ -289,7 +359,7 @@ class PreviewApp:
     def draw_hud(self) -> None:
         label = self.last_launched_label if self.random_mode else self.burst_label
         pyxel.text(4, 4, f"Z:launch {self.mode_label}:{label}", 5)
-        pyxel.text(4, 12, "SPACE:seq/next R:random X:auto V:burst", 5)
+        pyxel.text(4, 12, "1-5:salvo SPACE:seq/next R:random", 5)
         if not self.debug:
             return
         pyxel.text(4, self.profile.height - 30, f"profile {self.profile.name}", 5)

@@ -264,3 +264,17 @@ Tune Kiku to double as Peony, connect Peony directly to production gameplay, or 
 
 Impact:
 `generate_burst()` already supports Peony through `FireworkShape.SPHERE`. Peony reuses the sphere generator with lower particle count, shorter life, brighter palette, and lower trail rate. Kiku, Ring, Spiral, Willow, production runtime, `main.py`, profiles, and scenery remain unchanged.
+
+## 2026-06-25 Add random burst selection mode to preview
+
+Decision:
+Add preview-only random burst selection mode to `tools/preview_firework_box.py`. Pressing `R` enters random mode, `Z` and auto-launch choose a deterministic random implemented burst type, and `SPACE` exits random mode back to sequential cycling.
+
+Reason:
+Kiku, Ring, Spiral, Willow, and Peony now exist in the manual preview. Random selection makes comparative visual inspection faster without changing production runtime behavior or pure generation modules.
+
+Alternatives:
+Wait for production preset cycling, add random selection to runtime, or keep only manual sequential cycling.
+
+Impact:
+The preview owns a local seeded RNG and avoids global random state. `main.py`, production gameplay, firework generation outputs, profiles, and scenery remain unchanged. The next implementation task remains `T0003.6`.

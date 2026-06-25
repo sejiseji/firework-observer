@@ -5,6 +5,7 @@ import math
 import sys
 from dataclasses import dataclass
 from pathlib import Path
+from random import Random
 
 import pyxel
 
@@ -37,6 +38,8 @@ MAX_PITCH = 1.2
 MIN_PITCH = -1.2
 AUTO_LAUNCH_FRAMES = 120
 RING_ORIENTATION_BANK_SEED = 20260623
+PREVIEW_RANDOM_SEED = 20260625
+BURST_LABELS = ("Kiku", "Ring", "Spiral", "Willow", "Peony")
 
 
 @dataclass
@@ -125,6 +128,9 @@ class PreviewApp:
         )
         self.particles: list[PreviewParticle] = []
         self.burst_index = 0
+        self.last_launched_index = 0
+        self.random_mode = False
+        self.preview_rng = Random(PREVIEW_RANDOM_SEED)
         self.seed = 0
         self.auto_rotate = False
         self.auto_launch = False
@@ -139,7 +145,15 @@ class PreviewApp:
 
     @property
     def burst_label(self) -> str:
-        return ("Kiku", "Ring", "Spiral", "Willow", "Peony")[self.burst_index]
+        return BURST_LABELS[self.burst_index]
+
+    @property
+    def last_launched_label(self) -> str:
+        return BURST_LABELS[self.last_launched_index]
+
+    @property
+    def mode_label(self) -> str:
+        return "RANDOM" if self.random_mode else "SEQ"
 
     def update(self) -> None:
         self.handle_input()
@@ -171,7 +185,13 @@ class PreviewApp:
         if pyxel.btnp(pyxel.KEY_Z):
             self.launch()
         if pyxel.btnp(pyxel.KEY_SPACE):
-            self.burst_index = (self.burst_index + 1) % 5
+            if self.random_mode:
+                self.random_mode = False
+                self.burst_index = self.last_launched_index
+            else:
+                self.burst_index = (self.burst_index + 1) % len(BURST_LABELS)
+        if pyxel.btnp(pyxel.KEY_R):
+            self.random_mode = True
         if pyxel.btnp(pyxel.KEY_C):
             self.reset_camera()
         if pyxel.btnp(pyxel.KEY_X):
@@ -191,24 +211,34 @@ class PreviewApp:
 
     def launch(self) -> None:
         origin = Vec3(0.0, 0.0, 0.0)
-        if self.burst_index == 0:
+        burst_index = self.choose_launch_index()
+        if burst_index == 0:
             specs = generate_kiku_burst(origin=origin, seed=self.seed)
-        elif self.burst_index == 1:
+        elif burst_index == 1:
             specs = generate_ring_burst(
                 origin=origin,
                 seed=self.seed,
                 orientation_bank=self.ring_orientation_bank,
             )
-        elif self.burst_index == 2:
+        elif burst_index == 2:
             specs = generate_spiral_burst(origin=origin, seed=self.seed)
-        elif self.burst_index == 3:
+        elif burst_index == 3:
             specs = generate_willow_burst(origin=origin, seed=self.seed)
         else:
             specs = generate_peony_burst(origin=origin, seed=self.seed)
+        self.last_launched_index = burst_index
         self.seed += 1
         self.particles.extend(PreviewParticle.from_spawn(spec) for spec in specs)
         if len(self.particles) > self.profile.max_particles:
             self.particles = self.particles[-self.profile.max_particles :]
+
+    def choose_launch_index(self) -> int:
+        if not self.random_mode:
+            return self.burst_index
+        index = self.preview_rng.randrange(len(BURST_LABELS))
+        if len(BURST_LABELS) > 1 and index == self.last_launched_index:
+            return (index + 1) % len(BURST_LABELS)
+        return index
 
     def draw(self) -> None:
         pyxel.cls(0)
@@ -257,8 +287,9 @@ class PreviewApp:
         pyxel.pset(projected.sx, projected.sy, color)
 
     def draw_hud(self) -> None:
-        pyxel.text(4, 4, f"Z:launch SPACE:{self.burst_label}", 5)
-        pyxel.text(4, 12, "ARROWS:rotate A/S:zoom X:auto V:burst", 5)
+        label = self.last_launched_label if self.random_mode else self.burst_label
+        pyxel.text(4, 4, f"Z:launch {self.mode_label}:{label}", 5)
+        pyxel.text(4, 12, "SPACE:seq/next R:random X:auto V:burst", 5)
         if not self.debug:
             return
         pyxel.text(4, self.profile.height - 30, f"profile {self.profile.name}", 5)

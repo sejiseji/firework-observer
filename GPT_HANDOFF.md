@@ -210,13 +210,14 @@ After the task:
 - Do not hide product decisions in chat history.
 - `T0003.2.5` added a manual Kiku/Ring visual preview at `tools/preview_firework_box.py`.
 - Run the preview with `.venv/bin/python tools/preview_firework_box.py`; use `--profile iphone16_balanced` to inspect the larger balanced profile without changing defaults.
-- Preview controls: `Z` launches, `SPACE` switches Kiku/Ring/Spiral/Willow/Peony, arrow keys rotate, `A`/`S` zoom, `C` resets camera, `X` toggles auto-rotate, `V` toggles auto-launch, and `D` toggles debug HUD.
+- Preview controls: `Z` launches, `SPACE` switches Kiku/Ring/Spiral/Willow/Peony in sequential mode, `R` enters random burst mode, `SPACE` exits random mode, arrow keys rotate, `A`/`S` zoom, `C` resets camera, `X` toggles auto-rotate, `V` toggles auto-launch, and `D` toggles debug HUD.
 - The preview is a development tool only. It does not migrate `main.py`, production runtime particles, scenery, or future firework presets.
 - `T0003.2.7` tuned iPhone-style profiles to use portrait viewport / portrait firework volume: `iphone16_balanced` is now screen `236x512`, box `120x260x120`, camera distance `340.0`; `iphone16_large` is screen `393x852`, box `200x440x200`, camera distance `560.0`.
 - `T0003.2.8` added deterministic Ring orientation bank support in `firework_bursts.py`; the manual preview now builds a 24-orientation bank from seed `20260623` for Ring bursts.
 - `T0003.3` added `SPIRAL_PRESET` and deterministic 3D Spiral burst generation; the manual preview now cycles Kiku, Ring, and Spiral.
 - `T0003.4` added `WILLOW_PRESET` and deterministic Willow burst generation; the manual preview now cycles Kiku, Ring, Spiral, and Willow.
 - `T0003.5` added `PEONY_PRESET` and deterministic Peony burst generation; the manual preview now cycles Kiku, Ring, Spiral, Willow, and Peony.
+- `T0003.5.5` added preview-only random burst selection mode; `R` enters random mode and `SPACE` returns to sequential cycling.
 - `classic` remains unchanged and remains the default profile.
 - If the user changes the game direction, update `project_brief.json` and regenerate or manually update the related docs.
 - Review whether the standalone `main.py` should be migrated into `src/pyxel_goal_game/` or kept only as a reference prototype.

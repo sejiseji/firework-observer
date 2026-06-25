@@ -348,3 +348,24 @@ Record completed tasks here.
 - User-visible behavior: Production gameplay remains unchanged. Manual preview can now inspect Peony.
 - Preservation: `main.py` was unchanged. Default profile remains `classic`. `iphone16_balanced` remains screen `236x512` and box `120x260x120`. No Multi-ring/Halo/Senrin implementation, scenery rendering, production runtime migration, or external Firework.py code was added.
 - Follow-up: Use the manual preview to inspect Peony brightness and trail restraint, then start `T0003.6` to implement Multi-ring or Halo.
+
+## 2026-06-25 T0003.5.5 Add random burst selection mode to preview
+
+- Summary: Added preview-only random burst selection mode to `tools/preview_firework_box.py`. `R` enters random mode, `Z` launches a deterministic random implemented burst type, auto-launch also chooses random burst types in random mode, and `SPACE` exits random mode back to sequential cycling.
+- Pre-task git state: branch `main`; worktree clean; latest commit `4c121d3 Add deterministic Peony burst generation`.
+- Files changed: `tools/preview_firework_box.py`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Behavior:
+  - Sequential mode keeps existing `SPACE` next-type behavior.
+  - Random mode uses a preview-local seeded RNG and does not use global random state.
+  - Returning from random mode sets the sequential index to the last launched burst type.
+  - HUD shows `SEQ` or `RANDOM` and the selected or last launched burst label.
+- Tests:
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 91 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 91 passed.
+- Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
+- User-visible behavior: Production gameplay remains unchanged. Manual preview can now randomize existing burst types for visual inspection.
+- Preservation: `main.py` was unchanged. Default profile remains `classic`. No Multi-ring/Halo/Senrin implementation, scenery rendering, production runtime migration, pure generation behavior changes, or external Firework.py code was added.
+- Follow-up: Use random preview mode for visual comparison, then start `T0003.6` to implement Multi-ring or Halo.

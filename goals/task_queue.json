@@ -339,6 +339,12 @@
       "title": "Implement peony preset",
       "completed_on": "2026-06-25",
       "summary": "Added PEONY_PRESET and deterministic Pyxel-independent peony burst generation with short life, bright palette, restrained trails, and manual preview cycling."
+    },
+    {
+      "id": "T0003.5.5",
+      "title": "Add random burst selection mode to preview",
+      "completed_on": "2026-06-25",
+      "summary": "Added preview-only random burst selection mode with R to enter random mode, SPACE to return to sequential mode, and deterministic random choices for manual and auto launches."
     }
   ]
 }

@@ -446,3 +446,17 @@ Use the earlier connected history line, keep detached ember pixels, draw a compa
 
 Impact:
 Only manual preview launch drawing changed. Type-specific colors remain. The fireball shape is generated from current projected motion direction and filled with Pyxel triangles plus a bright nose. `main.py`, production gameplay, preset parameters, pure generation behavior, Halo, and scenery remain unchanged.
+
+## 2026-06-25 Restore simple firework shell gradient tail
+
+Decision:
+Use one shared preview-only rising firework shell tail for all burst types: a short recent-motion gradient of white, white, white, yellow, yellow, brown, brown.
+
+Reason:
+The rising object is a firework shell, not a rocket. Type-colored launch geometry and filled teardrop shapes were overcomplicating the visual and making the object read incorrectly. The stable base expression should be a small shell/fireball with a short gradient tail.
+
+Alternatives:
+Keep type-colored shell tails, keep the filled teardrop shape, draw a full trajectory guide, or remove the shell tail entirely.
+
+Impact:
+The preview no longer varies rising shell tail shape or color by burst type. It draws only recent history samples with the fixed white/yellow/brown gradient and keeps burst accent rays separate. `main.py`, production gameplay, preset parameters, pure generation behavior, Halo, and scenery remain unchanged.

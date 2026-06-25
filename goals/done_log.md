@@ -632,3 +632,22 @@ Record completed tasks here.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 132 passed.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` was unchanged. Production runtime, preset parameters, pure generation behavior, Halo, and scenery were unchanged.
+
+## 2026-06-25 T0003.8.7 Restore simple gradient firework shell tail
+
+- Summary: Replaced the filled teardrop/type-colored launch visual with one shared short firework shell tail using the fixed white, white, white, yellow, yellow, brown, brown gradient.
+- Files changed: `tools/preview_firework_box.py`, `docs/research/visual_tuning_checklist.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Behavior:
+  - The rising object is documented and drawn as a firework shell/fireball, not a rocket or trajectory guide.
+  - The tail uses only recent history samples.
+  - Tail color is shared across all burst types.
+  - Burst accent rays and particle generation are unchanged.
+- Tests:
+  - `.venv/bin/python -m json.tool goals/task_queue.json` passed.
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 132 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 132 passed.
+- Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
+- Preservation: `main.py` was unchanged. Production runtime, preset parameters, pure generation behavior, Halo, and scenery were unchanged.

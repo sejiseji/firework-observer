@@ -328,6 +328,12 @@
       "title": "Add type-colored rocket tails and burst accent rays",
       "completed_on": "2026-06-25",
       "summary": "Added preview-only burst-type rocket tail colors and short-lived center-outward accent rays for selected explosion particles without changing pure generation or production runtime behavior."
+    },
+    {
+      "id": "T0003.8.7",
+      "title": "Restore simple gradient firework shell tail",
+      "completed_on": "2026-06-25",
+      "summary": "Restored the preview rising launch visual to a shared firework shell tail using a short white/yellow/brown gradient and removed type-specific shell tail geometry."
     }
   ]
 }

@@ -51,8 +51,10 @@ Interaction rules:
 - `R` randomizes burst type.
 - `0` randomizes salvo count.
 - `H` randomizes explosion height within the box.
-- Rockets should show short tails behind their heads, not full launch-to-current path lines.
-- Rocket tail colors should match the scheduled burst type.
+- Rising firework shells should show a short fixed gradient tail behind the fireball, not full launch-to-current path lines.
+- The canonical shell tail color sequence is white, white, white, yellow, yellow, brown, brown.
+- Shell tail geometry and colors are shared across burst types. Do not vary this shape by firework type.
+- Avoid rocket-like terminology and behavior for the rising shell visual.
 - Burst accent rays should appear only briefly and only on a limited subset of particles.
 - `R` and `0` are independent.
 - `R + 0` randomizes both type and count.
@@ -67,7 +69,7 @@ Interaction rules:
 - Reads as the baseline sphere.
 - Density is full but not opaque.
 - Trails show motion without turning every particle into a line.
-- Gold/white rocket tail and a few center accent rays make the opening readable.
+- The shared white/yellow/brown shell tail and a few center accent rays make the opening readable.
 - Works as the reference preset for comparison with Peony and Senrin.
 
 ### Ring
@@ -75,7 +77,7 @@ Interaction rules:
 - Orientation varies across launches.
 - No obvious fixed-direction bias appears during repeated random launches.
 - The ring plane is readable when rotating the camera.
-- Blue/cyan rocket tail and accent rays do not obscure the ring plane.
+- The shared shell tail and accent rays do not obscure the ring plane.
 - It remains distinct from Multi-ring.
 
 ### Spiral
@@ -83,7 +85,7 @@ Interaction rules:
 - Reads as a 3D twisted structure, not a flat circle.
 - Rotation reveals depth and twist.
 - It does not overextend vertically in `iphone16_balanced`.
-- Green/gold rocket tail and accent rays reinforce the twist without over-drawing it.
+- Accent rays reinforce the twist without over-drawing it.
 - It remains distinct from Ring.
 
 ### Willow
@@ -91,14 +93,14 @@ Interaction rules:
 - Tails visibly fall under gravity.
 - The portrait volume gives the falling trails enough space.
 - Trail density is high enough for afterglow but not high enough to cover later salvos.
-- Gold rocket tail and accent rays do not compete with Willow's falling particle trails.
+- The shared shell tail and accent rays do not compete with Willow's falling particle trails.
 - It remains distinct from Kiku and Peony.
 
 ### Peony
 
 - Looks shorter and brighter than Kiku.
 - Trails are restrained and points remain the main visual.
-- Pink/red rocket tail and brief accent rays make the first bloom feel bright.
+- Brief accent rays make the first bloom feel bright.
 - It is not too similar to Kiku.
 - It does not read like Willow or Ring.
 
@@ -131,12 +133,13 @@ Interaction rules:
    - Press `Z` several times and use `1`-`5` loops.
    - Confirm burst heights vary without leaving the box.
 
-3. Rocket tail check:
+3. Firework shell tail check:
    - Use `1`-`5` salvo loops.
-   - Confirm rocket heads rise before bursts.
+   - Confirm firework shells rise before bursts.
    - Confirm tails are short and follow recent motion only.
-   - Confirm rockets in a salvo have visible speed variation.
-   - Confirm rocket tail colors match the selected or random burst type.
+   - Confirm the tail near the shell is white, the middle is yellow, and the oldest tail is brown.
+   - Confirm salvos have visible flight-time variation.
+   - Confirm random burst type mode does not change the shell tail shape unexpectedly.
 
 4. Burst accent check:
    - Press `Z` for each type.
@@ -199,11 +202,11 @@ If Peony and Kiku look too similar:
 - Brighten or adjust Peony palette.
 - Adjust Peony speed range.
 
-If rocket tails dominate:
+If firework shell tails dominate:
 
-- Darken tail colors.
-- Shorten tail history length.
-- Draw only previous-to-current motion for dense salvos.
+- Shorten shell tail history length.
+- Use only the fixed white/yellow/brown gradient.
+- Do not introduce type-specific shell tail colors before the base shell visual is stable.
 
 If burst accent rays dominate:
 
@@ -220,7 +223,7 @@ For every check:
 - Particles should appear inside the 3D volume.
 - Rotating the camera should reveal shape differences.
 - Trails should not erase the front box edges.
-- Rocket tails and accent rays should not erase front box edges.
+- Firework shell tails and accent rays should not erase front box edges.
 - Dense salvos should not hide the current firework type.
 
 ## Frame Pacing And Particle Budget
@@ -238,9 +241,9 @@ Watch the debug HUD in stress modes:
 - `T0003.8.2`: Tune Multi-ring density for salvo preview.
 - `T0003.8.3`: Tune Willow trail density.
 - `T0003.8.4`: Tune Peony/Kiku distinction.
-- `T0003.8.5`: Tune rocket tail readability.
+- `T0003.8.5`: Tune firework shell tail readability.
 - `T0003.8.6`: Tune persistent salvo repeat interval.
-- `T0003.8.7`: Tune burst accent ray density.
+- `T0003.8.8`: Tune burst accent ray density.
 - `T0003.9`: Add Halo preset if density is stable.
 
 Runtime integration planning should wait until visual tuning is stable enough that the preview no longer needs large parameter corrections.

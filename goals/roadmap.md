@@ -39,6 +39,7 @@
 - [x] add preset cycling and visual tuning checklist
 - [x] review external Firework.py for future preset candidates
 - [x] add type-colored rocket tails and burst accent rays
+- [x] restore simple gradient firework shell tail
 - [ ] add scenery preset data scaffold
 - [ ] add EMPTY and MOUNTAINS scenery presets
 - [ ] add CITY skyline scenery preset

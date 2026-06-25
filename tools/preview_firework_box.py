@@ -46,12 +46,13 @@ AUTO_LAUNCH_FRAMES = 120
 PERSISTENT_SALVO_FRAMES = 210
 ROCKET_MIN_FLIGHT_FRAMES = 96
 ROCKET_MAX_FLIGHT_FRAMES = 180
-ROCKET_TAIL_LENGTH = 7
+FIREWORK_SHELL_TAIL_COLORS_NEW_TO_OLD = (7, 7, 7, 10, 10, 4, 4)
+FIREWORK_SHELL_TAIL_LENGTH = len(FIREWORK_SHELL_TAIL_COLORS_NEW_TO_OLD)
 RING_ORIENTATION_BANK_SEED = 20260623
 PREVIEW_RANDOM_SEED = 20260625
 HEIGHT_VARIATION_RATIO = 0.16
 BURST_LABELS = ("Kiku", "Ring", "Spiral", "Willow", "Peony", "Multi-ring", "Senrin")
-ROCKET_STYLES = (
+BURST_ACCENT_STYLES = (
     (10, 9, 7),
     (12, 6, 7),
     (11, 10, 7),
@@ -73,7 +74,6 @@ class PreviewRocket:
     burst_position: Vec3
     seed: int
     history: deque[Vec3]
-    tail_colors: tuple[int, int, int]
 
     def has_started(self, frame: int) -> bool:
         return frame >= self.launch_frame
@@ -343,7 +343,7 @@ class PreviewApp:
             seed=seed,
             particle_count=len(specs),
         )
-        accent_color = ROCKET_STYLES[burst_index][2]
+        accent_color = BURST_ACCENT_STYLES[burst_index][2]
         self.particles.extend(
             PreviewParticle.from_spawn(
                 spec,
@@ -446,8 +446,7 @@ class PreviewApp:
                 launch_position=launch_position,
                 burst_position=burst_position,
                 seed=seed,
-                history=deque(maxlen=ROCKET_TAIL_LENGTH),
-                tail_colors=ROCKET_STYLES[burst_index],
+                history=deque(maxlen=FIREWORK_SHELL_TAIL_LENGTH),
             )
         )
 
@@ -550,7 +549,7 @@ class PreviewApp:
             reverse=True,
         )
         self.draw_edges(projected_edges[:8], far=True)
-        self.draw_rocket_trails()
+        self.draw_firework_shells()
         self.draw_particles()
         self.draw_edges(projected_edges[8:], far=False)
         self.draw_hud()
@@ -574,68 +573,38 @@ class PreviewApp:
         for projected, particle in draw_items:
             self.draw_particle(particle=particle, projected=projected)
 
-    def draw_rocket_trails(self) -> None:
+    def draw_firework_shells(self) -> None:
         for rocket in self.rockets:
             if not rocket.has_started(pyxel.frame_count):
                 continue
             history = tuple(rocket.history)
-            self.draw_launch_fireball(
+            self.draw_firework_shell_tail(
                 current=self.camera.project(rocket.current_position(pyxel.frame_count)),
-                previous=self.project_previous_fireball_position(history),
-                colors=rocket.tail_colors,
+                history=history,
             )
 
-    def project_previous_fireball_position(
-        self,
-        history: tuple[Vec3, ...],
-    ) -> ProjectedPoint | None:
-        if len(history) < 2:
-            return None
-        return self.camera.project(history[-2])
-
-    def draw_launch_fireball(
+    def draw_firework_shell_tail(
         self,
         *,
         current: ProjectedPoint,
-        previous: ProjectedPoint | None,
-        colors: tuple[int, int, int],
+        history: tuple[Vec3, ...],
     ) -> None:
-        if previous is None:
-            direction_x = 0.0
-            direction_y = -1.0
-        else:
-            direction_x = float(current.sx - previous.sx)
-            direction_y = float(current.sy - previous.sy)
-            length = math.hypot(direction_x, direction_y)
-            if length < 0.001:
-                direction_x = 0.0
-                direction_y = -1.0
-            else:
-                direction_x /= length
-                direction_y /= length
+        samples = [current]
+        for position in reversed(history[:-1]):
+            samples.append(self.camera.project(position))
+            if len(samples) >= FIREWORK_SHELL_TAIL_LENGTH:
+                break
 
-        perpendicular_x = -direction_y
-        perpendicular_y = direction_x
-        tail_length = 9
-        nose_length = 3
-        half_width = 3
-
-        tail_x = round(current.sx - direction_x * tail_length)
-        tail_y = round(current.sy - direction_y * tail_length)
-        waist_x = round(current.sx - direction_x * 3)
-        waist_y = round(current.sy - direction_y * 3)
-        nose_x = round(current.sx + direction_x * nose_length)
-        nose_y = round(current.sy + direction_y * nose_length)
-        left_x = round(waist_x + perpendicular_x * half_width)
-        left_y = round(waist_y + perpendicular_y * half_width)
-        right_x = round(waist_x - perpendicular_x * half_width)
-        right_y = round(waist_y - perpendicular_y * half_width)
-
-        pyxel.tri(tail_x, tail_y, left_x, left_y, right_x, right_y, colors[0])
-        pyxel.tri(left_x, left_y, nose_x, nose_y, right_x, right_y, colors[1])
-        pyxel.pset(nose_x, nose_y, colors[2])
-        pyxel.pset(round(nose_x + perpendicular_x), round(nose_y + perpendicular_y), colors[2])
-        pyxel.pset(round(nose_x - perpendicular_x), round(nose_y - perpendicular_y), colors[2])
+        for index in range(len(samples) - 1, 0, -1):
+            start = samples[index]
+            end = samples[index - 1]
+            color = FIREWORK_SHELL_TAIL_COLORS_NEW_TO_OLD[index]
+            pyxel.line(start.sx, start.sy, end.sx, end.sy, color)
+        pyxel.pset(
+            current.sx,
+            current.sy,
+            FIREWORK_SHELL_TAIL_COLORS_NEW_TO_OLD[0],
+        )
 
     def draw_particle(
         self,

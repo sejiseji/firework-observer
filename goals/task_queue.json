@@ -3,28 +3,6 @@
   "policy": "Keep tasks small enough for one Codex patch. Split ambiguous tasks before implementation.",
   "current": [
     {
-      "id": "T0003.3",
-      "title": "Implement spiral preset",
-      "goal": "Add one spiral firework preset that shows readable twist in the 3D observation box.",
-      "status": "todo",
-      "depends_on": [
-        "T0003.2.8"
-      ],
-      "constraints": [
-        "Implement only spiral",
-        "Do not tune unrelated camera behavior",
-        "Do not modify standalone main.py",
-        "Do not copy external Firework.py code"
-      ],
-      "acceptance": [
-        "Spiral preset has a readable twist when the view changes",
-        "Same seed gives same particle initial states",
-        "Particle count and trails remain bounded",
-        "Existing radial and ring presets still work",
-        "Validation results are recorded"
-      ]
-    },
-    {
       "id": "T0003.4",
       "title": "Implement willow preset",
       "goal": "Add one willow-style preset focused on downward drift, trails, and afterglow.",
@@ -387,6 +365,12 @@
       "title": "Add deterministic Ring orientation bank",
       "completed_on": "2026-06-25",
       "summary": "Added Pyxel-independent RingOrientation and RingOrientationBank support with stratified deterministic orientations, and connected the manual preview to use a 24-orientation bank for Ring bursts."
+    },
+    {
+      "id": "T0003.3",
+      "title": "Implement spiral preset",
+      "completed_on": "2026-06-25",
+      "summary": "Added SPIRAL_PRESET and deterministic Pyxel-independent 3D spiral burst generation, and extended the manual preview to cycle Kiku, Ring, and Spiral."
     }
   ]
 }

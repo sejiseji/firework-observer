@@ -222,3 +222,17 @@ Keep all Rings in the original XY plane, generate a fresh fully random orientati
 
 Impact:
 `generate_ring_burst()` accepts an optional `orientation_bank`. If provided, the Ring orientation is selected deterministically from the bank by burst seed. If omitted, a deterministic direct orientation is generated from the seed. Kiku generation, runtime gameplay, `main.py`, and production rendering remain unchanged.
+
+## 2026-06-25 Add deterministic Spiral burst generation
+
+Decision:
+Add `SPIRAL_PRESET` and `generate_spiral_burst()` as Pyxel-independent preset data and burst generation. The manual preview now cycles Kiku, Ring, and Spiral.
+
+Reason:
+Spiral is the first preset focused on readable 3D twist rather than a spherical shell or oriented plane. Implementing it as deterministic `ParticleSpawnSpec` generation keeps it testable before runtime particle migration.
+
+Alternatives:
+Connect Spiral directly to production gameplay, derive it from the external 2D reference code, or delay Spiral until after Willow.
+
+Impact:
+`generate_burst()` now supports `FireworkShape.SPIRAL`. The generated velocities form a normalized 3D spiral direction so speed magnitudes remain within preset range. Kiku, Ring, RingOrientationBank, production runtime, `main.py`, and scenery remain unchanged.

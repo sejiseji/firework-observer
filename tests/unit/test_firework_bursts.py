@@ -14,11 +14,13 @@ from pyxel_goal_game.firework_bursts import (
     generate_burst,
     generate_kiku_burst,
     generate_ring_burst,
+    generate_spiral_burst,
     length_vec3,
 )
 from pyxel_goal_game.firework_presets import (
     KIKU_PRESET,
     RING_PRESET,
+    SPIRAL_PRESET,
     FireworkKind,
     FireworkPreset,
     FireworkShape,
@@ -104,9 +106,9 @@ def test_kiku_velocity_distribution_is_3d_not_flat() -> None:
 
 def test_generate_burst_rejects_unsupported_shapes() -> None:
     unsupported = FireworkPreset(
-        kind=FireworkKind.SPIRAL,
-        label="Spiral",
-        shape=FireworkShape.SPIRAL,
+        kind=FireworkKind.WILLOW,
+        label="Willow",
+        shape=FireworkShape.WILLOW,
         particle_count=1,
         speed_range=(1.0, 1.0),
         life_range=(1, 1),
@@ -119,7 +121,7 @@ def test_generate_burst_rejects_unsupported_shapes() -> None:
         trail=KIKU_PRESET.trail,
     )
 
-    with pytest.raises(NotImplementedError, match="SPIRAL"):
+    with pytest.raises(NotImplementedError, match="WILLOW"):
         generate_burst(preset=unsupported, origin=ORIGIN, seed=0)
 
 
@@ -281,3 +283,88 @@ def test_generate_burst_supports_ring_orientation_bank() -> None:
     )
 
     assert particles == generate_ring_burst(origin=ORIGIN, seed=0, orientation_bank=bank)
+
+
+def test_spiral_preset_uses_documented_values() -> None:
+    assert SPIRAL_PRESET.kind is FireworkKind.SPIRAL
+    assert SPIRAL_PRESET.shape is FireworkShape.SPIRAL
+    assert SPIRAL_PRESET.particle_count == 120
+    assert SPIRAL_PRESET.speed_range == (0.75, 1.35)
+    assert SPIRAL_PRESET.life_range == (62, 94)
+    assert SPIRAL_PRESET.palette == (11, 10, 7)
+    assert SPIRAL_PRESET.gravity == -0.019
+    assert SPIRAL_PRESET.trail.rate == 0.45
+
+
+def test_same_seed_generates_identical_spiral_specs() -> None:
+    first = generate_spiral_burst(origin=ORIGIN, seed=123)
+    second = generate_spiral_burst(origin=ORIGIN, seed=123)
+
+    assert first == second
+
+
+def test_different_seeds_generate_different_spiral_specs() -> None:
+    first = generate_spiral_burst(origin=ORIGIN, seed=123)
+    second = generate_spiral_burst(origin=ORIGIN, seed=124)
+
+    assert first != second
+
+
+def test_spiral_particle_count_and_ranges() -> None:
+    particles = generate_spiral_burst(origin=ORIGIN, seed=0)
+
+    assert len(particles) == SPIRAL_PRESET.particle_count
+    assert all(
+        SPIRAL_PRESET.life_range[0] <= particle.life <= SPIRAL_PRESET.life_range[1]
+        for particle in particles
+    )
+    assert all(
+        SPIRAL_PRESET.speed_range[0]
+        <= speed_of(particle.velocity)
+        <= SPIRAL_PRESET.speed_range[1]
+        for particle in particles
+    )
+
+
+def test_spiral_specs_preserve_physics_and_colors() -> None:
+    particles = generate_spiral_burst(origin=ORIGIN, seed=0)
+
+    assert all(particle.position == ORIGIN for particle in particles)
+    assert all(particle.gravity < 0.0 for particle in particles)
+    assert all(particle.drag == SPIRAL_PRESET.drag for particle in particles)
+    assert all(particle.color in SPIRAL_PRESET.palette for particle in particles)
+
+
+def test_spiral_trails_are_partial_for_known_seed() -> None:
+    particles = generate_spiral_burst(origin=ORIGIN, seed=0)
+    trail_count = sum(particle.has_trail for particle in particles)
+
+    assert 0 < trail_count < len(particles)
+    assert all(
+        particle.trail_until_age == int(particle.life * SPIRAL_PRESET.trail.early_ratio)
+        for particle in particles
+    )
+
+
+def test_spiral_velocity_distribution_is_3d_not_flat() -> None:
+    particles = generate_spiral_burst(origin=ORIGIN, seed=0)
+    x_values = [particle.velocity.x for particle in particles]
+    y_values = [particle.velocity.y for particle in particles]
+    z_values = [particle.velocity.z for particle in particles]
+
+    assert max(x_values) - min(x_values) > 1.0
+    assert max(y_values) - min(y_values) > 0.7
+    assert max(z_values) - min(z_values) > 1.0
+
+
+def test_spiral_uses_y_up_with_positive_and_negative_vertical_velocity() -> None:
+    particles = generate_spiral_burst(origin=ORIGIN, seed=0)
+
+    assert any(particle.velocity.y > 0.0 for particle in particles)
+    assert any(particle.velocity.y < 0.0 for particle in particles)
+
+
+def test_generate_burst_supports_spiral_shape() -> None:
+    particles = generate_burst(preset=SPIRAL_PRESET, origin=ORIGIN, seed=0)
+
+    assert particles == generate_spiral_burst(origin=ORIGIN, seed=0)

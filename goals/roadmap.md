@@ -27,7 +27,7 @@
 - [x] add manual Kiku/Ring visual preview before spiral tuning
 - [x] tune iPhone profiles to portrait viewport / portrait firework volume
 - [x] add deterministic Ring orientation bank
-- [ ] add spiral preset
+- [x] add spiral preset
 - [ ] add willow preset
 - [ ] add peony preset
 - [ ] add multi-ring or halo preset

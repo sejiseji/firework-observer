@@ -20,6 +20,7 @@ from pyxel_goal_game.firework_bursts import (  # noqa: E402
     build_ring_orientation_bank,
     generate_kiku_burst,
     generate_ring_burst,
+    generate_spiral_burst,
 )
 from pyxel_goal_game.screen_profiles import (  # noqa: E402
     DEFAULT_SCREEN_PROFILE_NAME,
@@ -136,7 +137,7 @@ class PreviewApp:
 
     @property
     def burst_label(self) -> str:
-        return "Kiku" if self.burst_index == 0 else "Ring"
+        return ("Kiku", "Ring", "Spiral")[self.burst_index]
 
     def update(self) -> None:
         self.handle_input()
@@ -168,7 +169,7 @@ class PreviewApp:
         if pyxel.btnp(pyxel.KEY_Z):
             self.launch()
         if pyxel.btnp(pyxel.KEY_SPACE):
-            self.burst_index = (self.burst_index + 1) % 2
+            self.burst_index = (self.burst_index + 1) % 3
         if pyxel.btnp(pyxel.KEY_C):
             self.reset_camera()
         if pyxel.btnp(pyxel.KEY_X):
@@ -190,12 +191,14 @@ class PreviewApp:
         origin = Vec3(0.0, 0.0, 0.0)
         if self.burst_index == 0:
             specs = generate_kiku_burst(origin=origin, seed=self.seed)
-        else:
+        elif self.burst_index == 1:
             specs = generate_ring_burst(
                 origin=origin,
                 seed=self.seed,
                 orientation_bank=self.ring_orientation_bank,
             )
+        else:
+            specs = generate_spiral_burst(origin=origin, seed=self.seed)
         self.seed += 1
         self.particles.extend(PreviewParticle.from_spawn(spec) for spec in specs)
         if len(self.particles) > self.profile.max_particles:

@@ -131,3 +131,27 @@ RING_PRESET = FireworkPreset(
     gravity=-0.018,
     trail=RING_TRAIL_PRESET,
 )
+
+
+SPIRAL_TRAIL_PRESET = TrailPreset(
+    rate=0.45,
+    speed_threshold=0.70,
+    early_ratio=0.55,
+    strong_speed=1.10,
+)
+
+SPIRAL_PRESET = FireworkPreset(
+    kind=FireworkKind.SPIRAL,
+    label="Spiral",
+    shape=FireworkShape.SPIRAL,
+    particle_count=120,
+    speed_range=(0.75, 1.35),
+    life_range=(62, 94),
+    palette=(11, 10, 7),
+    fade_mid=3,
+    fade_dark=1,
+    tip_color=7,
+    drag=0.986,
+    gravity=-0.019,
+    trail=SPIRAL_TRAIL_PRESET,
+)

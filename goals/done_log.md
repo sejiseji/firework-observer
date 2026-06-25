@@ -288,3 +288,23 @@ Record completed tasks here.
 - User-visible behavior: Production gameplay remains unchanged. Manual preview Ring bursts can now vary orientation deterministically.
 - Preservation: `main.py` was unchanged. Default profile remains `classic`. No Spiral/Willow/Peony/Multi-ring/Halo/Senrin implementation, scenery rendering, production runtime migration, or external Firework.py code was added.
 - Follow-up: Use the manual preview to inspect Ring orientation variety, then start `T0003.3` to implement Spiral.
+
+## 2026-06-25 T0003.3 Implement spiral preset
+
+- Summary: Added `SPIRAL_PRESET` and deterministic Pyxel-independent Spiral burst generation. The generator returns immutable `ParticleSpawnSpec` values with normalized 3D spiral velocities, negative gravity, and partial trail fields from `TrailPreset`.
+- Pre-task git state: branch `main`; worktree clean; latest commit `863c332 Add deterministic Ring orientation bank`.
+- Files changed: `src/pyxel_goal_game/firework_presets.py`, `src/pyxel_goal_game/firework_bursts.py`, `tests/unit/test_firework_bursts.py`, `tools/preview_firework_box.py`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Behavior:
+  - `generate_spiral_burst(origin=..., seed=...)` creates deterministic 3D spiral spawn specs.
+  - `generate_burst()` now supports `FireworkShape.SPIRAL`.
+  - Preview `SPACE` cycles Kiku, Ring, and Spiral.
+  - Spiral velocities include x/y/z variation while preserving speed magnitudes within `SPIRAL_PRESET.speed_range`.
+- Tests:
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 72 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 72 passed.
+- User-visible behavior: Production gameplay remains unchanged. Manual preview can now inspect Spiral.
+- Preservation: `main.py` was unchanged. Default profile remains `classic`. `iphone16_balanced` remains screen `236x512` and box `120x260x120`. No Willow/Peony/Multi-ring/Halo/Senrin implementation, scenery rendering, production runtime migration, or external Firework.py code was added.
+- Follow-up: Use the manual preview to inspect Spiral in the portrait profile, then start `T0003.4` to implement Willow.

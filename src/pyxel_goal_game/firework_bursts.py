@@ -8,6 +8,7 @@ from pyxel_goal_game.camera3d import Vec3
 from pyxel_goal_game.firework_presets import (
     KIKU_PRESET,
     RING_PRESET,
+    SPIRAL_PRESET,
     FireworkPreset,
     FireworkShape,
 )
@@ -86,6 +87,15 @@ def generate_ring_burst(
     )
 
 
+def generate_spiral_burst(
+    *,
+    origin: Vec3,
+    seed: int,
+    preset: FireworkPreset = SPIRAL_PRESET,
+) -> tuple[ParticleSpawnSpec, ...]:
+    return generate_burst(preset=preset, origin=origin, seed=seed)
+
+
 def generate_burst(
     *,
     preset: FireworkPreset,
@@ -107,6 +117,8 @@ def generate_burst(
             rng=rng,
             orientation=orientation,
         )
+    if preset.shape is FireworkShape.SPIRAL:
+        return generate_spiral_shape_burst(preset=preset, origin=origin, rng=rng)
 
     msg = f"Unsupported firework shape: {preset.shape.name}"
     raise NotImplementedError(msg)
@@ -150,6 +162,33 @@ def generate_ring_shape_burst(
             speed=speed,
             rng=rng,
             orientation=orientation,
+        )
+        particles.append(
+            make_particle_spec(
+                origin=origin,
+                velocity=velocity,
+                speed=speed,
+                preset=preset,
+                rng=rng,
+            )
+        )
+    return tuple(particles)
+
+
+def generate_spiral_shape_burst(
+    *,
+    preset: FireworkPreset,
+    origin: Vec3,
+    rng: Random,
+) -> tuple[ParticleSpawnSpec, ...]:
+    particles: list[ParticleSpawnSpec] = []
+    for index in range(preset.particle_count):
+        speed = rng.uniform(*preset.speed_range)
+        velocity = spiral_velocity(
+            index=index,
+            count=preset.particle_count,
+            speed=speed,
+            rng=rng,
         )
         particles.append(
             make_particle_spec(
@@ -225,6 +264,19 @@ def ring_velocity(
         scale_vec3(orientation.normal, thickness),
     )
     return scale_vec3(direction, speed)
+
+
+def spiral_velocity(*, index: int, count: int, speed: float, rng: Random) -> Vec3:
+    t = index / max(1, count - 1)
+    theta = index * 0.42
+    theta += rng.uniform(-0.05, 0.05)
+    radius = 0.72 + 0.28 * t
+    direction = Vec3(
+        x=math.cos(theta) * radius,
+        y=(t - 0.5) * 1.15 + rng.uniform(-0.08, 0.08),
+        z=math.sin(theta) * radius,
+    )
+    return scale_vec3(normalize_vec3(direction), speed)
 
 
 def choose_ring_orientation(

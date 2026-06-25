@@ -21,6 +21,7 @@ from pyxel_goal_game.firework_bursts import (
     generate_spiral_burst,
     generate_willow_burst,
     length_vec3,
+    varied_burst_speed,
 )
 from pyxel_goal_game.firework_presets import (
     KIKU_PRESET,
@@ -41,6 +42,10 @@ ORIGIN = Vec3(1.0, 2.0, 3.0)
 
 def speed_of(velocity: Vec3) -> float:
     return math.sqrt(velocity.x**2 + velocity.y**2 + velocity.z**2)
+
+
+def speed_in_range(speed: float, speed_range: tuple[float, float]) -> bool:
+    return speed_range[0] - 1e-9 <= speed <= speed_range[1] + 1e-9
 
 
 def test_kiku_preset_uses_protected_values() -> None:
@@ -77,7 +82,7 @@ def test_kiku_particle_count_and_ranges() -> None:
         for particle in particles
     )
     assert all(
-        KIKU_PRESET.speed_range[0] <= speed_of(particle.velocity) <= KIKU_PRESET.speed_range[1]
+        speed_in_range(speed_of(particle.velocity), KIKU_PRESET.speed_range)
         for particle in particles
     )
 
@@ -113,6 +118,30 @@ def test_kiku_velocity_distribution_is_3d_not_flat() -> None:
     assert any(abs(particle.velocity.x) > 0.01 for particle in particles)
     assert any(abs(particle.velocity.y) > 0.01 for particle in particles)
     assert any(abs(particle.velocity.z) > 0.01 for particle in particles)
+
+
+@pytest.mark.parametrize(
+    "preset",
+    [
+        KIKU_PRESET,
+        RING_PRESET,
+        SPIRAL_PRESET,
+        WILLOW_PRESET,
+        PEONY_PRESET,
+        MULTI_RING_PRESET,
+        SENRIN_PRESET,
+    ],
+)
+def test_burst_radius_variation_is_subtle_and_bounded(preset: FireworkPreset) -> None:
+    midpoint = sum(preset.speed_range) / 2.0
+    varied = [
+        varied_burst_speed(base_speed=midpoint, preset=preset, index=index)
+        for index in range(24)
+    ]
+
+    assert all(preset.speed_range[0] <= speed <= preset.speed_range[1] for speed in varied)
+    assert min(varied) < midpoint < max(varied)
+    assert max(varied) / min(varied) < 1.25
 
 
 def test_generate_burst_rejects_unsupported_shapes() -> None:
@@ -224,7 +253,7 @@ def test_ring_particle_count_and_ranges() -> None:
         for particle in particles
     )
     assert all(
-        RING_PRESET.speed_range[0] <= speed_of(particle.velocity) <= RING_PRESET.speed_range[1]
+        speed_in_range(speed_of(particle.velocity), RING_PRESET.speed_range)
         for particle in particles
     )
 
@@ -254,7 +283,7 @@ def test_ring_velocity_keeps_speed_with_orientation_bank() -> None:
     particles = generate_ring_burst(origin=ORIGIN, seed=0, orientation_bank=bank)
 
     assert all(
-        RING_PRESET.speed_range[0] <= speed_of(particle.velocity) <= RING_PRESET.speed_range[1]
+        speed_in_range(speed_of(particle.velocity), RING_PRESET.speed_range)
         for particle in particles
     )
 
@@ -330,9 +359,7 @@ def test_spiral_particle_count_and_ranges() -> None:
         for particle in particles
     )
     assert all(
-        SPIRAL_PRESET.speed_range[0]
-        <= speed_of(particle.velocity)
-        <= SPIRAL_PRESET.speed_range[1]
+        speed_in_range(speed_of(particle.velocity), SPIRAL_PRESET.speed_range)
         for particle in particles
     )
 
@@ -508,9 +535,7 @@ def test_peony_particle_count_life_and_speed_ranges() -> None:
         for particle in particles
     )
     assert all(
-        PEONY_PRESET.speed_range[0]
-        <= speed_of(particle.velocity)
-        <= PEONY_PRESET.speed_range[1]
+        speed_in_range(speed_of(particle.velocity), PEONY_PRESET.speed_range)
         for particle in particles
     )
 
@@ -607,9 +632,7 @@ def test_multi_ring_particle_count_life_and_speed_ranges() -> None:
         for particle in particles
     )
     assert all(
-        MULTI_RING_PRESET.speed_range[0] - 1e-9
-        <= speed_of(particle.velocity)
-        <= MULTI_RING_PRESET.speed_range[1] + 1e-9
+        speed_in_range(speed_of(particle.velocity), MULTI_RING_PRESET.speed_range)
         for particle in particles
     )
 

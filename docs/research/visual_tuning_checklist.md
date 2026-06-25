@@ -177,7 +177,14 @@ Interaction rules:
    - Press `0`.
    - Observe combined type, count, and height variation.
 
-10. Scenery readability check:
+10. Burst radius variation check:
+   - Select Kiku, Peony, Ring, Spiral, Willow, Multi-ring, and Senrin.
+   - Press `Z` for each type.
+   - Confirm burst radii are subtly uneven but identities remain readable.
+   - Confirm Ring and Multi-ring do not collapse into cloudy spheres.
+   - Confirm Senrin secondary bursts remain sparse and controlled.
+
+11. Scenery readability check:
    - Press `G` to cycle `Empty` and `City`.
    - Press `B` to confirm scenery can be hidden.
    - Rotate the camera and confirm scenery projects with the box.
@@ -229,6 +236,13 @@ If burst accent rays dominate:
 - Darken accent ray colors.
 - Disable accent rays for Senrin or Multi-ring first.
 
+If burst radius variation dominates:
+
+- Reduce sphere-like burst variation first.
+- Reduce ring-like burst variation if rings lose planar readability.
+- Keep Senrin secondary variation at none or near zero until density is stable.
+- Prefer smaller bounded speed wobble over random position offsets.
+
 If scenery dominates:
 
 - Reduce line count.
@@ -269,6 +283,7 @@ Watch the debug HUD in stress modes:
 - `T0003.8.5`: Tune firework shell tail readability.
 - `T0003.8.6`: Tune persistent salvo repeat interval.
 - `T0003.8.8`: Tune burst accent ray density.
+- `T0003.8.10`: Tune burst radius variation if identities become less readable.
 - `T0004.2`: Add city landmark tower, utility poles, and overhead wires.
 - `T0004.3`: Tune city scenery readability against fireworks.
 - `T0003.9`: Add Halo preset if density is stable.

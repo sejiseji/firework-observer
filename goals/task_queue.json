@@ -352,6 +352,12 @@
       "title": "Ground city building wireframes",
       "completed_on": "2026-06-26",
       "summary": "Omitted CITY building bottom-face perimeter edges while keeping vertical and top edges, and slightly reduced current city block scale and height so buildings read as rising from the cut floor plane."
+    },
+    {
+      "id": "T0003.8.9",
+      "title": "Add subtle burst radius variation",
+      "completed_on": "2026-06-26",
+      "summary": "Added bounded deterministic per-particle velocity magnitude wobble to pure burst generation so explosion radii feel less mechanically uniform while preserving preset identities."
     }
   ]
 }

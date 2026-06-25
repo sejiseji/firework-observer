@@ -13,6 +13,7 @@ from pyxel_goal_game.firework_presets import (
     SENRIN_PRESET,
     SPIRAL_PRESET,
     WILLOW_PRESET,
+    FireworkKind,
     FireworkPreset,
     FireworkShape,
     SecondaryPreset,
@@ -31,6 +32,15 @@ MULTI_RING_LAYERS = (
     (40, 1.00, 0.17),
     (48, 1.18, 0.34),
 )
+BURST_RADIUS_VARIATION_BY_KIND = {
+    FireworkKind.KIKU: 0.08,
+    FireworkKind.PEONY: 0.08,
+    FireworkKind.RING: 0.04,
+    FireworkKind.MULTI_RING: 0.04,
+    FireworkKind.WILLOW: 0.07,
+    FireworkKind.SPIRAL: 0.06,
+    FireworkKind.SENRIN: 0.05,
+}
 
 
 @dataclass(frozen=True)
@@ -216,8 +226,12 @@ def generate_sphere_burst(
     rng: Random,
 ) -> tuple[ParticleSpawnSpec, ...]:
     particles: list[ParticleSpawnSpec] = []
-    for _ in range(preset.particle_count):
-        speed = rng.uniform(*preset.speed_range)
+    for index in range(preset.particle_count):
+        speed = varied_burst_speed(
+            base_speed=rng.uniform(*preset.speed_range),
+            preset=preset,
+            index=index,
+        )
         velocity = random_sphere_velocity(speed=speed, rng=rng)
         particles.append(
             make_particle_spec(
@@ -240,7 +254,11 @@ def generate_ring_shape_burst(
 ) -> tuple[ParticleSpawnSpec, ...]:
     particles: list[ParticleSpawnSpec] = []
     for index in range(preset.particle_count):
-        speed = rng.uniform(*preset.speed_range)
+        speed = varied_burst_speed(
+            base_speed=rng.uniform(*preset.speed_range),
+            preset=preset,
+            index=index,
+        )
         velocity = ring_velocity(
             index=index,
             count=preset.particle_count,
@@ -271,10 +289,15 @@ def generate_multi_ring_shape_burst(
     for layer_count, speed_multiplier, theta_offset in MULTI_RING_LAYERS:
         for index in range(layer_count):
             base_speed = rng.uniform(*preset.speed_range)
-            speed = clamp_float(
+            layer_speed = clamp_float(
                 base_speed * speed_multiplier,
                 minimum=preset.speed_range[0],
                 maximum=preset.speed_range[1],
+            )
+            speed = varied_burst_speed(
+                base_speed=layer_speed,
+                preset=preset,
+                index=len(particles),
             )
             velocity = ring_velocity(
                 index=index,
@@ -308,7 +331,11 @@ def generate_spiral_shape_burst(
 ) -> tuple[ParticleSpawnSpec, ...]:
     particles: list[ParticleSpawnSpec] = []
     for index in range(preset.particle_count):
-        speed = rng.uniform(*preset.speed_range)
+        speed = varied_burst_speed(
+            base_speed=rng.uniform(*preset.speed_range),
+            preset=preset,
+            index=index,
+        )
         velocity = spiral_velocity(
             index=index,
             count=preset.particle_count,
@@ -334,8 +361,12 @@ def generate_willow_shape_burst(
     rng: Random,
 ) -> tuple[ParticleSpawnSpec, ...]:
     particles: list[ParticleSpawnSpec] = []
-    for _ in range(preset.particle_count):
-        speed = rng.uniform(*preset.speed_range)
+    for index in range(preset.particle_count):
+        speed = varied_burst_speed(
+            base_speed=rng.uniform(*preset.speed_range),
+            preset=preset,
+            index=index,
+        )
         velocity = willow_velocity(speed=speed, rng=rng)
         particles.append(
             make_particle_spec(
@@ -357,7 +388,11 @@ def generate_senrin_shape_burst(
 ) -> tuple[ParticleSpawnSpec, ...]:
     particles: list[ParticleSpawnSpec] = []
     for index in range(preset.particle_count):
-        speed = rng.uniform(*preset.speed_range)
+        speed = varied_burst_speed(
+            base_speed=rng.uniform(*preset.speed_range),
+            preset=preset,
+            index=index,
+        )
         velocity = random_sphere_velocity(speed=speed, rng=rng)
         velocity = Vec3(velocity.x, velocity.y * 0.75, velocity.z)
         particles.append(
@@ -375,6 +410,24 @@ def generate_senrin_shape_burst(
             )
         )
     return tuple(particles)
+
+
+def varied_burst_speed(
+    *,
+    base_speed: float,
+    preset: FireworkPreset,
+    index: int,
+) -> float:
+    amount = BURST_RADIUS_VARIATION_BY_KIND.get(preset.kind, 0.0)
+    if amount <= 0.0:
+        return base_speed
+    phase = (index + 1) * 2.399963229728653
+    wobble = 1.0 + math.sin(phase) * amount
+    return clamp_float(
+        base_speed * wobble,
+        minimum=preset.speed_range[0],
+        maximum=preset.speed_range[1],
+    )
 
 
 def make_particle_spec(

@@ -502,3 +502,17 @@ Keep full 12-edge cuboids, remove more building structure, or delay city readabi
 
 Impact:
 Only Pyxel-independent scenery data changed. `main.py`, production gameplay, firework preset parameters, pure firework generation behavior, preview controls, Halo, and external Firework.py integration remain unchanged.
+
+## 2026-06-26 Add subtle burst radius variation
+
+Decision:
+Add small deterministic per-particle burst radius variation as bounded velocity magnitude wobble in pure burst generation.
+
+Reason:
+Perfectly uniform burst radii make explosions feel too mechanically even. A small bounded wobble adds naturalness while preserving each preset's identity and existing y-up physics.
+
+Alternatives:
+Change particle positions, add preview-only visual noise, tune preset speed ranges directly, or defer until after Halo.
+
+Impact:
+Pure burst generation now varies effective velocity magnitudes slightly within each preset's existing speed range. Shell tail rendering, CITY scenery, preview controls, `main.py`, production runtime, preset parameter constants, Halo, and external Firework.py integration remain unchanged.

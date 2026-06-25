@@ -78,6 +78,40 @@ def test_city_uses_3d_building_geometry() -> None:
     assert len({round(point.z, 4) for point in points}) > 6
 
 
+def test_city_buildings_omit_bottom_face_edges() -> None:
+    city = get_scenery_preset("city", profile=CLASSIC_PROFILE)
+    base_y = min(point.y for point in city.all_points)
+    bottom_edges = [
+        line
+        for line in city.lines
+        if line.start.y == base_y and line.end.y == base_y
+    ]
+    vertical_edges = [
+        line
+        for line in city.lines
+        if line.start.x == line.end.x
+        and line.start.z == line.end.z
+        and line.start.y != line.end.y
+        and (line.start.y == base_y or line.end.y == base_y)
+    ]
+    top_edges = [
+        line
+        for line in city.lines
+        if line.start.y == line.end.y and line.start.y > base_y
+    ]
+
+    assert bottom_edges == []
+    assert len(vertical_edges) >= 24
+    assert len(top_edges) >= 24
+
+
+def test_city_stays_low_in_observation_box() -> None:
+    city = get_scenery_preset("city", profile=CLASSIC_PROFILE)
+    y_values = tuple(point.y for point in city.all_points)
+
+    assert max(y_values) - min(y_values) <= CLASSIC_PROFILE.box_height * 0.20
+
+
 def test_city_has_sparse_lit_windows() -> None:
     city = get_scenery_preset("city", profile=CLASSIC_PROFILE)
     colors = [line.color for line in city.lines]

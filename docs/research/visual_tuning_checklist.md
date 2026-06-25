@@ -236,6 +236,8 @@ If scenery dominates:
 - Move scenery lower in the box.
 - Prefer fewer back-phase lines before adding front-phase details.
 - Reduce bright window count before removing building outlines.
+- For CITY, keep building bottom-face perimeter edges omitted so buildings feel grounded into the cut floor plane instead of separate boxes.
+- For CITY, preserve vertical and top edges plus sparse windows; do not weaken the buildings by removing all structure.
 
 ## Depth And Box Readability
 

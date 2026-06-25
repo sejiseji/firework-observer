@@ -346,6 +346,12 @@
       "title": "Refocus scenery to city-only 3D urban kit",
       "completed_on": "2026-06-25",
       "summary": "Refocused active preview scenery to EMPTY and CITY, and rebuilt CITY as profile-scaled 3D cuboid building blocks with sparse lit windows."
+    },
+    {
+      "id": "T0004.1.1",
+      "title": "Ground city building wireframes",
+      "completed_on": "2026-06-26",
+      "summary": "Omitted CITY building bottom-face perimeter edges while keeping vertical and top edges, and slightly reduced current city block scale and height so buildings read as rising from the cut floor plane."
     }
   ]
 }

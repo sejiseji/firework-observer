@@ -488,3 +488,17 @@ Continue cycling all scenery presets, add forest/coast/dike next, or keep the pr
 
 Impact:
 `SCENERY_PRESET_NAMES` now exposes only `empty` and `city` to the preview cycle. The city data remains Pyxel-independent and uses profile-scaled `Vec3` line geometry. `main.py`, production gameplay, firework preset parameters, pure firework generation behavior, Halo, and external Firework.py integration remain unchanged.
+
+## 2026-06-26 Ground city building wireframes
+
+Decision:
+Omit the four bottom-face perimeter edges from CITY building cuboids, while preserving vertical edges, top edges, and sparse windows. Also slightly reduced the current city block scale and height.
+
+Reason:
+Full bottom cuboid edges made the city read like loose miniature boxes placed on the floor. Omitting only the bottom perimeter makes buildings feel grounded into the cut floor plane, which better matches the observation-box direction.
+
+Alternatives:
+Keep full 12-edge cuboids, remove more building structure, or delay city readability tuning until landmarks are added.
+
+Impact:
+Only Pyxel-independent scenery data changed. `main.py`, production gameplay, firework preset parameters, pure firework generation behavior, preview controls, Halo, and external Firework.py integration remain unchanged.

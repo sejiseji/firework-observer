@@ -42,6 +42,7 @@
 - [x] restore simple gradient firework shell tail
 - [x] add preview scenery preset scaffold and switching
 - [x] refocus scenery to city-only 3D urban kit
+- [x] ground city building wireframes into the cut floor plane
 - [ ] add city landmark tower, utility poles, and overhead wires
 - [ ] tune city scenery readability against fireworks
 - [ ] add scenery preset data scaffold

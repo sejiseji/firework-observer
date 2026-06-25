@@ -180,3 +180,17 @@ Follow-up city scenery work should add:
 - Slightly sagging overhead wires
 
 Do not add those city details until the cuboid building layer remains readable under `R + H + 0` preview stress mode.
+
+## City Grounding Rule
+
+`T0004.1.1` adjusted the city cuboid layer so buildings read as rising from the cut floor plane instead of sitting on the floor as separate miniature boxes.
+
+CITY building cuboids should:
+
+- Omit the four bottom-face perimeter edges
+- Keep the four vertical edges
+- Keep the four top-face edges
+- Keep sparse windows on visible faces
+- Stay slightly smaller and lower than the initial `T0004.1` block sizes
+
+This rule is intentional. Do not restore full 12-edge cuboids for CITY buildings unless a later task explicitly changes the city staging direction.

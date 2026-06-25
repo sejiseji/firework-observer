@@ -18,11 +18,14 @@ from pyxel_goal_game.camera3d import Camera3D, ProjectedPoint, Vec3  # noqa: E40
 from pyxel_goal_game.firework_bursts import (  # noqa: E402
     ParticleSpawnSpec,
     RingOrientationBank,
+    SecondaryBurstSpec,
     build_ring_orientation_bank,
     generate_kiku_burst,
     generate_multi_ring_burst,
     generate_peony_burst,
     generate_ring_burst,
+    generate_secondary_burst,
+    generate_senrin_burst,
     generate_spiral_burst,
     generate_willow_burst,
 )
@@ -41,7 +44,7 @@ MIN_PITCH = -1.2
 AUTO_LAUNCH_FRAMES = 120
 RING_ORIENTATION_BANK_SEED = 20260623
 PREVIEW_RANDOM_SEED = 20260625
-BURST_LABELS = ("Kiku", "Ring", "Spiral", "Willow", "Peony", "Multi-ring")
+BURST_LABELS = ("Kiku", "Ring", "Spiral", "Willow", "Peony", "Multi-ring", "Senrin")
 
 
 @dataclass(frozen=True)
@@ -69,6 +72,8 @@ class PreviewParticle:
     trail_until_age: int
     trail_strength: int
     trail_draw_every: int
+    secondary_burst: SecondaryBurstSpec | None = None
+    secondary_triggered: bool = False
 
     @classmethod
     def from_spawn(cls, spec: ParticleSpawnSpec) -> PreviewParticle:
@@ -88,6 +93,7 @@ class PreviewParticle:
             trail_until_age=spec.trail_until_age,
             trail_strength=spec.trail_strength,
             trail_draw_every=spec.trail_draw_every,
+            secondary_burst=spec.secondary_burst,
         )
 
     @property
@@ -177,6 +183,7 @@ class PreviewApp:
         self.camera.step_toward_target()
         for particle in self.particles:
             particle.step()
+        self.launch_secondary_bursts()
         self.particles = [
             particle for particle in self.particles if particle.is_alive()
         ][-self.profile.max_particles :]
@@ -252,16 +259,37 @@ class PreviewApp:
             specs = generate_willow_burst(origin=origin, seed=seed)
         elif burst_index == 4:
             specs = generate_peony_burst(origin=origin, seed=seed)
-        else:
+        elif burst_index == 5:
             specs = generate_multi_ring_burst(
                 origin=origin,
                 seed=seed,
                 orientation_bank=self.ring_orientation_bank,
             )
+        else:
+            specs = generate_senrin_burst(origin=origin, seed=seed)
         self.last_launched_index = burst_index
         self.particles.extend(PreviewParticle.from_spawn(spec) for spec in specs)
         if len(self.particles) > self.profile.max_particles:
             self.particles = self.particles[-self.profile.max_particles :]
+
+    def launch_secondary_bursts(self) -> None:
+        new_particles: list[PreviewParticle] = []
+        for particle in self.particles:
+            secondary = particle.secondary_burst
+            if (
+                secondary is not None
+                and not particle.secondary_triggered
+                and particle.age >= secondary.delay_frames
+            ):
+                particle.secondary_triggered = True
+                new_particles.extend(
+                    PreviewParticle.from_spawn(spec)
+                    for spec in generate_secondary_burst(
+                        origin=particle.position,
+                        spec=secondary,
+                    )
+                )
+        self.particles.extend(new_particles)
 
     def choose_launch_index(self) -> int:
         if not self.random_mode:

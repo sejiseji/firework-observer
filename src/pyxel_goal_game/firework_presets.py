@@ -227,3 +227,51 @@ WILLOW_PRESET = FireworkPreset(
     gravity=-0.040,
     trail=WILLOW_TRAIL_PRESET,
 )
+
+
+SENRIN_TRAIL_PRESET = TrailPreset(
+    rate=0.26,
+    speed_threshold=0.50,
+    early_ratio=0.42,
+    strong_speed=0.80,
+)
+
+SENRIN_SECONDARY_TRAIL_PRESET = TrailPreset(
+    rate=0.06,
+    speed_threshold=0.55,
+    early_ratio=0.25,
+    strong_speed=0.65,
+    draw_every=2,
+)
+
+SENRIN_SECONDARY_PRESET = SecondaryPreset(
+    rate=0.78,
+    count_range=(8, 14),
+    delay_range=(14, 28),
+    speed_range=(0.28, 0.68),
+    life_range=(28, 48),
+    palette=(7, 10, 9, 14),
+    fade_mid=9,
+    fade_dark=2,
+    tip_color=7,
+    drag=0.982,
+    gravity=-0.025,
+    trail=SENRIN_SECONDARY_TRAIL_PRESET,
+)
+
+SENRIN_PRESET = FireworkPreset(
+    kind=FireworkKind.SENRIN,
+    label="Senrin",
+    shape=FireworkShape.SENRIN_SEED,
+    particle_count=42,
+    speed_range=(0.55, 0.95),
+    life_range=(32, 52),
+    palette=(7, 10, 14),
+    fade_mid=10,
+    fade_dark=5,
+    tip_color=7,
+    drag=0.990,
+    gravity=-0.012,
+    trail=SENRIN_TRAIL_PRESET,
+    secondary=SENRIN_SECONDARY_PRESET,
+)

@@ -33,7 +33,7 @@
 - [x] add preview random burst selection mode
 - [x] add fixed-position preview salvo launch plans
 - [x] add multi-ring or halo preset
-- [ ] add senrin / secondary burst preset
+- [x] add senrin / secondary burst preset
 - [ ] add preset cycling and visual tuning checklist
 - [ ] add scenery preset data scaffold
 - [ ] add EMPTY and MOUNTAINS scenery presets

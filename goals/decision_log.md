@@ -306,3 +306,17 @@ Implement Halo first, make Multi-ring a production-only runtime effect, or incre
 
 Impact:
 `generate_burst()` now supports `FireworkShape.MULTI_RING`. Multi-ring uses three deterministic ring layers sharing a coherent orientation with clamped speed bands and restrained partial trails. Kiku, Ring, Spiral, Willow, Peony, production runtime, `main.py`, profiles, and scenery remain unchanged.
+
+## 2026-06-25 Add deterministic Senrin secondary burst specs
+
+Decision:
+Add `SENRIN_PRESET`, `SENRIN_SECONDARY_PRESET`, optional `ParticleSpawnSpec.secondary_burst`, and deterministic secondary burst generation. The manual preview executes secondary bursts locally for Senrin inspection.
+
+Reason:
+Senrin needs delayed small secondary bursts, but production runtime migration is still out of scope. Representing secondary behavior as deterministic data keeps the pure generation model testable and lets the preview show the visual idea without changing gameplay runtime.
+
+Alternatives:
+Implement runtime secondary particles immediately, fake Senrin as a dense single-stage sphere, or defer Senrin until after production particle migration.
+
+Impact:
+`generate_burst()` now supports `FireworkShape.SENRIN_SEED`. Non-secondary presets keep `secondary_burst=None`. Preview sequential, random, and salvo modes include Senrin and execute secondary bursts locally. `main.py`, production gameplay, profiles, scenery, and existing preset outputs remain unchanged.

@@ -3,28 +3,6 @@
   "policy": "Keep tasks small enough for one Codex patch. Split ambiguous tasks before implementation.",
   "current": [
     {
-      "id": "T0003.7",
-      "title": "Implement senrin / secondary burst preset",
-      "goal": "Add one small-shell cluster or secondary-burst preset with restrained secondary trails.",
-      "status": "todo",
-      "depends_on": [
-        "T0003.6"
-      ],
-      "constraints": [
-        "Implement only senrin or secondary burst behavior",
-        "Keep secondary particles capped",
-        "Do not modify standalone main.py",
-        "Do not copy external Firework.py code"
-      ],
-      "acceptance": [
-        "Secondary burst timing is deterministic",
-        "Secondary particle count is bounded",
-        "Secondary trails are restrained",
-        "Existing presets still work",
-        "Validation results are recorded"
-      ]
-    },
-    {
       "id": "T0003.8",
       "title": "Add preset cycling and visual tuning checklist",
       "goal": "Add a minimal way to cycle available presets and document visual tuning checks.",
@@ -335,6 +313,12 @@
       "title": "Implement multi-ring preset",
       "completed_on": "2026-06-25",
       "summary": "Added MULTI_RING_PRESET and deterministic Pyxel-independent three-layer multi-ring burst generation, with preview random and salvo support."
+    },
+    {
+      "id": "T0003.7",
+      "title": "Implement senrin / secondary burst preset",
+      "completed_on": "2026-06-25",
+      "summary": "Added SENRIN_PRESET, deterministic primary seed generation, optional SecondaryBurstSpec data, deterministic secondary burst generation, and preview-only secondary execution."
     }
   ]
 }

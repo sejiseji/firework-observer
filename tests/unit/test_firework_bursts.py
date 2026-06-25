@@ -16,6 +16,8 @@ from pyxel_goal_game.firework_bursts import (
     generate_multi_ring_burst,
     generate_peony_burst,
     generate_ring_burst,
+    generate_secondary_burst,
+    generate_senrin_burst,
     generate_spiral_burst,
     generate_willow_burst,
     length_vec3,
@@ -25,6 +27,8 @@ from pyxel_goal_game.firework_presets import (
     MULTI_RING_PRESET,
     PEONY_PRESET,
     RING_PRESET,
+    SENRIN_PRESET,
+    SENRIN_SECONDARY_PRESET,
     SPIRAL_PRESET,
     WILLOW_PRESET,
     FireworkKind,
@@ -88,6 +92,7 @@ def test_kiku_specs_preserve_physics_and_colors() -> None:
     assert all(particle.fade_mid == KIKU_PRESET.fade_mid for particle in particles)
     assert all(particle.fade_dark == KIKU_PRESET.fade_dark for particle in particles)
     assert all(particle.tip_color == KIKU_PRESET.tip_color for particle in particles)
+    assert all(particle.secondary_burst is None for particle in particles)
 
 
 def test_kiku_trails_are_partial_for_known_seed() -> None:
@@ -617,6 +622,7 @@ def test_multi_ring_specs_preserve_physics_and_colors() -> None:
     assert all(particle.gravity < 0.0 for particle in particles)
     assert all(particle.drag == MULTI_RING_PRESET.drag for particle in particles)
     assert all(particle.color in MULTI_RING_PRESET.palette for particle in particles)
+    assert all(particle.secondary_burst is None for particle in particles)
 
 
 def test_multi_ring_trails_are_partial_for_known_seed() -> None:
@@ -671,3 +677,170 @@ def test_generate_burst_supports_multi_ring_orientation_bank() -> None:
         seed=0,
         orientation_bank=bank,
     )
+
+
+def test_senrin_preset_uses_documented_values() -> None:
+    assert SENRIN_PRESET.kind is FireworkKind.SENRIN
+    assert SENRIN_PRESET.shape is FireworkShape.SENRIN_SEED
+    assert SENRIN_PRESET.particle_count == 42
+    assert SENRIN_PRESET.speed_range == (0.55, 0.95)
+    assert SENRIN_PRESET.life_range == (32, 52)
+    assert SENRIN_PRESET.palette == (7, 10, 14)
+    assert SENRIN_PRESET.fade_mid == 10
+    assert SENRIN_PRESET.fade_dark == 5
+    assert SENRIN_PRESET.gravity == -0.012
+    assert SENRIN_PRESET.secondary is SENRIN_SECONDARY_PRESET
+
+
+def test_senrin_secondary_preset_uses_documented_values() -> None:
+    assert SENRIN_SECONDARY_PRESET.rate == 0.78
+    assert SENRIN_SECONDARY_PRESET.count_range == (8, 14)
+    assert SENRIN_SECONDARY_PRESET.delay_range == (14, 28)
+    assert SENRIN_SECONDARY_PRESET.speed_range == (0.28, 0.68)
+    assert SENRIN_SECONDARY_PRESET.life_range == (28, 48)
+    assert SENRIN_SECONDARY_PRESET.palette == (7, 10, 9, 14)
+    assert SENRIN_SECONDARY_PRESET.gravity == -0.025
+    assert SENRIN_SECONDARY_PRESET.trail.rate == 0.06
+    assert SENRIN_SECONDARY_PRESET.trail.draw_every == 2
+
+
+def test_same_seed_generates_identical_senrin_specs() -> None:
+    first = generate_senrin_burst(origin=ORIGIN, seed=123)
+    second = generate_senrin_burst(origin=ORIGIN, seed=123)
+
+    assert first == second
+
+
+def test_different_seeds_generate_different_senrin_specs() -> None:
+    first = generate_senrin_burst(origin=ORIGIN, seed=123)
+    second = generate_senrin_burst(origin=ORIGIN, seed=124)
+
+    assert first != second
+
+
+def test_senrin_primary_particle_count_life_and_speed_ranges() -> None:
+    particles = generate_senrin_burst(origin=ORIGIN, seed=0)
+
+    assert len(particles) == SENRIN_PRESET.particle_count
+    assert all(
+        SENRIN_PRESET.life_range[0] <= particle.life <= SENRIN_PRESET.life_range[1]
+        for particle in particles
+    )
+    assert all(
+        speed_of(particle.velocity) <= SENRIN_PRESET.speed_range[1]
+        for particle in particles
+    )
+
+
+def test_senrin_primary_specs_preserve_physics_and_colors() -> None:
+    particles = generate_senrin_burst(origin=ORIGIN, seed=0)
+
+    assert all(particle.position == ORIGIN for particle in particles)
+    assert all(particle.gravity == SENRIN_PRESET.gravity for particle in particles)
+    assert all(particle.gravity < 0.0 for particle in particles)
+    assert all(particle.drag == SENRIN_PRESET.drag for particle in particles)
+    assert all(particle.color in SENRIN_PRESET.palette for particle in particles)
+
+
+def test_senrin_primary_trails_are_partial_for_known_seed() -> None:
+    particles = generate_senrin_burst(origin=ORIGIN, seed=0)
+    trail_count = sum(particle.has_trail for particle in particles)
+
+    assert 0 < trail_count < len(particles)
+    assert all(
+        particle.trail_until_age == int(particle.life * SENRIN_PRESET.trail.early_ratio)
+        for particle in particles
+    )
+
+
+def test_senrin_has_partial_secondary_burst_specs() -> None:
+    particles = generate_senrin_burst(origin=ORIGIN, seed=0)
+    secondary_specs = [
+        particle.secondary_burst
+        for particle in particles
+        if particle.secondary_burst is not None
+    ]
+
+    assert 0 < len(secondary_specs) < len(particles)
+    assert all(
+        SENRIN_SECONDARY_PRESET.delay_range[0]
+        <= secondary.delay_frames
+        <= SENRIN_SECONDARY_PRESET.delay_range[1]
+        for secondary in secondary_specs
+    )
+    assert all(
+        SENRIN_SECONDARY_PRESET.count_range[0]
+        <= secondary.particle_count
+        <= SENRIN_SECONDARY_PRESET.count_range[1]
+        for secondary in secondary_specs
+    )
+
+
+def test_senrin_secondary_specs_match_secondary_preset() -> None:
+    particles = generate_senrin_burst(origin=ORIGIN, seed=0)
+    secondary = next(
+        particle.secondary_burst
+        for particle in particles
+        if particle.secondary_burst is not None
+    )
+
+    assert secondary.speed_range == SENRIN_SECONDARY_PRESET.speed_range
+    assert secondary.life_range == SENRIN_SECONDARY_PRESET.life_range
+    assert secondary.palette == SENRIN_SECONDARY_PRESET.palette
+    assert secondary.fade_mid == SENRIN_SECONDARY_PRESET.fade_mid
+    assert secondary.fade_dark == SENRIN_SECONDARY_PRESET.fade_dark
+    assert secondary.tip_color == SENRIN_SECONDARY_PRESET.tip_color
+    assert secondary.drag == SENRIN_SECONDARY_PRESET.drag
+    assert secondary.gravity == SENRIN_SECONDARY_PRESET.gravity
+    assert secondary.trail == SENRIN_SECONDARY_PRESET.trail
+
+
+def test_secondary_burst_generation_is_deterministic() -> None:
+    secondary = next(
+        particle.secondary_burst
+        for particle in generate_senrin_burst(origin=ORIGIN, seed=0)
+        if particle.secondary_burst is not None
+    )
+
+    first = generate_secondary_burst(origin=ORIGIN, spec=secondary)
+    second = generate_secondary_burst(origin=ORIGIN, spec=secondary)
+
+    assert first == second
+
+
+def test_secondary_burst_particles_use_secondary_ranges() -> None:
+    secondary = next(
+        particle.secondary_burst
+        for particle in generate_senrin_burst(origin=ORIGIN, seed=0)
+        if particle.secondary_burst is not None
+    )
+    particles = generate_secondary_burst(origin=ORIGIN, spec=secondary)
+
+    assert len(particles) == secondary.particle_count
+    assert all(
+        secondary.life_range[0] <= particle.life <= secondary.life_range[1]
+        for particle in particles
+    )
+    assert all(particle.color in secondary.palette for particle in particles)
+    assert all(particle.gravity == secondary.gravity for particle in particles)
+    assert all(particle.gravity < 0.0 for particle in particles)
+    assert all(particle.secondary_burst is None for particle in particles)
+
+
+def test_secondary_burst_trails_are_sparse_for_known_seed() -> None:
+    secondary = next(
+        particle.secondary_burst
+        for particle in generate_senrin_burst(origin=ORIGIN, seed=0)
+        if particle.secondary_burst is not None
+    )
+    particles = generate_secondary_burst(origin=ORIGIN, spec=secondary)
+    trail_count = sum(particle.has_trail for particle in particles)
+
+    assert trail_count < len(particles)
+    assert all(particle.trail_draw_every == secondary.trail.draw_every for particle in particles)
+
+
+def test_generate_burst_supports_senrin_seed_shape() -> None:
+    particles = generate_burst(preset=SENRIN_PRESET, origin=ORIGIN, seed=0)
+
+    assert particles == generate_senrin_burst(origin=ORIGIN, seed=0)

@@ -414,3 +414,26 @@ Record completed tasks here.
 - User-visible behavior: Production gameplay remains unchanged. Manual preview can now inspect Multi-ring alone, in random mode, and in 1-5 salvos.
 - Preservation: `main.py` was unchanged. Default profile remains `classic`. `iphone16_balanced` remains screen `236x512` and box `120x260x120`. No Halo/Senrin implementation, scenery rendering, production runtime migration, or external Firework.py code was added.
 - Follow-up: Use the manual preview to inspect 5-shot Multi-ring density, then start `T0003.7` or insert a small density-tuning task if needed.
+
+## 2026-06-25 T0003.7 Implement senrin / secondary burst preset
+
+- Summary: Added `SENRIN_PRESET`, `SENRIN_SECONDARY_PRESET`, optional `SecondaryBurstSpec` data on primary spawn specs, deterministic secondary burst generation, and preview-only secondary burst execution.
+- Pre-task git state: branch `main`; worktree clean; latest commit `7b68c1b Add deterministic Multi-ring burst generation`.
+- Files changed: `src/pyxel_goal_game/firework_presets.py`, `src/pyxel_goal_game/firework_bursts.py`, `tests/unit/test_firework_bursts.py`, `tools/preview_firework_box.py`, `docs/architecture/PROTOTYPE_RECONCILIATION.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Behavior:
+  - `generate_senrin_burst(origin=..., seed=...)` creates deterministic primary seed spawn specs.
+  - Some primary specs carry deterministic `secondary_burst` data.
+  - `generate_secondary_burst(origin=..., spec=...)` creates deterministic secondary particles.
+  - Preview `SPACE` cycles Kiku, Ring, Spiral, Willow, Peony, Multi-ring, and Senrin.
+  - Preview random mode and 1-5 salvo scheduling include Senrin.
+  - Preview executes secondary bursts locally when primary particles reach their delay.
+- Tests:
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 132 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 132 passed.
+- Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
+- User-visible behavior: Production gameplay remains unchanged. Manual preview can now inspect Senrin primary and secondary burst behavior.
+- Preservation: `main.py` was unchanged. Default profile remains `classic`. `iphone16_balanced` remains screen `236x512` and box `120x260x120`. No Halo implementation, scenery rendering, production runtime migration, or external Firework.py code was added.
+- Follow-up: Use the manual preview to inspect Senrin secondary density, then continue to `T0003.8` or insert a tuning task if needed.

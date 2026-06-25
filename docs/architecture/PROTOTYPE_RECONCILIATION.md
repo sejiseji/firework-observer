@@ -348,3 +348,12 @@ This generator is not yet wired into runtime particles, rockets, rendering, or p
 - `generate_burst()` now supports `FireworkShape.SPHERE` and `FireworkShape.RING`.
 
 This generator is not yet wired into runtime particles, rockets, rendering, or preset cycling.
+
+`T0003.7` added deterministic Senrin seed and secondary burst specification support in `src/pyxel_goal_game/firework_bursts.py`.
+
+- `SENRIN_PRESET` stores primary seed values and references `SENRIN_SECONDARY_PRESET`.
+- `ParticleSpawnSpec.secondary_burst` is optional and remains `None` for non-secondary presets.
+- `SecondaryBurstSpec` records deterministic delayed secondary burst data without introducing production runtime particle execution.
+- `generate_secondary_burst()` can turn a secondary spec into deterministic secondary `ParticleSpawnSpec` values for preview-only inspection.
+
+This representation should guide future runtime migration: production particles may execute optional secondary burst specs later, but `main.py` and current package runtime behavior remain protected until an explicit migration task.

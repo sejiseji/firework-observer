@@ -10,10 +10,13 @@ from pyxel_goal_game.firework_presets import (
     MULTI_RING_PRESET,
     PEONY_PRESET,
     RING_PRESET,
+    SENRIN_PRESET,
     SPIRAL_PRESET,
     WILLOW_PRESET,
     FireworkPreset,
     FireworkShape,
+    SecondaryPreset,
+    TrailPreset,
 )
 
 RING_ORIENTATION_BANK_SEED = 20260623
@@ -31,6 +34,22 @@ MULTI_RING_LAYERS = (
 
 
 @dataclass(frozen=True)
+class SecondaryBurstSpec:
+    delay_frames: int
+    particle_count: int
+    seed: int
+    speed_range: tuple[float, float]
+    life_range: tuple[int, int]
+    palette: tuple[int, ...]
+    fade_mid: int
+    fade_dark: int
+    tip_color: int
+    drag: float
+    gravity: float
+    trail: TrailPreset
+
+
+@dataclass(frozen=True)
 class ParticleSpawnSpec:
     position: Vec3
     velocity: Vec3
@@ -45,6 +64,7 @@ class ParticleSpawnSpec:
     trail_until_age: int
     trail_strength: int
     trail_draw_every: int
+    secondary_burst: SecondaryBurstSpec | None = None
 
 
 @dataclass(frozen=True)
@@ -119,6 +139,15 @@ def generate_peony_burst(
     return generate_burst(preset=preset, origin=origin, seed=seed)
 
 
+def generate_senrin_burst(
+    *,
+    origin: Vec3,
+    seed: int,
+    preset: FireworkPreset = SENRIN_PRESET,
+) -> tuple[ParticleSpawnSpec, ...]:
+    return generate_burst(preset=preset, origin=origin, seed=seed)
+
+
 def generate_spiral_burst(
     *,
     origin: Vec3,
@@ -173,6 +202,8 @@ def generate_burst(
         return generate_spiral_shape_burst(preset=preset, origin=origin, rng=rng)
     if preset.shape is FireworkShape.WILLOW:
         return generate_willow_shape_burst(preset=preset, origin=origin, rng=rng)
+    if preset.shape is FireworkShape.SENRIN_SEED:
+        return generate_senrin_shape_burst(preset=preset, origin=origin, rng=rng)
 
     msg = f"Unsupported firework shape: {preset.shape.name}"
     raise NotImplementedError(msg)
@@ -318,6 +349,34 @@ def generate_willow_shape_burst(
     return tuple(particles)
 
 
+def generate_senrin_shape_burst(
+    *,
+    preset: FireworkPreset,
+    origin: Vec3,
+    rng: Random,
+) -> tuple[ParticleSpawnSpec, ...]:
+    particles: list[ParticleSpawnSpec] = []
+    for index in range(preset.particle_count):
+        speed = rng.uniform(*preset.speed_range)
+        velocity = random_sphere_velocity(speed=speed, rng=rng)
+        velocity = Vec3(velocity.x, velocity.y * 0.75, velocity.z)
+        particles.append(
+            make_particle_spec(
+                origin=origin,
+                velocity=velocity,
+                speed=speed,
+                preset=preset,
+                rng=rng,
+                secondary_burst=make_secondary_burst_spec(
+                    index=index,
+                    preset=preset.secondary,
+                    rng=rng,
+                ),
+            )
+        )
+    return tuple(particles)
+
+
 def make_particle_spec(
     *,
     origin: Vec3,
@@ -325,6 +384,7 @@ def make_particle_spec(
     speed: float,
     preset: FireworkPreset,
     rng: Random,
+    secondary_burst: SecondaryBurstSpec | None = None,
 ) -> ParticleSpawnSpec:
     life = rng.randint(*preset.life_range)
     has_trail = (
@@ -345,6 +405,71 @@ def make_particle_spec(
         trail_until_age=int(life * preset.trail.early_ratio),
         trail_strength=2 if speed >= preset.trail.strong_speed else 1,
         trail_draw_every=preset.trail.draw_every,
+        secondary_burst=secondary_burst,
+    )
+
+
+def make_secondary_burst_spec(
+    *,
+    index: int,
+    preset: SecondaryPreset | None,
+    rng: Random,
+) -> SecondaryBurstSpec | None:
+    if preset is None or rng.random() >= preset.rate:
+        return None
+    return SecondaryBurstSpec(
+        delay_frames=rng.randint(*preset.delay_range),
+        particle_count=rng.randint(*preset.count_range),
+        seed=rng.randrange(1_000_000_000) + index,
+        speed_range=preset.speed_range,
+        life_range=preset.life_range,
+        palette=preset.palette,
+        fade_mid=preset.fade_mid,
+        fade_dark=preset.fade_dark,
+        tip_color=preset.tip_color,
+        drag=preset.drag,
+        gravity=preset.gravity,
+        trail=preset.trail,
+    )
+
+
+def generate_secondary_burst(
+    *,
+    origin: Vec3,
+    spec: SecondaryBurstSpec,
+) -> tuple[ParticleSpawnSpec, ...]:
+    rng = Random(spec.seed)
+    particles: list[ParticleSpawnSpec] = []
+    for _ in range(spec.particle_count):
+        speed = rng.uniform(*spec.speed_range)
+        velocity = random_sphere_velocity(speed=speed, rng=rng)
+        particles.append(make_secondary_particle_spec(origin, velocity, speed, spec, rng))
+    return tuple(particles)
+
+
+def make_secondary_particle_spec(
+    origin: Vec3,
+    velocity: Vec3,
+    speed: float,
+    spec: SecondaryBurstSpec,
+    rng: Random,
+) -> ParticleSpawnSpec:
+    life = rng.randint(*spec.life_range)
+    has_trail = speed >= spec.trail.speed_threshold and rng.random() < spec.trail.rate
+    return ParticleSpawnSpec(
+        position=origin,
+        velocity=velocity,
+        life=life,
+        color=rng.choice(spec.palette),
+        fade_mid=spec.fade_mid,
+        fade_dark=spec.fade_dark,
+        tip_color=spec.tip_color,
+        drag=spec.drag,
+        gravity=spec.gravity,
+        has_trail=has_trail,
+        trail_until_age=int(life * spec.trail.early_ratio),
+        trail_strength=2 if speed >= spec.trail.strong_speed else 1,
+        trail_draw_every=spec.trail.draw_every,
     )
 
 

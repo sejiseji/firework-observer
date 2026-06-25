@@ -432,3 +432,17 @@ Revert all preview VFX color work, keep the ember trail, or make another new lau
 
 Impact:
 The preview launch now uses the earlier connected recent-history trail and single head point, mapped through each burst type's palette. `main.py`, production gameplay, preset parameters, pure generation behavior, Halo, and scenery remain unchanged.
+
+## 2026-06-25 Draw launch fireball as filled teardrop
+
+Decision:
+Render the preview launch object as a filled, direction-aware teardrop fireball instead of a line, ember trail, or booster-like attachment.
+
+Reason:
+The launched object should read as a firework shell/fireball, not a rocket with a physical booster or stick attached. The requested shape is a narrow filled loop/teardrop silhouette, with burst-type colors applied to the filled form.
+
+Alternatives:
+Use the earlier connected history line, keep detached ember pixels, draw a compact round cluster, or add a sprite asset.
+
+Impact:
+Only manual preview launch drawing changed. Type-specific colors remain. The fireball shape is generated from current projected motion direction and filled with Pyxel triangles plus a bright nose. `main.py`, production gameplay, preset parameters, pure generation behavior, Halo, and scenery remain unchanged.

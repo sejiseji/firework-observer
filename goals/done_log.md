@@ -614,3 +614,21 @@ Record completed tasks here.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 132 passed.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` was unchanged. Production runtime, preset parameters, pure generation behavior, Halo, and scenery were unchanged.
+
+## 2026-06-25 Draw preview launch fireball as filled teardrop
+
+- Summary: Replaced line/ember-style launch drawing with a filled, direction-aware teardrop fireball shape using the existing burst-type palettes.
+- Files changed: `tools/preview_firework_box.py`, `goals/decision_log.md`, and `goals/done_log.md`.
+- Behavior:
+  - The launch object is drawn as the firework shell/fireball itself, not as a rocket with an attached booster or stick.
+  - The shape is filled with Pyxel triangles and capped with a bright nose color.
+  - Type-colored palettes remain unchanged.
+  - Burst accent rays and particle generation are unchanged.
+- Tests:
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 132 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 132 passed.
+- Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
+- Preservation: `main.py` was unchanged. Production runtime, preset parameters, pure generation behavior, Halo, and scenery were unchanged.

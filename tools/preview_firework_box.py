@@ -579,31 +579,63 @@ class PreviewApp:
             if not rocket.has_started(pyxel.frame_count):
                 continue
             history = tuple(rocket.history)
-            if len(history) >= 2:
-                last_segment_index = len(history) - 2
-                for index in range(len(history) - 1):
-                    start = self.camera.project(history[index])
-                    end = self.camera.project(history[index + 1])
-                    color = self.rocket_tail_color(
-                        index,
-                        last_segment_index,
-                        rocket.tail_colors,
-                    )
-                    pyxel.line(start.sx, start.sy, end.sx, end.sy, color)
-            head = self.camera.project(rocket.current_position(pyxel.frame_count))
-            pyxel.pset(head.sx, head.sy, rocket.tail_colors[2])
+            self.draw_launch_fireball(
+                current=self.camera.project(rocket.current_position(pyxel.frame_count)),
+                previous=self.project_previous_fireball_position(history),
+                colors=rocket.tail_colors,
+            )
 
-    def rocket_tail_color(
+    def project_previous_fireball_position(
         self,
-        index: int,
-        last_segment_index: int,
+        history: tuple[Vec3, ...],
+    ) -> ProjectedPoint | None:
+        if len(history) < 2:
+            return None
+        return self.camera.project(history[-2])
+
+    def draw_launch_fireball(
+        self,
+        *,
+        current: ProjectedPoint,
+        previous: ProjectedPoint | None,
         colors: tuple[int, int, int],
-    ) -> int:
-        if index == last_segment_index:
-            return colors[2]
-        if index >= last_segment_index - 2:
-            return colors[1]
-        return colors[0]
+    ) -> None:
+        if previous is None:
+            direction_x = 0.0
+            direction_y = -1.0
+        else:
+            direction_x = float(current.sx - previous.sx)
+            direction_y = float(current.sy - previous.sy)
+            length = math.hypot(direction_x, direction_y)
+            if length < 0.001:
+                direction_x = 0.0
+                direction_y = -1.0
+            else:
+                direction_x /= length
+                direction_y /= length
+
+        perpendicular_x = -direction_y
+        perpendicular_y = direction_x
+        tail_length = 9
+        nose_length = 3
+        half_width = 3
+
+        tail_x = round(current.sx - direction_x * tail_length)
+        tail_y = round(current.sy - direction_y * tail_length)
+        waist_x = round(current.sx - direction_x * 3)
+        waist_y = round(current.sy - direction_y * 3)
+        nose_x = round(current.sx + direction_x * nose_length)
+        nose_y = round(current.sy + direction_y * nose_length)
+        left_x = round(waist_x + perpendicular_x * half_width)
+        left_y = round(waist_y + perpendicular_y * half_width)
+        right_x = round(waist_x - perpendicular_x * half_width)
+        right_y = round(waist_y - perpendicular_y * half_width)
+
+        pyxel.tri(tail_x, tail_y, left_x, left_y, right_x, right_y, colors[0])
+        pyxel.tri(left_x, left_y, nose_x, nose_y, right_x, right_y, colors[1])
+        pyxel.pset(nose_x, nose_y, colors[2])
+        pyxel.pset(round(nose_x + perpendicular_x), round(nose_y + perpendicular_y), colors[2])
+        pyxel.pset(round(nose_x - perpendicular_x), round(nose_y - perpendicular_y), colors[2])
 
     def draw_particle(
         self,

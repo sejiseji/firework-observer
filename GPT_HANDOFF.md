@@ -217,6 +217,7 @@ After the task:
 - Preview controls: `Z` launches, `SPACE` switches Kiku/Ring, arrow keys rotate, `A`/`S` zoom, `C` resets camera, `X` toggles auto-rotate, `V` toggles auto-launch, and `D` toggles debug HUD.
 - The preview is a development tool only. It does not migrate `main.py`, production runtime particles, scenery, or future firework presets.
 - `T0003.2.7` tuned iPhone-style profiles to use portrait viewport / portrait firework volume: `iphone16_balanced` is now screen `236x512`, box `120x260x120`, camera distance `340.0`; `iphone16_large` is screen `393x852`, box `200x440x200`, camera distance `560.0`.
+- `T0003.2.8` added deterministic Ring orientation bank support in `firework_bursts.py`; the manual preview now builds a 24-orientation bank from seed `20260623` for Ring bursts.
 - `classic` remains unchanged and remains the default profile.
 - If the user changes the game direction, update `project_brief.json` and regenerate or manually update the related docs.
 - Review whether the standalone `main.py` should be migrated into `src/pyxel_goal_game/` or kept only as a reference prototype.

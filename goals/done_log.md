@@ -268,3 +268,23 @@ Record completed tasks here.
 - User-visible behavior: No production gameplay behavior changed. The tuned profile values affect only code that explicitly selects those larger profiles.
 - Preservation: `main.py` was unchanged. Default profile remains `classic`. No new firework types, scenery rendering, production runtime migration, or external Firework.py code was added.
 - Follow-up: Use the manual preview to inspect `iphone16_balanced`, then start `T0003.3` to implement Spiral against the updated portrait profile assumptions.
+
+## 2026-06-25 T0003.2.8 Add deterministic Ring orientation bank
+
+- Summary: Added Pyxel-independent `RingOrientation` and `RingOrientationBank` support. Ring generation can now use a deterministic stratified orientation bank, and the manual preview builds a 24-orientation bank for Ring bursts.
+- Pre-task git state: branch `main`; worktree clean; latest commit `0cc438c Tune iPhone profiles for portrait viewport`.
+- Files changed: `src/pyxel_goal_game/firework_bursts.py`, `tests/unit/test_firework_bursts.py`, `tools/preview_firework_box.py`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Behavior:
+  - `build_ring_orientation_bank(seed=20260623, count=24)` creates deterministic near-vertical, oblique, and near-horizontal Ring orientations.
+  - `generate_ring_burst(..., orientation_bank=bank)` selects orientation deterministically by burst seed.
+  - If no bank is provided, Ring orientation is still generated deterministically from the burst seed.
+  - Preview Ring launches use the bank; Kiku launches are unchanged.
+- Tests:
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 63 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 63 passed.
+- User-visible behavior: Production gameplay remains unchanged. Manual preview Ring bursts can now vary orientation deterministically.
+- Preservation: `main.py` was unchanged. Default profile remains `classic`. No Spiral/Willow/Peony/Multi-ring/Halo/Senrin implementation, scenery rendering, production runtime migration, or external Firework.py code was added.
+- Follow-up: Use the manual preview to inspect Ring orientation variety, then start `T0003.3` to implement Spiral.

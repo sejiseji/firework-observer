@@ -16,6 +16,8 @@ if str(SRC) not in sys.path:
 from pyxel_goal_game.camera3d import Camera3D, ProjectedPoint, Vec3  # noqa: E402
 from pyxel_goal_game.firework_bursts import (  # noqa: E402
     ParticleSpawnSpec,
+    RingOrientationBank,
+    build_ring_orientation_bank,
     generate_kiku_burst,
     generate_ring_burst,
 )
@@ -31,6 +33,7 @@ MIN_ZOOM = 0.45
 MAX_PITCH = 1.2
 MIN_PITCH = -1.2
 AUTO_LAUNCH_FRAMES = 120
+RING_ORIENTATION_BANK_SEED = 20260623
 
 
 @dataclass
@@ -113,6 +116,10 @@ class PreviewApp:
         self.profile = get_screen_profile(profile_name)
         self.camera = Camera3D.from_profile(self.profile)
         self.box = WireBox.from_profile(self.profile)
+        self.ring_orientation_bank: RingOrientationBank = build_ring_orientation_bank(
+            seed=RING_ORIENTATION_BANK_SEED,
+            count=24,
+        )
         self.particles: list[PreviewParticle] = []
         self.burst_index = 0
         self.seed = 0
@@ -184,7 +191,11 @@ class PreviewApp:
         if self.burst_index == 0:
             specs = generate_kiku_burst(origin=origin, seed=self.seed)
         else:
-            specs = generate_ring_burst(origin=origin, seed=self.seed)
+            specs = generate_ring_burst(
+                origin=origin,
+                seed=self.seed,
+                orientation_bank=self.ring_orientation_bank,
+            )
         self.seed += 1
         self.particles.extend(PreviewParticle.from_spawn(spec) for spec in specs)
         if len(self.particles) > self.profile.max_particles:

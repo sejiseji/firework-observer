@@ -208,3 +208,17 @@ Keep the wide canvas with a tall central box, add side UI first, or wait until S
 
 Impact:
 `iphone16_balanced` now uses screen `236x512` with box `120x260x120`; `iphone16_large` now uses screen `393x852` with box `200x440x200`. Future Spiral, Willow, and scenery tuning should assume portrait viewport / portrait firework volume for iPhone-style profiles.
+
+## 2026-06-25 Add deterministic Ring orientation bank
+
+Decision:
+Add Pyxel-independent `RingOrientation`, `RingOrientationBank`, and `build_ring_orientation_bank()` to the pure burst generation module. The manual preview builds a 24-orientation bank from explicit seed `20260623` and passes it to Ring generation.
+
+Reason:
+Ring orientation should be reproducible and visually varied without relying on global random state. A stratified bank keeps near-vertical, oblique, and near-horizontal Ring planes available, which gives better controlled variation than fresh unconstrained random orientations.
+
+Alternatives:
+Keep all Rings in the original XY plane, generate a fresh fully random orientation for every Ring burst, or defer orientation variation until runtime integration.
+
+Impact:
+`generate_ring_burst()` accepts an optional `orientation_bank`. If provided, the Ring orientation is selected deterministically from the bank by burst seed. If omitted, a deterministic direct orientation is generated from the seed. Kiku generation, runtime gameplay, `main.py`, and production rendering remain unchanged.

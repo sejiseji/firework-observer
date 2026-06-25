@@ -7,9 +7,14 @@ import pytest
 
 from pyxel_goal_game.camera3d import Vec3
 from pyxel_goal_game.firework_bursts import (
+    DEFAULT_RING_ORIENTATION_COUNT,
+    RingOrientationBank,
+    build_ring_orientation_bank,
+    dot_vec3,
     generate_burst,
     generate_kiku_burst,
     generate_ring_burst,
+    length_vec3,
 )
 from pyxel_goal_game.firework_presets import (
     KIKU_PRESET,
@@ -124,6 +129,46 @@ def test_firework_bursts_module_has_no_pyxel_dependency() -> None:
     assert "pyxel" not in module.__dict__
 
 
+def test_ring_orientation_bank_has_expected_count() -> None:
+    bank = build_ring_orientation_bank(seed=20260623)
+
+    assert len(bank.orientations) == DEFAULT_RING_ORIENTATION_COUNT
+
+
+def test_ring_orientation_bank_is_deterministic() -> None:
+    first = build_ring_orientation_bank(seed=20260623)
+    second = build_ring_orientation_bank(seed=20260623)
+
+    assert first == second
+
+
+def test_different_ring_orientation_bank_seeds_differ() -> None:
+    first = build_ring_orientation_bank(seed=20260623)
+    second = build_ring_orientation_bank(seed=20260624)
+
+    assert first != second
+
+
+def test_ring_orientation_bank_contains_stratified_orientations() -> None:
+    bank = build_ring_orientation_bank(seed=20260623)
+    normal_y_values = [orientation.normal_y for orientation in bank.orientations]
+
+    assert any(0.00 <= normal_y < 0.30 for normal_y in normal_y_values)
+    assert any(0.30 <= normal_y < 0.75 for normal_y in normal_y_values)
+    assert any(0.75 <= normal_y <= 0.98 for normal_y in normal_y_values)
+
+
+def test_ring_orientation_bank_choose_is_deterministic() -> None:
+    bank = build_ring_orientation_bank(seed=20260623)
+
+    assert bank.choose(seed=42) == bank.choose(seed=42)
+
+
+def test_empty_ring_orientation_bank_is_rejected() -> None:
+    with pytest.raises(ValueError, match="orientations"):
+        RingOrientationBank(())
+
+
 def test_ring_preset_uses_documented_values() -> None:
     assert RING_PRESET.kind is FireworkKind.RING
     assert RING_PRESET.shape is FireworkShape.RING
@@ -138,6 +183,14 @@ def test_ring_preset_uses_documented_values() -> None:
 def test_same_seed_generates_identical_ring_specs() -> None:
     first = generate_ring_burst(origin=ORIGIN, seed=123)
     second = generate_ring_burst(origin=ORIGIN, seed=123)
+
+    assert first == second
+
+
+def test_same_seed_and_bank_generate_identical_ring_specs() -> None:
+    bank = build_ring_orientation_bank(seed=20260623)
+    first = generate_ring_burst(origin=ORIGIN, seed=123, orientation_bank=bank)
+    second = generate_ring_burst(origin=ORIGIN, seed=123, orientation_bank=bank)
 
     assert first == second
 
@@ -183,11 +236,24 @@ def test_ring_trails_are_partial_for_known_seed() -> None:
     )
 
 
-def test_ring_velocity_is_mostly_planar_with_small_z_thickness() -> None:
-    particles = generate_ring_burst(origin=ORIGIN, seed=0)
+def test_ring_velocity_keeps_speed_with_orientation_bank() -> None:
+    bank = build_ring_orientation_bank(seed=20260623)
+    particles = generate_ring_burst(origin=ORIGIN, seed=0, orientation_bank=bank)
 
     assert all(
-        abs(particle.velocity.z) <= speed_of(particle.velocity) * 0.061
+        RING_PRESET.speed_range[0] <= speed_of(particle.velocity) <= RING_PRESET.speed_range[1]
+        for particle in particles
+    )
+
+
+def test_ring_velocity_is_mostly_planar_relative_to_chosen_orientation() -> None:
+    bank = build_ring_orientation_bank(seed=20260623)
+    orientation = bank.choose(seed=0)
+    particles = generate_ring_burst(origin=ORIGIN, seed=0, orientation_bank=bank)
+
+    assert all(
+        abs(dot_vec3(particle.velocity, orientation.normal))
+        <= length_vec3(particle.velocity) * 0.061
         for particle in particles
     )
 
@@ -203,3 +269,15 @@ def test_generate_burst_supports_ring_shape() -> None:
     particles = generate_burst(preset=RING_PRESET, origin=ORIGIN, seed=0)
 
     assert particles == generate_ring_burst(origin=ORIGIN, seed=0)
+
+
+def test_generate_burst_supports_ring_orientation_bank() -> None:
+    bank = build_ring_orientation_bank(seed=20260623)
+    particles = generate_burst(
+        preset=RING_PRESET,
+        origin=ORIGIN,
+        seed=0,
+        orientation_bank=bank,
+    )
+
+    assert particles == generate_ring_burst(origin=ORIGIN, seed=0, orientation_bank=bank)

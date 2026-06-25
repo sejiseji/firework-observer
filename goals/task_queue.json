@@ -8,7 +8,7 @@
       "goal": "Add one spiral firework preset that shows readable twist in the 3D observation box.",
       "status": "todo",
       "depends_on": [
-        "T0003.2.7"
+        "T0003.2.8"
       ],
       "constraints": [
         "Implement only spiral",
@@ -381,6 +381,12 @@
       "title": "Tune iPhone screen profiles to portrait Pyxel viewport",
       "completed_on": "2026-06-24",
       "summary": "Changed iPhone-style Pyxel screen profiles from landscape to portrait while preserving the tall firework volume and classic default."
+    },
+    {
+      "id": "T0003.2.8",
+      "title": "Add deterministic Ring orientation bank",
+      "completed_on": "2026-06-25",
+      "summary": "Added Pyxel-independent RingOrientation and RingOrientationBank support with stratified deterministic orientations, and connected the manual preview to use a 24-orientation bank for Ring bursts."
     }
   ]
 }

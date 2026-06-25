@@ -37,6 +37,7 @@
 - [x] add persistent preview salvo controls
 - [x] fix preview rocket tail, flight pacing, and launch speed variation
 - [x] add preset cycling and visual tuning checklist
+- [x] review external Firework.py for future preset candidates
 - [ ] add scenery preset data scaffold
 - [ ] add EMPTY and MOUNTAINS scenery presets
 - [ ] add CITY skyline scenery preset

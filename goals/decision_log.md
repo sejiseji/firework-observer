@@ -362,3 +362,17 @@ Keep full trajectory lines, only lengthen the previous trajectory animation, or 
 
 Impact:
 The preview now schedules rockets that launch, move, keep a short 3D history tail, and then spawn the selected burst at arrival. `Z`, auto-launch, persistent fixed-count salvos, random-count salvos, random type mode, and height variation all use this preview rocket path. `main.py`, production gameplay, pure burst generation outputs, preset parameters, profiles, and scenery remain unchanged.
+
+## 2026-06-25 Review external Firework.py candidate presets
+
+Decision:
+Add `docs/research/external_firework_candidates_20260625.md` to record future preset candidates from the external `Firework.py` file without copying or integrating its code.
+
+Reason:
+The external file contains useful visual and mathematical ideas such as Halo, Elliptical, Fibonacci, Counter Ring, Star, Heart, Sierpinski, and Magic Square bursts. These should be translated into Firework Observer's deterministic 3D `Vec3` / `ParticleSpawnSpec` model rather than imported as 2D complex-plane functions.
+
+Alternatives:
+Implement Halo immediately, ignore the external file, or expand the existing older reference notes only.
+
+Impact:
+The new research document recommends Halo as the next safest preset if density is stable, followed by Orbit/Elliptical, Golden Bloom/Fibonacci, Counter Ring, and later shape-plane presets. `main.py`, production gameplay, preset parameters, pure generation behavior, preview behavior, and scenery remain unchanged.

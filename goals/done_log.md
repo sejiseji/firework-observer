@@ -510,3 +510,31 @@ Record completed tasks here.
 - User-visible behavior: Production gameplay remains unchanged. Manual preview rocket launches are slower, less uniform, and draw short tails.
 - Preservation: `main.py` was unchanged. Production runtime, preset parameters, pure generation behavior, Halo, scenery, and profile values were unchanged.
 - Follow-up: Use the manual visual checklist and inspect `R + H + 0` stress mode before choosing density tuning, Halo planning, or runtime integration planning.
+
+## 2026-06-25 T0003.8.5 Review external Firework.py for future preset candidates
+
+- Summary: Reviewed `/Users/toytoytoy330/Desktop/AllMyFiles/Pyxel/01_kamito/Firework.py` as reference material only and documented future preset candidates in `docs/research/external_firework_candidates_20260625.md`.
+- Pre-task git state: branch `main`; worktree clean; latest commit `2c57a7b Fix preview rocket launch pacing`.
+- Files changed: `docs/research/external_firework_candidates_20260625.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Analysis covered:
+  - Halo
+  - Elliptical / Orbit
+  - Golden Bloom / Fibonacci
+  - Counter Ring
+  - Star
+  - Heart
+  - Sierpinski
+  - Magic Square / Grid
+  - Radiating Sphere Projection
+- Key decision: Treat external functions as 2D mathematical/visual reference only. Future presets should be translated into deterministic 3D `Vec3` / `ParticleSpawnSpec` generation.
+- Recommended order: Halo, Orbit/Elliptical, Golden Bloom/Fibonacci, Counter Ring, shape-plane scaffold, Star, Heart, then geometry bursts.
+- Tests:
+  - `.venv/bin/python -m json.tool goals/task_queue.json` passed.
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 132 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 132 passed.
+- User-visible behavior: None. This was a documentation-only research task.
+- Preservation: `main.py` was unchanged. Production runtime, preset parameters, pure generation behavior, preview behavior, Halo implementation, and scenery were unchanged. No external code was copied.
+- Follow-up: Run visual density review first. If stable, implement Halo next; otherwise tune Senrin, Multi-ring, or Willow density before adding presets.

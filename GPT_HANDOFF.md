@@ -224,6 +224,7 @@ After the task:
 - `T0003.7.5` changed preview salvo controls into persistent loops: `1` is the default one-shot loop, `2`-`5` are fixed-count loops, `0` is random-count salvo mode, `H` toggles height variation, and preview salvo launches draw launch-to-burst rocket trajectories.
 - `T0003.7.6` corrected preview rocket behavior: rockets now launch before bursting, draw only short recent-motion tails, use longer distance-aware flight timing, and vary speed per rocket.
 - `T0003.8` added `docs/research/visual_tuning_checklist.md`. Use it for manual visual review before changing preset parameters, adding Halo, or planning runtime integration.
+- `T0003.8.5` added `docs/research/external_firework_candidates_20260625.md`. It treats external `Firework.py` as reference only and recommends Halo, Orbit/Elliptical, Golden Bloom/Fibonacci, and Counter Ring as the next safest candidate families.
 - Recommended visual review command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`.
 - Main stress sequence: press `R`, `H`, then `0` to combine random burst type, height variation, and random-count persistent salvos.
 - `classic` remains unchanged and remains the default profile.

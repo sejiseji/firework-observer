@@ -316,6 +316,12 @@
       "title": "Add preset cycling and visual tuning checklist",
       "completed_on": "2026-06-25",
       "summary": "Added docs/research/visual_tuning_checklist.md to define profile targets, preview commands, controls, per-preset visual checks, stress sequences, density risks, and follow-up tuning candidates."
+    },
+    {
+      "id": "T0003.8.5",
+      "title": "Review external Firework.py for future preset candidates",
+      "completed_on": "2026-06-25",
+      "summary": "Reviewed external Firework.py as reference material only and documented future preset candidates, 3D translation strategy, risks, and recommended order in docs/research/external_firework_candidates_20260625.md."
     }
   ]
 }

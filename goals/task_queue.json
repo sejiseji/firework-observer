@@ -3,28 +3,6 @@
   "policy": "Keep tasks small enough for one Codex patch. Split ambiguous tasks before implementation.",
   "current": [
     {
-      "id": "T0003.4",
-      "title": "Implement willow preset",
-      "goal": "Add one willow-style preset focused on downward drift, trails, and afterglow.",
-      "status": "todo",
-      "depends_on": [
-        "T0003.3"
-      ],
-      "constraints": [
-        "Implement only willow",
-        "Respect y-up coordinates and negative gravity",
-        "Do not modify standalone main.py",
-        "Do not copy external Firework.py code"
-      ],
-      "acceptance": [
-        "Willow particles visibly drift downward in y-up space",
-        "Selected particles have longer but still bounded trails",
-        "Same seed gives same particle initial states",
-        "Existing presets still work",
-        "Validation results are recorded"
-      ]
-    },
-    {
       "id": "T0003.5",
       "title": "Implement peony preset",
       "goal": "Add one bright short-lived peony-style preset with restrained trails.",
@@ -371,6 +349,12 @@
       "title": "Implement spiral preset",
       "completed_on": "2026-06-25",
       "summary": "Added SPIRAL_PRESET and deterministic Pyxel-independent 3D spiral burst generation, and extended the manual preview to cycle Kiku, Ring, and Spiral."
+    },
+    {
+      "id": "T0003.4",
+      "title": "Implement willow preset",
+      "completed_on": "2026-06-25",
+      "summary": "Added WILLOW_PRESET and deterministic Pyxel-independent willow burst generation with stronger negative gravity, longer partial trails, and manual preview cycling."
     }
   ]
 }

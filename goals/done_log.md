@@ -308,3 +308,23 @@ Record completed tasks here.
 - User-visible behavior: Production gameplay remains unchanged. Manual preview can now inspect Spiral.
 - Preservation: `main.py` was unchanged. Default profile remains `classic`. `iphone16_balanced` remains screen `236x512` and box `120x260x120`. No Willow/Peony/Multi-ring/Halo/Senrin implementation, scenery rendering, production runtime migration, or external Firework.py code was added.
 - Follow-up: Use the manual preview to inspect Spiral in the portrait profile, then start `T0003.4` to implement Willow.
+
+## 2026-06-25 T0003.4 Implement willow preset
+
+- Summary: Added `WILLOW_PRESET` and deterministic Pyxel-independent Willow burst generation. The generator returns immutable `ParticleSpawnSpec` values with loose radial spread, varied vertical velocity, stronger negative gravity, and longer partial trail fields from `TrailPreset`.
+- Pre-task git state: branch `main`; worktree clean; latest commit `f06e9de Add deterministic Spiral burst generation`.
+- Files changed: `src/pyxel_goal_game/firework_presets.py`, `src/pyxel_goal_game/firework_bursts.py`, `tests/unit/test_firework_bursts.py`, `tools/preview_firework_box.py`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Behavior:
+  - `generate_willow_burst(origin=..., seed=...)` creates deterministic willow spawn specs.
+  - `generate_burst()` now supports `FireworkShape.WILLOW`.
+  - Preview `SPACE` cycles Kiku, Ring, Spiral, and Willow.
+  - Willow uses stronger negative gravity and longer partial trail settings than earlier presets.
+- Tests:
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 82 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 82 passed.
+- User-visible behavior: Production gameplay remains unchanged. Manual preview can now inspect Willow.
+- Preservation: `main.py` was unchanged. Default profile remains `classic`. `iphone16_balanced` remains screen `236x512` and box `120x260x120`. No Peony/Multi-ring/Halo/Senrin implementation, scenery rendering, production runtime migration, or external Firework.py code was added.
+- Follow-up: Use the manual preview to inspect Willow trail density in the portrait profile, then start `T0003.5` to implement Peony.

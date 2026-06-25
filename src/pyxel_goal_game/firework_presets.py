@@ -155,3 +155,27 @@ SPIRAL_PRESET = FireworkPreset(
     gravity=-0.019,
     trail=SPIRAL_TRAIL_PRESET,
 )
+
+
+WILLOW_TRAIL_PRESET = TrailPreset(
+    rate=0.68,
+    speed_threshold=0.45,
+    early_ratio=0.72,
+    strong_speed=0.85,
+)
+
+WILLOW_PRESET = FireworkPreset(
+    kind=FireworkKind.WILLOW,
+    label="Willow",
+    shape=FireworkShape.WILLOW,
+    particle_count=88,
+    speed_range=(0.55, 1.10),
+    life_range=(85, 125),
+    palette=(10, 9, 4),
+    fade_mid=4,
+    fade_dark=2,
+    tip_color=10,
+    drag=0.976,
+    gravity=-0.040,
+    trail=WILLOW_TRAIL_PRESET,
+)

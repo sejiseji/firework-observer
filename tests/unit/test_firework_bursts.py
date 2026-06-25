@@ -15,12 +15,14 @@ from pyxel_goal_game.firework_bursts import (
     generate_kiku_burst,
     generate_ring_burst,
     generate_spiral_burst,
+    generate_willow_burst,
     length_vec3,
 )
 from pyxel_goal_game.firework_presets import (
     KIKU_PRESET,
     RING_PRESET,
     SPIRAL_PRESET,
+    WILLOW_PRESET,
     FireworkKind,
     FireworkPreset,
     FireworkShape,
@@ -106,9 +108,9 @@ def test_kiku_velocity_distribution_is_3d_not_flat() -> None:
 
 def test_generate_burst_rejects_unsupported_shapes() -> None:
     unsupported = FireworkPreset(
-        kind=FireworkKind.WILLOW,
-        label="Willow",
-        shape=FireworkShape.WILLOW,
+        kind=FireworkKind.MULTI_RING,
+        label="Multi-ring",
+        shape=FireworkShape.MULTI_RING,
         particle_count=1,
         speed_range=(1.0, 1.0),
         life_range=(1, 1),
@@ -121,7 +123,7 @@ def test_generate_burst_rejects_unsupported_shapes() -> None:
         trail=KIKU_PRESET.trail,
     )
 
-    with pytest.raises(NotImplementedError, match="WILLOW"):
+    with pytest.raises(NotImplementedError, match="MULTI_RING"):
         generate_burst(preset=unsupported, origin=ORIGIN, seed=0)
 
 
@@ -368,3 +370,91 @@ def test_generate_burst_supports_spiral_shape() -> None:
     particles = generate_burst(preset=SPIRAL_PRESET, origin=ORIGIN, seed=0)
 
     assert particles == generate_spiral_burst(origin=ORIGIN, seed=0)
+
+
+def test_willow_preset_uses_documented_values() -> None:
+    assert WILLOW_PRESET.kind is FireworkKind.WILLOW
+    assert WILLOW_PRESET.shape is FireworkShape.WILLOW
+    assert WILLOW_PRESET.particle_count == 88
+    assert WILLOW_PRESET.speed_range == (0.55, 1.10)
+    assert WILLOW_PRESET.life_range == (85, 125)
+    assert WILLOW_PRESET.palette == (10, 9, 4)
+    assert WILLOW_PRESET.gravity == -0.040
+    assert WILLOW_PRESET.trail.rate == 0.68
+    assert WILLOW_PRESET.trail.early_ratio == 0.72
+
+
+def test_same_seed_generates_identical_willow_specs() -> None:
+    first = generate_willow_burst(origin=ORIGIN, seed=123)
+    second = generate_willow_burst(origin=ORIGIN, seed=123)
+
+    assert first == second
+
+
+def test_different_seeds_generate_different_willow_specs() -> None:
+    first = generate_willow_burst(origin=ORIGIN, seed=123)
+    second = generate_willow_burst(origin=ORIGIN, seed=124)
+
+    assert first != second
+
+
+def test_willow_particle_count_and_life_ranges() -> None:
+    particles = generate_willow_burst(origin=ORIGIN, seed=0)
+
+    assert len(particles) == WILLOW_PRESET.particle_count
+    assert all(
+        WILLOW_PRESET.life_range[0] <= particle.life <= WILLOW_PRESET.life_range[1]
+        for particle in particles
+    )
+
+
+def test_willow_velocity_components_match_loose_radial_shape() -> None:
+    particles = generate_willow_burst(origin=ORIGIN, seed=0)
+
+    assert all(
+        speed_of(particle.velocity) <= WILLOW_PRESET.speed_range[1] * 1.20
+        for particle in particles
+    )
+    assert any(particle.velocity.y < 0.0 for particle in particles)
+    assert any(particle.velocity.y > 0.0 for particle in particles)
+    assert any(abs(particle.velocity.x) > 0.1 for particle in particles)
+    assert any(abs(particle.velocity.z) > 0.1 for particle in particles)
+
+
+def test_willow_specs_preserve_physics_and_colors() -> None:
+    particles = generate_willow_burst(origin=ORIGIN, seed=0)
+
+    assert all(particle.position == ORIGIN for particle in particles)
+    assert all(particle.gravity == WILLOW_PRESET.gravity for particle in particles)
+    assert all(particle.drag == WILLOW_PRESET.drag for particle in particles)
+    assert all(particle.color in WILLOW_PRESET.palette for particle in particles)
+
+
+def test_willow_gravity_is_stronger_than_existing_presets() -> None:
+    assert abs(WILLOW_PRESET.gravity) > abs(KIKU_PRESET.gravity)
+    assert abs(WILLOW_PRESET.gravity) > abs(RING_PRESET.gravity)
+    assert abs(WILLOW_PRESET.gravity) > abs(SPIRAL_PRESET.gravity)
+
+
+def test_willow_trails_are_partial_for_known_seed() -> None:
+    particles = generate_willow_burst(origin=ORIGIN, seed=0)
+    trail_count = sum(particle.has_trail for particle in particles)
+
+    assert 0 < trail_count < len(particles)
+    assert all(
+        particle.trail_until_age == int(particle.life * WILLOW_PRESET.trail.early_ratio)
+        for particle in particles
+    )
+
+
+def test_willow_trail_tendency_is_longer_than_kiku_and_ring() -> None:
+    assert WILLOW_PRESET.trail.rate > KIKU_PRESET.trail.rate
+    assert WILLOW_PRESET.trail.rate > RING_PRESET.trail.rate
+    assert WILLOW_PRESET.trail.early_ratio > KIKU_PRESET.trail.early_ratio
+    assert WILLOW_PRESET.trail.early_ratio > RING_PRESET.trail.early_ratio
+
+
+def test_generate_burst_supports_willow_shape() -> None:
+    particles = generate_burst(preset=WILLOW_PRESET, origin=ORIGIN, seed=0)
+
+    assert particles == generate_willow_burst(origin=ORIGIN, seed=0)

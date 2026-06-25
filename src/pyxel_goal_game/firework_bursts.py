@@ -9,6 +9,7 @@ from pyxel_goal_game.firework_presets import (
     KIKU_PRESET,
     RING_PRESET,
     SPIRAL_PRESET,
+    WILLOW_PRESET,
     FireworkPreset,
     FireworkShape,
 )
@@ -96,6 +97,15 @@ def generate_spiral_burst(
     return generate_burst(preset=preset, origin=origin, seed=seed)
 
 
+def generate_willow_burst(
+    *,
+    origin: Vec3,
+    seed: int,
+    preset: FireworkPreset = WILLOW_PRESET,
+) -> tuple[ParticleSpawnSpec, ...]:
+    return generate_burst(preset=preset, origin=origin, seed=seed)
+
+
 def generate_burst(
     *,
     preset: FireworkPreset,
@@ -119,6 +129,8 @@ def generate_burst(
         )
     if preset.shape is FireworkShape.SPIRAL:
         return generate_spiral_shape_burst(preset=preset, origin=origin, rng=rng)
+    if preset.shape is FireworkShape.WILLOW:
+        return generate_willow_shape_burst(preset=preset, origin=origin, rng=rng)
 
     msg = f"Unsupported firework shape: {preset.shape.name}"
     raise NotImplementedError(msg)
@@ -190,6 +202,28 @@ def generate_spiral_shape_burst(
             speed=speed,
             rng=rng,
         )
+        particles.append(
+            make_particle_spec(
+                origin=origin,
+                velocity=velocity,
+                speed=speed,
+                preset=preset,
+                rng=rng,
+            )
+        )
+    return tuple(particles)
+
+
+def generate_willow_shape_burst(
+    *,
+    preset: FireworkPreset,
+    origin: Vec3,
+    rng: Random,
+) -> tuple[ParticleSpawnSpec, ...]:
+    particles: list[ParticleSpawnSpec] = []
+    for _ in range(preset.particle_count):
+        speed = rng.uniform(*preset.speed_range)
+        velocity = willow_velocity(speed=speed, rng=rng)
         particles.append(
             make_particle_spec(
                 origin=origin,
@@ -277,6 +311,16 @@ def spiral_velocity(*, index: int, count: int, speed: float, rng: Random) -> Vec
         z=math.sin(theta) * radius,
     )
     return scale_vec3(normalize_vec3(direction), speed)
+
+
+def willow_velocity(*, speed: float, rng: Random) -> Vec3:
+    theta = rng.uniform(0.0, math.tau)
+    radial = rng.uniform(0.35, 1.0) * speed
+    return Vec3(
+        x=math.cos(theta) * radial,
+        y=rng.uniform(-0.15, 0.65) * speed,
+        z=math.sin(theta) * radial,
+    )
 
 
 def choose_ring_orientation(

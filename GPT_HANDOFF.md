@@ -219,6 +219,7 @@ After the task:
 - `T0003.2.7` tuned iPhone-style profiles to use portrait viewport / portrait firework volume: `iphone16_balanced` is now screen `236x512`, box `120x260x120`, camera distance `340.0`; `iphone16_large` is screen `393x852`, box `200x440x200`, camera distance `560.0`.
 - `T0003.2.8` added deterministic Ring orientation bank support in `firework_bursts.py`; the manual preview now builds a 24-orientation bank from seed `20260623` for Ring bursts.
 - `T0003.3` added `SPIRAL_PRESET` and deterministic 3D Spiral burst generation; the manual preview now cycles Kiku, Ring, and Spiral.
+- `T0003.4` added `WILLOW_PRESET` and deterministic Willow burst generation; the manual preview now cycles Kiku, Ring, Spiral, and Willow.
 - `classic` remains unchanged and remains the default profile.
 - If the user changes the game direction, update `project_brief.json` and regenerate or manually update the related docs.
 - Review whether the standalone `main.py` should be migrated into `src/pyxel_goal_game/` or kept only as a reference prototype.

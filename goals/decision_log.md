@@ -236,3 +236,17 @@ Connect Spiral directly to production gameplay, derive it from the external 2D r
 
 Impact:
 `generate_burst()` now supports `FireworkShape.SPIRAL`. The generated velocities form a normalized 3D spiral direction so speed magnitudes remain within preset range. Kiku, Ring, RingOrientationBank, production runtime, `main.py`, and scenery remain unchanged.
+
+## 2026-06-25 Add deterministic Willow burst generation
+
+Decision:
+Add `WILLOW_PRESET` and `generate_willow_burst()` as Pyxel-independent preset data and burst generation. The manual preview now cycles Kiku, Ring, Spiral, and Willow.
+
+Reason:
+Willow is the first preset focused on long afterglow, stronger downward gravity, and selected longer trails. It should be represented as deterministic spawn specs before runtime migration so falling-tail behavior can be tuned from data.
+
+Alternatives:
+Tune Willow directly in the preview runtime, implement Peony first, or defer falling-tail behavior until rocket/particle migration.
+
+Impact:
+`generate_burst()` now supports `FireworkShape.WILLOW`. Willow uses loose radial horizontal velocity, varied initial vertical velocity, stronger negative gravity, and longer partial trail settings. Kiku, Ring, Spiral, production runtime, `main.py`, profiles, and scenery remain unchanged.

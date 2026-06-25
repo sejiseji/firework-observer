@@ -41,8 +41,9 @@
 - [x] add type-colored rocket tails and burst accent rays
 - [x] restore simple gradient firework shell tail
 - [x] add preview scenery preset scaffold and switching
-- [ ] add forest, coast, and dike scenery presets
-- [ ] tune scenery readability against fireworks
+- [x] refocus scenery to city-only 3D urban kit
+- [ ] add city landmark tower, utility poles, and overhead wires
+- [ ] tune city scenery readability against fireworks
 - [ ] add scenery preset data scaffold
 - [ ] add EMPTY and MOUNTAINS scenery presets
 - [ ] add CITY skyline scenery preset

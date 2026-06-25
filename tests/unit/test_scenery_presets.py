@@ -38,6 +38,10 @@ def test_empty_scenery_has_no_geometry() -> None:
     assert preset.all_points == ()
 
 
+def test_active_preview_scenery_is_city_focused() -> None:
+    assert SCENERY_PRESET_NAMES == ("empty", "city")
+
+
 @pytest.mark.parametrize("name", ["mountains", "city", "riverbank"])
 def test_initial_scenery_presets_contain_geometry(name: str) -> None:
     preset = get_scenery_preset(name, profile=CLASSIC_PROFILE)
@@ -62,6 +66,25 @@ def test_scenery_is_profile_scaled() -> None:
 
     assert max(balanced_y_values) < max(classic_y_values)
     assert min(balanced_y_values) < min(classic_y_values)
+
+
+def test_city_uses_3d_building_geometry() -> None:
+    city = get_scenery_preset("city", profile=CLASSIC_PROFILE)
+    points = city.all_points
+
+    assert len(city.lines) >= 72
+    assert len({round(point.x, 4) for point in points}) > 10
+    assert len({round(point.y, 4) for point in points}) > 5
+    assert len({round(point.z, 4) for point in points}) > 6
+
+
+def test_city_has_sparse_lit_windows() -> None:
+    city = get_scenery_preset("city", profile=CLASSIC_PROFILE)
+    colors = [line.color for line in city.lines]
+
+    assert 7 in colors
+    assert 10 in colors
+    assert colors.count(7) + colors.count(10) < len(colors) // 3
 
 
 @pytest.mark.parametrize("name", SCENERY_PRESET_NAMES)

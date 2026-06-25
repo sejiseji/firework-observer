@@ -340,6 +340,12 @@
       "title": "Add preview scenery preset scaffold and switching",
       "completed_on": "2026-06-25",
       "summary": "Added Pyxel-independent in-box 3D scenery preset data for EMPTY, MOUNTAINS, CITY, and RIVERBANK, plus preview G cycling and B visibility toggle."
+    },
+    {
+      "id": "T0004.1",
+      "title": "Refocus scenery to city-only 3D urban kit",
+      "completed_on": "2026-06-25",
+      "summary": "Refocused active preview scenery to EMPTY and CITY, and rebuilt CITY as profile-scaled 3D cuboid building blocks with sparse lit windows."
     }
   ]
 }

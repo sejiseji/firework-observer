@@ -48,7 +48,7 @@ class SceneryPreset:
         return line_points + polyline_points
 
 
-SCENERY_PRESET_NAMES = ("empty", "mountains", "city", "riverbank")
+SCENERY_PRESET_NAMES = ("empty", "city")
 
 
 def get_scenery_preset(
@@ -106,45 +106,40 @@ def mountain_scenery(profile: ScreenProfile) -> SceneryPreset:
 
 def city_scenery(profile: ScreenProfile) -> SceneryPreset:
     buildings = (
-        (-0.88, -0.74, 0.12),
-        (-0.66, -0.62, 0.10),
-        (-0.47, -0.78, 0.13),
-        (-0.25, -0.58, 0.10),
-        (-0.04, -0.70, 0.11),
-        (0.18, -0.52, 0.12),
-        (0.42, -0.74, 0.10),
-        (0.63, -0.60, 0.13),
-        (0.86, -0.76, 0.10),
+        (-0.72, 0.36, 0.17, 0.20, 0.24),
+        (-0.48, 0.18, 0.15, 0.18, 0.34),
+        (-0.24, 0.46, 0.19, 0.22, 0.20),
+        (0.02, 0.26, 0.17, 0.20, 0.40),
+        (0.30, 0.08, 0.20, 0.22, 0.28),
+        (0.60, 0.34, 0.22, 0.18, 0.22),
     )
     lines: list[SceneryLine] = []
-    base_y = -0.94
-    z = 0.72
-    for center_x, top_y, width in buildings:
-        left = center_x - width / 2.0
-        right = center_x + width / 2.0
-        color = 5 if top_y < -0.65 else 1
+    base_y = -0.96
+    for index, (center_x, center_z, width, depth, height) in enumerate(buildings):
+        top_y = base_y + height
+        color = 5 if height < 0.30 else 1
         lines.extend(
-            (
-                SceneryLine(
-                    box_point(profile, left, base_y, z),
-                    box_point(profile, left, top_y, z),
-                    color,
-                ),
-                SceneryLine(
-                    box_point(profile, right, base_y, z),
-                    box_point(profile, right, top_y, z),
-                    color,
-                ),
-                SceneryLine(
-                    box_point(profile, left, top_y, z),
-                    box_point(profile, right, top_y, z),
-                    color,
-                ),
-                SceneryLine(
-                    box_point(profile, left, base_y, z),
-                    box_point(profile, right, base_y, z),
-                    1,
-                ),
+            building_cuboid_lines(
+                profile=profile,
+                center_x=center_x,
+                center_z=center_z,
+                width=width,
+                depth=depth,
+                base_y=base_y,
+                top_y=top_y,
+                color=color,
+            )
+        )
+        lines.extend(
+            building_window_lines(
+                profile=profile,
+                building_index=index,
+                center_x=center_x,
+                center_z=center_z,
+                width=width,
+                depth=depth,
+                base_y=base_y,
+                top_y=top_y,
             )
         )
     return SceneryPreset(
@@ -152,6 +147,101 @@ def city_scenery(profile: ScreenProfile) -> SceneryPreset:
         label="City",
         lines=tuple(lines),
     )
+
+
+def building_cuboid_lines(
+    *,
+    profile: ScreenProfile,
+    center_x: float,
+    center_z: float,
+    width: float,
+    depth: float,
+    base_y: float,
+    top_y: float,
+    color: int,
+) -> tuple[SceneryLine, ...]:
+    left = center_x - width / 2.0
+    right = center_x + width / 2.0
+    rear = center_z - depth / 2.0
+    front = center_z + depth / 2.0
+    vertices = (
+        box_point(profile, left, base_y, rear),
+        box_point(profile, right, base_y, rear),
+        box_point(profile, right, top_y, rear),
+        box_point(profile, left, top_y, rear),
+        box_point(profile, left, base_y, front),
+        box_point(profile, right, base_y, front),
+        box_point(profile, right, top_y, front),
+        box_point(profile, left, top_y, front),
+    )
+    edges = (
+        (0, 1),
+        (1, 2),
+        (2, 3),
+        (3, 0),
+        (4, 5),
+        (5, 6),
+        (6, 7),
+        (7, 4),
+        (0, 4),
+        (1, 5),
+        (2, 6),
+        (3, 7),
+    )
+    return tuple(SceneryLine(vertices[start], vertices[end], color) for start, end in edges)
+
+
+def building_window_lines(
+    *,
+    profile: ScreenProfile,
+    building_index: int,
+    center_x: float,
+    center_z: float,
+    width: float,
+    depth: float,
+    base_y: float,
+    top_y: float,
+) -> tuple[SceneryLine, ...]:
+    lines: list[SceneryLine] = []
+    left = center_x - width / 2.0
+    right = center_x + width / 2.0
+    front = center_z + depth / 2.0
+    rear = center_z - depth / 2.0
+    row_count = max(1, int((top_y - base_y) / 0.08))
+    column_count = 2 if width < 0.18 else 3
+    for row in range(row_count):
+        y = base_y + 0.07 + row * 0.075
+        if y >= top_y - 0.03:
+            continue
+        for column in range(column_count):
+            x = left + (column + 1) * width / (column_count + 1)
+            color = lit_window_color(building_index, row, column)
+            half_window = width * 0.065
+            lines.append(
+                SceneryLine(
+                    box_point(profile, x - half_window, y, front),
+                    box_point(profile, x + half_window, y, front),
+                    color,
+                )
+            )
+            if column == column_count - 1 and row % 2 == 0:
+                side_z = rear + depth * 0.35
+                lines.append(
+                    SceneryLine(
+                        box_point(profile, right, y, side_z - depth * 0.06),
+                        box_point(profile, right, y, side_z + depth * 0.06),
+                        5,
+                    )
+                )
+    return tuple(lines)
+
+
+def lit_window_color(building_index: int, row: int, column: int) -> int:
+    if (building_index * 5 + row * 3 + column) % 11 == 0:
+        return 7
+    if (building_index * 7 + row + column * 2) % 5 == 0:
+        return 10
+    return 1
 
 
 def riverbank_scenery(profile: ScreenProfile) -> SceneryPreset:

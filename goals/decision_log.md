@@ -474,3 +474,17 @@ Draw a flat background, wait for production runtime integration, or implement al
 
 Impact:
 `src/pyxel_goal_game/scenery_presets.py` now provides Pyxel-independent scenery data. The manual preview can cycle scenery with `G` and toggle it with `B`. `main.py`, production gameplay, firework preset parameters, pure firework generation behavior, Halo, and external Firework.py integration remain unchanged.
+
+## 2026-06-25 Refocus scenery to city-only urban kit
+
+Decision:
+Refocus active preview scenery on `EMPTY` and `CITY`, and rebuild `CITY` as a low-detail 3D urban kit made from cuboid building blocks and sparse lit windows.
+
+Reason:
+City scenery has the clearest relationship to fireworks and the strongest sense of human presence. Mountains and riverbank are useful reference ideas, but growing them in parallel would dilute the next visual direction. The city should read as small 3D geometry on the box floor, not as a flat side-wall skyline.
+
+Alternatives:
+Continue cycling all scenery presets, add forest/coast/dike next, or keep the previous flat skyline style.
+
+Impact:
+`SCENERY_PRESET_NAMES` now exposes only `empty` and `city` to the preview cycle. The city data remains Pyxel-independent and uses profile-scaled `Vec3` line geometry. `main.py`, production gameplay, firework preset parameters, pure firework generation behavior, Halo, and external Firework.py integration remain unchanged.

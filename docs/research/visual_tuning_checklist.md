@@ -178,10 +178,12 @@ Interaction rules:
    - Observe combined type, count, and height variation.
 
 10. Scenery readability check:
-   - Press `G` to cycle `Empty`, `Mountains`, `City`, and `Riverbank`.
+   - Press `G` to cycle `Empty` and `City`.
    - Press `B` to confirm scenery can be hidden.
    - Rotate the camera and confirm scenery projects with the box.
    - Confirm scenery stays in the lower part of the observation volume.
+   - Confirm City reads as small 3D cuboid buildings, not a flat wall skyline.
+   - Confirm sparse lit windows are visible without outshining fireworks.
    - Confirm `R + H + 0` remains readable with scenery enabled.
 
 ## Density Risk Thresholds
@@ -233,6 +235,7 @@ If scenery dominates:
 - Use darker colors.
 - Move scenery lower in the box.
 - Prefer fewer back-phase lines before adding front-phase details.
+- Reduce bright window count before removing building outlines.
 
 ## Depth And Box Readability
 
@@ -264,8 +267,8 @@ Watch the debug HUD in stress modes:
 - `T0003.8.5`: Tune firework shell tail readability.
 - `T0003.8.6`: Tune persistent salvo repeat interval.
 - `T0003.8.8`: Tune burst accent ray density.
-- `T0004.1`: Add forest, coast, and dike scenery presets.
-- `T0004.2`: Tune scenery readability against fireworks.
+- `T0004.2`: Add city landmark tower, utility poles, and overhead wires.
+- `T0004.3`: Tune city scenery readability against fireworks.
 - `T0003.9`: Add Halo preset if density is stable.
 
 Runtime integration planning should wait until visual tuning is stable enough that the preview no longer needs large parameter corrections.

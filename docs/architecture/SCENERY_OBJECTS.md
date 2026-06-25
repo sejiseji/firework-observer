@@ -54,9 +54,12 @@ These primitives should be data-only model objects. Rendering code should projec
 
 ### City
 
-- Skyline made from coarse vertical and horizontal line segments.
-- No filled polygons initially.
-- Keep building density sparse enough that fireworks remain readable.
+- City is the primary scenery direction for the current preview.
+- It should read as a small 3D urban kit on the floor of the observation box, not a flat skyline stuck to a side wall.
+- Use low-detail wireframe cuboid buildings with varied widths, heights, and depths.
+- Add sparse windows to visible building faces.
+- A small subset of windows may be brighter to imply human presence.
+- Keep building density and brightness sparse enough that fireworks remain readable.
 
 ### Forest
 
@@ -128,7 +131,7 @@ Future scenery presets should use the same `ScreenProfile` box dimensions and y-
   - `G`: cycle scenery preset
   - `B`: toggle scenery visibility
 
-Implemented initial presets:
+Implemented initial presets in `T0004.0`:
 
 - `EMPTY`
 - `MOUNTAINS`
@@ -150,3 +153,30 @@ Current preview render order:
 7. HUD
 
 This is still a preview/development layer. Production runtime scenery integration remains a later task.
+
+## City-Focused Refinement
+
+`T0004.1` refocused active preview scenery around `EMPTY` and `CITY`.
+
+Active preview scenery cycle:
+
+- `EMPTY`
+- `CITY`
+
+The previous `MOUNTAINS` and `RIVERBANK` data remain reference/dev candidates, but they are no longer the practical focus of preview cycling.
+
+The current `CITY` preset is a low-detail 3D urban kit:
+
+- Multiple wireframe cuboid buildings
+- Low-rise and mid-rise block variation
+- Profile-scaled box-relative placement near the bottom of the observation volume
+- Sparse front and side-face windows
+- A small number of brighter lit windows
+
+Follow-up city scenery work should add:
+
+- A simple 3D landmark tower
+- Utility poles
+- Slightly sagging overhead wires
+
+Do not add those city details until the cuboid building layer remains readable under `R + H + 0` preview stress mode.

@@ -561,3 +561,20 @@ Record completed tasks here.
 - User-visible behavior: Production gameplay remains unchanged. Manual preview launches and burst starts are more readable and type-aware.
 - Preservation: `main.py` was unchanged. Production runtime, preset parameters, pure generation behavior, Halo, scenery, and external Firework.py integration were unchanged.
 - Follow-up: Use `R + H + 0` to check accent density. If stable, proceed to Halo; if not, tune accent ray density or high-risk presets first.
+
+## 2026-06-25 Restore preview rocket fireball shape
+
+- Summary: Kept type-colored rocket palettes but changed the preview rocket head from a single pixel back to a compact fireball cluster.
+- Files changed: `tools/preview_firework_box.py`, `goals/decision_log.md`, and `goals/done_log.md`.
+- Behavior:
+  - Rocket tails remain type-colored.
+  - Rocket heads now draw as a small 5-pixel cluster using the same type color set.
+  - Tail length, rocket pacing, accent rays, and burst generation are unchanged.
+- Tests:
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 132 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 132 passed.
+- Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
+- Preservation: `main.py` was unchanged. Production runtime, preset parameters, pure generation behavior, Halo, and scenery were unchanged.

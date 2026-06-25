@@ -390,3 +390,17 @@ Change `ParticleSpawnSpec`, add accent rays to all particles, add production run
 
 Impact:
 Rocket styles are frozen when rockets are scheduled, so random mode and salvos show the color of the actual selected type. Accent rays are assigned to a deterministic limited subset of preview particles at burst spawn time. Senrin secondary bursts keep no added accent rays. `main.py`, production gameplay, pure generation outputs, preset parameters, Halo, and scenery remain unchanged.
+
+## 2026-06-25 Restore preview rocket fireball shape
+
+Decision:
+Keep the new type-colored rocket palette, but restore the rocket head from a single point to a small clustered fireball shape.
+
+Reason:
+The type-colored rocket tails are useful, but the launch fireball shape became visually too cheap as a single pixel. A compact pixel cluster keeps the improved color identity while making the launch head read as a fireball again.
+
+Alternatives:
+Revert all rocket VFX color work, enlarge the entire rocket tail, or add a heavier animated sprite.
+
+Impact:
+Only `tools/preview_firework_box.py` rocket head drawing changed. `main.py`, production gameplay, preset parameters, pure generation behavior, Halo, and scenery remain unchanged.

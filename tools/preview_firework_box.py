@@ -591,7 +591,18 @@ class PreviewApp:
                     )
                     pyxel.line(start.sx, start.sy, end.sx, end.sy, color)
             head = self.camera.project(rocket.current_position(pyxel.frame_count))
-            pyxel.pset(head.sx, head.sy, rocket.tail_colors[2])
+            self.draw_rocket_head(head, rocket.tail_colors)
+
+    def draw_rocket_head(
+        self,
+        head: ProjectedPoint,
+        colors: tuple[int, int, int],
+    ) -> None:
+        pyxel.pset(head.sx, head.sy, colors[2])
+        pyxel.pset(head.sx - 1, head.sy, colors[1])
+        pyxel.pset(head.sx + 1, head.sy, colors[1])
+        pyxel.pset(head.sx, head.sy - 1, colors[2])
+        pyxel.pset(head.sx, head.sy + 1, colors[0])
 
     def rocket_tail_color(
         self,

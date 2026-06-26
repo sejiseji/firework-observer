@@ -7,6 +7,11 @@ from pyxel_goal_game.runtime.camera_motion import (
     DEFAULT_AUTO_ROTATE_SPEED_INDEX,
     AutoRotateMotion,
 )
+from pyxel_goal_game.runtime.show_schedule import (
+    PERSISTENT_SALVO_REPEAT_FRAMES,
+    RuntimeLaunchSchedule,
+    RuntimeLaunchSlot,
+)
 from pyxel_goal_game.runtime.state import (
     AUTO_ROTATE_SPEED_MODE_ORDER,
     FIRST_GENERATION_FIREWORK_ORDER,
@@ -25,7 +30,10 @@ __all__ = [
     "FIRST_GENERATION_FIREWORK_ORDER",
     "AutoRotateMotion",
     "AutoRotateSpeedMode",
+    "PERSISTENT_SALVO_REPEAT_FRAMES",
     "RuntimeShowState",
+    "RuntimeLaunchSchedule",
+    "RuntimeLaunchSlot",
     "RuntimeToggles",
     "SalvoCountMode",
 ]

@@ -61,10 +61,9 @@
 - [x] document preview-to-runtime integration contract
 - [x] extract preview runtime state/controller scaffold
 - [x] extract camera motion and auto-rotate comfort settings
-- [ ] extract show launch/salvo scheduling
-- [ ] add runtime renderer using package state
-- [ ] add official runtime entrypoint
-- [ ] decide main.py handoff
+- [x] extract show launch/salvo scheduling
+- [ ] add first official runtime app and entrypoint
+- [ ] review runtime parity and decide main.py handoff
 - [ ] tune city scenery readability against fireworks
 - [ ] add scenery preset data scaffold
 - [ ] add EMPTY and MOUNTAINS scenery presets

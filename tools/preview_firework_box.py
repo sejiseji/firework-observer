@@ -37,14 +37,22 @@ from pyxel_goal_game.firework_bursts import (  # noqa: E402
     generate_spiral_burst,
     generate_willow_burst,
 )
+from pyxel_goal_game.firework_presets import FireworkKind  # noqa: E402
 from pyxel_goal_game.runtime.camera_motion import (  # noqa: E402
     AUTO_ROTATE_BASE_SWAY,
     AUTO_ROTATE_SPEEDS,
     DEFAULT_AUTO_ROTATE_SPEED_INDEX,
     compute_pitch_sway,
 )
+from pyxel_goal_game.runtime.show_schedule import (  # noqa: E402
+    PERSISTENT_SALVO_REPEAT_FRAMES,
+    RuntimeLaunchSchedule,
+    RuntimeLaunchSlot,
+    build_fixed_salvo_schedule,
+    build_random_count_salvo_schedule,
+    build_single_launch_schedule,
+)
 from pyxel_goal_game.runtime.state import AutoRotateSpeedMode  # noqa: E402
-from pyxel_goal_game.salvo_patterns import SalvoPlan, build_salvo_plan  # noqa: E402
 from pyxel_goal_game.scenery_presets import (  # noqa: E402
     SCENERY_PRESET_NAMES,
     SceneryLine,
@@ -64,14 +72,13 @@ MIN_ZOOM = 0.45
 MAX_PITCH = 1.2
 MIN_PITCH = -1.2
 AUTO_LAUNCH_FRAMES = 120
-PERSISTENT_SALVO_FRAMES = 210
+PERSISTENT_SALVO_FRAMES = PERSISTENT_SALVO_REPEAT_FRAMES
 ROCKET_MIN_FLIGHT_FRAMES = 96
 ROCKET_MAX_FLIGHT_FRAMES = 180
 FIREWORK_SHELL_TAIL_COLORS_NEW_TO_OLD = (7, 7, 7, 10, 10, 4, 4)
 FIREWORK_SHELL_TAIL_LENGTH = len(FIREWORK_SHELL_TAIL_COLORS_NEW_TO_OLD)
 RING_ORIENTATION_BANK_SEED = 20260623
 PREVIEW_RANDOM_SEED = 20260625
-HEIGHT_VARIATION_RATIO = 0.16
 BURST_LABELS = (
     "Kiku",
     "Ring",
@@ -81,6 +88,16 @@ BURST_LABELS = (
     "Multi-ring",
     "Senrin",
     "Halo",
+)
+BURST_KINDS = (
+    FireworkKind.KIKU,
+    FireworkKind.RING,
+    FireworkKind.SPIRAL,
+    FireworkKind.WILLOW,
+    FireworkKind.PEONY,
+    FireworkKind.MULTI_RING,
+    FireworkKind.SENRIN,
+    FireworkKind.HALO,
 )
 BURST_ACCENT_STYLES = (
     (10, 9, 7),
@@ -423,16 +440,17 @@ class PreviewApp:
         self.camera.target_zoom = 1.0
 
     def launch(self) -> None:
-        origin = Vec3(0.0, 0.0, 0.0)
-        burst_index = self.choose_launch_index()
-        self.schedule_rocket(
-            launch_frame=pyxel.frame_count,
-            burst_index=burst_index,
-            launch_position=self.default_launch_position(origin),
-            burst_position=origin,
+        schedule = build_single_launch_schedule(
+            profile=self.profile,
+            start_frame=pyxel.frame_count,
             seed=self.seed,
+            selected_firework_kind=BURST_KINDS[self.burst_index],
+            random_firework_mode=self.random_mode,
+            random_seed=self.seed,
+            previous_firework_kind=BURST_KINDS[self.last_launched_index],
         )
-        self.seed += 1
+        self.schedule_runtime_launches(schedule)
+        self.seed += len(schedule.slots)
 
     def launch_burst(self, *, burst_index: int, origin: Vec3, seed: int) -> None:
         if burst_index == 0:
@@ -544,37 +562,38 @@ class PreviewApp:
                 )
         self.particles.extend(new_particles)
 
-    def choose_launch_index(self) -> int:
-        if not self.random_mode:
-            return self.burst_index
-        index = self.preview_rng.randrange(len(BURST_LABELS))
-        if len(BURST_LABELS) > 1 and index == self.last_launched_index:
-            return (index + 1) % len(BURST_LABELS)
-        return index
-
     def schedule_salvo(self, count: int) -> None:
-        plan = build_salvo_plan(count=count, profile=self.profile)
-        base_seed = self.seed
-        self.seed += len(plan.slots)
-        for slot, burst_index in zip(
-            plan.slots,
-            self.choose_salvo_burst_indexes(plan),
-            strict=True,
-        ):
-            burst_position = self.apply_height_variation(slot.burst_position)
-            self.schedule_rocket(
-                launch_frame=pyxel.frame_count + slot.delay_frames,
-                burst_index=burst_index,
-                launch_position=slot.launch_position,
-                burst_position=burst_position,
-                seed=base_seed + slot.seed_offset,
-            )
+        schedule = build_fixed_salvo_schedule(
+            count=count,
+            profile=self.profile,
+            start_frame=pyxel.frame_count,
+            base_seed=self.seed,
+            selected_firework_kind=BURST_KINDS[self.burst_index],
+            random_firework_mode=self.random_mode,
+            random_seed=self.seed,
+            previous_firework_kind=BURST_KINDS[self.last_launched_index],
+            height_variation=self.height_variation,
+            height_seed=self.seed,
+        )
+        self.schedule_runtime_launches(schedule)
+        self.seed += len(schedule.slots)
 
-    def default_launch_position(self, burst_position: Vec3) -> Vec3:
-        return Vec3(
-            x=burst_position.x,
-            y=-self.profile.box_height * 0.46,
-            z=burst_position.z,
+    def schedule_runtime_launches(self, schedule: RuntimeLaunchSchedule) -> None:
+        for slot in schedule.slots:
+            self.schedule_runtime_slot(schedule=schedule, slot=slot)
+
+    def schedule_runtime_slot(
+        self,
+        *,
+        schedule: RuntimeLaunchSchedule,
+        slot: RuntimeLaunchSlot,
+    ) -> None:
+        self.schedule_rocket(
+            launch_frame=schedule.start_frame + slot.frame_offset,
+            burst_index=BURST_KINDS.index(slot.firework_kind),
+            launch_position=slot.launch_origin,
+            burst_position=slot.burst_origin,
+            seed=slot.seed,
         )
 
     def schedule_rocket(
@@ -618,33 +637,6 @@ class PreviewApp:
             min(ROCKET_MAX_FLIGHT_FRAMES, flight_frames),
         )
 
-    def apply_height_variation(self, position: Vec3) -> Vec3:
-        if not self.height_variation:
-            return position
-        half_height = self.profile.box_height / 2
-        varied_y = position.y + self.preview_rng.uniform(
-            -HEIGHT_VARIATION_RATIO,
-            HEIGHT_VARIATION_RATIO,
-        ) * half_height
-        return Vec3(
-            x=position.x,
-            y=max(-half_height, min(half_height, varied_y)),
-            z=position.z,
-        )
-
-    def choose_salvo_burst_indexes(self, plan: SalvoPlan) -> tuple[int, ...]:
-        if not self.random_mode:
-            return tuple(self.burst_index for _ in plan.slots)
-        indexes: list[int] = []
-        previous = self.last_launched_index
-        for _ in plan.slots:
-            index = self.preview_rng.randrange(len(BURST_LABELS))
-            if len(BURST_LABELS) > 1 and index == previous:
-                index = (index + 1) % len(BURST_LABELS)
-            indexes.append(index)
-            previous = index
-        return tuple(indexes)
-
     def start_fixed_salvo_loop(self, count: int) -> None:
         self.auto_launch = False
         self.persistent_salvo_enabled = True
@@ -657,8 +649,24 @@ class PreviewApp:
         self.auto_launch = False
         self.persistent_salvo_enabled = True
         self.random_salvo_count = True
-        self.schedule_salvo(self.choose_salvo_count())
+        self.schedule_random_count_salvo()
         self.next_persistent_salvo_frame = pyxel.frame_count + PERSISTENT_SALVO_FRAMES
+
+    def schedule_random_count_salvo(self) -> None:
+        schedule = build_random_count_salvo_schedule(
+            profile=self.profile,
+            start_frame=pyxel.frame_count,
+            base_seed=self.seed,
+            selected_firework_kind=BURST_KINDS[self.burst_index],
+            count_seed=self.seed,
+            random_firework_mode=self.random_mode,
+            random_seed=self.seed,
+            previous_firework_kind=BURST_KINDS[self.last_launched_index],
+            height_variation=self.height_variation,
+            height_seed=self.seed,
+        )
+        self.schedule_runtime_launches(schedule)
+        self.seed += len(schedule.slots)
 
     def choose_salvo_count(self) -> int:
         if self.random_salvo_count:
@@ -670,7 +678,10 @@ class PreviewApp:
             self.persistent_salvo_enabled
             and pyxel.frame_count >= self.next_persistent_salvo_frame
         ):
-            self.schedule_salvo(self.choose_salvo_count())
+            if self.random_salvo_count:
+                self.schedule_random_count_salvo()
+            else:
+                self.schedule_salvo(self.choose_salvo_count())
             self.next_persistent_salvo_frame = pyxel.frame_count + PERSISTENT_SALVO_FRAMES
 
     def update_rockets(self) -> None:

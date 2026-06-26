@@ -398,3 +398,13 @@ Parity checks:
 - `R + H + 0` remains the primary stress review for type, height, and random-count salvo density.
 
 Runtime migration failures should be treated as parity bugs before adding new visual features.
+
+Scheduling parity checks:
+
+- `Z` should still schedule one shell launch.
+- `1` should still start persistent one-shot salvo mode.
+- `2` through `5` should still start fixed-count salvo modes.
+- `0` should still start random-count salvo mode.
+- `R` should still freeze the chosen firework kind per scheduled slot.
+- `H` should still freeze burst height variation per scheduled slot.
+- Salvo slot positions and offsets should continue to come from the package-side salvo pattern data.

@@ -97,6 +97,12 @@ This scaffold is Pyxel-independent and import-safe. It models selected profile, 
 
 The module is Pyxel-independent and stores the settled auto-rotate comfort values: `slow=0.0035`, `normal=0.0065`, `fast=0.0100`, plus speed-dependent pitch sway scales. The manual preview now consumes these package-side settings for auto-rotate speed and pitch sway. Rendering, input ownership, and broader preview state extraction are still pending.
 
+`T0005.3` introduced package-side show scheduling:
+
+- `src/pyxel_goal_game/runtime/show_schedule.py`
+
+The module is Pyxel-independent and builds immutable launch schedules for single launches, fixed-count salvos, random-count salvos, random firework kind selection, and height variation. The manual preview now consumes these schedules and converts them into its existing shell objects. Shell simulation, particle spawning, rendering, and the official runtime app are still pending.
+
 ## Pure Logic And Pyxel Boundary
 
 Pure modules must not import Pyxel.
@@ -145,9 +151,8 @@ Use small follow-up tasks:
 1. `T0005.1`: Extract preview runtime state/controller scaffold.
 2. `T0005.2`: Extract camera motion and auto-rotate comfort settings.
 3. `T0005.3`: Extract show launch/salvo scheduling.
-4. `T0005.4`: Add runtime renderer using package state.
-5. `T0005.5`: Add official runtime entrypoint.
-6. `T0005.6`: Decide `main.py` handoff.
+4. `T0005.4`: Add first official runtime app and entrypoint without touching `main.py`.
+5. `T0005.5`: Review runtime parity and decide `main.py` launcher handoff.
 
 Each task should keep the preview working and should avoid changing visual tuning unless the task explicitly says it is a tuning task.
 

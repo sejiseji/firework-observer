@@ -740,3 +740,17 @@ Leave the values in `tools/preview_firework_box.py`, extract them later with ren
 
 Impact:
 Auto-rotate settings are now reusable package-side constants/helpers. Preview behavior, key bindings, HUD mode display, firework generation, shell tail, glitter, CITY, stars, and production runtime behavior remain unchanged.
+
+## 2026-06-26 Extract runtime show scheduling
+
+Decision:
+Move single launch, fixed-count salvo, random-count salvo, random firework kind selection, and height variation schedule construction into Pyxel-independent `src/pyxel_goal_game/runtime/show_schedule.py`.
+
+Reason:
+Show scheduling is stable enough to promote from preview into package runtime, but shell simulation, particle spawning, and rendering should remain separate migration steps. This keeps the extraction focused on deciding when, where, which kind, and which seed to launch.
+
+Alternatives:
+Keep scheduling inside `tools/preview_firework_box.py`, move shell simulation at the same time, or wait until renderer migration.
+
+Impact:
+Preview now consumes package-side immutable launch schedules and converts them into existing preview shell objects. `main.py`, firework generation, shell tail, glitter residue, CITY, stars, camera motion, key bindings, and production runtime behavior remain unchanged.

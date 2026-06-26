@@ -3,32 +3,9 @@
   "policy": "Keep tasks small enough for one Codex patch. Split ambiguous tasks before implementation.",
   "current": [
     {
-      "id": "T0005.3",
-      "title": "Extract show launch and salvo scheduling",
-      "goal": "Move single launch, random type selection, height variation, persistent salvo, and random-count salvo scheduling into package runtime show-controller logic.",
-      "status": "todo",
-      "depends_on": [
-        "T0005.2"
-      ],
-      "constraints": [
-        "Do not modify standalone main.py",
-        "Do not change firework generation",
-        "Do not change shell tail behavior",
-        "Keep scheduling deterministic where currently deterministic",
-        "Keep preview parity"
-      ],
-      "acceptance": [
-        "Show controller supports single launch, fixed salvos, random-count salvos, random burst type, and height variation",
-        "Scheduled choices freeze at scheduling time",
-        "Preview parity is preserved",
-        "Tests cover deterministic scheduling behavior where practical",
-        "Validation results are recorded"
-      ]
-    },
-    {
       "id": "T0005.4",
-      "title": "Add runtime renderer using package state",
-      "goal": "Add a package-side Pyxel-bound renderer for the extracted runtime state while preserving the first-generation preview visual order.",
+      "title": "Add first official runtime app and entrypoint",
+      "goal": "Add the first package-side official runtime app, renderer, input boundary, and entrypoint without touching protected main.py.",
       "status": "todo",
       "depends_on": [
         "T0005.3"
@@ -37,9 +14,11 @@
         "Do not modify standalone main.py",
         "Do not import tools/preview_firework_box.py",
         "Keep pure modules Pyxel-independent",
-        "Preserve draw order for box, stars, CITY, shells, particles, glitter residue, front box edges, and HUD"
+        "Preserve draw order for box, stars, CITY, shells, particles, glitter residue, front box edges, and HUD",
+        "Keep preview available as a regression viewer"
       ],
       "acceptance": [
+        "Official runtime app and entrypoint exist",
         "Runtime renderer draws from package state",
         "CITY, interior stars, shells, particles, and glitter residue match the first-generation preview direction",
         "Preview remains available as a regression viewer",
@@ -49,42 +28,21 @@
     },
     {
       "id": "T0005.5",
-      "title": "Add official runtime entrypoint",
-      "goal": "Add an official package runtime entrypoint that runs the promoted first-generation Firework Observer without changing protected main.py.",
+      "title": "Runtime parity review and main.py handoff decision",
+      "goal": "Review official runtime parity against preview and decide whether protected main.py remains a reference or becomes a thin launcher in a later explicit task.",
       "status": "todo",
       "depends_on": [
         "T0005.4"
       ],
       "constraints": [
-        "Do not modify standalone main.py",
-        "Do not remove the preview harness",
-        "Do not import from tools",
-        "Keep classic as the default profile unless explicitly configured"
-      ],
-      "acceptance": [
-        "Official runtime entrypoint exists",
-        "Entrypoint runs package-side runtime behavior",
-        "main.py remains unchanged",
-        "Preview remains available",
-        "Validation and smoke results are recorded"
-      ]
-    },
-    {
-      "id": "T0005.6",
-      "title": "Decide main.py handoff",
-      "goal": "Decide whether protected main.py should remain a reference prototype or become a thin launcher for the official package runtime.",
-      "status": "todo",
-      "depends_on": [
-        "T0005.5"
-      ],
-      "constraints": [
         "Do not change main.py without explicit authorization",
         "Base the decision on official runtime parity",
-        "Keep the decision documented"
+        "Keep the decision documented",
+        "Do not add new visual features during parity review"
       ],
       "acceptance": [
         "A documented decision exists for main.py",
-        "If main.py changes, it is only through an explicitly authorized task",
+        "Preview/runtime parity results are recorded",
         "Runtime parity and validation results are considered",
         "Follow-up tasks are updated"
       ]
@@ -254,6 +212,12 @@
     }
   ],
   "done": [
+    {
+      "id": "T0005.3",
+      "title": "Extract show launch and salvo scheduling",
+      "completed_on": "2026-06-26",
+      "summary": "Moved single launch, fixed salvo, random-count salvo, random firework kind, and height variation schedule construction into Pyxel-independent runtime helpers, with preview consuming immutable launch schedules."
+    },
     {
       "id": "T0005.2",
       "title": "Extract camera motion and auto-rotate comfort settings",

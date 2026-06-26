@@ -1102,3 +1102,24 @@ Record completed tasks here.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 217 passed.
   - Visual smoke was not run because preview behavior was intended to remain equivalent.
 - Preservation: `main.py` unchanged. Firework generation, firework preset constants, burst radius scaling, shell tail, glitter residue, CITY, interior stars, UFO, and production runtime unchanged.
+
+## 2026-06-26 T0005.3 Extract show launch and salvo scheduling
+
+- Summary: Added Pyxel-independent runtime show scheduling helpers and updated the manual preview to consume immutable launch schedules for single launches, fixed salvos, random-count salvos, random firework kind selection, and height variation.
+- Files changed: `src/pyxel_goal_game/runtime/show_schedule.py`, `src/pyxel_goal_game/runtime/__init__.py`, `tools/preview_firework_box.py`, `tests/unit/test_runtime_show_schedule.py`, `docs/architecture/PREVIEW_TO_RUNTIME_INTEGRATION.md`, `docs/research/visual_tuning_checklist.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Behavior:
+  - Runtime schedule data records start frame, frame offsets, launch origin, burst origin, firework kind, and seed.
+  - Single launch, fixed salvo, and random-count salvo schedule construction now live package-side.
+  - Preview still owns shell simulation, particle spawning, rendering, shell tail, and glitter residue.
+  - Preview key bindings and visual intent are preserved.
+- Tests:
+  - Targeted runtime schedule and salvo pytest passed: 33 tests passed.
+  - `.venv/bin/python -m json.tool goals/task_queue.json` passed.
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 233 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 233 passed.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_235351.txt`.
+- Preservation: `main.py` unchanged. Firework generation, firework preset constants, burst radius scaling, shell tail, glitter residue, CITY, interior stars, camera motion, UFO, and production runtime unchanged.

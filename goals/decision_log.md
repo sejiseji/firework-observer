@@ -544,3 +544,17 @@ Tune density before adding another preset, implement Orbit/Elliptical first, or 
 
 Impact:
 Pure firework generation now supports `FireworkShape.HALO`. Preview can launch Halo through `SPACE`, `R`, `1`-`5`, and `0` random-count salvos. CITY scenery, shell tail behavior, existing preset constants, `main.py`, and production runtime remain unchanged.
+
+## 2026-06-26 Densify CITY and replace utility lines with signage
+
+Decision:
+Refine active CITY into a denser cutaway urban mass, remove utility poles and overhead wires, enlarge and ground the landmark tower, and add low-detail building-attached signage.
+
+Reason:
+The pole/wire layer added human detail, but it pulled the scene toward separate street objects rather than a cutaway urban rooftop mass. Dense buildings and signs better support the city-as-stage direction while keeping fireworks dominant.
+
+Alternatives:
+Keep utility poles and wires, add more natural scenery, add UFO ambient behavior first, or leave CITY sparse until runtime integration.
+
+Impact:
+Only Pyxel-independent CITY scenery data changed. `main.py`, production runtime, firework generation, firework presets, shell tail behavior, preview controls, Halo, and active scenery selection remain unchanged.

@@ -167,19 +167,14 @@ The previous `MOUNTAINS` and `RIVERBANK` data remain reference/dev candidates, b
 
 The current `CITY` preset is a low-detail 3D urban kit:
 
-- Multiple wireframe cuboid buildings
+- Dense wireframe cuboid buildings
 - Low-rise and mid-rise block variation
 - Profile-scaled box-relative placement near the bottom of the observation volume
 - Sparse front and side-face windows
 - A small number of brighter lit windows
+- Building-attached signs, projecting signs, and rooftop signs
 
-Follow-up city scenery work should add:
-
-- A simple 3D landmark tower
-- Utility poles
-- Slightly sagging overhead wires
-
-Do not add those city details until the cuboid building layer remains readable under `R + H + 0` preview stress mode.
+The CITY direction is a dense cutaway urban mass, not a sparse set of isolated objects on the floor.
 
 ## City Grounding Rule
 
@@ -195,7 +190,7 @@ CITY building cuboids should:
 
 This rule is intentional. Do not restore full 12-edge cuboids for CITY buildings unless a later task explicitly changes the city staging direction.
 
-## City Landmarks And Wires
+## City Landmark And Signage
 
 `T0004.2` added a small set of CITY-only urban details:
 
@@ -206,3 +201,20 @@ This rule is intentional. Do not restore full 12-edge cuboids for CITY buildings
 These details are still preview scenery data, not production runtime scenery. They remain static `Vec3` line/polyline geometry inside the observation box.
 
 The tower should stay below the main firework bloom region. Utility poles and wires should remain visually quiet and should not become a dense line network. Future city work should tune readability before adding more urban detail.
+
+`T0004.2.1` revised the active CITY direction:
+
+- Increased building density so the lower city footprint reads as a cutaway urban mass
+- Enlarged and grounded the landmark tower by extending its legs to the floor baseline
+- Removed active utility poles and overhead wires
+- Added low-detail signage attached to buildings
+
+Active CITY signage should remain simple geometry:
+
+- Wall-mounted sign frames on visible building faces
+- A few projecting side signs
+- A few rooftop signs on short supports
+- No dense text rendering
+- No loud neon effects
+
+The utility pole and wire idea is intentionally not part of the active CITY preset after `T0004.2.1`. The city should feel like a dense urban section cut out of the floor plane, with building mass and signs carrying the sense of human activity.

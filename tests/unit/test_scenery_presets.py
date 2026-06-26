@@ -72,7 +72,7 @@ def test_city_uses_3d_building_geometry() -> None:
     city = get_scenery_preset("city", profile=CLASSIC_PROFILE)
     points = city.all_points
 
-    assert len(city.lines) >= 72
+    assert len(city.lines) >= 240
     assert len({round(point.x, 4) for point in points}) > 10
     assert len({round(point.y, 4) for point in points}) > 5
     assert len({round(point.z, 4) for point in points}) > 6
@@ -101,8 +101,23 @@ def test_city_buildings_omit_bottom_face_edges() -> None:
     ]
 
     assert bottom_edges == []
-    assert len(vertical_edges) >= 24
-    assert len(top_edges) >= 24
+    assert len(vertical_edges) >= 60
+    assert len(top_edges) >= 40
+
+
+def test_city_buildings_are_grounded() -> None:
+    city = get_scenery_preset("city", profile=CLASSIC_PROFILE)
+    base_y = min(point.y for point in city.all_points)
+    grounded_verticals = [
+        line
+        for line in city.lines
+        if line.start.x == line.end.x
+        and line.start.z == line.end.z
+        and line.start.y != line.end.y
+        and (line.start.y == base_y or line.end.y == base_y)
+    ]
+
+    assert len(grounded_verticals) >= 60
 
 
 def test_city_stays_low_in_observation_box() -> None:
@@ -115,11 +130,23 @@ def test_city_stays_low_in_observation_box() -> None:
 def test_city_includes_quiet_urban_landmarks() -> None:
     city = get_scenery_preset("city", profile=CLASSIC_PROFILE)
 
-    assert city.polylines
-    assert any(polyline.phase == "front" for polyline in city.polylines)
-    assert any(len(polyline.points) == 3 for polyline in city.polylines)
-    assert any(line.phase == "front" for line in city.lines)
     assert any(line.color == 10 for line in city.lines)
+    assert max(point.y for point in city.all_points) > -CLASSIC_PROFILE.box_height * 0.21
+
+
+def test_city_removes_active_utility_poles_and_wires() -> None:
+    city = get_scenery_preset("city", profile=CLASSIC_PROFILE)
+
+    assert city.polylines == ()
+    assert all(line.phase == "back" for line in city.lines)
+
+
+def test_city_includes_sparse_signage() -> None:
+    city = get_scenery_preset("city", profile=CLASSIC_PROFILE)
+    colors = [line.color for line in city.lines]
+
+    assert 12 in colors
+    assert colors.count(12) < len(colors) // 10
 
 
 def test_city_has_sparse_lit_windows() -> None:

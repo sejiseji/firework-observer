@@ -782,3 +782,26 @@ Record completed tasks here.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_174429.txt`.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` unchanged. Production runtime, CITY scenery, shell tail behavior, and existing firework preset parameters unchanged.
+
+## 2026-06-26 T0004.2.1 Densify city blocks and replace utility poles with signage
+
+- Summary: Refined active CITY into a denser cutaway urban mass by adding more grounded building blocks, enlarging and grounding the landmark tower, removing utility poles/wires, and adding low-detail building signage.
+- Files changed: `src/pyxel_goal_game/scenery_presets.py`, `tests/unit/test_scenery_presets.py`, `docs/architecture/SCENERY_OBJECTS.md`, `docs/research/visual_tuning_checklist.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Behavior:
+  - CITY now has a denser building footprint in the lower observation volume.
+  - CITY building bottom-face perimeter edges remain omitted.
+  - The landmark tower is larger and reaches the floor baseline.
+  - Utility poles and overhead wire polylines were removed from active CITY.
+  - CITY now includes wall-mounted, projecting, and rooftop signs.
+  - EMPTY / CITY remain the active scenery presets.
+- Tests:
+  - `.venv/bin/python -m json.tool goals/task_queue.json` passed.
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 170 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 170 passed.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_190406.txt`.
+- Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
+- Preservation: `main.py` unchanged. Production runtime, firework generation, firework presets, shell tail behavior, preview controls, and Halo unchanged.

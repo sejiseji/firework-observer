@@ -106,12 +106,22 @@ def mountain_scenery(profile: ScreenProfile) -> SceneryPreset:
 
 def city_scenery(profile: ScreenProfile) -> SceneryPreset:
     buildings = (
-        (-0.70, 0.34, 0.14, 0.16, 0.20),
-        (-0.49, 0.18, 0.13, 0.15, 0.28),
-        (-0.25, 0.44, 0.16, 0.18, 0.18),
-        (0.00, 0.26, 0.14, 0.17, 0.33),
-        (0.28, 0.09, 0.17, 0.18, 0.23),
-        (0.57, 0.33, 0.18, 0.15, 0.19),
+        (-0.82, 0.40, 0.12, 0.15, 0.18),
+        (-0.66, 0.18, 0.14, 0.18, 0.23),
+        (-0.52, 0.44, 0.12, 0.16, 0.16),
+        (-0.38, 0.02, 0.13, 0.16, 0.27),
+        (-0.23, 0.30, 0.15, 0.18, 0.21),
+        (-0.08, 0.08, 0.12, 0.14, 0.30),
+        (0.08, 0.40, 0.14, 0.16, 0.17),
+        (0.22, 0.18, 0.15, 0.18, 0.25),
+        (0.39, 0.42, 0.13, 0.16, 0.20),
+        (0.50, 0.05, 0.16, 0.17, 0.24),
+        (0.67, 0.28, 0.13, 0.15, 0.19),
+        (-0.72, -0.08, 0.11, 0.13, 0.15),
+        (-0.55, -0.22, 0.14, 0.14, 0.18),
+        (-0.16, -0.18, 0.13, 0.15, 0.16),
+        (0.10, -0.14, 0.14, 0.15, 0.20),
+        (0.32, -0.22, 0.12, 0.13, 0.15),
     )
     lines: list[SceneryLine] = []
     base_y = -0.96
@@ -142,14 +152,12 @@ def city_scenery(profile: ScreenProfile) -> SceneryPreset:
                 top_y=top_y,
             )
         )
+    lines.extend(city_sign_lines(profile=profile, buildings=buildings, base_y=base_y))
     lines.extend(landmark_tower_lines(profile=profile, base_y=base_y))
-    lines.extend(utility_pole_lines(profile=profile, base_y=base_y))
-    polylines = utility_wire_polylines(profile=profile, base_y=base_y)
     return SceneryPreset(
         kind=SceneryKind.CITY,
         label="City",
         lines=tuple(lines),
-        polylines=polylines,
     )
 
 
@@ -244,21 +252,166 @@ def lit_window_color(building_index: int, row: int, column: int) -> int:
     return 1
 
 
+def city_sign_lines(
+    *,
+    profile: ScreenProfile,
+    buildings: tuple[tuple[float, float, float, float, float], ...],
+    base_y: float,
+) -> tuple[SceneryLine, ...]:
+    lines: list[SceneryLine] = []
+    for building_index in (1, 4, 7, 10):
+        lines.extend(
+            wall_sign_lines(
+                profile=profile,
+                building=buildings[building_index],
+                base_y=base_y,
+                color=12 if building_index in (4, 10) else 5,
+            )
+        )
+    for building_index in (5, 9, 13):
+        lines.extend(
+            projecting_sign_lines(
+                profile=profile,
+                building=buildings[building_index],
+                base_y=base_y,
+                color=10 if building_index == 9 else 5,
+            )
+        )
+    for building_index in (2, 8, 14):
+        lines.extend(
+            rooftop_sign_lines(
+                profile=profile,
+                building=buildings[building_index],
+                base_y=base_y,
+                color=12 if building_index == 8 else 5,
+            )
+        )
+    return tuple(lines)
+
+
+def wall_sign_lines(
+    *,
+    profile: ScreenProfile,
+    building: tuple[float, float, float, float, float],
+    base_y: float,
+    color: int,
+) -> tuple[SceneryLine, ...]:
+    center_x, center_z, width, depth, height = building
+    sign_width = width * 0.45
+    sign_height = min(0.045, height * 0.24)
+    y_mid = base_y + height * 0.58
+    z = center_z + depth / 2.0 + 0.002
+    x_left = center_x - sign_width / 2.0
+    x_right = center_x + sign_width / 2.0
+    y_bottom = y_mid - sign_height / 2.0
+    y_top = y_mid + sign_height / 2.0
+    corners = (
+        box_point(profile, x_left, y_bottom, z),
+        box_point(profile, x_right, y_bottom, z),
+        box_point(profile, x_right, y_top, z),
+        box_point(profile, x_left, y_top, z),
+    )
+    return rectangle_lines(corners, color)
+
+
+def projecting_sign_lines(
+    *,
+    profile: ScreenProfile,
+    building: tuple[float, float, float, float, float],
+    base_y: float,
+    color: int,
+) -> tuple[SceneryLine, ...]:
+    center_x, center_z, width, depth, height = building
+    x = center_x + width / 2.0
+    z_wall = center_z + depth * 0.18
+    z_outer = z_wall + depth * 0.42
+    y_bottom = base_y + height * 0.44
+    y_top = y_bottom + min(0.055, height * 0.28)
+    support = SceneryLine(
+        box_point(profile, x, (y_bottom + y_top) / 2.0, z_wall),
+        box_point(profile, x, (y_bottom + y_top) / 2.0, z_outer),
+        5,
+    )
+    sign = rectangle_lines(
+        (
+            box_point(profile, x, y_bottom, z_outer),
+            box_point(profile, x, y_top, z_outer),
+            box_point(profile, x + width * 0.22, y_top, z_outer),
+            box_point(profile, x + width * 0.22, y_bottom, z_outer),
+        ),
+        color,
+    )
+    return (support, *sign)
+
+
+def rooftop_sign_lines(
+    *,
+    profile: ScreenProfile,
+    building: tuple[float, float, float, float, float],
+    base_y: float,
+    color: int,
+) -> tuple[SceneryLine, ...]:
+    center_x, center_z, width, depth, height = building
+    top_y = base_y + height
+    sign_bottom = top_y + 0.012
+    sign_top = min(-0.39, sign_bottom + 0.045)
+    sign_width = width * 0.54
+    z = center_z + depth * 0.18
+    x_left = center_x - sign_width / 2.0
+    x_right = center_x + sign_width / 2.0
+    support_left_x = center_x - sign_width * 0.28
+    support_right_x = center_x + sign_width * 0.28
+    supports = (
+        SceneryLine(
+            box_point(profile, support_left_x, top_y, z),
+            box_point(profile, support_left_x, sign_bottom, z),
+            5,
+        ),
+        SceneryLine(
+            box_point(profile, support_right_x, top_y, z),
+            box_point(profile, support_right_x, sign_bottom, z),
+            5,
+        ),
+    )
+    sign = rectangle_lines(
+        (
+            box_point(profile, x_left, sign_bottom, z),
+            box_point(profile, x_right, sign_bottom, z),
+            box_point(profile, x_right, sign_top, z),
+            box_point(profile, x_left, sign_top, z),
+        ),
+        color,
+    )
+    return (*supports, *sign)
+
+
+def rectangle_lines(
+    corners: tuple[Vec3, Vec3, Vec3, Vec3],
+    color: int,
+) -> tuple[SceneryLine, ...]:
+    return tuple(
+        SceneryLine(corners[index], corners[(index + 1) % 4], color)
+        for index in range(4)
+    )
+
+
 def landmark_tower_lines(
     *,
     profile: ScreenProfile,
     base_y: float,
 ) -> tuple[SceneryLine, ...]:
-    base = -0.88
-    deck = -0.60
-    top = -0.49
-    antenna = -0.42
-    center_x = 0.74
-    center_z = 0.02
-    base_half_width = 0.105
-    deck_half_width = 0.052
-    top_half_width = 0.020
-    depth = 0.09
+    base = base_y
+    lower_deck = -0.70
+    deck = -0.58
+    top = -0.46
+    antenna = -0.38
+    center_x = 0.76
+    center_z = -0.03
+    base_half_width = 0.135
+    lower_deck_half_width = 0.080
+    deck_half_width = 0.055
+    top_half_width = 0.022
+    depth = 0.105
 
     base_points = (
         box_point(profile, center_x - base_half_width, base, center_z - depth),
@@ -272,6 +425,32 @@ def landmark_tower_lines(
         box_point(profile, center_x + deck_half_width, deck, center_z + depth * 0.55),
         box_point(profile, center_x - deck_half_width, deck, center_z + depth * 0.55),
     )
+    lower_deck_points = (
+        box_point(
+            profile,
+            center_x - lower_deck_half_width,
+            lower_deck,
+            center_z - depth * 0.72,
+        ),
+        box_point(
+            profile,
+            center_x + lower_deck_half_width,
+            lower_deck,
+            center_z - depth * 0.72,
+        ),
+        box_point(
+            profile,
+            center_x + lower_deck_half_width,
+            lower_deck,
+            center_z + depth * 0.72,
+        ),
+        box_point(
+            profile,
+            center_x - lower_deck_half_width,
+            lower_deck,
+            center_z + depth * 0.72,
+        ),
+    )
     top_points = (
         box_point(profile, center_x - top_half_width, top, center_z - depth * 0.20),
         box_point(profile, center_x + top_half_width, top, center_z - depth * 0.20),
@@ -284,76 +463,17 @@ def landmark_tower_lines(
 
     lines: list[SceneryLine] = []
     for index in range(4):
-        lines.append(SceneryLine(base_points[index], deck_points[index], 5))
+        lines.append(SceneryLine(base_points[index], lower_deck_points[index], 5))
+        lines.append(SceneryLine(lower_deck_points[index], deck_points[index], 5))
         lines.append(SceneryLine(deck_points[index], top_points[index], 5))
-        lines.append(SceneryLine(base_points[index], deck_points[(index + 1) % 4], 1))
-    for ring in (deck_points, top_points):
+        lines.append(SceneryLine(base_points[index], lower_deck_points[(index + 1) % 4], 1))
+        lines.append(SceneryLine(lower_deck_points[index], deck_points[(index + 1) % 4], 1))
+    for ring in (lower_deck_points, deck_points, top_points):
         for index in range(4):
             lines.append(SceneryLine(ring[index], ring[(index + 1) % 4], 5))
     lines.append(SceneryLine(center_deck, center_top, 5))
     lines.append(SceneryLine(center_top, antenna_top, 10))
     return tuple(lines)
-
-
-def utility_pole_lines(
-    *,
-    profile: ScreenProfile,
-    base_y: float,
-) -> tuple[SceneryLine, ...]:
-    poles = (
-        (-0.82, -0.18, 0.18),
-        (-0.36, -0.08, 0.22),
-        (0.16, -0.16, 0.19),
-    )
-    lines: list[SceneryLine] = []
-    for x, z, height in poles:
-        bottom = box_point(profile, x, base_y + 0.02, z)
-        top = box_point(profile, x, base_y + height, z)
-        crossbar_left = box_point(profile, x - 0.055, base_y + height - 0.035, z)
-        crossbar_right = box_point(profile, x + 0.055, base_y + height - 0.035, z)
-        brace_left = box_point(profile, x - 0.030, base_y + height - 0.075, z)
-        brace_right = box_point(profile, x + 0.030, base_y + height - 0.075, z)
-        lines.extend(
-            (
-                SceneryLine(bottom, top, 5, phase="front"),
-                SceneryLine(crossbar_left, crossbar_right, 5, phase="front"),
-                SceneryLine(brace_left, top, 1, phase="front"),
-                SceneryLine(top, brace_right, 1, phase="front"),
-            )
-        )
-    return tuple(lines)
-
-
-def utility_wire_polylines(
-    *,
-    profile: ScreenProfile,
-    base_y: float,
-) -> tuple[SceneryPolyline, ...]:
-    wire_sets = (
-        ((-0.82, -0.18, 0.18), (-0.36, -0.08, 0.22)),
-        ((-0.36, -0.08, 0.22), (0.16, -0.16, 0.19)),
-    )
-    polylines: list[SceneryPolyline] = []
-    for start, end in wire_sets:
-        start_x, start_z, start_height = start
-        end_x, end_z, end_height = end
-        start_y = base_y + start_height - 0.045
-        end_y = base_y + end_height - 0.045
-        mid_x = (start_x + end_x) / 2.0
-        mid_z = (start_z + end_z) / 2.0
-        mid_y = min(start_y, end_y) - 0.025
-        polylines.append(
-            SceneryPolyline(
-                points=(
-                    box_point(profile, start_x, start_y, start_z),
-                    box_point(profile, mid_x, mid_y, mid_z),
-                    box_point(profile, end_x, end_y, end_z),
-                ),
-                color=1,
-                phase="front",
-            )
-        )
-    return tuple(polylines)
 
 
 def riverbank_scenery(profile: ScreenProfile) -> SceneryPreset:

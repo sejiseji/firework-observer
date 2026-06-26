@@ -370,6 +370,12 @@
       "title": "Implement Halo preset",
       "completed_on": "2026-06-26",
       "summary": "Added HALO_PRESET and deterministic Pyxel-independent Halo burst generation as a light, soft, wobbling ring-like firework, with preview sequential, random, and salvo support."
+    },
+    {
+      "id": "T0004.2.1",
+      "title": "Densify city blocks and replace utility poles with signage",
+      "completed_on": "2026-06-26",
+      "summary": "Refined active CITY into a denser cutaway urban mass with more grounded building blocks, a larger grounded landmark tower, removed utility poles/wires, and low-detail building signage."
     }
   ]
 }

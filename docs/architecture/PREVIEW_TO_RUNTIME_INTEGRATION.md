@@ -103,6 +103,24 @@ The module is Pyxel-independent and stores the settled auto-rotate comfort value
 
 The module is Pyxel-independent and builds immutable launch schedules for single launches, fixed-count salvos, random-count salvos, random firework kind selection, and height variation. The manual preview now consumes these schedules and converts them into its existing shell objects. Shell simulation, particle spawning, rendering, and the official runtime app are still pending.
 
+`T0005.4` introduced the first official package-side runtime app:
+
+- `src/pyxel_goal_game/runtime/app.py`
+- `src/pyxel_goal_game/runtime/input.py`
+- `src/pyxel_goal_game/runtime/render.py`
+- `src/pyxel_goal_game/runtime/effects.py`
+- `scripts/run_runtime_app.py`
+
+The official runtime app is launched separately from protected `main.py`:
+
+```bash
+.venv/bin/python scripts/run_runtime_app.py --profile iphone16_balanced
+```
+
+The runtime app owns the Pyxel loop, input boundary, rendering boundary, active shells, active particles, secondary bursts, and glitter residue. It uses package-side runtime state, controller, camera motion, and show scheduling modules. It does not import `tools/preview_firework_box.py`. The preview remains available as a regression viewer.
+
+Remaining parity risks should be reviewed in `T0005.5`: visual exactness between preview and official runtime, any missing smoke coverage specific to the official entrypoint, and whether `main.py` should remain a protected reference or later become a thin launcher.
+
 ## Pure Logic And Pyxel Boundary
 
 Pure modules must not import Pyxel.
@@ -120,29 +138,31 @@ pure package modules
 
 ## Proposed Runtime Module Boundaries
 
-Do not create these modules in this documentation task. They are the recommended target shape for follow-up implementation.
+The first official runtime now uses this package-side shape:
 
 ```text
 src/pyxel_goal_game/runtime/
   __init__.py
   app.py
+  effects.py
   state.py
   input.py
   render.py
   show_controller.py
   camera_motion.py
-  visual_config.py
+  show_schedule.py
 ```
 
 Responsibilities:
 
 - `app.py`: Pyxel app loop boundary, initialization, and lifecycle.
+- `effects.py`: active shell, particle, secondary burst, and glitter residue runtime state plus small effect builders.
 - `state.py`: runtime state, active fireworks, scheduled salvos, active shells, active particles, glitter residue, toggles, selected profile, selected firework kind, selected scenery, and selected camera mode.
 - `input.py`: maps keys to runtime actions without embedding generation logic.
 - `render.py`: Pyxel-bound drawing, draw order, box, CITY, stars, shells, particles, glitter residue, and optional HUD.
 - `show_controller.py`: single launch, salvo launch, random firework selection, height variation, scheduled launches, and secondary burst triggering.
 - `camera_motion.py`: auto rotate ON/OFF, speed modes, speed-dependent pitch sway, and manual rotation helpers if cleanly extractable.
-- `visual_config.py`: stable visual constants promoted from preview, without over-abstracting values that still need tuning.
+- `show_schedule.py`: immutable launch schedule construction for single launches, salvos, random type selection, and height variation.
 
 ## Migration Order
 

@@ -1123,3 +1123,17 @@ Record completed tasks here.
   - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_235351.txt`.
 - Preservation: `main.py` unchanged. Firework generation, firework preset constants, burst radius scaling, shell tail, glitter residue, CITY, interior stars, camera motion, UFO, and production runtime unchanged.
+
+## 2026-06-26 T0005.4 Add first official runtime app and entrypoint
+
+- Summary: Added the first official package-side Firework Observer runtime app and launcher without modifying protected `main.py` or importing from `tools/preview_firework_box.py`.
+- Files changed: `src/pyxel_goal_game/runtime/app.py`, `src/pyxel_goal_game/runtime/input.py`, `src/pyxel_goal_game/runtime/render.py`, `src/pyxel_goal_game/runtime/effects.py`, `scripts/run_runtime_app.py`, runtime import/input tests, integration docs, visual checklist, goals logs, roadmap, task queue, and `GPT_HANDOFF.md`.
+- Behavior:
+  - Official runtime launches separately with `.venv/bin/python scripts/run_runtime_app.py --profile iphone16_balanced`.
+  - Runtime owns the Pyxel app loop, input mapping, rendering, active shell simulation, particle updates, secondary bursts, and glitter residue.
+  - Runtime uses package-side state/controller, camera motion, and show scheduling modules.
+  - Preview remains available as a development harness and regression viewer.
+  - `main.py` remains protected and unchanged.
+- Tests:
+  - Validation results are recorded in the final task report.
+- Preservation: Firework generation, preset constants, burst radius scaling, shell tail visual intent, glitter residue visual intent, CITY geometry, interior star behavior, camera motion settings, show scheduling semantics, UFO exclusion, and preview availability are preserved.

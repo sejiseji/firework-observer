@@ -3,30 +3,6 @@
   "policy": "Keep tasks small enough for one Codex patch. Split ambiguous tasks before implementation.",
   "current": [
     {
-      "id": "T0005.4",
-      "title": "Add first official runtime app and entrypoint",
-      "goal": "Add the first package-side official runtime app, renderer, input boundary, and entrypoint without touching protected main.py.",
-      "status": "todo",
-      "depends_on": [
-        "T0005.3"
-      ],
-      "constraints": [
-        "Do not modify standalone main.py",
-        "Do not import tools/preview_firework_box.py",
-        "Keep pure modules Pyxel-independent",
-        "Preserve draw order for box, stars, CITY, shells, particles, glitter residue, front box edges, and HUD",
-        "Keep preview available as a regression viewer"
-      ],
-      "acceptance": [
-        "Official runtime app and entrypoint exist",
-        "Runtime renderer draws from package state",
-        "CITY, interior stars, shells, particles, and glitter residue match the first-generation preview direction",
-        "Preview remains available as a regression viewer",
-        "Smoke coverage is updated or run",
-        "Validation results are recorded"
-      ]
-    },
-    {
       "id": "T0005.5",
       "title": "Runtime parity review and main.py handoff decision",
       "goal": "Review official runtime parity against preview and decide whether protected main.py remains a reference or becomes a thin launcher in a later explicit task.",
@@ -212,6 +188,12 @@
     }
   ],
   "done": [
+    {
+      "id": "T0005.4",
+      "title": "Add first official runtime app and entrypoint",
+      "completed_on": "2026-06-26",
+      "summary": "Added the first package-side official runtime app, Pyxel input/render/effects boundaries, and a separate launcher without touching protected main.py or importing from the preview tool."
+    },
     {
       "id": "T0005.3",
       "title": "Extract show launch and salvo scheduling",

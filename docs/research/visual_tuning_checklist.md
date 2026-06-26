@@ -381,6 +381,7 @@ When comparing an official runtime against the preview, use:
 
 ```bash
 .venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced
+.venv/bin/python scripts/run_runtime_app.py --profile iphone16_balanced
 ```
 
 Parity checks:
@@ -408,3 +409,11 @@ Scheduling parity checks:
 - `R` should still freeze the chosen firework kind per scheduled slot.
 - `H` should still freeze burst height variation per scheduled slot.
 - Salvo slot positions and offsets should continue to come from the package-side salvo pattern data.
+
+Official runtime manual checks:
+
+- The official runtime should launch without touching protected `main.py`.
+- The preview should remain available after the official runtime is added.
+- `SPACE`, `R`, `Z`, `V`, `1`-`5`, `0`, `H`, `X`, `Q`, `T`, `G`, `B`, `D`, `A`/`S`, and arrow keys should remain usable.
+- CITY, interior stars, shell tails, compact bursts, glitter residue, salvos, and auto-rotate comfort should be recognizable against the preview reference.
+- Any visual mismatch should be recorded as a runtime parity issue before adding UFO, new presets, or additional scenery.

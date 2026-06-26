@@ -754,3 +754,17 @@ Keep scheduling inside `tools/preview_firework_box.py`, move shell simulation at
 
 Impact:
 Preview now consumes package-side immutable launch schedules and converts them into existing preview shell objects. `main.py`, firework generation, shell tail, glitter residue, CITY, stars, camera motion, key bindings, and production runtime behavior remain unchanged.
+
+## 2026-06-26 Add first official runtime app beside preview
+
+Decision:
+Add a package-side official runtime app and launcher without modifying protected `main.py` or importing from `tools/preview_firework_box.py`.
+
+Reason:
+State, camera motion, and show scheduling have already been promoted package-side. The next integration step needs a runnable official runtime path while preserving the manual preview as a regression viewer.
+
+Alternatives:
+Modify `main.py` immediately, keep the project runnable only through the preview tool, or import the preview tool from runtime.
+
+Impact:
+The official runtime now has package-side Pyxel app/input/render/effects boundaries and can be launched with `scripts/run_runtime_app.py`. The preview remains available, and `main.py` remains unchanged. Remaining work should review visual/runtime parity before any `main.py` handoff decision.

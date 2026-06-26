@@ -1041,3 +1041,23 @@ Record completed tasks here.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_222047.txt`.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` unchanged. Production runtime, firework generation, shell tail behavior, CITY, UFO, and preview controls unchanged.
+
+## 2026-06-26 T0005.0 Preview-to-runtime integration contract
+
+- Summary: Added `docs/architecture/PREVIEW_TO_RUNTIME_INTEGRATION.md` to define how the first-generation preview should be promoted into package runtime without importing from `tools/` or modifying protected `main.py`.
+- Files changed: `docs/architecture/PREVIEW_TO_RUNTIME_INTEGRATION.md`, `docs/architecture/PROTOTYPE_RECONCILIATION.md`, `docs/research/visual_tuning_checklist.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Behavior:
+  - Documentation-only.
+  - First-generation preview behavior is now the runtime promotion reference.
+  - Follow-up runtime extraction tasks are documented as `T0005.1` through `T0005.6`.
+  - Runtime must not import `tools/preview_firework_box.py`.
+  - `main.py` remains protected until a separate explicit handoff task.
+- Tests:
+  - `.venv/bin/python -m json.tool goals/task_queue.json` passed.
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 193 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 193 passed.
+  - Visual smoke was not run because this was a docs-only integration planning task.
+- Preservation: `main.py` unchanged. Source behavior, preview behavior, tests, firework generation, CITY, shell tail, stars, and production runtime unchanged.

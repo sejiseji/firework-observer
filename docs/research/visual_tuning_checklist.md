@@ -371,3 +371,29 @@ Watch the debug HUD in stress modes:
 - `T0003.9`: Add Halo preset if density is stable.
 
 Runtime integration planning should wait until visual tuning is stable enough that the preview no longer needs large parameter corrections.
+
+## Runtime Parity Checks
+
+Use `docs/architecture/PREVIEW_TO_RUNTIME_INTEGRATION.md` as the contract for promoting the preview into package runtime.
+
+When comparing an official runtime against the preview, use:
+
+```bash
+.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced
+```
+
+Parity checks:
+
+- `iphone16_balanced` should remain the primary visual target.
+- `classic` should remain the default compatibility baseline.
+- The runtime should preserve the same 3D cuboid observation-box feel.
+- Kiku, Ring, Spiral, Willow, Peony, Multi-ring, Senrin, and Halo should remain available.
+- Shell launch, short shell tail, compact burst radius, deterministic wobble, pre-scale trail decisions, and glitter residue should match the preview direction.
+- CITY should preserve 48 building cuboids, central boulevard, tower, ferris wheel, signs, sparse windows, and interleaved two-blue building outlines.
+- Interior stars should remain attached to top and upper side faces, never exterior-facing surfaces.
+- Top-face stars should remain visible at shallow interior viewing angles.
+- Side-face star visibility should remain stricter than top-face visibility.
+- Auto rotate should preserve slow/normal/fast modes and reduced speed-dependent pitch sway.
+- `R + H + 0` remains the primary stress review for type, height, and random-count salvo density.
+
+Runtime migration failures should be treated as parity bugs before adding new visual features.

@@ -357,3 +357,16 @@ This generator is not yet wired into runtime particles, rockets, rendering, or p
 - `generate_secondary_burst()` can turn a secondary spec into deterministic secondary `ParticleSpawnSpec` values for preview-only inspection.
 
 This representation should guide future runtime migration: production particles may execute optional secondary burst specs later, but `main.py` and current package runtime behavior remain protected until an explicit migration task.
+
+## Preview As Current Runtime Promotion Reference
+
+The manual preview has become the first-generation visual reference for package runtime promotion. `docs/architecture/PREVIEW_TO_RUNTIME_INTEGRATION.md` defines the current integration contract.
+
+This does not change the protected `main.py` policy:
+
+- `main.py` remains a protected reference prototype.
+- The official package runtime must not import `tools/preview_firework_box.py`.
+- Stable preview behavior should be extracted into package runtime modules in small steps.
+- Preview should remain available as a development harness and regression viewer.
+
+Runtime promotion should preserve the current preview-proven visual direction: portrait observation volume, eight firework presets, compact burst radius, shell tail, glitter residue, CITY cutaway scenery, interior stars, random/salvo controls, and camera comfort settings.

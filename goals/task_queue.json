@@ -3,6 +3,138 @@
   "policy": "Keep tasks small enough for one Codex patch. Split ambiguous tasks before implementation.",
   "current": [
     {
+      "id": "T0005.1",
+      "title": "Extract preview runtime state/controller scaffold",
+      "goal": "Create package-side runtime state and controller scaffolding for preview-proven show behavior without changing visible behavior.",
+      "status": "todo",
+      "depends_on": [
+        "T0005.0"
+      ],
+      "constraints": [
+        "Do not modify standalone main.py",
+        "Do not import tools/preview_firework_box.py from runtime",
+        "Keep preview working",
+        "Do not change firework generation or visual tuning",
+        "Keep Pyxel drawing out of pure state/controller modules"
+      ],
+      "acceptance": [
+        "Package-side runtime state/controller scaffold exists",
+        "The scaffold can represent selected profile, selected firework kind, toggles, shells, particles, salvos, glitter residue, and scenery/star state",
+        "No visible behavior changes",
+        "Tests cover pure scaffold behavior where practical",
+        "Validation results are recorded"
+      ]
+    },
+    {
+      "id": "T0005.2",
+      "title": "Extract camera motion and auto-rotate comfort settings",
+      "goal": "Move preview-proven auto-rotate speed modes and speed-dependent pitch sway into package runtime camera-motion helpers.",
+      "status": "todo",
+      "depends_on": [
+        "T0005.1"
+      ],
+      "constraints": [
+        "Do not modify standalone main.py",
+        "Do not change auto-rotate values unless explicitly tuning",
+        "Preserve X/Q preview behavior",
+        "Keep camera motion helpers Pyxel-independent where practical"
+      ],
+      "acceptance": [
+        "Runtime camera motion helpers represent slow/normal/fast modes",
+        "Reduced speed-dependent pitch sway settings are preserved",
+        "Preview behavior remains unchanged or is adapted through the shared helper",
+        "Tests verify speed and sway ordering",
+        "Validation results are recorded"
+      ]
+    },
+    {
+      "id": "T0005.3",
+      "title": "Extract show launch and salvo scheduling",
+      "goal": "Move single launch, random type selection, height variation, persistent salvo, and random-count salvo scheduling into package runtime show-controller logic.",
+      "status": "todo",
+      "depends_on": [
+        "T0005.2"
+      ],
+      "constraints": [
+        "Do not modify standalone main.py",
+        "Do not change firework generation",
+        "Do not change shell tail behavior",
+        "Keep scheduling deterministic where currently deterministic",
+        "Keep preview parity"
+      ],
+      "acceptance": [
+        "Show controller supports single launch, fixed salvos, random-count salvos, random burst type, and height variation",
+        "Scheduled choices freeze at scheduling time",
+        "Preview parity is preserved",
+        "Tests cover deterministic scheduling behavior where practical",
+        "Validation results are recorded"
+      ]
+    },
+    {
+      "id": "T0005.4",
+      "title": "Add runtime renderer using package state",
+      "goal": "Add a package-side Pyxel-bound renderer for the extracted runtime state while preserving the first-generation preview visual order.",
+      "status": "todo",
+      "depends_on": [
+        "T0005.3"
+      ],
+      "constraints": [
+        "Do not modify standalone main.py",
+        "Do not import tools/preview_firework_box.py",
+        "Keep pure modules Pyxel-independent",
+        "Preserve draw order for box, stars, CITY, shells, particles, glitter residue, front box edges, and HUD"
+      ],
+      "acceptance": [
+        "Runtime renderer draws from package state",
+        "CITY, interior stars, shells, particles, and glitter residue match the first-generation preview direction",
+        "Preview remains available as a regression viewer",
+        "Smoke coverage is updated or run",
+        "Validation results are recorded"
+      ]
+    },
+    {
+      "id": "T0005.5",
+      "title": "Add official runtime entrypoint",
+      "goal": "Add an official package runtime entrypoint that runs the promoted first-generation Firework Observer without changing protected main.py.",
+      "status": "todo",
+      "depends_on": [
+        "T0005.4"
+      ],
+      "constraints": [
+        "Do not modify standalone main.py",
+        "Do not remove the preview harness",
+        "Do not import from tools",
+        "Keep classic as the default profile unless explicitly configured"
+      ],
+      "acceptance": [
+        "Official runtime entrypoint exists",
+        "Entrypoint runs package-side runtime behavior",
+        "main.py remains unchanged",
+        "Preview remains available",
+        "Validation and smoke results are recorded"
+      ]
+    },
+    {
+      "id": "T0005.6",
+      "title": "Decide main.py handoff",
+      "goal": "Decide whether protected main.py should remain a reference prototype or become a thin launcher for the official package runtime.",
+      "status": "todo",
+      "depends_on": [
+        "T0005.5"
+      ],
+      "constraints": [
+        "Do not change main.py without explicit authorization",
+        "Base the decision on official runtime parity",
+        "Keep the decision documented"
+      ],
+      "acceptance": [
+        "A documented decision exists for main.py",
+        "If main.py changes, it is only through an explicitly authorized task",
+        "Runtime parity and validation results are considered",
+        "Follow-up tasks are updated"
+      ]
+    },
+    {
       "id": "T0004",
       "title": "Recreate protected prototype viewpoint controls in package",
       "goal": "Add package-side viewpoint/camera adjustment matching the protected main.py prototype behavior.",
@@ -167,6 +299,12 @@
     }
   ],
   "done": [
+    {
+      "id": "T0005.0",
+      "title": "Preview-to-runtime integration contract",
+      "completed_on": "2026-06-26",
+      "summary": "Documented the contract for promoting first-generation preview behavior into package runtime while keeping main.py protected and preserving the preview as a development harness."
+    },
     {
       "id": "T0001",
       "title": "Initialize docs from project brief",

@@ -243,6 +243,8 @@ After the task:
 - `T0004.2.10` increased active CITY building cuboids to 48 while preserving the even bright-blue/dark-blue split, interleaved distribution, central boulevard, tower, ferris wheel, signage, and windows.
 - `T0003.8.11` reduced primary burst radius maximum width. Primary burst velocities now use `BURST_RADIUS_SCALE = 0.80` after deterministic wobble/clamping, while trail decisions use the pre-radius-scale speed so trail tendencies remain stable. Senrin secondary, preset constants, CITY, shell tail, and preview controls remain unchanged.
 - `T0003.9` added `HALO_PRESET` and deterministic Halo burst generation. Halo is a light, soft, wobbling single-ring burst, lighter than Multi-ring, and preview sequential/random/salvo modes include it. Do not modify CITY or shell tail behavior when tuning Halo.
+- `T0005.0` added `docs/architecture/PREVIEW_TO_RUNTIME_INTEGRATION.md`. The current first-generation preview is now the package runtime promotion target. Runtime migration must not import `tools/preview_firework_box.py`; stable behavior should be extracted into package-side runtime modules. `main.py` remains protected until a separate explicit handoff task.
+- Recommended runtime extraction sequence: `T0005.1` state/controller scaffold, `T0005.2` camera motion, `T0005.3` show/salvo scheduling, `T0005.4` runtime renderer, `T0005.5` official entrypoint, `T0005.6` main.py handoff decision.
 - Recommended visual review command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`.
 - Main stress sequence: press `R`, `H`, then `0` to combine random burst type, height variation, and random-count persistent salvos.
 - `classic` remains unchanged and remains the default profile.

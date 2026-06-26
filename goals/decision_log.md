@@ -698,3 +698,17 @@ Draw top stars unconditionally, broaden all face thresholds, or increase star de
 
 Impact:
 Only the top-face visibility threshold changed. Side-wall thresholds, star placement, CITY, fireworks, shell tail, preview controls, and production runtime remain unchanged.
+
+## 2026-06-26 Document preview-to-runtime integration contract
+
+Decision:
+Freeze the current first-generation preview as the package runtime promotion target and document the extraction contract in `docs/architecture/PREVIEW_TO_RUNTIME_INTEGRATION.md`.
+
+Reason:
+The preview has stabilized enough to serve as the visual reference for runtime promotion. Continuing to grow stable behavior inside `tools/preview_firework_box.py` would make production migration harder, but directly rewriting `main.py` or importing the preview tool would create avoidable architecture risk.
+
+Alternatives:
+Keep all behavior in the preview, rewrite `main.py` immediately, or start runtime extraction without a contract.
+
+Impact:
+This is documentation-only. `main.py`, source behavior, preview behavior, tests, and runtime gameplay remain unchanged. Future T0005.x tasks should extract package-side runtime state, camera motion, show scheduling, rendering, entrypoint, and final `main.py` handoff in small steps.

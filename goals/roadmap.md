@@ -58,6 +58,13 @@
 - [x] increase city building count to 48
 - [x] reduce burst radius maximum width
 - [x] keep ceiling stars visible at near-parallel angles
+- [x] document preview-to-runtime integration contract
+- [ ] extract preview runtime state/controller scaffold
+- [ ] extract camera motion and auto-rotate comfort settings
+- [ ] extract show launch/salvo scheduling
+- [ ] add runtime renderer using package state
+- [ ] add official runtime entrypoint
+- [ ] decide main.py handoff
 - [ ] tune city scenery readability against fireworks
 - [ ] add scenery preset data scaffold
 - [ ] add EMPTY and MOUNTAINS scenery presets

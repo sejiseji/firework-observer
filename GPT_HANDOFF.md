@@ -240,6 +240,7 @@ After the task:
 - `T0004.2.8.1` further relaxed only the top-face interior star visibility threshold so ceiling stars remain visible at smaller eye-line-to-ceiling angles. Side-wall star visibility remains unchanged.
 - `T0004.2.9` balanced CITY building cuboid outline brightness. Building outlines now use an even, interleaved bright-blue/dark-blue pattern so bright and dark buildings do not cluster. Tower, ferris wheel, signage, windows, CITY geometry, and preview controls remain unchanged.
 - `T0004.2.10` increased active CITY building cuboids to 48 while preserving the even bright-blue/dark-blue split, interleaved distribution, central boulevard, tower, ferris wheel, signage, and windows.
+- `T0003.8.11` reduced primary burst radius maximum width. Primary burst velocities now use `BURST_RADIUS_SCALE = 0.80` after deterministic wobble/clamping, while trail decisions use the pre-radius-scale speed so trail tendencies remain stable. Senrin secondary, preset constants, CITY, shell tail, and preview controls remain unchanged.
 - `T0003.9` added `HALO_PRESET` and deterministic Halo burst generation. Halo is a light, soft, wobbling single-ring burst, lighter than Multi-ring, and preview sequential/random/salvo modes include it. Do not modify CITY or shell tail behavior when tuning Halo.
 - Recommended visual review command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`.
 - Main stress sequence: press `R`, `H`, then `0` to combine random burst type, height variation, and random-count persistent salvos.

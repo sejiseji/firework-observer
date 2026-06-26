@@ -198,6 +198,7 @@ Interaction rules:
    - Select Kiku, Peony, Ring, Spiral, Willow, Multi-ring, Senrin, and Halo.
    - Press `Z` for each type.
    - Confirm burst radii are subtly uneven but compact enough that bursts do not feel over-expanded.
+   - Confirm maximum burst radius reads about 80% of the previous wide spread.
    - Confirm Ring and Multi-ring do not collapse into cloudy spheres.
    - Confirm Senrin secondary bursts remain sparse and controlled.
    - Confirm Halo remains a soft light ring and does not become a second Multi-ring.

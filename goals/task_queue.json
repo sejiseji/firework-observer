@@ -430,6 +430,12 @@
       "title": "Increase city building count to 48",
       "completed_on": "2026-06-26",
       "summary": "Increased active CITY building cuboids to 48 while preserving the balanced bright-blue/dark-blue distribution, central boulevard, and existing tower, ferris wheel, signage, and window behavior."
+    },
+    {
+      "id": "T0003.8.11",
+      "title": "Reduce burst radius maximum width",
+      "completed_on": "2026-06-26",
+      "summary": "Scaled primary burst velocity radius to 80% of the previous maximum while preserving deterministic wobble, trail tendencies, preset constants, Senrin secondary, CITY, and preview controls."
     }
   ]
 }

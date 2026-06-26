@@ -33,6 +33,7 @@ MULTI_RING_LAYERS = (
     (40, 1.00, 0.17),
     (48, 1.18, 0.34),
 )
+BURST_RADIUS_SCALE = 0.80
 BURST_RADIUS_VARIATION_BY_KIND = {
     FireworkKind.KIKU: 0.04,
     FireworkKind.PEONY: 0.04,
@@ -265,7 +266,7 @@ def generate_sphere_burst(
             make_particle_spec(
                 origin=origin,
                 velocity=velocity,
-                speed=speed,
+                speed=trail_speed_from_radius_speed(speed),
                 preset=preset,
                 rng=rng,
             )
@@ -298,7 +299,7 @@ def generate_ring_shape_burst(
             make_particle_spec(
                 origin=origin,
                 velocity=velocity,
-                speed=speed,
+                speed=trail_speed_from_radius_speed(speed),
                 preset=preset,
                 rng=rng,
             )
@@ -340,7 +341,7 @@ def generate_multi_ring_shape_burst(
                 make_particle_spec(
                     origin=origin,
                     velocity=velocity,
-                    speed=speed,
+                    speed=trail_speed_from_radius_speed(speed),
                     preset=preset,
                     rng=rng,
                 )
@@ -383,7 +384,7 @@ def generate_halo_shape_burst(
             make_particle_spec(
                 origin=origin,
                 velocity=velocity,
-                speed=speed,
+                speed=trail_speed_from_radius_speed(speed),
                 preset=preset,
                 rng=rng,
             )
@@ -414,7 +415,7 @@ def generate_spiral_shape_burst(
             make_particle_spec(
                 origin=origin,
                 velocity=velocity,
-                speed=speed,
+                speed=trail_speed_from_radius_speed(speed),
                 preset=preset,
                 rng=rng,
             )
@@ -440,7 +441,7 @@ def generate_willow_shape_burst(
             make_particle_spec(
                 origin=origin,
                 velocity=velocity,
-                speed=speed,
+                speed=trail_speed_from_radius_speed(speed),
                 preset=preset,
                 rng=rng,
             )
@@ -467,7 +468,7 @@ def generate_senrin_shape_burst(
             make_particle_spec(
                 origin=origin,
                 velocity=velocity,
-                speed=speed,
+                speed=trail_speed_from_radius_speed(speed),
                 preset=preset,
                 rng=rng,
                 secondary_burst=make_secondary_burst_spec(
@@ -488,14 +489,19 @@ def varied_burst_speed(
 ) -> float:
     amount = BURST_RADIUS_VARIATION_BY_KIND.get(preset.kind, 0.0)
     if amount <= 0.0:
-        return base_speed
+        return base_speed * BURST_RADIUS_SCALE
     phase = (index + 1) * 2.399963229728653
     wobble = 1.0 + math.sin(phase) * amount
-    return clamp_float(
+    bounded_speed = clamp_float(
         base_speed * wobble,
         minimum=preset.speed_range[0],
         maximum=preset.speed_range[1],
     )
+    return bounded_speed * BURST_RADIUS_SCALE
+
+
+def trail_speed_from_radius_speed(radius_speed: float) -> float:
+    return radius_speed / BURST_RADIUS_SCALE
 
 
 def make_particle_spec(

@@ -7,6 +7,7 @@ import pytest
 
 from pyxel_goal_game.camera3d import Vec3
 from pyxel_goal_game.firework_bursts import (
+    BURST_RADIUS_SCALE,
     DEFAULT_RING_ORIENTATION_COUNT,
     RingOrientationBank,
     build_ring_orientation_bank,
@@ -46,8 +47,12 @@ def speed_of(velocity: Vec3) -> float:
     return math.sqrt(velocity.x**2 + velocity.y**2 + velocity.z**2)
 
 
-def speed_in_range(speed: float, speed_range: tuple[float, float]) -> bool:
-    return speed_range[0] - 1e-9 <= speed <= speed_range[1] + 1e-9
+def speed_in_scaled_range(speed: float, speed_range: tuple[float, float]) -> bool:
+    return (
+        speed_range[0] * BURST_RADIUS_SCALE - 1e-9
+        <= speed
+        <= speed_range[1] * BURST_RADIUS_SCALE + 1e-9
+    )
 
 
 def test_kiku_preset_uses_protected_values() -> None:
@@ -84,7 +89,7 @@ def test_kiku_particle_count_and_ranges() -> None:
         for particle in particles
     )
     assert all(
-        speed_in_range(speed_of(particle.velocity), KIKU_PRESET.speed_range)
+        speed_in_scaled_range(speed_of(particle.velocity), KIKU_PRESET.speed_range)
         for particle in particles
     )
 
@@ -141,10 +146,17 @@ def test_burst_radius_variation_is_subtle_and_bounded(preset: FireworkPreset) ->
         varied_burst_speed(base_speed=midpoint, preset=preset, index=index)
         for index in range(24)
     ]
+    scaled_midpoint = midpoint * BURST_RADIUS_SCALE
 
-    assert all(preset.speed_range[0] <= speed <= preset.speed_range[1] for speed in varied)
-    assert min(varied) < midpoint < max(varied)
+    assert all(
+        preset.speed_range[0] * BURST_RADIUS_SCALE
+        <= speed
+        <= preset.speed_range[1] * BURST_RADIUS_SCALE
+        for speed in varied
+    )
+    assert min(varied) < scaled_midpoint < max(varied)
     assert max(varied) / min(varied) < 1.09
+    assert max(varied) <= preset.speed_range[1] * 0.80
 
 
 def test_generate_burst_rejects_unsupported_shapes() -> None:
@@ -259,7 +271,7 @@ def test_ring_particle_count_and_ranges() -> None:
         for particle in particles
     )
     assert all(
-        speed_in_range(speed_of(particle.velocity), RING_PRESET.speed_range)
+        speed_in_scaled_range(speed_of(particle.velocity), RING_PRESET.speed_range)
         for particle in particles
     )
 
@@ -289,7 +301,7 @@ def test_ring_velocity_keeps_speed_with_orientation_bank() -> None:
     particles = generate_ring_burst(origin=ORIGIN, seed=0, orientation_bank=bank)
 
     assert all(
-        speed_in_range(speed_of(particle.velocity), RING_PRESET.speed_range)
+        speed_in_scaled_range(speed_of(particle.velocity), RING_PRESET.speed_range)
         for particle in particles
     )
 
@@ -365,7 +377,7 @@ def test_spiral_particle_count_and_ranges() -> None:
         for particle in particles
     )
     assert all(
-        speed_in_range(speed_of(particle.velocity), SPIRAL_PRESET.speed_range)
+        speed_in_scaled_range(speed_of(particle.velocity), SPIRAL_PRESET.speed_range)
         for particle in particles
     )
 
@@ -541,7 +553,7 @@ def test_peony_particle_count_life_and_speed_ranges() -> None:
         for particle in particles
     )
     assert all(
-        speed_in_range(speed_of(particle.velocity), PEONY_PRESET.speed_range)
+        speed_in_scaled_range(speed_of(particle.velocity), PEONY_PRESET.speed_range)
         for particle in particles
     )
 
@@ -638,7 +650,7 @@ def test_multi_ring_particle_count_life_and_speed_ranges() -> None:
         for particle in particles
     )
     assert all(
-        speed_in_range(speed_of(particle.velocity), MULTI_RING_PRESET.speed_range)
+        speed_in_scaled_range(speed_of(particle.velocity), MULTI_RING_PRESET.speed_range)
         for particle in particles
     )
 
@@ -747,7 +759,7 @@ def test_halo_particle_count_life_and_speed_ranges() -> None:
         for particle in particles
     )
     assert all(
-        speed_in_range(speed_of(particle.velocity), HALO_PRESET.speed_range)
+        speed_in_scaled_range(speed_of(particle.velocity), HALO_PRESET.speed_range)
         for particle in particles
     )
 

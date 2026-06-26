@@ -670,3 +670,17 @@ Increase only window/sign density, add new landmarks, or broaden city coverage w
 
 Impact:
 Only CITY building cuboid data changed. The landmark tower, ferris wheel, signage, windows, central boulevard, preview controls, firework generation, shell tail behavior, and production runtime remain unchanged.
+
+## 2026-06-26 Reduce burst radius maximum width
+
+Decision:
+Apply an 80% radius speed scale to primary firework burst velocities while preserving the existing deterministic per-kind radius wobble.
+
+Reason:
+User review found the maximum explosion radius too wide. Scaling the effective burst velocity directly reduces the visual radius without changing preset constants, particle counts, or firework identities.
+
+Alternatives:
+Lower each preset `speed_range`, reduce only the wobble upper bound, or add preview-only camera scaling.
+
+Impact:
+Primary burst velocity magnitudes are reduced to 80% of their bounded generated speed. Trail decisions continue to use the pre-radius-scale speed so existing trail tendencies remain stable. Senrin secondary, preset constants, shell tail, CITY, preview controls, and production runtime remain unchanged.

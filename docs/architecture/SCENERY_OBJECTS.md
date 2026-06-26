@@ -229,6 +229,16 @@ The utility pole and wire idea is intentionally not part of the active CITY pres
 
 CITY should now read as a fuller cutaway urban stage across the lower footprint of the observation box. Preserve launch readability and upper bloom space: the city can occupy most of the bottom, but it must remain visually quieter than fireworks.
 
+`T0004.2.5` tuned CITY layout readability:
+
+- Buildings avoid a central x-axis corridor so the city reads as having a broad boulevard through the cutaway mass
+- The broader lower-footprint coverage is preserved on both sides of the corridor
+- The ferris wheel was enlarged and tuned to read more circular
+- The ferris wheel remains grounded, static, subdued, and below the main firework bloom area
+- Utility poles and overhead wires remain removed from active CITY
+
+Future CITY tuning should preserve the central boulevard unless a later task explicitly changes the stage layout.
+
 ## Interior Box Stars
 
 `T0004.2.4` added a preview-only interior star ambience layer.

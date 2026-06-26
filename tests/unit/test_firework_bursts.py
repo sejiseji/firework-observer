@@ -144,7 +144,7 @@ def test_burst_radius_variation_is_subtle_and_bounded(preset: FireworkPreset) ->
 
     assert all(preset.speed_range[0] <= speed <= preset.speed_range[1] for speed in varied)
     assert min(varied) < midpoint < max(varied)
-    assert max(varied) / min(varied) < 1.25
+    assert max(varied) / min(varied) < 1.09
 
 
 def test_generate_burst_rejects_unsupported_shapes() -> None:

@@ -394,6 +394,12 @@
       "title": "Add interior twinkling box stars with toggle",
       "completed_on": "2026-06-26",
       "summary": "Added preview-only twinkling stars attached to the observation box's interior top and upper side faces, with T toggling and conservative interior-face visibility."
+    },
+    {
+      "id": "T0004.2.5",
+      "title": "Tune burst compactness and city landmark layout",
+      "completed_on": "2026-06-26",
+      "summary": "Tightened deterministic burst radius wobble, enlarged the CITY ferris wheel, and preserved a central boulevard-like open corridor through the dense city footprint."
     }
   ]
 }

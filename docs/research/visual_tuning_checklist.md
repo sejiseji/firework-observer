@@ -191,7 +191,7 @@ Interaction rules:
 10. Burst radius variation check:
    - Select Kiku, Peony, Ring, Spiral, Willow, Multi-ring, Senrin, and Halo.
    - Press `Z` for each type.
-   - Confirm burst radii are subtly uneven but identities remain readable.
+   - Confirm burst radii are subtly uneven but compact enough that bursts do not feel over-expanded.
    - Confirm Ring and Multi-ring do not collapse into cloudy spheres.
    - Confirm Senrin secondary bursts remain sparse and controlled.
    - Confirm Halo remains a soft light ring and does not become a second Multi-ring.
@@ -207,8 +207,9 @@ Interaction rules:
    - Confirm the landmark tower is larger than surrounding buildings but clearly grounded.
    - Confirm building-attached signs are visible but not noisy.
    - Confirm City buildings spread across most of the lower footprint, not only the center cluster.
-   - Confirm the ferris wheel is recognizable, grounded, and quieter than fireworks.
+   - Confirm the ferris wheel is recognizable, grounded, circular enough, and quieter than fireworks.
    - Confirm the ferris wheel does not block core launch readability.
+   - Confirm the central boulevard-like corridor remains visible through the city mass.
    - Confirm utility poles and sagging overhead wires are absent from active CITY.
    - Confirm `R + H + 0` remains readable with scenery enabled.
 
@@ -277,6 +278,7 @@ If burst radius variation dominates:
 - Reduce ring-like burst variation if rings lose planar readability.
 - Keep Senrin secondary variation at none or near zero until density is stable.
 - Prefer smaller bounded speed wobble over random position offsets.
+- Preserve some deterministic variation; do not return all bursts to perfectly uniform radii.
 
 If scenery dominates:
 
@@ -291,6 +293,8 @@ If scenery dominates:
 - If CITY tower or signs dominate, reduce their line count or darken them before removing building windows.
 - If the CITY ferris wheel dominates, reduce its rim/spoke line count or darken it before shrinking the broader building footprint.
 - If CITY density hurts launch readability, restore small corridors around launch paths before removing the off-center landmark elements.
+- If the central boulevard disappears, move building blocks outward before lowering overall CITY density.
+- If the ferris wheel reads vertically narrow, tune its normalized x/y extent before adding cabin detail.
 - If interior stars dominate, lower star count, darken twinkle colors, or hide edge-on faces more aggressively.
 - If stars look painted on the outside of the box, tighten the interior-face visibility threshold before changing star placement.
 

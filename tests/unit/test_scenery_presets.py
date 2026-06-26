@@ -91,6 +91,21 @@ def test_city_extends_across_fuller_lower_footprint() -> None:
     assert max(point.z for point in points) > half_depth * 0.55
 
 
+def test_city_preserves_central_boulevard_corridor() -> None:
+    city = get_scenery_preset("city", profile=CLASSIC_PROFILE)
+    base_y = min(point.y for point in city.all_points)
+    grounded_verticals = [
+        line
+        for line in city.lines
+        if line.start.x == line.end.x
+        and line.start.z == line.end.z
+        and line.start.y != line.end.y
+        and (line.start.y == base_y or line.end.y == base_y)
+    ]
+
+    assert all(abs(line.start.x) >= CLASSIC_PROFILE.box_width * 0.06 for line in grounded_verticals)
+
+
 def test_city_buildings_omit_bottom_face_edges() -> None:
     city = get_scenery_preset("city", profile=CLASSIC_PROFILE)
     base_y = min(point.y for point in city.all_points)
@@ -151,6 +166,8 @@ def test_city_includes_low_detail_ferris_wheel() -> None:
     wheel_lines = ferris_wheel_lines(profile=CLASSIC_PROFILE, base_y=-0.96)
     wheel_points = tuple(point for line in wheel_lines for point in (line.start, line.end))
     base_y = min(point.y for point in wheel_points)
+    x_extent = max(point.x for point in wheel_points) - min(point.x for point in wheel_points)
+    y_extent = max(point.y for point in wheel_points) - min(point.y for point in wheel_points)
     grounded_supports = [
         line
         for line in wheel_lines
@@ -160,14 +177,20 @@ def test_city_includes_low_detail_ferris_wheel() -> None:
         point
         for point in wheel_points
         if abs(point.x - (-0.72 * CLASSIC_PROFILE.box_width / 2.0)) < 0.001
-        and abs(point.y - (-0.72 * CLASSIC_PROFILE.box_height / 2.0)) < 0.001
+        and abs(point.y - (-0.74 * CLASSIC_PROFILE.box_height / 2.0)) < 0.001
     ]
 
-    assert len(wheel_lines) >= 26
+    assert len(wheel_lines) >= 32
     assert len(grounded_supports) >= 4
-    assert len(hub_like_points) >= 6
-    assert len({round(point.x, 4) for point in wheel_points}) >= 8
-    assert len({round(point.y, 4) for point in wheel_points}) >= 8
+    assert len(hub_like_points) >= 8
+    normalized_x_extent = x_extent / CLASSIC_PROFILE.box_width
+    normalized_y_extent = y_extent / CLASSIC_PROFILE.box_height
+
+    assert normalized_x_extent > 0.15
+    assert normalized_y_extent > 0.18
+    assert 0.82 <= normalized_x_extent / normalized_y_extent <= 1.18
+    assert len({round(point.x, 4) for point in wheel_points}) >= 10
+    assert len({round(point.y, 4) for point in wheel_points}) >= 10
 
 
 def test_city_removes_active_utility_poles_and_wires() -> None:

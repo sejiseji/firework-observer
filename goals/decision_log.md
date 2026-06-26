@@ -586,3 +586,17 @@ Add UFO ambient behavior first, add screen-space stars, place stars freely in 3D
 
 Impact:
 Added Pyxel-independent star field and visibility helpers plus preview rendering/toggle support. `main.py`, production runtime, firework generation, burst radius variation, firework presets, shell tail behavior, CITY geometry, UFO, and existing preview controls remain unchanged.
+
+## 2026-06-26 Tune burst compactness and CITY layout
+
+Decision:
+Tighten deterministic burst radius wobble, enlarge the CITY ferris wheel, and move CITY building blocks away from the center to preserve a boulevard-like open corridor.
+
+Reason:
+The existing burst wobble added useful naturalness but could feel slightly too wide at the upper radius. The ferris wheel needed to read more clearly as a circular landmark, and the dense CITY mass needed a central avenue to improve launch readability and city staging.
+
+Alternatives:
+Leave the existing wobble unchanged, add more city detail, implement UFO ambient behavior, or change preview controls.
+
+Impact:
+Pure burst generation keeps deterministic radius variation but with smaller factors. CITY remains Pyxel-independent line geometry, with utility poles/wires still absent. `main.py`, production runtime, preview controls, shell tail, interior stars, UFO, and firework preset constants remain unchanged.

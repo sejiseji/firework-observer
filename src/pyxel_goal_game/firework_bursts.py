@@ -34,14 +34,14 @@ MULTI_RING_LAYERS = (
     (48, 1.18, 0.34),
 )
 BURST_RADIUS_VARIATION_BY_KIND = {
-    FireworkKind.KIKU: 0.08,
-    FireworkKind.PEONY: 0.08,
-    FireworkKind.RING: 0.04,
-    FireworkKind.MULTI_RING: 0.04,
-    FireworkKind.HALO: 0.03,
-    FireworkKind.WILLOW: 0.07,
-    FireworkKind.SPIRAL: 0.06,
-    FireworkKind.SENRIN: 0.05,
+    FireworkKind.KIKU: 0.04,
+    FireworkKind.PEONY: 0.04,
+    FireworkKind.RING: 0.03,
+    FireworkKind.MULTI_RING: 0.03,
+    FireworkKind.HALO: 0.025,
+    FireworkKind.WILLOW: 0.04,
+    FireworkKind.SPIRAL: 0.035,
+    FireworkKind.SENRIN: 0.03,
 }
 
 

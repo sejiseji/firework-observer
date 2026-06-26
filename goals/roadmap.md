@@ -64,7 +64,7 @@
 - [x] extract show launch/salvo scheduling
 - [x] add first official runtime app and entrypoint
 - [x] review runtime parity and decide main.py handoff
-- [ ] convert main.py to official runtime launcher
+- [x] convert main.py to official runtime launcher
 - [ ] tune city scenery readability against fireworks
 - [ ] add scenery preset data scaffold
 - [ ] add EMPTY and MOUNTAINS scenery presets

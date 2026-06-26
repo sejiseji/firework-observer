@@ -10,7 +10,7 @@ The manual preview has reached the intended first-generation visual direction. I
 
 Further stable behavior should not remain trapped in `tools/preview_firework_box.py`. Runtime work should promote those behaviors into `src/pyxel_goal_game/` in small package-side slices.
 
-The protected standalone `main.py` remains a reference prototype. This integration does not authorize modifying it.
+The standalone `main.py` has completed its handoff and is now intended to be a thin launcher to the official package runtime.
 
 ## Frozen First-Generation Feature Set
 
@@ -46,7 +46,7 @@ These are intentionally outside the first runtime promotion:
 - Conversation, story, or event systems.
 - Combat, collection, objective, or win/lose loops.
 - Mobile-specific deployment.
-- Main `main.py` handoff.
+- Further `main.py` logic changes beyond thin-launcher delegation.
 - Sound, unless a later task explicitly stabilizes it.
 
 ## Preview-Only Versus Runtime
@@ -127,6 +127,15 @@ Remaining parity risks should be reviewed in `T0005.5`: visual exactness between
 
 Manual review found official runtime parity OK for `iphone16_balanced`. Startup, controls, CITY, stars, shell tail, glitter residue, all first-generation firework kinds, salvos, height variation, auto-rotate comfort, and `R + H + 0` stress mode were accepted. The handoff decision is `READY`: `main.py` may become a thin launcher to the official runtime in a separate explicit task.
 
+`T0005.6` applied the handoff. `main.py` is now a thin launcher to `pyxel_goal_game.runtime.app.main` and does not contain runtime logic or import from `tools/`.
+
+Primary launch commands:
+
+```bash
+.venv/bin/python main.py
+.venv/bin/python scripts/run_runtime_app.py --profile iphone16_balanced
+```
+
 ## Pure Logic And Pyxel Boundary
 
 Pure modules must not import Pyxel.
@@ -185,9 +194,9 @@ Each task should keep the preview working and should avoid changing visual tunin
 
 ## Protected main.py Policy
 
-`main.py` remains protected unless a task explicitly authorizes changing it.
+`main.py` is now a thin launcher for the official package runtime.
 
-The first official package runtime was added without overwriting or thinning `main.py`. Runtime parity review is now complete and records `main.py` handoff readiness as `READY`. `T0005.6` is authorized to convert `main.py` into a thin launcher only; it must not move runtime logic back into `main.py`.
+Future changes must not move runtime logic back into `main.py`. Runtime behavior belongs in `src/pyxel_goal_game/runtime/`, and the preview remains available in `tools/preview_firework_box.py`.
 
 ## Risks And Guardrails
 
@@ -195,7 +204,7 @@ Risks:
 
 - Importing from `tools/preview_firework_box.py` would make a temporary harness part of production architecture.
 - Moving everything in one patch would mix state, input, rendering, scheduling, and visual tuning regressions.
-- Changing `main.py` early would remove the protected reference prototype.
+- Moving runtime logic back into `main.py` would recreate a single-file prototype and bypass the package runtime boundary.
 - Moving Pyxel calls into pure modules would weaken deterministic tests.
 - Re-tuning visuals during extraction would make parity failures hard to diagnose.
 
@@ -213,7 +222,7 @@ Guardrails:
 The first official runtime is acceptable when it:
 
 - Does not import from `tools/`.
-- Keeps `main.py` unchanged until an explicit handoff task.
+- Keeps `main.py` thin and free of runtime logic.
 - Supports the `iphone16_balanced` visual target.
 - Preserves the 3D cuboid observation box.
 - Preserves the eight first-generation firework presets.

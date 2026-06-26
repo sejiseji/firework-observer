@@ -31,9 +31,7 @@ The project now includes:
 - `docs/architecture/SCENERY_OBJECTS.md`: planning for future quiet 3D line scenery inside the observation box.
 - `docs/architecture/PROTOTYPE_RECONCILIATION.md`: inventory of protected `main.py` behavior and package migration strategy.
 
-An existing standalone `main.py` is still present and was not overwritten. It appears to contain a separate single-file Pyxel firework box prototype.
-
-Important: the current good-feeling firework box behavior may live in this standalone `main.py`, not yet in `src/pyxel_goal_game/`. Treat `main.py` as a protected reference prototype for now.
+`main.py` has completed handoff and is now a thin launcher for the official package runtime. The old standalone prototype behavior is documented in `docs/architecture/PROTOTYPE_RECONCILIATION.md`.
 
 ## Product Direction
 
@@ -249,13 +247,12 @@ After the task:
 - `T0005.3` added Pyxel-independent `runtime/show_schedule.py` and moved package-side schedule construction for single launches, fixed salvos, random-count salvos, random firework kinds, and height variation. Preview consumes immutable launch schedules but still owns shell simulation, particle spawning, rendering, shell tail, and glitter residue.
 - `T0005.4` added the first official package-side runtime app and entrypoint without touching protected `main.py` or importing `tools/preview_firework_box.py`. Launch it with `.venv/bin/python scripts/run_runtime_app.py --profile iphone16_balanced`. Runtime modules now include `runtime/app.py`, `runtime/input.py`, `runtime/render.py`, and `runtime/effects.py`; the preview remains available as a regression viewer.
 - `T0005.5` recorded manual runtime parity review in `docs/research/runtime_parity_review_20260626.md`. Official runtime parity is OK, runtime stability is OK, and `main.py` handoff readiness is READY.
-- Recommended runtime sequence from here: `T0005.6` convert `main.py` to a thin official runtime launcher. Do not move runtime logic back into `main.py`; it should delegate to the package-side runtime only.
+- `T0005.6` converted `main.py` into a thin launcher for `pyxel_goal_game.runtime.app.main`. Do not move runtime logic back into `main.py`; runtime behavior belongs in `src/pyxel_goal_game/runtime/`.
 - Recommended visual review command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`.
 - Main stress sequence: press `R`, `H`, then `0` to combine random burst type, height variation, and random-count persistent salvos.
 - `classic` remains unchanged and remains the default profile.
 - If the user changes the game direction, update `project_brief.json` and regenerate or manually update the related docs.
-- Review whether the standalone `main.py` should be migrated into `src/pyxel_goal_game/` or kept only as a reference prototype.
-- Before implementing `T0003.0`, inspect `main.py`, identify behavior to preserve, and document the migration strategy in `T0002.5`.
+- The standalone `main.py` migration is complete; use `docs/architecture/PROTOTYPE_RECONCILIATION.md` for historical reference only.
 - Use `docs/architecture/PROTOTYPE_RECONCILIATION.md` as the source of truth for preserving protected prototype behavior during migration.
 - Use `docs/prompts/goal_driven_mode.md` for future Codex sessions so each run completes only one eligible task.
 - `T0004` should mean recreating the protected `main.py` viewpoint/camera feel on the package side, not inventing unrelated camera behavior.

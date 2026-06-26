@@ -3,29 +3,6 @@
   "policy": "Keep tasks small enough for one Codex patch. Split ambiguous tasks before implementation.",
   "current": [
     {
-      "id": "T0005.6",
-      "title": "Convert main.py to official runtime launcher",
-      "goal": "Convert protected main.py into a thin launcher for the official package runtime after recorded parity approval.",
-      "status": "todo",
-      "depends_on": [
-        "T0005.5"
-      ],
-      "constraints": [
-        "Only thin-launcher main.py changes are allowed",
-        "Do not move runtime logic into main.py",
-        "Do not change official runtime behavior",
-        "Do not change preview behavior",
-        "Keep preview available as development harness"
-      ],
-      "acceptance": [
-        "main.py delegates to the official runtime app",
-        "main.py contains no copied runtime logic",
-        "Official runtime launch path remains available",
-        "Preview remains available",
-        "Validation results are recorded"
-      ]
-    },
-    {
       "id": "T0004",
       "title": "Recreate protected prototype viewpoint controls in package",
       "goal": "Add package-side viewpoint/camera adjustment matching the protected main.py prototype behavior.",
@@ -190,6 +167,12 @@
     }
   ],
   "done": [
+    {
+      "id": "T0005.6",
+      "title": "Convert main.py to official runtime launcher",
+      "completed_on": "2026-06-27",
+      "summary": "Converted main.py from the old standalone prototype into a thin launcher that delegates to the official package runtime app."
+    },
     {
       "id": "T0005.5",
       "title": "Runtime parity review and main.py handoff decision",

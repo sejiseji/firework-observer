@@ -782,3 +782,17 @@ Keep `main.py` protected indefinitely, or convert it before recording parity res
 
 Impact:
 This is documentation-only. `main.py` remains unchanged in T0005.5. A separate explicit task, `T0005.6`, is now ready to convert `main.py` to a thin launcher for the official runtime.
+
+## 2026-06-27 Convert main.py to official runtime launcher
+
+Decision:
+Convert `main.py` into a thin launcher that delegates to `pyxel_goal_game.runtime.app.main`.
+
+Reason:
+Runtime parity was recorded as OK and handoff readiness was marked READY in T0005.5. The official package runtime should now be the default project entry path, while runtime logic remains package-side.
+
+Alternatives:
+Keep `main.py` as the old standalone prototype, duplicate runtime logic into `main.py`, or remove `main.py`.
+
+Impact:
+`main.py` no longer contains the old single-file prototype implementation. It imports the official runtime app entrypoint and calls it. Runtime behavior remains owned by `src/pyxel_goal_game/runtime/`; the preview remains available as a development harness.

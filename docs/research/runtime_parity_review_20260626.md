@@ -81,3 +81,21 @@ The next task is:
 - Keep `main.py` as a thin launcher only.
 - Preserve `tools/preview_firework_box.py` as the development harness.
 - Preserve package-side runtime ownership of app loop, input, render, effects, camera motion, state, and scheduling.
+
+## T0005.6 Application
+
+Status: `APPLIED`
+
+`main.py` has been converted into a thin launcher for the official runtime. It delegates to `pyxel_goal_game.runtime.app.main` and does not import from `tools/`.
+
+Default launch command:
+
+```bash
+.venv/bin/python main.py
+```
+
+Explicit runtime launcher remains available:
+
+```bash
+.venv/bin/python scripts/run_runtime_app.py --profile iphone16_balanced
+```

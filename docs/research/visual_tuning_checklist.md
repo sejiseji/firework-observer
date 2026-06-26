@@ -428,6 +428,10 @@ Result:
 - Runtime stability: OK.
 - `main.py` handoff readiness: READY.
 
-Next step:
+Default entry path after T0005.6:
 
-- `T0005.6`: convert `main.py` to a thin official runtime launcher.
+- `.venv/bin/python main.py`
+
+The explicit runtime launcher remains available:
+
+- `.venv/bin/python scripts/run_runtime_app.py --profile iphone16_balanced`

@@ -1157,3 +1157,26 @@ Record completed tasks here.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 238 passed.
   - Visual smoke was not run because this was a documentation-only parity recording task.
 - Preservation: `main.py` unchanged. Runtime behavior, preview behavior, firework generation, CITY, stars, shell tail, glitter residue, and controls unchanged.
+
+## 2026-06-27 T0005.6 Convert main.py to official runtime launcher
+
+- Summary: Converted `main.py` into a thin launcher for the official package runtime.
+- Files changed: `main.py`, `tests/unit/test_main_launcher.py`, `docs/architecture/PREVIEW_TO_RUNTIME_INTEGRATION.md`, `docs/research/runtime_parity_review_20260626.md`, `docs/research/visual_tuning_checklist.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Behavior:
+  - `.venv/bin/python main.py` is now the default project entry path for the official runtime.
+  - `main.py` delegates to `pyxel_goal_game.runtime.app.main`.
+  - `main.py` does not import `tools/preview_firework_box.py`.
+  - `main.py` contains no copied runtime logic.
+  - `tools/preview_firework_box.py` remains available as a development harness.
+- Tests:
+  - `.venv/bin/python main.py --help` passed.
+  - `.venv/bin/python scripts/run_runtime_app.py --help` passed.
+  - `.venv/bin/python -m json.tool goals/task_queue.json` passed.
+  - `python3 -m compileall src tests scripts tools main.py` passed.
+  - `.venv/bin/python -m pytest` passed: 239 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 239 passed.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_080123.txt`.
+- Preservation: Firework generation, preset constants, burst radius scaling, shell tail, glitter residue, CITY, interior stars, camera motion, show scheduling, preview behavior, and UFO exclusion unchanged.

@@ -436,6 +436,12 @@
       "title": "Reduce burst radius maximum width",
       "completed_on": "2026-06-26",
       "summary": "Scaled primary burst velocity radius to 80% of the previous maximum while preserving deterministic wobble, trail tendencies, preset constants, Senrin secondary, CITY, and preview controls."
+    },
+    {
+      "id": "T0004.2.8.2",
+      "title": "Keep ceiling stars visible at near-parallel angles",
+      "completed_on": "2026-06-26",
+      "summary": "Widened only the top-face interior star visibility threshold so ceiling stars remain visible at near-parallel eye-line-to-ceiling angles while side-wall visibility remains unchanged."
     }
   ]
 }

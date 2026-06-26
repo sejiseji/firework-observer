@@ -684,3 +684,17 @@ Lower each preset `speed_range`, reduce only the wobble upper bound, or add prev
 
 Impact:
 Primary burst velocity magnitudes are reduced to 80% of their bounded generated speed. Trail decisions continue to use the pre-radius-scale speed so existing trail tendencies remain stable. Senrin secondary, preset constants, shell tail, CITY, preview controls, and production runtime remain unchanged.
+
+## 2026-06-26 Keep ceiling stars at near-parallel angles
+
+Decision:
+Widen only the top-face interior star visibility threshold so ceiling stars remain visible even when the eye line is near parallel with the ceiling plane.
+
+Reason:
+User review found that ceiling stars should not disappear at the practical shallow-angle limit. Side-wall star visibility was not part of the issue.
+
+Alternatives:
+Draw top stars unconditionally, broaden all face thresholds, or increase star density.
+
+Impact:
+Only the top-face visibility threshold changed. Side-wall thresholds, star placement, CITY, fireworks, shell tail, preview controls, and production runtime remain unchanged.

@@ -1021,3 +1021,23 @@ Record completed tasks here.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_221728.txt`.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` unchanged. Production runtime, firework preset constants, Senrin secondary, shell tail behavior, CITY, UFO, and preview controls unchanged.
+
+## 2026-06-26 T0004.2.8.2 Keep ceiling stars visible at near-parallel angles
+
+- Summary: Widened only the top-face interior star visibility threshold so ceiling stars stay visible at near-parallel eye-line-to-ceiling angles.
+- Files changed: `src/pyxel_goal_game/ambient_box_stars.py`, `tests/unit/test_ambient_box_stars.py`, `docs/architecture/SCENERY_OBJECTS.md`, `docs/research/visual_tuning_checklist.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Behavior:
+  - Top-face stars remain visible at the practical shallow-angle limit.
+  - Side-wall visibility thresholds remain unchanged.
+  - Star placement, CITY, fireworks, shell tail, preview controls, and production runtime remain unchanged.
+- Tests:
+  - `.venv/bin/python -m json.tool goals/task_queue.json` passed.
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 193 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 193 passed.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_222047.txt`.
+- Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
+- Preservation: `main.py` unchanged. Production runtime, firework generation, shell tail behavior, CITY, UFO, and preview controls unchanged.

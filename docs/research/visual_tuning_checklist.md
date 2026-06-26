@@ -227,7 +227,7 @@ Interaction rules:
 13. Interior star check:
    - Press `T` to toggle stars ON/OFF.
    - Rotate the camera.
-   - Confirm top-face stars remain visible when the ceiling is clearly visible, even at very shallow eye-line-to-ceiling angles.
+   - Confirm top-face stars remain visible when the ceiling is clearly visible, even at near-limit shallow eye-line-to-ceiling angles.
    - Confirm stars appear on the interior top face and upper side-wall bands.
    - Confirm side-wall star visibility behaves as before and does not become too broad.
    - Confirm stars do not appear on the floor, lower side walls, or open central volume.

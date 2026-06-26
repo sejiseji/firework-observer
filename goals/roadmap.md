@@ -57,6 +57,7 @@
 - [x] balance city building outline brightness
 - [x] increase city building count to 48
 - [x] reduce burst radius maximum width
+- [x] keep ceiling stars visible at near-parallel angles
 - [ ] tune city scenery readability against fireworks
 - [ ] add scenery preset data scaffold
 - [ ] add EMPTY and MOUNTAINS scenery presets

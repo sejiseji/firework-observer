@@ -388,6 +388,12 @@
       "title": "Add ferris wheel and full-footprint city coverage",
       "completed_on": "2026-06-26",
       "summary": "Expanded active CITY building coverage across the lower observation-box footprint and added one low-detail ferris wheel while preserving preview controls and firework behavior."
+    },
+    {
+      "id": "T0004.2.4",
+      "title": "Add interior twinkling box stars with toggle",
+      "completed_on": "2026-06-26",
+      "summary": "Added preview-only twinkling stars attached to the observation box's interior top and upper side faces, with T toggling and conservative interior-face visibility."
     }
   ]
 }

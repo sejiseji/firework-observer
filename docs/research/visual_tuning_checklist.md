@@ -43,6 +43,7 @@ Use `iphone16_balanced` for most visual judgement. Use `classic` to confirm comp
 | `H` | Toggle salvo burst height variation |
 | `G` | Cycle scenery preset |
 | `B` | Toggle scenery visibility |
+| `T` | Toggle interior box stars |
 | `X` | Toggle auto rotate |
 | `D` | Toggle debug HUD |
 | `A` / `S` | Zoom in / out |
@@ -65,7 +66,9 @@ Interaction rules:
 - `Z` remains a single immediate launch and does not change persistent salvo state.
 - `G` cycles low-detail in-box 3D scenery presets.
 - `B` hides or shows scenery without changing firework behavior.
+- `T` hides or shows subtle stars attached to the top and upper interior side faces.
 - Scenery must rotate with the box. It is not a 2D screen-space background.
+- Interior stars must not render on exterior-facing box surfaces.
 
 ## Per-Firework Checks
 
@@ -209,6 +212,15 @@ Interaction rules:
    - Confirm utility poles and sagging overhead wires are absent from active CITY.
    - Confirm `R + H + 0` remains readable with scenery enabled.
 
+12. Interior star check:
+   - Press `T` to toggle stars ON/OFF.
+   - Rotate the camera.
+   - Confirm stars appear on the interior top face and upper side-wall bands.
+   - Confirm stars do not appear on the floor, lower side walls, or open central volume.
+   - Confirm exterior-facing box surfaces do not show stars.
+   - Confirm stars twinkle subtly and remain quieter than fireworks.
+   - Confirm `R + H + 0` remains readable with stars ON.
+
 ## Density Risk Thresholds
 
 If 5-shot Senrin overwhelms the preview:
@@ -279,6 +291,8 @@ If scenery dominates:
 - If CITY tower or signs dominate, reduce their line count or darken them before removing building windows.
 - If the CITY ferris wheel dominates, reduce its rim/spoke line count or darken it before shrinking the broader building footprint.
 - If CITY density hurts launch readability, restore small corridors around launch paths before removing the off-center landmark elements.
+- If interior stars dominate, lower star count, darken twinkle colors, or hide edge-on faces more aggressively.
+- If stars look painted on the outside of the box, tighten the interior-face visibility threshold before changing star placement.
 
 ## Depth And Box Readability
 

@@ -49,6 +49,7 @@
 - [x] densify city blocks and replace utility poles with signage
 - [x] add preview auto-rotation speed cycling
 - [x] add ferris wheel and fuller city coverage
+- [x] add interior twinkling box stars with toggle
 - [ ] tune city scenery readability against fireworks
 - [ ] add scenery preset data scaffold
 - [ ] add EMPTY and MOUNTAINS scenery presets

@@ -228,3 +228,27 @@ The utility pole and wire idea is intentionally not part of the active CITY pres
 - Utility poles and overhead wires remain removed from active CITY
 
 CITY should now read as a fuller cutaway urban stage across the lower footprint of the observation box. Preserve launch readability and upper bloom space: the city can occupy most of the bottom, but it must remain visually quieter than fireworks.
+
+## Interior Box Stars
+
+`T0004.2.4` added a preview-only interior star ambience layer.
+
+Stars are environmental points attached to the observation box interior, not fireworks, free-floating particles, or a 2D background. They should appear only on:
+
+- The interior top face
+- The upper bands of interior side faces
+
+Stars should not appear on:
+
+- The floor
+- Lower side-wall bands
+- Open central volume
+- Exterior-facing box surfaces
+
+Each star belongs to a box face and uses a conservative interior-face visibility test. If the camera angle sees the exterior side of a face, that face's stars should not render. This is required so stars read as inside the observation box instead of painted on the outside.
+
+The current preview toggle is:
+
+- `T`: show/hide interior stars
+
+Star generation and visibility helpers live in Pyxel-independent code. Preview rendering projects visible stars through `Camera3D`.

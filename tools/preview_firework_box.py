@@ -15,6 +15,12 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
+from pyxel_goal_game.ambient_box_stars import (  # noqa: E402
+    BoxStarField,
+    build_box_star_field,
+    is_interior_face_visible,
+    star_twinkle_color,
+)
 from pyxel_goal_game.camera3d import Camera3D, ProjectedPoint, Vec3  # noqa: E402
 from pyxel_goal_game.firework_bursts import (  # noqa: E402
     ParticleSpawnSpec,
@@ -237,6 +243,8 @@ class PreviewApp:
         self.scenery_index = 0
         self.scenery_visible = True
         self.scenery = self.load_scenery()
+        self.stars_visible = True
+        self.star_field: BoxStarField = build_box_star_field(self.profile)
         pyxel.init(
             self.profile.width,
             self.profile.height,
@@ -338,6 +346,8 @@ class PreviewApp:
             self.scenery = self.load_scenery()
         if pyxel.btnp(pyxel.KEY_B):
             self.scenery_visible = not self.scenery_visible
+        if pyxel.btnp(pyxel.KEY_T):
+            self.stars_visible = not self.stars_visible
 
     def load_scenery(self) -> SceneryPreset:
         return get_scenery_preset(
@@ -606,6 +616,7 @@ class PreviewApp:
             reverse=True,
         )
         self.draw_edges(projected_edges[:8], far=True)
+        self.draw_box_stars()
         self.draw_scenery_phase("back")
         self.draw_firework_shells()
         self.draw_particles()
@@ -617,6 +628,23 @@ class PreviewApp:
         for edge in edges:
             color = self.edge_color(edge=edge, far=far)
             pyxel.line(edge.start.sx, edge.start.sy, edge.end.sx, edge.end.sy, color)
+
+    def draw_box_stars(self) -> None:
+        if not self.stars_visible:
+            return
+        visible_faces = {
+            face
+            for face in {star.face for star in self.star_field.stars}
+            if is_interior_face_visible(self.camera, face)
+        }
+        for star in self.star_field.stars:
+            if star.face not in visible_faces:
+                continue
+            color = star_twinkle_color(star, pyxel.frame_count)
+            if color is None:
+                continue
+            projected = self.camera.project(star.position)
+            pyxel.pset(projected.sx, projected.sy, color)
 
     def edge_color(self, *, edge: ProjectedEdge, far: bool) -> int:
         if far:
@@ -725,7 +753,10 @@ class PreviewApp:
         pyxel.text(
             4,
             20,
-            f"G:scene {self.scenery.label} B:{self.scenery_visible} Q:rot",
+            (
+                f"G:scene {self.scenery.label} B:{self.scenery_visible} "
+                f"T:stars {self.stars_visible} Q:rot"
+            ),
             5,
         )
         if not self.debug:

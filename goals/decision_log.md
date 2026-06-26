@@ -572,3 +572,17 @@ Add UFO ambient behavior, add interior stars, tune firework presets, or broaden 
 
 Impact:
 Only Pyxel-independent CITY scenery data changed. `main.py`, production runtime, firework generation, firework presets, shell tail behavior, preview controls, auto-rotate speed control, and active `EMPTY`/`CITY` scenery selection remain unchanged.
+
+## 2026-06-26 Add interior box stars
+
+Decision:
+Add subtle twinkling stars as a preview-only ambience layer attached to the observation box's interior top face and upper side faces, with a `T` toggle.
+
+Reason:
+The next ambient layer should reinforce the feeling of looking into a cutout box without becoming a 2D background or free-floating particle effect. Stars must render only when their interior face is visible, so they do not look painted on exterior box walls.
+
+Alternatives:
+Add UFO ambient behavior first, add screen-space stars, place stars freely in 3D space, or postpone ambient layers until runtime integration.
+
+Impact:
+Added Pyxel-independent star field and visibility helpers plus preview rendering/toggle support. `main.py`, production runtime, firework generation, burst radius variation, firework presets, shell tail behavior, CITY geometry, UFO, and existing preview controls remain unchanged.

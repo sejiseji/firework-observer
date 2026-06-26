@@ -846,3 +846,25 @@ Record completed tasks here.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_204005.txt`.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` unchanged. Production runtime, firework generation, firework presets, shell tail behavior, preview controls, and auto-rotate speed control unchanged.
+
+## 2026-06-26 T0004.2.4 Add interior twinkling box stars with toggle
+
+- Summary: Added preview-only twinkling stars attached to the observation box's interior top and upper side faces, with `T` toggling and conservative interior-face visibility.
+- Files changed: `src/pyxel_goal_game/ambient_box_stars.py`, `tools/preview_firework_box.py`, `tests/unit/test_ambient_box_stars.py`, `docs/architecture/SCENERY_OBJECTS.md`, `docs/research/visual_tuning_checklist.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Behavior:
+  - Stars are generated as deterministic Pyxel-independent `Vec3` points attached to the box interior.
+  - Stars are limited to the interior top face and upper side-face bands.
+  - Stars are not placed on the floor, lower side walls, or open central volume.
+  - Preview renders stars only when their attached interior face is visible.
+  - `T` toggles stars ON/OFF in preview.
+- Tests:
+  - `.venv/bin/python -m json.tool goals/task_queue.json` passed.
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 182 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 182 passed.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_204637.txt`.
+- Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
+- Preservation: `main.py` unchanged. Production runtime, firework generation, burst radius variation, firework presets, shell tail behavior, CITY geometry, UFO, and existing preview controls unchanged.

@@ -121,6 +121,12 @@ The runtime app owns the Pyxel loop, input boundary, rendering boundary, active 
 
 Remaining parity risks should be reviewed in `T0005.5`: visual exactness between preview and official runtime, any missing smoke coverage specific to the official entrypoint, and whether `main.py` should remain a protected reference or later become a thin launcher.
 
+`T0005.5` recorded the runtime parity review:
+
+- `docs/research/runtime_parity_review_20260626.md`
+
+Manual review found official runtime parity OK for `iphone16_balanced`. Startup, controls, CITY, stars, shell tail, glitter residue, all first-generation firework kinds, salvos, height variation, auto-rotate comfort, and `R + H + 0` stress mode were accepted. The handoff decision is `READY`: `main.py` may become a thin launcher to the official runtime in a separate explicit task.
+
 ## Pure Logic And Pyxel Boundary
 
 Pure modules must not import Pyxel.
@@ -173,6 +179,7 @@ Use small follow-up tasks:
 3. `T0005.3`: Extract show launch/salvo scheduling.
 4. `T0005.4`: Add first official runtime app and entrypoint without touching `main.py`.
 5. `T0005.5`: Review runtime parity and decide `main.py` launcher handoff.
+6. `T0005.6`: Convert `main.py` to a thin official runtime launcher.
 
 Each task should keep the preview working and should avoid changing visual tuning unless the task explicitly says it is a tuning task.
 
@@ -180,7 +187,7 @@ Each task should keep the preview working and should avoid changing visual tunin
 
 `main.py` remains protected unless a task explicitly authorizes changing it.
 
-The first official package runtime should be added without overwriting or thinning `main.py`. If the official runtime is accepted later, `main.py` may become a thin launcher, but that decision must be made in a separate task.
+The first official package runtime was added without overwriting or thinning `main.py`. Runtime parity review is now complete and records `main.py` handoff readiness as `READY`. `T0005.6` is authorized to convert `main.py` into a thin launcher only; it must not move runtime logic back into `main.py`.
 
 ## Risks And Guardrails
 

@@ -417,3 +417,17 @@ Official runtime manual checks:
 - `SPACE`, `R`, `Z`, `V`, `1`-`5`, `0`, `H`, `X`, `Q`, `T`, `G`, `B`, `D`, `A`/`S`, and arrow keys should remain usable.
 - CITY, interior stars, shell tails, compact bursts, glitter residue, salvos, and auto-rotate comfort should be recognizable against the preview reference.
 - Any visual mismatch should be recorded as a runtime parity issue before adding UFO, new presets, or additional scenery.
+
+The first runtime parity review is recorded in:
+
+- `docs/research/runtime_parity_review_20260626.md`
+
+Result:
+
+- Official runtime parity: OK.
+- Runtime stability: OK.
+- `main.py` handoff readiness: READY.
+
+Next step:
+
+- `T0005.6`: convert `main.py` to a thin official runtime launcher.

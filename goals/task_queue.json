@@ -3,24 +3,26 @@
   "policy": "Keep tasks small enough for one Codex patch. Split ambiguous tasks before implementation.",
   "current": [
     {
-      "id": "T0005.5",
-      "title": "Runtime parity review and main.py handoff decision",
-      "goal": "Review official runtime parity against preview and decide whether protected main.py remains a reference or becomes a thin launcher in a later explicit task.",
+      "id": "T0005.6",
+      "title": "Convert main.py to official runtime launcher",
+      "goal": "Convert protected main.py into a thin launcher for the official package runtime after recorded parity approval.",
       "status": "todo",
       "depends_on": [
-        "T0005.4"
+        "T0005.5"
       ],
       "constraints": [
-        "Do not change main.py without explicit authorization",
-        "Base the decision on official runtime parity",
-        "Keep the decision documented",
-        "Do not add new visual features during parity review"
+        "Only thin-launcher main.py changes are allowed",
+        "Do not move runtime logic into main.py",
+        "Do not change official runtime behavior",
+        "Do not change preview behavior",
+        "Keep preview available as development harness"
       ],
       "acceptance": [
-        "A documented decision exists for main.py",
-        "Preview/runtime parity results are recorded",
-        "Runtime parity and validation results are considered",
-        "Follow-up tasks are updated"
+        "main.py delegates to the official runtime app",
+        "main.py contains no copied runtime logic",
+        "Official runtime launch path remains available",
+        "Preview remains available",
+        "Validation results are recorded"
       ]
     },
     {
@@ -188,6 +190,12 @@
     }
   ],
   "done": [
+    {
+      "id": "T0005.5",
+      "title": "Runtime parity review and main.py handoff decision",
+      "completed_on": "2026-06-26",
+      "summary": "Recorded manual preview/runtime parity review as OK and marked main.py handoff readiness as READY for a separate thin-launcher task."
+    },
     {
       "id": "T0005.4",
       "title": "Add first official runtime app and entrypoint",

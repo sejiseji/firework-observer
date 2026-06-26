@@ -768,3 +768,17 @@ Modify `main.py` immediately, keep the project runnable only through the preview
 
 Impact:
 The official runtime now has package-side Pyxel app/input/render/effects boundaries and can be launched with `scripts/run_runtime_app.py`. The preview remains available, and `main.py` remains unchanged. Remaining work should review visual/runtime parity before any `main.py` handoff decision.
+
+## 2026-06-26 Mark official runtime ready for main.py handoff
+
+Decision:
+Record official runtime parity as OK and mark `main.py` handoff readiness as `READY`.
+
+Reason:
+Manual review compared the preview and official runtime with `iphone16_balanced`. Startup, controls, CITY, interior stars, first-generation fireworks, shell tail, glitter residue, salvos, height variation, auto-rotate comfort, and `R + H + 0` stress mode showed no visual, control, or stability problems.
+
+Alternatives:
+Keep `main.py` protected indefinitely, or convert it before recording parity results.
+
+Impact:
+This is documentation-only. `main.py` remains unchanged in T0005.5. A separate explicit task, `T0005.6`, is now ready to convert `main.py` to a thin launcher for the official runtime.

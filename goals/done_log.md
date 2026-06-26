@@ -1137,3 +1137,23 @@ Record completed tasks here.
 - Tests:
   - Validation results are recorded in the final task report.
 - Preservation: Firework generation, preset constants, burst radius scaling, shell tail visual intent, glitter residue visual intent, CITY geometry, interior star behavior, camera motion settings, show scheduling semantics, UFO exclusion, and preview availability are preserved.
+
+## 2026-06-26 T0005.5 Record runtime parity review and main.py handoff readiness
+
+- Summary: Recorded manual runtime parity review results and marked `main.py` handoff readiness as `READY`.
+- Files changed: `docs/research/runtime_parity_review_20260626.md`, `docs/architecture/PREVIEW_TO_RUNTIME_INTEGRATION.md`, `docs/research/visual_tuning_checklist.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Behavior:
+  - Documentation-only.
+  - Official runtime parity is recorded as OK.
+  - Runtime stability is recorded as OK.
+  - Preview remains the development harness.
+  - `T0005.6` is now the next task to convert `main.py` into a thin official runtime launcher.
+- Tests:
+  - `.venv/bin/python -m json.tool goals/task_queue.json` passed.
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 238 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 238 passed.
+  - Visual smoke was not run because this was a documentation-only parity recording task.
+- Preservation: `main.py` unchanged. Runtime behavior, preview behavior, firework generation, CITY, stars, shell tail, glitter residue, and controls unchanged.

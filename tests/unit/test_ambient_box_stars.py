@@ -91,13 +91,22 @@ def test_interior_face_visibility_uses_camera_orientation() -> None:
 def test_top_interior_visibility_depends_on_pitch() -> None:
     camera = Camera3D.from_profile(CLASSIC_PROFILE)
     camera.yaw = 0.0
-    camera.pitch = 0.35
+    camera.pitch = 0.03
 
     assert is_interior_face_visible(camera, BoxStarFace.TOP)
 
     camera.pitch = -0.35
 
     assert not is_interior_face_visible(camera, BoxStarFace.TOP)
+
+
+def test_side_face_visibility_keeps_existing_margin() -> None:
+    camera = Camera3D.from_profile(CLASSIC_PROFILE)
+    camera.pitch = 0.0
+    camera.yaw = 0.03
+
+    assert not is_interior_face_visible(camera, BoxStarFace.BACK)
+    assert not is_interior_face_visible(camera, BoxStarFace.LEFT)
 
 
 def test_opposite_side_faces_are_not_both_visible() -> None:

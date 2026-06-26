@@ -163,32 +163,38 @@ Interaction rules:
    - Confirm accent rays disappear quickly.
    - Confirm Senrin secondary bursts do not become over-dense.
 
-5. Random variety check:
+5. Glitter residue check:
+   - Press `Z` for each type.
+   - Confirm a few tiny glitter points remain briefly after the burst starts.
+   - Confirm residue expires quickly and does not read as a second explosion.
+   - Confirm Senrin remains sparse, especially around secondary bursts.
+
+6. Random variety check:
    - Press `R`.
    - Press `Z` repeatedly.
    - Confirm random type selection gives varied, recognizable bursts.
 
-6. Auto random check:
+7. Auto random check:
    - Press `R`.
    - Press `V`.
    - Confirm auto launch uses random types and remains readable.
 
-7. Fixed salvo check:
+8. Fixed salvo check:
    - Select each type.
    - Press `1`, `2`, `3`, `4`, and `5`.
    - Confirm fixed-count loops are readable for each type.
 
-8. Random-count check:
+9. Random-count check:
    - Press `0`.
    - Confirm repeated salvos choose changing shot counts from 1 to 5.
 
-9. Fireworks-show stress check:
+10. Fireworks-show stress check:
    - Press `R`.
    - Press `H`.
    - Press `0`.
    - Observe combined type, count, and height variation.
 
-10. Burst radius variation check:
+11. Burst radius variation check:
    - Select Kiku, Peony, Ring, Spiral, Willow, Multi-ring, Senrin, and Halo.
    - Press `Z` for each type.
    - Confirm burst radii are subtly uneven but compact enough that bursts do not feel over-expanded.
@@ -196,7 +202,7 @@ Interaction rules:
    - Confirm Senrin secondary bursts remain sparse and controlled.
    - Confirm Halo remains a soft light ring and does not become a second Multi-ring.
 
-11. Scenery readability check:
+12. Scenery readability check:
    - Press `G` to cycle `Empty` and `City`.
    - Press `B` to confirm scenery can be hidden.
    - Rotate the camera and confirm scenery projects with the box.
@@ -208,21 +214,25 @@ Interaction rules:
    - Confirm building-attached signs are visible but not noisy.
    - Confirm City buildings spread across most of the lower footprint, not only the center cluster.
    - Confirm the ferris wheel is recognizable, grounded, circular enough, and quieter than fireworks.
+   - Confirm the ferris wheel reads closer to round than vertically narrow from side views.
    - Confirm the ferris wheel does not block core launch readability.
    - Confirm the central boulevard-like corridor remains visible through the city mass.
+   - Confirm peripheral side floor regions have building coverage without filling the boulevard.
    - Confirm utility poles and sagging overhead wires are absent from active CITY.
    - Confirm `R + H + 0` remains readable with scenery enabled.
 
-12. Interior star check:
+13. Interior star check:
    - Press `T` to toggle stars ON/OFF.
    - Rotate the camera.
+   - Confirm top-face stars remain visible when the ceiling is clearly visible at shallow angles.
    - Confirm stars appear on the interior top face and upper side-wall bands.
+   - Confirm side-wall star visibility behaves as before and does not become too broad.
    - Confirm stars do not appear on the floor, lower side walls, or open central volume.
    - Confirm exterior-facing box surfaces do not show stars.
    - Confirm stars twinkle subtly and remain quieter than fireworks.
    - Confirm `R + H + 0` remains readable with stars ON.
 
-13. Auto-rotate comfort check:
+14. Auto-rotate comfort check:
    - Press `X` to enable auto-rotate.
    - Press `Q` to cycle `slow`, `normal`, and `fast`.
    - Confirm `slow` is comfortable for long observation.
@@ -281,6 +291,13 @@ If burst accent rays dominate:
 - Darken accent ray colors.
 - Disable accent rays for Senrin or Multi-ring first.
 
+If glitter residue dominates:
+
+- Lower residue count before changing main burst particle counts.
+- Shorten residue lifetime.
+- Darken residue colors or reduce bright twinkle frames.
+- Keep Senrin residue minimal and do not add residue to Senrin secondary bursts unless explicitly tuned.
+
 If burst radius variation dominates:
 
 - Reduce sphere-like burst variation first.
@@ -306,6 +323,7 @@ If scenery dominates:
 - If the ferris wheel reads vertically narrow, tune its normalized x/y extent before adding cabin detail.
 - If interior stars dominate, lower star count, darken twinkle colors, or hide edge-on faces more aggressively.
 - If stars look painted on the outside of the box, tighten the interior-face visibility threshold before changing star placement.
+- If ceiling stars disappear while the top interior face is clearly visible, relax only the top-face visibility threshold and leave side-wall thresholds unchanged.
 
 If auto-rotate causes discomfort:
 

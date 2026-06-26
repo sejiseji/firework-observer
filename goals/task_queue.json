@@ -406,6 +406,12 @@
       "title": "Tune preview auto rotate comfort",
       "completed_on": "2026-06-26",
       "summary": "Reduced preview auto-rotate normal and fast speeds and scaled vertical sway by speed mode while preserving X and Q controls."
+    },
+    {
+      "id": "T0004.2.8",
+      "title": "Tune ceiling stars, glitter residue, ferris wheel roundness, and city edge coverage",
+      "completed_on": "2026-06-26",
+      "summary": "Relaxed top-face star visibility while preserving side-wall thresholds, added sparse preview-only glitter residue, rounded the CITY ferris wheel, and added peripheral CITY buildings while preserving the central boulevard."
     }
   ]
 }

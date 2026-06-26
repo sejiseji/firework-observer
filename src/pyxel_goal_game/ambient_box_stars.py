@@ -37,6 +37,7 @@ INWARD_NORMALS = {
     BoxStarFace.BACK: Vec3(0.0, 0.0, 1.0),
 }
 FACE_VISIBILITY_MARGIN = 0.08
+TOP_FACE_VISIBILITY_MARGIN = 0.0
 
 
 def build_box_star_field(
@@ -120,6 +121,8 @@ def _side_star(
 
 def is_interior_face_visible(camera: Camera3D, face: BoxStarFace) -> bool:
     transformed = camera.transform(INWARD_NORMALS[face])
+    if face is BoxStarFace.TOP:
+        return transformed.z < TOP_FACE_VISIBILITY_MARGIN
     return transformed.z < -FACE_VISIBILITY_MARGIN
 
 

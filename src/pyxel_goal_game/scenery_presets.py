@@ -135,6 +135,10 @@ def city_scenery(profile: ScreenProfile) -> SceneryPreset:
         (0.22, -0.14, 0.14, 0.15, 0.20),
         (0.32, -0.22, 0.12, 0.13, 0.15),
         (0.58, -0.12, 0.11, 0.12, 0.14),
+        (-0.92, 0.70, 0.09, 0.12, 0.12),
+        (-0.91, -0.66, 0.10, 0.12, 0.13),
+        (0.91, 0.58, 0.10, 0.12, 0.13),
+        (0.90, -0.62, 0.10, 0.12, 0.12),
     )
     lines: list[SceneryLine] = []
     base_y = -0.96
@@ -495,21 +499,21 @@ def ferris_wheel_lines(
     profile: ScreenProfile,
     base_y: float,
 ) -> tuple[SceneryLine, ...]:
-    center_x = -0.72
-    center_y = -0.74
-    center_z = -0.55
-    radius = 0.16
-    rim_segments = 16
+    center = box_point(profile, -0.72, -0.69, -0.55)
+    radius = min(profile.box_width, profile.box_depth) * 0.09
+    rim_segments = 20
+    yaw = math.radians(24.0)
+    axis_x = math.cos(yaw)
+    axis_z = math.sin(yaw)
     rim_points = tuple(
-        box_point(
-            profile,
-            center_x + math.cos(index / rim_segments * math.tau) * radius,
-            center_y + math.sin(index / rim_segments * math.tau) * radius,
-            center_z,
+        Vec3(
+            x=center.x + math.cos(index / rim_segments * math.tau) * radius * axis_x,
+            y=center.y + math.sin(index / rim_segments * math.tau) * radius,
+            z=center.z + math.cos(index / rim_segments * math.tau) * radius * axis_z,
         )
         for index in range(rim_segments)
     )
-    hub = box_point(profile, center_x, center_y, center_z)
+    hub = center
     lines: list[SceneryLine] = []
 
     for index in range(rim_segments):
@@ -518,23 +522,35 @@ def ferris_wheel_lines(
         lines.append(SceneryLine(hub, rim_points[index], 1))
 
     support_feet = (
-        box_point(profile, center_x - radius * 0.75, base_y, center_z - 0.035),
-        box_point(profile, center_x + radius * 0.75, base_y, center_z - 0.035),
-        box_point(profile, center_x - radius * 0.55, base_y, center_z + 0.040),
-        box_point(profile, center_x + radius * 0.55, base_y, center_z + 0.040),
+        Vec3(
+            x=center.x - radius * 0.72 * axis_x,
+            y=base_y * profile.box_height / 2.0,
+            z=center.z - radius * (0.72 * axis_z + 0.22),
+        ),
+        Vec3(
+            x=center.x + radius * 0.72 * axis_x,
+            y=base_y * profile.box_height / 2.0,
+            z=center.z + radius * (0.72 * axis_z - 0.22),
+        ),
+        Vec3(
+            x=center.x - radius * 0.52 * axis_x,
+            y=base_y * profile.box_height / 2.0,
+            z=center.z - radius * (0.52 * axis_z - 0.24),
+        ),
+        Vec3(
+            x=center.x + radius * 0.52 * axis_x,
+            y=base_y * profile.box_height / 2.0,
+            z=center.z + radius * (0.52 * axis_z + 0.24),
+        ),
     )
-    lower_hub = box_point(profile, center_x, center_y - radius * 0.18, center_z)
+    lower_hub = Vec3(center.x, center.y - radius * 0.18, center.z)
     for foot in support_feet:
         lines.append(SceneryLine(foot, lower_hub, 5))
 
-    for index in (1, 5, 9, 13):
+    for index in (1, 6, 11, 16):
         rim_point = rim_points[index]
-        cabin_drop = box_point(
-            profile,
-            (rim_point.x / (profile.box_width / 2.0)),
-            (rim_point.y / (profile.box_height / 2.0)) - 0.035,
-            center_z,
-        )
+        cabin_drop_y = max(base_y * profile.box_height / 2.0, rim_point.y - radius * 0.14)
+        cabin_drop = Vec3(rim_point.x, cabin_drop_y, rim_point.z)
         lines.append(SceneryLine(rim_point, cabin_drop, 1))
 
     return tuple(lines)

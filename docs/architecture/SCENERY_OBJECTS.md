@@ -237,6 +237,12 @@ CITY should now read as a fuller cutaway urban stage across the lower footprint 
 - The ferris wheel remains grounded, static, subdued, and below the main firework bloom area
 - Utility poles and overhead wires remain removed from active CITY
 
+`T0004.2.8` added another CITY readability pass:
+
+- Additional small and medium buildings fill sparse peripheral floor regions near the side edges
+- The central boulevard remains open and launch readability remains protected
+- The ferris wheel uses a more circular world-space rim while staying grounded and inside the box
+
 Future CITY tuning should preserve the central boulevard unless a later task explicitly changes the stage layout.
 
 ## Interior Box Stars
@@ -255,10 +261,25 @@ Stars should not appear on:
 - Open central volume
 - Exterior-facing box surfaces
 
-Each star belongs to a box face and uses a conservative interior-face visibility test. If the camera angle sees the exterior side of a face, that face's stars should not render. This is required so stars read as inside the observation box instead of painted on the outside.
+Each star belongs to a box face and uses an interior-face visibility test. If the camera angle sees the exterior side of a face, that face's stars should not render. This is required so stars read as inside the observation box instead of painted on the outside.
+
+`T0004.2.8` made only the top-face visibility threshold more permissive so ceiling stars stay visible at shallower angles when the ceiling is clearly visible. Side-face star visibility remains on the previous stricter threshold.
 
 The current preview toggle is:
 
 - `T`: show/hide interior stars
 
 Star generation and visibility helpers live in Pyxel-independent code. Preview rendering projects visible stars through `Camera3D`.
+
+## Burst Glitter Residue
+
+`T0004.2.8` added a preview-only glitter residue layer after burst spawn.
+
+The residue is intentionally not part of pure firework generation. It is a small, short-lived visual polish layer in the preview renderer:
+
+- A bounded number of tiny glitter points spawn near the burst center
+- Glitter drifts lightly and expires quickly
+- The effect is sparse and should not read as a second explosion
+- Senrin uses minimal residue, and Senrin secondary bursts do not gain extra density
+
+Future tuning should reduce residue count, lifetime, or brightness before changing core burst particle counts.

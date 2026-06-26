@@ -914,3 +914,28 @@ Record completed tasks here.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_212808.txt`.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` unchanged. Production runtime, firework generation, burst radius variation, shell tail behavior, CITY geometry, ferris wheel geometry, boulevard layout, interior stars, UFO, and firework preset constants unchanged.
+
+## 2026-06-26 T0004.2.8 Tune ceiling stars, glitter residue, ferris wheel roundness, and city edge coverage
+
+- Summary: Relaxed top-face interior star visibility, added sparse preview-only glitter residue after bursts, made the CITY ferris wheel read more circular, and added peripheral CITY buildings while preserving the central boulevard.
+- Files changed: `src/pyxel_goal_game/ambient_box_stars.py`, `src/pyxel_goal_game/scenery_presets.py`, `tools/preview_firework_box.py`, `tests/unit/test_ambient_box_stars.py`, `tests/unit/test_scenery_presets.py`, `tests/unit/test_preview_auto_rotate.py`, `docs/architecture/SCENERY_OBJECTS.md`, `docs/research/visual_tuning_checklist.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Behavior:
+  - Top-face stars remain visible at shallower interior viewing angles.
+  - Side-wall star visibility remains on the previous stricter threshold.
+  - Burst glitter residue is preview-only, bounded, short-lived, and sparse.
+  - CITY ferris wheel geometry is more circular and remains grounded/inside bounds.
+  - Extra CITY buildings cover sparse side/peripheral regions while preserving the boulevard and launch readability.
+  - Utility poles and overhead wires remain absent.
+- Tests:
+  - Targeted pytest for ambient stars, scenery presets, and preview auto-rotate/glitter tests passed: 44 tests passed.
+  - Targeted ruff check for changed pure/preview/test files passed.
+  - `.venv/bin/python -m json.tool goals/task_queue.json` passed.
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 192 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 192 passed.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_215154.txt`.
+- Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
+- Preservation: `main.py` unchanged. Production runtime, preview controls, shell tail behavior, burst compactness, auto-rotate comfort, UFO, and firework preset constants unchanged.

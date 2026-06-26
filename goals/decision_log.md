@@ -614,3 +614,17 @@ Remove pitch sway entirely, change key bindings, or leave auto-rotate speed-only
 
 Impact:
 Preview `X` and `Q` controls are preserved. `slow`, `normal`, and `fast` remain ordered, with `normal` and `fast` calmer than before and slower modes using less vertical sway. `main.py`, production runtime, firework generation, burst radius variation, shell tail, CITY, ferris wheel, boulevard, interior stars, UFO, and firework preset constants remain unchanged.
+
+## 2026-06-26 Tune stars, glitter residue, and CITY edges
+
+Decision:
+Relax only the top-face interior star visibility threshold, add sparse preview-only burst glitter residue, make the CITY ferris wheel read more circular, and add peripheral CITY buildings near side floor regions.
+
+Reason:
+User review found that ceiling stars disappeared too early while side-wall star visibility was already acceptable. Firework bursts needed a small residual sparkle without becoming denser core bursts. CITY needed stronger side coverage and a more circular ferris wheel while preserving the central boulevard and launch readability.
+
+Alternatives:
+Broaden all star face thresholds, add glitter to pure burst generation, add more central buildings, or postpone CITY tuning until a later pass.
+
+Impact:
+Top-face stars are more permissive while side-face thresholds remain unchanged. Glitter residue is preview-only and short-lived. CITY stays Pyxel-independent, with utility poles and overhead wires still absent. `main.py`, production runtime, preview controls, shell tail behavior, burst compactness, auto-rotate comfort, UFO, and firework preset constants remain unchanged.

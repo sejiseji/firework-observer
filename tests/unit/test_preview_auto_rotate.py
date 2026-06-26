@@ -11,6 +11,8 @@ from tools.preview_firework_box import (  # noqa: E402
     AUTO_ROTATE_BASE_SWAY,
     AUTO_ROTATE_SPEEDS,
     DEFAULT_AUTO_ROTATE_SPEED_INDEX,
+    GLITTER_RESIDUE_COUNTS,
+    GLITTER_RESIDUE_LIFE_RANGE,
 )
 
 
@@ -57,3 +59,14 @@ def test_auto_rotate_q_cycle_order_wraps() -> None:
         "fast",
         "slow",
     )
+
+
+def test_glitter_residue_counts_are_sparse() -> None:
+    assert len(GLITTER_RESIDUE_COUNTS) == 8
+    assert max(GLITTER_RESIDUE_COUNTS) <= 12
+    assert GLITTER_RESIDUE_COUNTS[6] <= 2
+
+
+def test_glitter_residue_lifetime_is_short() -> None:
+    assert GLITTER_RESIDUE_LIFE_RANGE[0] >= 8
+    assert GLITTER_RESIDUE_LIFE_RANGE[1] <= 30

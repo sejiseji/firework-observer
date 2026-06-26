@@ -94,6 +94,9 @@ BURST_ACCENT_STYLES = (
 )
 ACCENT_COUNTS = (8, 6, 8, 5, 10, 6, 4, 5)
 ACCENT_RAY_FRAMES = 12
+GLITTER_RESIDUE_COUNTS = (8, 6, 7, 5, 8, 6, 2, 5)
+GLITTER_RESIDUE_LIFE_RANGE = (14, 24)
+GLITTER_RESIDUE_MAX = 96
 
 
 @dataclass(frozen=True)
@@ -216,6 +219,44 @@ class PreviewParticle:
         return self.life > 0
 
 
+@dataclass
+class PreviewGlitter:
+    position: Vec3
+    velocity: Vec3
+    life: int
+    max_life: int
+    phase: int
+
+    @property
+    def age(self) -> int:
+        return self.max_life - self.life
+
+    def step(self) -> None:
+        self.position = Vec3(
+            self.position.x + self.velocity.x,
+            self.position.y + self.velocity.y,
+            self.position.z + self.velocity.z,
+        )
+        self.velocity = Vec3(
+            self.velocity.x * 0.94,
+            self.velocity.y * 0.94 - 0.004,
+            self.velocity.z * 0.94,
+        )
+        self.life -= 1
+
+    def draw_color(self) -> int | None:
+        if (self.age + self.phase) % 7 == 0:
+            return None
+        if self.life > self.max_life * 0.62:
+            return 7
+        if self.life > self.max_life * 0.30:
+            return 10
+        return 5
+
+    def is_alive(self) -> bool:
+        return self.life > 0
+
+
 class PreviewApp:
     def __init__(self, profile_name: str) -> None:
         self.profile = get_screen_profile(profile_name)
@@ -226,6 +267,7 @@ class PreviewApp:
             count=24,
         )
         self.particles: list[PreviewParticle] = []
+        self.glitter: list[PreviewGlitter] = []
         self.burst_index = 0
         self.last_launched_index = 0
         self.random_mode = False
@@ -292,10 +334,15 @@ class PreviewApp:
         self.camera.step_toward_target()
         for particle in self.particles:
             particle.step()
+        for glitter in self.glitter:
+            glitter.step()
         self.launch_secondary_bursts()
         self.particles = [
             particle for particle in self.particles if particle.is_alive()
         ][-self.profile.max_particles :]
+        self.glitter = [
+            glitter for glitter in self.glitter if glitter.is_alive()
+        ][-GLITTER_RESIDUE_MAX:]
 
     def handle_input(self) -> None:
         if pyxel.btn(pyxel.KEY_LEFT):
@@ -427,8 +474,33 @@ class PreviewApp:
             )
             for index, spec in enumerate(specs)
         )
+        self.spawn_glitter_residue(burst_index=burst_index, origin=origin, seed=seed)
         if len(self.particles) > self.profile.max_particles:
             self.particles = self.particles[-self.profile.max_particles :]
+
+    def spawn_glitter_residue(self, *, burst_index: int, origin: Vec3, seed: int) -> None:
+        count = GLITTER_RESIDUE_COUNTS[burst_index]
+        if count <= 0:
+            return
+        rng = Random(seed ^ ((burst_index + 1) * 0x517CC1B7))
+        for _ in range(count):
+            theta = rng.uniform(0.0, math.tau)
+            vertical = rng.uniform(-0.15, 0.45)
+            speed = rng.uniform(0.05, 0.18)
+            life = rng.randint(*GLITTER_RESIDUE_LIFE_RANGE)
+            self.glitter.append(
+                PreviewGlitter(
+                    position=origin,
+                    velocity=Vec3(
+                        x=math.cos(theta) * speed,
+                        y=vertical * speed,
+                        z=math.sin(theta) * speed,
+                    ),
+                    life=life,
+                    max_life=life,
+                    phase=rng.randrange(16),
+                )
+            )
 
     def choose_accent_indexes(
         self,
@@ -627,6 +699,7 @@ class PreviewApp:
         self.draw_scenery_phase("back")
         self.draw_firework_shells()
         self.draw_particles()
+        self.draw_glitter()
         self.draw_scenery_phase("front")
         self.draw_edges(projected_edges[8:], far=False)
         self.draw_hud()
@@ -666,6 +739,17 @@ class PreviewApp:
         draw_items.sort(key=lambda item: item[0].depth, reverse=True)
         for projected, particle in draw_items:
             self.draw_particle(particle=particle, projected=projected)
+
+    def draw_glitter(self) -> None:
+        draw_items = [
+            (self.camera.project(glitter.position), glitter)
+            for glitter in self.glitter
+        ]
+        draw_items.sort(key=lambda item: item[0].depth, reverse=True)
+        for projected, glitter in draw_items:
+            color = glitter.draw_color()
+            if color is not None:
+                pyxel.pset(projected.sx, projected.sy, color)
 
     def draw_scenery_phase(self, phase: str) -> None:
         if not self.scenery_visible:

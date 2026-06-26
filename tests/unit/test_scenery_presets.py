@@ -73,7 +73,7 @@ def test_city_uses_3d_building_geometry() -> None:
     city = get_scenery_preset("city", profile=CLASSIC_PROFILE)
     points = city.all_points
 
-    assert len(city.lines) >= 330
+    assert len(city.lines) >= 360
     assert len({round(point.x, 4) for point in points}) > 10
     assert len({round(point.y, 4) for point in points}) > 5
     assert len({round(point.z, 4) for point in points}) > 6
@@ -89,6 +89,25 @@ def test_city_extends_across_fuller_lower_footprint() -> None:
     assert max(point.x for point in points) > half_width * 0.88
     assert min(point.z for point in points) < -half_depth * 0.50
     assert max(point.z for point in points) > half_depth * 0.55
+
+
+def test_city_has_peripheral_side_building_coverage() -> None:
+    city = get_scenery_preset("city", profile=CLASSIC_PROFILE)
+    base_y = min(point.y for point in city.all_points)
+    grounded_verticals = [
+        line
+        for line in city.lines
+        if line.start.x == line.end.x
+        and line.start.z == line.end.z
+        and line.start.y != line.end.y
+        and (line.start.y == base_y or line.end.y == base_y)
+    ]
+    half_width = CLASSIC_PROFILE.box_width / 2.0
+    half_depth = CLASSIC_PROFILE.box_depth / 2.0
+
+    assert sum(1 for line in grounded_verticals if line.start.x < -half_width * 0.75) >= 8
+    assert sum(1 for line in grounded_verticals if line.start.x > half_width * 0.75) >= 8
+    assert any(abs(line.start.z) > half_depth * 0.60 for line in grounded_verticals)
 
 
 def test_city_preserves_central_boulevard_corridor() -> None:
@@ -177,18 +196,18 @@ def test_city_includes_low_detail_ferris_wheel() -> None:
         point
         for point in wheel_points
         if abs(point.x - (-0.72 * CLASSIC_PROFILE.box_width / 2.0)) < 0.001
-        and abs(point.y - (-0.74 * CLASSIC_PROFILE.box_height / 2.0)) < 0.001
+        and abs(point.y - (-0.69 * CLASSIC_PROFILE.box_height / 2.0)) < 0.001
     ]
 
-    assert len(wheel_lines) >= 32
+    assert len(wheel_lines) >= 36
     assert len(grounded_supports) >= 4
-    assert len(hub_like_points) >= 8
+    assert len(hub_like_points) >= 10
     normalized_x_extent = x_extent / CLASSIC_PROFILE.box_width
     normalized_y_extent = y_extent / CLASSIC_PROFILE.box_height
 
     assert normalized_x_extent > 0.15
     assert normalized_y_extent > 0.18
-    assert 0.82 <= normalized_x_extent / normalized_y_extent <= 1.18
+    assert 0.82 <= x_extent / y_extent <= 1.18
     assert len({round(point.x, 4) for point in wheel_points}) >= 10
     assert len({round(point.y, 4) for point in wheel_points}) >= 10
 

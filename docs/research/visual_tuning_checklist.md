@@ -203,6 +203,9 @@ Interaction rules:
    - Confirm sparse lit windows are visible without outshining fireworks.
    - Confirm the landmark tower is larger than surrounding buildings but clearly grounded.
    - Confirm building-attached signs are visible but not noisy.
+   - Confirm City buildings spread across most of the lower footprint, not only the center cluster.
+   - Confirm the ferris wheel is recognizable, grounded, and quieter than fireworks.
+   - Confirm the ferris wheel does not block core launch readability.
    - Confirm utility poles and sagging overhead wires are absent from active CITY.
    - Confirm `R + H + 0` remains readable with scenery enabled.
 
@@ -274,6 +277,8 @@ If scenery dominates:
 - For CITY, preserve vertical and top edges plus sparse windows; do not weaken the buildings by removing all structure.
 - For CITY, preserve the dense cutaway mass impression while keeping upper bloom space open.
 - If CITY tower or signs dominate, reduce their line count or darken them before removing building windows.
+- If the CITY ferris wheel dominates, reduce its rim/spoke line count or darken it before shrinking the broader building footprint.
+- If CITY density hurts launch readability, restore small corridors around launch paths before removing the off-center landmark elements.
 
 ## Depth And Box Readability
 

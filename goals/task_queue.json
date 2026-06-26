@@ -382,6 +382,12 @@
       "title": "Add preview auto-rotation speed cycling",
       "completed_on": "2026-06-26",
       "summary": "Added preview-only Q control to cycle auto-rotation speed through slow, normal, and fast while preserving X as auto-rotate ON/OFF."
+    },
+    {
+      "id": "T0004.2.3",
+      "title": "Add ferris wheel and full-footprint city coverage",
+      "completed_on": "2026-06-26",
+      "summary": "Expanded active CITY building coverage across the lower observation-box footprint and added one low-detail ferris wheel while preserving preview controls and firework behavior."
     }
   ]
 }

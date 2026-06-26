@@ -218,3 +218,13 @@ Active CITY signage should remain simple geometry:
 - No loud neon effects
 
 The utility pole and wire idea is intentionally not part of the active CITY preset after `T0004.2.1`. The city should feel like a dense urban section cut out of the floor plane, with building mass and signs carrying the sense of human activity.
+
+`T0004.2.3` extended the active CITY footprint and added a quiet leisure landmark:
+
+- More small, medium, and modest mid-rise cuboid buildings spread toward the left, right, front, and rear lower floor area
+- One low-detail ferris wheel placed off-center in the lower city region
+- Ferris wheel geometry is static line data: rim segments, hub, spokes, and support legs
+- Building bottom-face perimeter edges remain omitted
+- Utility poles and overhead wires remain removed from active CITY
+
+CITY should now read as a fuller cutaway urban stage across the lower footprint of the observation box. Preserve launch readability and upper bloom space: the city can occupy most of the bottom, but it must remain visually quieter than fireworks.

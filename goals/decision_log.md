@@ -558,3 +558,17 @@ Keep utility poles and wires, add more natural scenery, add UFO ambient behavior
 
 Impact:
 Only Pyxel-independent CITY scenery data changed. `main.py`, production runtime, firework generation, firework presets, shell tail behavior, preview controls, Halo, and active scenery selection remain unchanged.
+
+## 2026-06-26 Add ferris wheel and fuller CITY footprint
+
+Decision:
+Spread active CITY buildings across more of the lower observation-box footprint and add one low-detail ferris wheel as a quiet urban/leisure landmark.
+
+Reason:
+The city should feel like a dense cutaway urban stage across the bottom of the cuboid, not a cluster of buildings near the center. A small off-center ferris wheel adds recognizable place character while keeping fireworks dominant.
+
+Alternatives:
+Add UFO ambient behavior, add interior stars, tune firework presets, or broaden scenery back to mountains/riverbank/forest/coast.
+
+Impact:
+Only Pyxel-independent CITY scenery data changed. `main.py`, production runtime, firework generation, firework presets, shell tail behavior, preview controls, auto-rotate speed control, and active `EMPTY`/`CITY` scenery selection remain unchanged.

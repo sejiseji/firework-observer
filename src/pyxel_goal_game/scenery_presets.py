@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 from enum import Enum, auto
 from typing import Literal
@@ -106,22 +107,34 @@ def mountain_scenery(profile: ScreenProfile) -> SceneryPreset:
 
 def city_scenery(profile: ScreenProfile) -> SceneryPreset:
     buildings = (
+        (-0.88, -0.46, 0.10, 0.12, 0.13),
         (-0.82, 0.40, 0.12, 0.15, 0.18),
+        (-0.74, -0.30, 0.12, 0.13, 0.17),
         (-0.66, 0.18, 0.14, 0.18, 0.23),
+        (-0.61, 0.66, 0.12, 0.13, 0.14),
         (-0.52, 0.44, 0.12, 0.16, 0.16),
         (-0.38, 0.02, 0.13, 0.16, 0.27),
+        (-0.34, -0.42, 0.12, 0.13, 0.19),
         (-0.23, 0.30, 0.15, 0.18, 0.21),
         (-0.08, 0.08, 0.12, 0.14, 0.30),
+        (-0.04, 0.62, 0.12, 0.13, 0.15),
+        (0.04, -0.48, 0.11, 0.12, 0.14),
         (0.08, 0.40, 0.14, 0.16, 0.17),
         (0.22, 0.18, 0.15, 0.18, 0.25),
+        (0.26, 0.68, 0.11, 0.12, 0.16),
         (0.39, 0.42, 0.13, 0.16, 0.20),
+        (0.44, -0.42, 0.12, 0.13, 0.17),
         (0.50, 0.05, 0.16, 0.17, 0.24),
         (0.67, 0.28, 0.13, 0.15, 0.19),
+        (0.70, 0.68, 0.12, 0.13, 0.14),
+        (0.78, -0.30, 0.12, 0.13, 0.16),
+        (0.88, 0.08, 0.10, 0.12, 0.13),
         (-0.72, -0.08, 0.11, 0.13, 0.15),
         (-0.55, -0.22, 0.14, 0.14, 0.18),
         (-0.16, -0.18, 0.13, 0.15, 0.16),
         (0.10, -0.14, 0.14, 0.15, 0.20),
         (0.32, -0.22, 0.12, 0.13, 0.15),
+        (0.58, -0.12, 0.11, 0.12, 0.14),
     )
     lines: list[SceneryLine] = []
     base_y = -0.96
@@ -154,6 +167,7 @@ def city_scenery(profile: ScreenProfile) -> SceneryPreset:
         )
     lines.extend(city_sign_lines(profile=profile, buildings=buildings, base_y=base_y))
     lines.extend(landmark_tower_lines(profile=profile, base_y=base_y))
+    lines.extend(ferris_wheel_lines(profile=profile, base_y=base_y))
     return SceneryPreset(
         kind=SceneryKind.CITY,
         label="City",
@@ -259,31 +273,31 @@ def city_sign_lines(
     base_y: float,
 ) -> tuple[SceneryLine, ...]:
     lines: list[SceneryLine] = []
-    for building_index in (1, 4, 7, 10):
+    for building_index in (1, 4, 7, 10, 18, 22):
         lines.extend(
             wall_sign_lines(
                 profile=profile,
                 building=buildings[building_index],
                 base_y=base_y,
-                color=12 if building_index in (4, 10) else 5,
+                color=12 if building_index in (4, 10, 18) else 5,
             )
         )
-    for building_index in (5, 9, 13):
+    for building_index in (5, 9, 13, 20):
         lines.extend(
             projecting_sign_lines(
                 profile=profile,
                 building=buildings[building_index],
                 base_y=base_y,
-                color=10 if building_index == 9 else 5,
+                color=10 if building_index in (9, 20) else 5,
             )
         )
-    for building_index in (2, 8, 14):
+    for building_index in (2, 8, 14, 24):
         lines.extend(
             rooftop_sign_lines(
                 profile=profile,
                 building=buildings[building_index],
                 base_y=base_y,
-                color=12 if building_index == 8 else 5,
+                color=12 if building_index in (8, 24) else 5,
             )
         )
     return tuple(lines)
@@ -473,6 +487,56 @@ def landmark_tower_lines(
             lines.append(SceneryLine(ring[index], ring[(index + 1) % 4], 5))
     lines.append(SceneryLine(center_deck, center_top, 5))
     lines.append(SceneryLine(center_top, antenna_top, 10))
+    return tuple(lines)
+
+
+def ferris_wheel_lines(
+    *,
+    profile: ScreenProfile,
+    base_y: float,
+) -> tuple[SceneryLine, ...]:
+    center_x = -0.72
+    center_y = -0.72
+    center_z = -0.55
+    radius = 0.13
+    rim_segments = 12
+    rim_points = tuple(
+        box_point(
+            profile,
+            center_x + math.cos(index / rim_segments * math.tau) * radius,
+            center_y + math.sin(index / rim_segments * math.tau) * radius,
+            center_z,
+        )
+        for index in range(rim_segments)
+    )
+    hub = box_point(profile, center_x, center_y, center_z)
+    lines: list[SceneryLine] = []
+
+    for index in range(rim_segments):
+        lines.append(SceneryLine(rim_points[index], rim_points[(index + 1) % rim_segments], 5))
+    for index in range(0, rim_segments, 2):
+        lines.append(SceneryLine(hub, rim_points[index], 1))
+
+    support_feet = (
+        box_point(profile, center_x - radius * 0.75, base_y, center_z - 0.035),
+        box_point(profile, center_x + radius * 0.75, base_y, center_z - 0.035),
+        box_point(profile, center_x - radius * 0.55, base_y, center_z + 0.040),
+        box_point(profile, center_x + radius * 0.55, base_y, center_z + 0.040),
+    )
+    lower_hub = box_point(profile, center_x, center_y - radius * 0.18, center_z)
+    for foot in support_feet:
+        lines.append(SceneryLine(foot, lower_hub, 5))
+
+    for index in (1, 4, 7, 10):
+        rim_point = rim_points[index]
+        cabin_drop = box_point(
+            profile,
+            (rim_point.x / (profile.box_width / 2.0)),
+            (rim_point.y / (profile.box_height / 2.0)) - 0.035,
+            center_z,
+        )
+        lines.append(SceneryLine(rim_point, cabin_drop, 1))
+
     return tuple(lines)
 
 

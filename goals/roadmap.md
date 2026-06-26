@@ -45,6 +45,7 @@
 - [x] ground city building wireframes into the cut floor plane
 - [x] add subtle burst radius variation
 - [x] add city landmark tower, utility poles, and overhead wires
+- [x] implement Halo preset
 - [ ] tune city scenery readability against fireworks
 - [ ] add scenery preset data scaffold
 - [ ] add EMPTY and MOUNTAINS scenery presets

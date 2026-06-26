@@ -4,7 +4,7 @@
 
 This checklist defines how to evaluate the current Firework Box preview before changing preset parameters or adding more effects.
 
-Use it to judge Kiku, Ring, Spiral, Willow, Peony, Multi-ring, and Senrin in the manual preview. Do not treat this document as permission to change preset values, production runtime behavior, scenery, or `main.py`.
+Use it to judge Kiku, Ring, Spiral, Willow, Peony, Multi-ring, Senrin, and Halo in the manual preview. Do not treat this document as permission to change preset values, production runtime behavior, scenery, or `main.py`.
 
 ## Profile Policy
 
@@ -126,6 +126,14 @@ Interaction rules:
 - A 5-shot salvo does not overwhelm the preview.
 - Random-count salvos remain readable when Senrin appears.
 
+### Halo
+
+- Reads as a soft uneven light ring, not a dense sphere.
+- It is lighter and more atmospheric than Multi-ring.
+- The subtle radial wobble is visible without turning into a noisy cloud.
+- Sparse trails do not cover CITY or later salvos.
+- It remains distinct from Ring and Multi-ring.
+
 ## Check Sequences
 
 1. Single type check:
@@ -178,11 +186,12 @@ Interaction rules:
    - Observe combined type, count, and height variation.
 
 10. Burst radius variation check:
-   - Select Kiku, Peony, Ring, Spiral, Willow, Multi-ring, and Senrin.
+   - Select Kiku, Peony, Ring, Spiral, Willow, Multi-ring, Senrin, and Halo.
    - Press `Z` for each type.
    - Confirm burst radii are subtly uneven but identities remain readable.
    - Confirm Ring and Multi-ring do not collapse into cloudy spheres.
    - Confirm Senrin secondary bursts remain sparse and controlled.
+   - Confirm Halo remains a soft light ring and does not become a second Multi-ring.
 
 11. Scenery readability check:
    - Press `G` to cycle `Empty` and `City`.
@@ -210,6 +219,13 @@ If 5-shot Multi-ring overwhelms the preview:
 - Lower Multi-ring trail rate.
 - Shorten Multi-ring life range.
 - Reduce layer counts.
+
+If 5-shot Halo overwhelms the preview:
+
+- Lower `HALO_PRESET.particle_count`.
+- Lower Halo trail rate.
+- Shorten Halo life range.
+- Reduce Halo radius wobble.
 
 If Willow trails cover later salvos:
 

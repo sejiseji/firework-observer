@@ -181,6 +181,31 @@ MULTI_RING_PRESET = FireworkPreset(
 )
 
 
+HALO_TRAIL_PRESET = TrailPreset(
+    rate=0.16,
+    speed_threshold=0.70,
+    early_ratio=0.35,
+    strong_speed=1.05,
+    draw_every=2,
+)
+
+HALO_PRESET = FireworkPreset(
+    kind=FireworkKind.HALO,
+    label="Halo",
+    shape=FireworkShape.HALO,
+    particle_count=96,
+    speed_range=(0.70, 1.22),
+    life_range=(64, 96),
+    palette=(7, 10, 12),
+    fade_mid=6,
+    fade_dark=1,
+    tip_color=7,
+    drag=0.990,
+    gravity=-0.012,
+    trail=HALO_TRAIL_PRESET,
+)
+
+
 SPIRAL_TRAIL_PRESET = TrailPreset(
     rate=0.45,
     speed_threshold=0.70,

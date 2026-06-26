@@ -232,6 +232,7 @@ After the task:
 - `T0004.1.1` grounded CITY building wireframes into the cut floor plane. CITY cuboids intentionally omit the four bottom-face perimeter edges while keeping vertical and top edges plus sparse windows. Do not restore full 12-edge city cuboids unless a later task explicitly changes the staging direction.
 - `T0003.8.9` added subtle deterministic burst radius variation in pure burst generation. It uses bounded velocity magnitude wobble within existing preset speed ranges. Shell tail rendering, CITY scenery, preview controls, and preset constants were intentionally left unchanged.
 - `T0004.2` added CITY-only urban details: one low-detail 3D landmark tower, a few utility poles, and slightly sagging overhead wire polylines. These are still Pyxel-independent in-box scenery data. Keep them quiet and below the main firework bloom region.
+- `T0003.9` added `HALO_PRESET` and deterministic Halo burst generation. Halo is a light, soft, wobbling single-ring burst, lighter than Multi-ring, and preview sequential/random/salvo modes include it. Do not modify CITY or shell tail behavior when tuning Halo.
 - Recommended visual review command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`.
 - Main stress sequence: press `R`, `H`, then `0` to combine random burst type, height variation, and random-count persistent salvos.
 - `classic` remains unchanged and remains the default profile.

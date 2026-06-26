@@ -57,7 +57,7 @@ external 2D shape idea
 - Preview-first: yes.
 - Notes:
   - Differentiate from Multi-ring by making it a soft outer glow, not several crisp rings.
-  - Good candidate for `T0003.9`.
+  - Implemented in `T0003.9` as a light, soft, wobbling single-ring burst.
 
 ### Elliptical / Orbit
 
@@ -227,13 +227,12 @@ Add a future `ShapePlaneOrientationBank` only when implementing:
 
 ## Recommended Follow-Up Tasks
 
-1. `T0003.9`: Implement Halo preset.
-2. `T0003.10`: Implement Orbit / Elliptical preset.
-3. `T0003.11`: Implement Golden Bloom / Fibonacci preset.
-4. `T0003.12`: Implement Counter Ring preset.
-5. `T0003.13`: Add shape-plane burst scaffold.
-6. `T0003.14`: Implement Star preset.
-7. `T0003.15`: Implement Heart preset.
+1. `T0003.10`: Implement Orbit / Elliptical preset.
+2. `T0003.11`: Implement Golden Bloom / Fibonacci preset.
+3. `T0003.12`: Implement Counter Ring preset.
+4. `T0003.13`: Add shape-plane burst scaffold.
+5. `T0003.14`: Implement Star preset.
+6. `T0003.15`: Implement Heart preset.
 8. `T0003.16`: Evaluate Sierpinski / Magic Square geometry bursts.
 
 Before starting those, run the existing visual tuning checklist against `iphone16_balanced`. If Senrin, Multi-ring, or Willow are already too dense, tune density first.

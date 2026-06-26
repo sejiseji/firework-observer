@@ -6,6 +6,7 @@ from random import Random
 
 from pyxel_goal_game.camera3d import Vec3
 from pyxel_goal_game.firework_presets import (
+    HALO_PRESET,
     KIKU_PRESET,
     MULTI_RING_PRESET,
     PEONY_PRESET,
@@ -37,6 +38,7 @@ BURST_RADIUS_VARIATION_BY_KIND = {
     FireworkKind.PEONY: 0.08,
     FireworkKind.RING: 0.04,
     FireworkKind.MULTI_RING: 0.04,
+    FireworkKind.HALO: 0.03,
     FireworkKind.WILLOW: 0.07,
     FireworkKind.SPIRAL: 0.06,
     FireworkKind.SENRIN: 0.05,
@@ -140,6 +142,21 @@ def generate_multi_ring_burst(
     )
 
 
+def generate_halo_burst(
+    *,
+    origin: Vec3,
+    seed: int,
+    preset: FireworkPreset = HALO_PRESET,
+    orientation_bank: RingOrientationBank | None = None,
+) -> tuple[ParticleSpawnSpec, ...]:
+    return generate_burst(
+        preset=preset,
+        origin=origin,
+        seed=seed,
+        orientation_bank=orientation_bank,
+    )
+
+
 def generate_peony_burst(
     *,
     origin: Vec3,
@@ -203,6 +220,17 @@ def generate_burst(
             orientation_bank=orientation_bank,
         )
         return generate_multi_ring_shape_burst(
+            preset=preset,
+            origin=origin,
+            rng=rng,
+            orientation=orientation,
+        )
+    if preset.shape is FireworkShape.HALO:
+        orientation = choose_ring_orientation(
+            seed=seed,
+            orientation_bank=orientation_bank,
+        )
+        return generate_halo_shape_burst(
             preset=preset,
             origin=origin,
             rng=rng,
@@ -320,6 +348,46 @@ def generate_multi_ring_shape_burst(
     if len(particles) != preset.particle_count:
         msg = "Multi-ring layer counts must match particle_count"
         raise ValueError(msg)
+    return tuple(particles)
+
+
+def generate_halo_shape_burst(
+    *,
+    preset: FireworkPreset,
+    origin: Vec3,
+    rng: Random,
+    orientation: RingOrientation,
+) -> tuple[ParticleSpawnSpec, ...]:
+    particles: list[ParticleSpawnSpec] = []
+    phase = rng.uniform(0.0, math.tau)
+    for index in range(preset.particle_count):
+        base_speed = rng.uniform(*preset.speed_range)
+        wobble = 1.0 + 0.08 * math.sin(index * math.pi / 3.0 + phase)
+        speed = varied_burst_speed(
+            base_speed=clamp_float(
+                base_speed * wobble,
+                minimum=preset.speed_range[0],
+                maximum=preset.speed_range[1],
+            ),
+            preset=preset,
+            index=index,
+        )
+        velocity = halo_velocity(
+            index=index,
+            count=preset.particle_count,
+            speed=speed,
+            rng=rng,
+            orientation=orientation,
+        )
+        particles.append(
+            make_particle_spec(
+                origin=origin,
+                velocity=velocity,
+                speed=speed,
+                preset=preset,
+                rng=rng,
+            )
+        )
     return tuple(particles)
 
 
@@ -559,6 +627,30 @@ def ring_velocity(
     direction = add_vec3(
         scale_vec3(plane_direction, planar_scale),
         scale_vec3(orientation.normal, thickness),
+    )
+    return scale_vec3(direction, speed)
+
+
+def halo_velocity(
+    *,
+    index: int,
+    count: int,
+    speed: float,
+    rng: Random,
+    orientation: RingOrientation,
+) -> Vec3:
+    theta = index / count * math.tau
+    theta += rng.uniform(-0.018, 0.018)
+    thickness = rng.uniform(-0.035, 0.035)
+    ring_direction = add_vec3(
+        scale_vec3(orientation.basis_u, math.cos(theta)),
+        scale_vec3(orientation.basis_v, math.sin(theta)),
+    )
+    direction = normalize_vec3(
+        add_vec3(
+            ring_direction,
+            scale_vec3(orientation.normal, thickness),
+        )
     )
     return scale_vec3(direction, speed)
 

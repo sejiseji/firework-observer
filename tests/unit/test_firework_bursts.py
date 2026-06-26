@@ -12,6 +12,7 @@ from pyxel_goal_game.firework_bursts import (
     build_ring_orientation_bank,
     dot_vec3,
     generate_burst,
+    generate_halo_burst,
     generate_kiku_burst,
     generate_multi_ring_burst,
     generate_peony_burst,
@@ -24,6 +25,7 @@ from pyxel_goal_game.firework_bursts import (
     varied_burst_speed,
 )
 from pyxel_goal_game.firework_presets import (
+    HALO_PRESET,
     KIKU_PRESET,
     MULTI_RING_PRESET,
     PEONY_PRESET,
@@ -129,6 +131,7 @@ def test_kiku_velocity_distribution_is_3d_not_flat() -> None:
         WILLOW_PRESET,
         PEONY_PRESET,
         MULTI_RING_PRESET,
+        HALO_PRESET,
         SENRIN_PRESET,
     ],
 )
@@ -145,10 +148,13 @@ def test_burst_radius_variation_is_subtle_and_bounded(preset: FireworkPreset) ->
 
 
 def test_generate_burst_rejects_unsupported_shapes() -> None:
+    class UnsupportedShape:
+        name = "UNSUPPORTED"
+
     unsupported = FireworkPreset(
         kind=FireworkKind.HALO,
-        label="Halo",
-        shape=FireworkShape.HALO,
+        label="Unsupported",
+        shape=UnsupportedShape(),  # type: ignore[arg-type]
         particle_count=1,
         speed_range=(1.0, 1.0),
         life_range=(1, 1),
@@ -161,7 +167,7 @@ def test_generate_burst_rejects_unsupported_shapes() -> None:
         trail=KIKU_PRESET.trail,
     )
 
-    with pytest.raises(NotImplementedError, match="HALO"):
+    with pytest.raises(NotImplementedError, match="UNSUPPORTED"):
         generate_burst(preset=unsupported, origin=ORIGIN, seed=0)
 
 
@@ -696,6 +702,95 @@ def test_generate_burst_supports_multi_ring_orientation_bank() -> None:
     )
 
     assert particles == generate_multi_ring_burst(
+        origin=ORIGIN,
+        seed=0,
+        orientation_bank=bank,
+    )
+
+
+def test_halo_preset_uses_documented_values() -> None:
+    assert HALO_PRESET.kind is FireworkKind.HALO
+    assert HALO_PRESET.shape is FireworkShape.HALO
+    assert HALO_PRESET.particle_count == 96
+    assert HALO_PRESET.speed_range == (0.70, 1.22)
+    assert HALO_PRESET.life_range == (64, 96)
+    assert HALO_PRESET.palette == (7, 10, 12)
+    assert HALO_PRESET.fade_mid == 6
+    assert HALO_PRESET.fade_dark == 1
+    assert HALO_PRESET.tip_color == 7
+    assert HALO_PRESET.drag == 0.990
+    assert HALO_PRESET.gravity == -0.012
+    assert HALO_PRESET.trail.rate == 0.16
+    assert HALO_PRESET.trail.draw_every == 2
+
+
+def test_same_seed_generates_identical_halo_specs() -> None:
+    first = generate_halo_burst(origin=ORIGIN, seed=123)
+    second = generate_halo_burst(origin=ORIGIN, seed=123)
+
+    assert first == second
+
+
+def test_different_seeds_generate_different_halo_specs() -> None:
+    first = generate_halo_burst(origin=ORIGIN, seed=123)
+    second = generate_halo_burst(origin=ORIGIN, seed=124)
+
+    assert first != second
+
+
+def test_halo_particle_count_life_and_speed_ranges() -> None:
+    particles = generate_halo_burst(origin=ORIGIN, seed=0)
+
+    assert len(particles) == HALO_PRESET.particle_count
+    assert all(
+        HALO_PRESET.life_range[0] <= particle.life <= HALO_PRESET.life_range[1]
+        for particle in particles
+    )
+    assert all(
+        speed_in_range(speed_of(particle.velocity), HALO_PRESET.speed_range)
+        for particle in particles
+    )
+
+
+def test_halo_specs_preserve_physics_colors_and_sparse_trails() -> None:
+    particles = generate_halo_burst(origin=ORIGIN, seed=0)
+    trail_count = sum(particle.has_trail for particle in particles)
+
+    assert all(particle.position == ORIGIN for particle in particles)
+    assert all(particle.gravity == HALO_PRESET.gravity for particle in particles)
+    assert all(particle.gravity < 0.0 for particle in particles)
+    assert all(particle.drag == HALO_PRESET.drag for particle in particles)
+    assert all(particle.color in HALO_PRESET.palette for particle in particles)
+    assert all(particle.secondary_burst is None for particle in particles)
+    assert 0 < trail_count < len(particles) // 3
+
+
+def test_halo_is_not_fixed_to_xy_and_is_lighter_than_multi_ring() -> None:
+    particles = generate_halo_burst(origin=ORIGIN, seed=0)
+
+    assert any(abs(particle.velocity.x) > 0.01 for particle in particles)
+    assert any(abs(particle.velocity.y) > 0.01 for particle in particles)
+    assert any(abs(particle.velocity.z) > 0.01 for particle in particles)
+    assert HALO_PRESET.particle_count < MULTI_RING_PRESET.particle_count
+    assert HALO_PRESET.trail.rate < MULTI_RING_PRESET.trail.rate
+
+
+def test_generate_burst_supports_halo_shape() -> None:
+    particles = generate_burst(preset=HALO_PRESET, origin=ORIGIN, seed=0)
+
+    assert particles == generate_halo_burst(origin=ORIGIN, seed=0)
+
+
+def test_generate_burst_supports_halo_orientation_bank() -> None:
+    bank = build_ring_orientation_bank(seed=20260623)
+    particles = generate_burst(
+        preset=HALO_PRESET,
+        origin=ORIGIN,
+        seed=0,
+        orientation_bank=bank,
+    )
+
+    assert particles == generate_halo_burst(
         origin=ORIGIN,
         seed=0,
         orientation_bank=bank,

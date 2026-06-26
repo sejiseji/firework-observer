@@ -530,3 +530,17 @@ Add Halo first, add more building blocks, reintroduce natural scenery presets, o
 
 Impact:
 Only Pyxel-independent CITY scenery data changed. `main.py`, production runtime, firework presets, pure firework generation, shell tail behavior, preview controls, Halo, and external Firework.py integration remain unchanged.
+
+## 2026-06-26 Implement Halo as a light wobbling ring
+
+Decision:
+Add `HALO_PRESET` as a deterministic, Pyxel-independent, single-plane wobbling light-ring burst and include it in preview sequential, random, and salvo selection.
+
+Reason:
+The current city stage is acceptable, and Halo is the next lowest-risk external-reference-inspired preset. It extends the Ring/Multi-ring family while staying lighter, softer, and less dense than Multi-ring.
+
+Alternatives:
+Tune density before adding another preset, implement Orbit/Elliptical first, or add Halo as preview-only VFX instead of pure burst generation.
+
+Impact:
+Pure firework generation now supports `FireworkShape.HALO`. Preview can launch Halo through `SPACE`, `R`, `1`-`5`, and `0` random-count salvos. CITY scenery, shell tail behavior, existing preset constants, `main.py`, and production runtime remain unchanged.

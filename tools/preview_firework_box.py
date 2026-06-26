@@ -21,6 +21,7 @@ from pyxel_goal_game.firework_bursts import (  # noqa: E402
     RingOrientationBank,
     SecondaryBurstSpec,
     build_ring_orientation_bank,
+    generate_halo_burst,
     generate_kiku_burst,
     generate_multi_ring_burst,
     generate_peony_burst,
@@ -58,7 +59,16 @@ FIREWORK_SHELL_TAIL_LENGTH = len(FIREWORK_SHELL_TAIL_COLORS_NEW_TO_OLD)
 RING_ORIENTATION_BANK_SEED = 20260623
 PREVIEW_RANDOM_SEED = 20260625
 HEIGHT_VARIATION_RATIO = 0.16
-BURST_LABELS = ("Kiku", "Ring", "Spiral", "Willow", "Peony", "Multi-ring", "Senrin")
+BURST_LABELS = (
+    "Kiku",
+    "Ring",
+    "Spiral",
+    "Willow",
+    "Peony",
+    "Multi-ring",
+    "Senrin",
+    "Halo",
+)
 BURST_ACCENT_STYLES = (
     (10, 9, 7),
     (12, 6, 7),
@@ -67,8 +77,9 @@ BURST_ACCENT_STYLES = (
     (14, 8, 10),
     (12, 6, 10),
     (7, 10, 14),
+    (7, 10, 12),
 )
-ACCENT_COUNTS = (8, 6, 8, 5, 10, 6, 4)
+ACCENT_COUNTS = (8, 6, 8, 5, 10, 6, 4, 5)
 ACCENT_RAY_FRAMES = 12
 
 
@@ -356,8 +367,14 @@ class PreviewApp:
                 seed=seed,
                 orientation_bank=self.ring_orientation_bank,
             )
-        else:
+        elif burst_index == 6:
             specs = generate_senrin_burst(origin=origin, seed=seed)
+        else:
+            specs = generate_halo_burst(
+                origin=origin,
+                seed=seed,
+                orientation_bank=self.ring_orientation_bank,
+            )
         self.last_launched_index = burst_index
         accent_indexes = self.choose_accent_indexes(
             burst_index=burst_index,

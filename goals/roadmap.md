@@ -51,6 +51,7 @@
 - [x] add ferris wheel and fuller city coverage
 - [x] add interior twinkling box stars with toggle
 - [x] tune burst compactness and city landmark layout
+- [x] tune preview auto-rotate comfort
 - [ ] tune city scenery readability against fireworks
 - [ ] add scenery preset data scaffold
 - [ ] add EMPTY and MOUNTAINS scenery presets

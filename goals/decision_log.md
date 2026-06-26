@@ -600,3 +600,17 @@ Leave the existing wobble unchanged, add more city detail, implement UFO ambient
 
 Impact:
 Pure burst generation keeps deterministic radius variation but with smaller factors. CITY remains Pyxel-independent line geometry, with utility poles/wires still absent. `main.py`, production runtime, preview controls, shell tail, interior stars, UFO, and firework preset constants remain unchanged.
+
+## 2026-06-26 Tune preview auto-rotate comfort
+
+Decision:
+Reduce preview auto-rotate normal and fast speeds, and scale pitch sway by the selected speed mode.
+
+Reason:
+Long visual review needs a comfortable auto-rotate mode. The previous pitch sway used the same amplitude for all speed modes and could feel nauseating, especially when the viewer wanted slow observation.
+
+Alternatives:
+Remove pitch sway entirely, change key bindings, or leave auto-rotate speed-only.
+
+Impact:
+Preview `X` and `Q` controls are preserved. `slow`, `normal`, and `fast` remain ordered, with `normal` and `fast` calmer than before and slower modes using less vertical sway. `main.py`, production runtime, firework generation, burst radius variation, shell tail, CITY, ferris wheel, boulevard, interior stars, UFO, and firework preset constants remain unchanged.

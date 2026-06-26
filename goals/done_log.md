@@ -891,3 +891,26 @@ Record completed tasks here.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_212142.txt`.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` unchanged. Production runtime, preview controls, shell tail behavior, interior stars, UFO, and firework preset constants unchanged.
+
+## 2026-06-26 T0004.2.6 Tune preview auto rotate comfort
+
+- Summary: Reduced preview auto-rotate normal and fast speeds and scaled vertical pitch sway by speed mode.
+- Files changed: `tools/preview_firework_box.py`, `tests/unit/test_preview_auto_rotate.py`, `docs/research/visual_tuning_checklist.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Behavior:
+  - `X` still toggles auto-rotate ON/OFF.
+  - `Q` still cycles `slow`, `normal`, and `fast`.
+  - Auto-rotate speeds are now `slow=0.0035`, `normal=0.0065`, and `fast=0.0100`.
+  - Pitch sway now scales by mode, with slow using the smallest vertical sway.
+  - Debug HUD still shows `rot slow/normal/fast`.
+- Tests:
+  - `.venv/bin/python -m json.tool goals/task_queue.json` passed.
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 188 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` then failed under approved `uv` cache access because `uv run pytest` did not include the repo root on `sys.path` for `tests/unit/test_preview_auto_rotate.py`; the test was updated to insert the repo root explicitly.
+  - `python3 scripts/check_all.py` passed after the import-path test fix; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 188 passed.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_212808.txt`.
+- Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
+- Preservation: `main.py` unchanged. Production runtime, firework generation, burst radius variation, shell tail behavior, CITY geometry, ferris wheel geometry, boulevard layout, interior stars, UFO, and firework preset constants unchanged.

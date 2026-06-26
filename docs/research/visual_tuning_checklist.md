@@ -222,6 +222,15 @@ Interaction rules:
    - Confirm stars twinkle subtly and remain quieter than fireworks.
    - Confirm `R + H + 0` remains readable with stars ON.
 
+13. Auto-rotate comfort check:
+   - Press `X` to enable auto-rotate.
+   - Press `Q` to cycle `slow`, `normal`, and `fast`.
+   - Confirm `slow` is comfortable for long observation.
+   - Confirm `normal` is calmer than the previous fast-feeling preview rotation.
+   - Confirm `fast` remains faster than normal but is no longer excessive.
+   - Confirm slower modes have smaller vertical sway than faster modes.
+   - Confirm CITY, ferris wheel, boulevard, interior stars, and fireworks remain readable during rotation.
+
 ## Density Risk Thresholds
 
 If 5-shot Senrin overwhelms the preview:
@@ -297,6 +306,13 @@ If scenery dominates:
 - If the ferris wheel reads vertically narrow, tune its normalized x/y extent before adding cabin detail.
 - If interior stars dominate, lower star count, darken twinkle colors, or hide edge-on faces more aggressively.
 - If stars look painted on the outside of the box, tighten the interior-face visibility threshold before changing star placement.
+
+If auto-rotate causes discomfort:
+
+- Prefer lowering normal and fast rotation speeds before changing manual controls.
+- Reduce pitch/vertical sway in slower modes.
+- Keep `slow < normal < fast`.
+- Keep `X` as auto-rotate ON/OFF and `Q` as speed cycling.
 
 ## Depth And Box Readability
 

@@ -400,6 +400,12 @@
       "title": "Tune burst compactness and city landmark layout",
       "completed_on": "2026-06-26",
       "summary": "Tightened deterministic burst radius wobble, enlarged the CITY ferris wheel, and preserved a central boulevard-like open corridor through the dense city footprint."
+    },
+    {
+      "id": "T0004.2.6",
+      "title": "Tune preview auto rotate comfort",
+      "completed_on": "2026-06-26",
+      "summary": "Reduced preview auto-rotate normal and fast speeds and scaled vertical sway by speed mode while preserving X and Q controls."
     }
   ]
 }

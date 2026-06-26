@@ -91,6 +91,12 @@ Preview-local behavior to promote includes:
 
 This scaffold is Pyxel-independent and import-safe. It models selected profile, selected firework kind, active scenery, first-generation toggles, salvo count mode, auto-rotate speed mode, frame count, and seed base. It also provides pure state-transition helpers for preview-equivalent control actions. The preview is not yet migrated to use this scaffold.
 
+`T0005.2` introduced package-side camera motion settings:
+
+- `src/pyxel_goal_game/runtime/camera_motion.py`
+
+The module is Pyxel-independent and stores the settled auto-rotate comfort values: `slow=0.0035`, `normal=0.0065`, `fast=0.0100`, plus speed-dependent pitch sway scales. The manual preview now consumes these package-side settings for auto-rotate speed and pitch sway. Rendering, input ownership, and broader preview state extraction are still pending.
+
 ## Pure Logic And Pyxel Boundary
 
 Pure modules must not import Pyxel.

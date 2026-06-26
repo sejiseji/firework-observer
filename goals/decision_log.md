@@ -726,3 +726,17 @@ Move preview code directly, start with a renderer, or change `main.py` first.
 
 Impact:
 Runtime scaffold modules and tests were added. The scaffold does not open Pyxel, does not render, does not schedule real particles, and does not change preview behavior. `main.py`, production runtime gameplay, firework generation, CITY, shell tail, stars, and preview controls remain unchanged.
+
+## 2026-06-26 Extract runtime camera motion settings
+
+Decision:
+Move settled auto-rotate speed and pitch sway comfort settings into Pyxel-independent `src/pyxel_goal_game/runtime/camera_motion.py`, and make the manual preview consume those package-side settings.
+
+Reason:
+Camera comfort is now stable enough to be part of the first-generation runtime contract. Keeping these values in the preview would duplicate or hide the official runtime target.
+
+Alternatives:
+Leave the values in `tools/preview_firework_box.py`, extract them later with renderer migration, or retune camera motion during extraction.
+
+Impact:
+Auto-rotate settings are now reusable package-side constants/helpers. Preview behavior, key bindings, HUD mode display, firework generation, shell tail, glitter, CITY, stars, and production runtime behavior remain unchanged.

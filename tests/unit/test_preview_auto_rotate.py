@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+# ruff: noqa: E402, I001
+
 import sys
 from pathlib import Path
 
@@ -7,7 +9,11 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from tools.preview_firework_box import (  # noqa: E402
+from pyxel_goal_game.runtime.camera_motion import (
+    AUTO_ROTATE_BASE_SWAY as RUNTIME_AUTO_ROTATE_BASE_SWAY,
+    AUTO_ROTATE_SPEEDS as RUNTIME_AUTO_ROTATE_SPEEDS,
+)
+from tools.preview_firework_box import (
     AUTO_ROTATE_BASE_SWAY,
     AUTO_ROTATE_SPEEDS,
     DEFAULT_AUTO_ROTATE_SPEED_INDEX,
@@ -22,6 +28,11 @@ def test_auto_rotate_speed_modes_are_ordered_for_comfort() -> None:
 
     assert labels == ("slow", "normal", "fast")
     assert speeds[0] < speeds[1] < speeds[2]
+
+
+def test_preview_uses_runtime_auto_rotate_settings() -> None:
+    assert AUTO_ROTATE_SPEEDS == RUNTIME_AUTO_ROTATE_SPEEDS
+    assert AUTO_ROTATE_BASE_SWAY == RUNTIME_AUTO_ROTATE_BASE_SWAY
 
 
 def test_auto_rotate_normal_and_fast_are_reduced_from_previous_values() -> None:

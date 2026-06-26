@@ -60,7 +60,7 @@
 - [x] keep ceiling stars visible at near-parallel angles
 - [x] document preview-to-runtime integration contract
 - [x] extract preview runtime state/controller scaffold
-- [ ] extract camera motion and auto-rotate comfort settings
+- [x] extract camera motion and auto-rotate comfort settings
 - [ ] extract show launch/salvo scheduling
 - [ ] add runtime renderer using package state
 - [ ] add official runtime entrypoint

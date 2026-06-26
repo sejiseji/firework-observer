@@ -334,6 +334,7 @@ If auto-rotate causes discomfort:
 - Reduce pitch/vertical sway in slower modes.
 - Keep `slow < normal < fast`.
 - Keep `X` as auto-rotate ON/OFF and `Q` as speed cycling.
+- Runtime parity should use package-side `runtime/camera_motion.py` values for preview and official runtime camera comfort.
 
 ## Depth And Box Readability
 

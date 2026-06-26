@@ -1082,3 +1082,23 @@ Record completed tasks here.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 209 passed.
   - Visual smoke was not run because this scaffold task does not change visual behavior.
 - Preservation: `main.py` unchanged. `tools/preview_firework_box.py` behavior unchanged. Firework generation, shell tail behavior, glitter residue, CITY geometry, interior stars, preview controls, and production runtime unchanged.
+
+## 2026-06-26 T0005.2 Extract camera motion and auto-rotate comfort settings
+
+- Summary: Added Pyxel-independent `runtime/camera_motion.py` with settled auto-rotate speed and pitch sway comfort settings, and updated the manual preview to consume those package-side settings.
+- Files changed: `src/pyxel_goal_game/runtime/camera_motion.py`, `src/pyxel_goal_game/runtime/__init__.py`, `tools/preview_firework_box.py`, `tests/unit/test_runtime_camera_motion.py`, `tests/unit/test_preview_auto_rotate.py`, `docs/architecture/PREVIEW_TO_RUNTIME_INTEGRATION.md`, `docs/research/visual_tuning_checklist.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Behavior:
+  - Auto-rotate speeds remain `slow=0.0035`, `normal=0.0065`, and `fast=0.0100`.
+  - Pitch sway scales remain `slow=0.25`, `normal=0.55`, and `fast=0.80`.
+  - Preview `X`, `Q`, and HUD mode label behavior are preserved.
+  - Rendering and input ownership are not migrated yet.
+- Tests:
+  - Targeted camera motion and preview auto-rotate pytest passed: 15 tests passed.
+  - `.venv/bin/python -m json.tool goals/task_queue.json` passed.
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 217 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 217 passed.
+  - Visual smoke was not run because preview behavior was intended to remain equivalent.
+- Preservation: `main.py` unchanged. Firework generation, firework preset constants, burst radius scaling, shell tail, glitter residue, CITY, interior stars, UFO, and production runtime unchanged.

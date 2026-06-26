@@ -37,6 +37,13 @@ from pyxel_goal_game.firework_bursts import (  # noqa: E402
     generate_spiral_burst,
     generate_willow_burst,
 )
+from pyxel_goal_game.runtime.camera_motion import (  # noqa: E402
+    AUTO_ROTATE_BASE_SWAY,
+    AUTO_ROTATE_SPEEDS,
+    DEFAULT_AUTO_ROTATE_SPEED_INDEX,
+    compute_pitch_sway,
+)
+from pyxel_goal_game.runtime.state import AutoRotateSpeedMode  # noqa: E402
 from pyxel_goal_game.salvo_patterns import SalvoPlan, build_salvo_plan  # noqa: E402
 from pyxel_goal_game.scenery_presets import (  # noqa: E402
     SCENERY_PRESET_NAMES,
@@ -65,13 +72,6 @@ FIREWORK_SHELL_TAIL_LENGTH = len(FIREWORK_SHELL_TAIL_COLORS_NEW_TO_OLD)
 RING_ORIENTATION_BANK_SEED = 20260623
 PREVIEW_RANDOM_SEED = 20260625
 HEIGHT_VARIATION_RATIO = 0.16
-AUTO_ROTATE_SPEEDS = (
-    ("slow", 0.0035, 0.25),
-    ("normal", 0.0065, 0.55),
-    ("fast", 0.0100, 0.80),
-)
-AUTO_ROTATE_BASE_SWAY = 0.35
-DEFAULT_AUTO_ROTATE_SPEED_INDEX = 1
 BURST_LABELS = (
     "Kiku",
     "Ring",
@@ -317,6 +317,10 @@ class PreviewApp:
         return AUTO_ROTATE_SPEEDS[self.auto_rotate_speed_index][1]
 
     @property
+    def auto_rotate_speed_mode(self) -> AutoRotateSpeedMode:
+        return AutoRotateSpeedMode(AUTO_ROTATE_SPEEDS[self.auto_rotate_speed_index][0])
+
+    @property
     def auto_rotate_sway(self) -> float:
         return AUTO_ROTATE_BASE_SWAY * AUTO_ROTATE_SPEEDS[self.auto_rotate_speed_index][2]
 
@@ -324,8 +328,9 @@ class PreviewApp:
         self.handle_input()
         if self.auto_rotate:
             self.camera.target_yaw += self.auto_rotate_speed
-            self.camera.target_pitch = math.sin(pyxel.frame_count * 0.015) * (
-                self.auto_rotate_sway
+            self.camera.target_pitch = compute_pitch_sway(
+                frame=pyxel.frame_count,
+                mode=self.auto_rotate_speed_mode,
             )
         if self.auto_launch and pyxel.frame_count % AUTO_LAUNCH_FRAMES == 0:
             self.launch()

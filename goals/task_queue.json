@@ -3,28 +3,6 @@
   "policy": "Keep tasks small enough for one Codex patch. Split ambiguous tasks before implementation.",
   "current": [
     {
-      "id": "T0005.2",
-      "title": "Extract camera motion and auto-rotate comfort settings",
-      "goal": "Move preview-proven auto-rotate speed modes and speed-dependent pitch sway into package runtime camera-motion helpers.",
-      "status": "todo",
-      "depends_on": [
-        "T0005.1"
-      ],
-      "constraints": [
-        "Do not modify standalone main.py",
-        "Do not change auto-rotate values unless explicitly tuning",
-        "Preserve X/Q preview behavior",
-        "Keep camera motion helpers Pyxel-independent where practical"
-      ],
-      "acceptance": [
-        "Runtime camera motion helpers represent slow/normal/fast modes",
-        "Reduced speed-dependent pitch sway settings are preserved",
-        "Preview behavior remains unchanged or is adapted through the shared helper",
-        "Tests verify speed and sway ordering",
-        "Validation results are recorded"
-      ]
-    },
-    {
       "id": "T0005.3",
       "title": "Extract show launch and salvo scheduling",
       "goal": "Move single launch, random type selection, height variation, persistent salvo, and random-count salvo scheduling into package runtime show-controller logic.",
@@ -276,6 +254,12 @@
     }
   ],
   "done": [
+    {
+      "id": "T0005.2",
+      "title": "Extract camera motion and auto-rotate comfort settings",
+      "completed_on": "2026-06-26",
+      "summary": "Moved settled auto-rotate speed and pitch sway comfort settings into Pyxel-independent runtime camera motion helpers, and updated the preview to consume them without changing behavior."
+    },
     {
       "id": "T0005.1",
       "title": "Extract preview runtime state/controller scaffold",

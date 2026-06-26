@@ -91,7 +91,7 @@ def test_interior_face_visibility_uses_camera_orientation() -> None:
 def test_top_interior_visibility_depends_on_pitch() -> None:
     camera = Camera3D.from_profile(CLASSIC_PROFILE)
     camera.yaw = 0.0
-    camera.pitch = 0.03
+    camera.pitch = -0.03
 
     assert is_interior_face_visible(camera, BoxStarFace.TOP)
 

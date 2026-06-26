@@ -265,6 +265,8 @@ Each star belongs to a box face and uses an interior-face visibility test. If th
 
 `T0004.2.8` made only the top-face visibility threshold more permissive so ceiling stars stay visible at shallower angles when the ceiling is clearly visible. Side-face star visibility remains on the previous stricter threshold.
 
+`T0004.2.8.1` relaxed the top-face threshold further so ceiling stars remain visible even when the eye line is closer to parallel with the ceiling plane. Side-face thresholds still remain unchanged.
+
 The current preview toggle is:
 
 - `T`: show/hide interior stars

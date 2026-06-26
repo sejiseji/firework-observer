@@ -628,3 +628,17 @@ Broaden all star face thresholds, add glitter to pure burst generation, add more
 
 Impact:
 Top-face stars are more permissive while side-face thresholds remain unchanged. Glitter residue is preview-only and short-lived. CITY stays Pyxel-independent, with utility poles and overhead wires still absent. `main.py`, production runtime, preview controls, shell tail behavior, burst compactness, auto-rotate comfort, UFO, and firework preset constants remain unchanged.
+
+## 2026-06-26 Relax ceiling star shallow-angle visibility
+
+Decision:
+Relax the top-face interior star visibility threshold further so ceiling stars remain visible when the eye line is closer to parallel with the ceiling plane.
+
+Reason:
+User review found that ceiling stars still disappeared too early at shallow viewing angles. The side-wall visibility behavior was not part of this issue and should stay unchanged.
+
+Alternatives:
+Increase star count, broaden all face thresholds, or draw top stars unconditionally.
+
+Impact:
+Only the top-face threshold changed. Side-wall thresholds, star placement, preview controls, CITY, firework generation, shell tail behavior, and production runtime remain unchanged.

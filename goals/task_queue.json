@@ -412,6 +412,12 @@
       "title": "Tune ceiling stars, glitter residue, ferris wheel roundness, and city edge coverage",
       "completed_on": "2026-06-26",
       "summary": "Relaxed top-face star visibility while preserving side-wall thresholds, added sparse preview-only glitter residue, rounded the CITY ferris wheel, and added peripheral CITY buildings while preserving the central boulevard."
+    },
+    {
+      "id": "T0004.2.8.1",
+      "title": "Relax ceiling star shallow-angle visibility",
+      "completed_on": "2026-06-26",
+      "summary": "Relaxed only the top-face interior star visibility threshold further so ceiling stars remain visible at smaller eye-line-to-ceiling angles, while side-wall star visibility remains unchanged."
     }
   ]
 }

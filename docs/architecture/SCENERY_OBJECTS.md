@@ -243,6 +243,13 @@ CITY should now read as a fuller cutaway urban stage across the lower footprint 
 - The central boulevard remains open and launch readability remains protected
 - The ferris wheel uses a more circular world-space rim while staying grounded and inside the box
 
+`T0004.2.9` tuned CITY building outline brightness:
+
+- Building cuboid outlines use an even split between bright blue and dark blue
+- Bright and dark building groups are interleaved so they do not cluster by height or location
+- The change applies to building cuboids only
+- The landmark tower, ferris wheel, signage, windows, and other CITY accent geometry keep their existing colors
+
 Future CITY tuning should preserve the central boulevard unless a later task explicitly changes the stage layout.
 
 ## Interior Box Stars

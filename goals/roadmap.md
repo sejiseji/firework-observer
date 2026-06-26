@@ -54,6 +54,7 @@
 - [x] tune preview auto-rotate comfort
 - [x] tune ceiling stars, glitter residue, ferris wheel roundness, and city edge coverage
 - [x] relax ceiling star shallow-angle visibility
+- [x] balance city building outline brightness
 - [ ] tune city scenery readability against fireworks
 - [ ] add scenery preset data scaffold
 - [ ] add EMPTY and MOUNTAINS scenery presets

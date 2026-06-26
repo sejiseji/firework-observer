@@ -210,6 +210,7 @@ Interaction rules:
    - Confirm City reads as small 3D cuboid buildings, not a flat wall skyline.
    - Confirm City reads as a dense cutaway urban mass, not sparse isolated objects.
    - Confirm sparse lit windows are visible without outshining fireworks.
+   - Confirm bright and dark blue building outlines are roughly balanced and scattered, not grouped into large bright/dark clusters.
    - Confirm the landmark tower is larger than surrounding buildings but clearly grounded.
    - Confirm building-attached signs are visible but not noisy.
    - Confirm City buildings spread across most of the lower footprint, not only the center cluster.

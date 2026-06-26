@@ -50,6 +50,18 @@ class SceneryPreset:
 
 
 SCENERY_PRESET_NAMES = ("empty", "city")
+CITY_BUILDING_DARK_COLOR = 1
+CITY_BUILDING_BRIGHT_COLOR = 5
+CITY_BUILDING_COLOR_PATTERN = (
+    CITY_BUILDING_BRIGHT_COLOR,
+    CITY_BUILDING_DARK_COLOR,
+    CITY_BUILDING_DARK_COLOR,
+    CITY_BUILDING_BRIGHT_COLOR,
+    CITY_BUILDING_DARK_COLOR,
+    CITY_BUILDING_BRIGHT_COLOR,
+    CITY_BUILDING_BRIGHT_COLOR,
+    CITY_BUILDING_DARK_COLOR,
+)
 
 
 def get_scenery_preset(
@@ -144,7 +156,7 @@ def city_scenery(profile: ScreenProfile) -> SceneryPreset:
     base_y = -0.96
     for index, (center_x, center_z, width, depth, height) in enumerate(buildings):
         top_y = base_y + height
-        color = 5 if height < 0.30 else 1
+        color = city_building_color(index)
         lines.extend(
             building_cuboid_lines(
                 profile=profile,
@@ -177,6 +189,10 @@ def city_scenery(profile: ScreenProfile) -> SceneryPreset:
         label="City",
         lines=tuple(lines),
     )
+
+
+def city_building_color(index: int) -> int:
+    return CITY_BUILDING_COLOR_PATTERN[index % len(CITY_BUILDING_COLOR_PATTERN)]
 
 
 def building_cuboid_lines(

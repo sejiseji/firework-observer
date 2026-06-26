@@ -418,6 +418,12 @@
       "title": "Relax ceiling star shallow-angle visibility",
       "completed_on": "2026-06-26",
       "summary": "Relaxed only the top-face interior star visibility threshold further so ceiling stars remain visible at smaller eye-line-to-ceiling angles, while side-wall star visibility remains unchanged."
+    },
+    {
+      "id": "T0004.2.9",
+      "title": "Balance city building outline brightness",
+      "completed_on": "2026-06-26",
+      "summary": "Changed CITY building cuboid outlines to an even, interleaved bright-blue/dark-blue distribution while leaving the tower, ferris wheel, signs, windows, and geometry unchanged."
     }
   ]
 }

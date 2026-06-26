@@ -642,3 +642,17 @@ Increase star count, broaden all face thresholds, or draw top stars unconditiona
 
 Impact:
 Only the top-face threshold changed. Side-wall thresholds, star placement, preview controls, CITY, firework generation, shell tail behavior, and production runtime remain unchanged.
+
+## 2026-06-26 Balance CITY building outline brightness
+
+Decision:
+Change CITY building cuboid outline colors from height-based coloring to a deterministic bright-blue/dark-blue pattern with an even split and scattered distribution.
+
+Reason:
+The previous height-based coloring could create visible clusters of similar brightness. The user wanted the city to read as mixed bright and dark building groups, with overall brightness reduced and no large bright/dark blocks.
+
+Alternatives:
+Darken all buildings, randomize colors with a seed, or tune tower/sign/window colors at the same time.
+
+Impact:
+Only building cuboid outline color selection changed. The landmark tower, ferris wheel, signage, windows, preview controls, firework generation, shell tail behavior, CITY geometry placement, and production runtime remain unchanged.

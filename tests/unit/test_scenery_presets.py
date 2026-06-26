@@ -5,8 +5,12 @@ from pathlib import Path
 import pytest
 
 from pyxel_goal_game.scenery_presets import (
+    CITY_BUILDING_BRIGHT_COLOR,
+    CITY_BUILDING_COLOR_PATTERN,
+    CITY_BUILDING_DARK_COLOR,
     SCENERY_PRESET_NAMES,
     SceneryKind,
+    city_building_color,
     ferris_wheel_lines,
     get_scenery_preset,
 )
@@ -77,6 +81,20 @@ def test_city_uses_3d_building_geometry() -> None:
     assert len({round(point.x, 4) for point in points}) > 10
     assert len({round(point.y, 4) for point in points}) > 5
     assert len({round(point.z, 4) for point in points}) > 6
+
+
+def test_city_building_outline_colors_are_balanced_and_scattered() -> None:
+    colors = tuple(city_building_color(index) for index in range(32))
+
+    assert colors.count(CITY_BUILDING_BRIGHT_COLOR) == colors.count(CITY_BUILDING_DARK_COLOR)
+    assert set(CITY_BUILDING_COLOR_PATTERN) == {
+        CITY_BUILDING_BRIGHT_COLOR,
+        CITY_BUILDING_DARK_COLOR,
+    }
+    assert all(
+        len({colors[index], colors[index + 1], colors[index + 2]}) > 1
+        for index in range(len(colors) - 2)
+    )
 
 
 def test_city_extends_across_fuller_lower_footprint() -> None:

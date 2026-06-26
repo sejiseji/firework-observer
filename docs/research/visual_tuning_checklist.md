@@ -209,6 +209,7 @@ Interaction rules:
    - Confirm scenery stays in the lower part of the observation volume.
    - Confirm City reads as small 3D cuboid buildings, not a flat wall skyline.
    - Confirm City reads as a dense cutaway urban mass, not sparse isolated objects.
+   - Confirm City has the intended denser 48-building footprint without closing the central boulevard.
    - Confirm sparse lit windows are visible without outshining fireworks.
    - Confirm bright and dark blue building outlines are roughly balanced and scattered, not grouped into large bright/dark clusters.
    - Confirm the landmark tower is larger than surrounding buildings but clearly grounded.

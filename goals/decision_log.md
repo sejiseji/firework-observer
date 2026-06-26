@@ -656,3 +656,17 @@ Darken all buildings, randomize colors with a seed, or tune tower/sign/window co
 
 Impact:
 Only building cuboid outline color selection changed. The landmark tower, ferris wheel, signage, windows, preview controls, firework generation, shell tail behavior, CITY geometry placement, and production runtime remain unchanged.
+
+## 2026-06-26 Increase CITY building count to 48
+
+Decision:
+Increase the active CITY building cuboid count to 48 while preserving the even bright-blue/dark-blue outline split and interleaved brightness distribution.
+
+Reason:
+The user wanted the same building color conditions but with a denser city mass. Increasing the building count strengthens the cutaway urban footprint while keeping the darker overall read from the balanced color pattern.
+
+Alternatives:
+Increase only window/sign density, add new landmarks, or broaden city coverage without changing the building count target.
+
+Impact:
+Only CITY building cuboid data changed. The landmark tower, ferris wheel, signage, windows, central boulevard, preview controls, firework generation, shell tail behavior, and production runtime remain unchanged.

@@ -8,6 +8,7 @@ from pyxel_goal_game.scenery_presets import (
     CITY_BUILDING_BRIGHT_COLOR,
     CITY_BUILDING_COLOR_PATTERN,
     CITY_BUILDING_DARK_COLOR,
+    CITY_BUILDINGS,
     SCENERY_PRESET_NAMES,
     SceneryKind,
     city_building_color,
@@ -77,16 +78,19 @@ def test_city_uses_3d_building_geometry() -> None:
     city = get_scenery_preset("city", profile=CLASSIC_PROFILE)
     points = city.all_points
 
-    assert len(city.lines) >= 360
+    assert len(CITY_BUILDINGS) == 48
+    assert len(city.lines) >= 520
     assert len({round(point.x, 4) for point in points}) > 10
     assert len({round(point.y, 4) for point in points}) > 5
     assert len({round(point.z, 4) for point in points}) > 6
 
 
 def test_city_building_outline_colors_are_balanced_and_scattered() -> None:
-    colors = tuple(city_building_color(index) for index in range(32))
+    colors = tuple(city_building_color(index) for index in range(len(CITY_BUILDINGS)))
 
     assert colors.count(CITY_BUILDING_BRIGHT_COLOR) == colors.count(CITY_BUILDING_DARK_COLOR)
+    assert colors.count(CITY_BUILDING_BRIGHT_COLOR) == 24
+    assert colors.count(CITY_BUILDING_DARK_COLOR) == 24
     assert set(CITY_BUILDING_COLOR_PATTERN) == {
         CITY_BUILDING_BRIGHT_COLOR,
         CITY_BUILDING_DARK_COLOR,

@@ -424,6 +424,12 @@
       "title": "Balance city building outline brightness",
       "completed_on": "2026-06-26",
       "summary": "Changed CITY building cuboid outlines to an even, interleaved bright-blue/dark-blue distribution while leaving the tower, ferris wheel, signs, windows, and geometry unchanged."
+    },
+    {
+      "id": "T0004.2.10",
+      "title": "Increase city building count to 48",
+      "completed_on": "2026-06-26",
+      "summary": "Increased active CITY building cuboids to 48 while preserving the balanced bright-blue/dark-blue distribution, central boulevard, and existing tower, ferris wheel, signage, and window behavior."
     }
   ]
 }

@@ -250,6 +250,13 @@ CITY should now read as a fuller cutaway urban stage across the lower footprint 
 - The change applies to building cuboids only
 - The landmark tower, ferris wheel, signage, windows, and other CITY accent geometry keep their existing colors
 
+`T0004.2.10` increased the active CITY building count to 48:
+
+- The 48 building cuboids keep the same even bright-blue/dark-blue split
+- Bright and dark building groups remain interleaved
+- Additional buildings increase the dense cutaway city mass without filling the central boulevard
+- The landmark tower, ferris wheel, signage, windows, and other accent geometry remain unchanged
+
 Future CITY tuning should preserve the central boulevard unless a later task explicitly changes the stage layout.
 
 ## Interior Box Stars

@@ -805,3 +805,22 @@ Record completed tasks here.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_190406.txt`.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` unchanged. Production runtime, firework generation, firework presets, shell tail behavior, preview controls, and Halo unchanged.
+
+## 2026-06-26 Preview auto-rotation speed cycling
+
+- Summary: Added preview-only auto-rotation speed cycling with `Q`.
+- Files changed: `tools/preview_firework_box.py`, `goals/done_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, and `GPT_HANDOFF.md`.
+- Behavior:
+  - `X` still toggles auto-rotate ON/OFF.
+  - `Q` cycles auto-rotate speed through `slow`, `normal`, and `fast`.
+  - Default speed remains close to the previous auto-rotate behavior.
+  - Debug HUD shows the current rotation speed label.
+- Tests:
+  - `python3 -m compileall tools/preview_firework_box.py` passed.
+  - `.venv/bin/python -m pytest` passed: 170 tests passed.
+  - `.venv/bin/python -m ruff check tools/preview_firework_box.py` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 170 passed.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_202712.txt`.
+- Preservation: `main.py` unchanged. Production runtime, firework generation, scenery, shell tail behavior, and preview launch controls unchanged.

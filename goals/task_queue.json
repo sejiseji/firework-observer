@@ -376,6 +376,12 @@
       "title": "Densify city blocks and replace utility poles with signage",
       "completed_on": "2026-06-26",
       "summary": "Refined active CITY into a denser cutaway urban mass with more grounded building blocks, a larger grounded landmark tower, removed utility poles/wires, and low-detail building signage."
+    },
+    {
+      "id": "T0004.2.1.1",
+      "title": "Add preview auto-rotation speed cycling",
+      "completed_on": "2026-06-26",
+      "summary": "Added preview-only Q control to cycle auto-rotation speed through slow, normal, and fast while preserving X as auto-rotate ON/OFF."
     }
   ]
 }

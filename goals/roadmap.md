@@ -47,6 +47,7 @@
 - [x] add city landmark tower, utility poles, and overhead wires
 - [x] implement Halo preset
 - [x] densify city blocks and replace utility poles with signage
+- [x] add preview auto-rotation speed cycling
 - [ ] tune city scenery readability against fireworks
 - [ ] add scenery preset data scaffold
 - [ ] add EMPTY and MOUNTAINS scenery presets

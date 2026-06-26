@@ -59,6 +59,12 @@ FIREWORK_SHELL_TAIL_LENGTH = len(FIREWORK_SHELL_TAIL_COLORS_NEW_TO_OLD)
 RING_ORIENTATION_BANK_SEED = 20260623
 PREVIEW_RANDOM_SEED = 20260625
 HEIGHT_VARIATION_RATIO = 0.16
+AUTO_ROTATE_SPEEDS = (
+    ("slow", 0.0035),
+    ("normal", 0.0100),
+    ("fast", 0.0140),
+)
+DEFAULT_AUTO_ROTATE_SPEED_INDEX = 1
 BURST_LABELS = (
     "Kiku",
     "Ring",
@@ -225,6 +231,7 @@ class PreviewApp:
         self.height_variation = False
         self.seed = 0
         self.auto_rotate = False
+        self.auto_rotate_speed_index = DEFAULT_AUTO_ROTATE_SPEED_INDEX
         self.auto_launch = False
         self.debug = True
         self.scenery_index = 0
@@ -250,10 +257,18 @@ class PreviewApp:
     def mode_label(self) -> str:
         return "RANDOM" if self.random_mode else "SEQ"
 
+    @property
+    def auto_rotate_speed_label(self) -> str:
+        return AUTO_ROTATE_SPEEDS[self.auto_rotate_speed_index][0]
+
+    @property
+    def auto_rotate_speed(self) -> float:
+        return AUTO_ROTATE_SPEEDS[self.auto_rotate_speed_index][1]
+
     def update(self) -> None:
         self.handle_input()
         if self.auto_rotate:
-            self.camera.target_yaw += 0.01
+            self.camera.target_yaw += self.auto_rotate_speed
             self.camera.target_pitch = math.sin(pyxel.frame_count * 0.015) * 0.35
         if self.auto_launch and pyxel.frame_count % AUTO_LAUNCH_FRAMES == 0:
             self.launch()
@@ -306,6 +321,10 @@ class PreviewApp:
             self.reset_camera()
         if pyxel.btnp(pyxel.KEY_X):
             self.auto_rotate = not self.auto_rotate
+        if pyxel.btnp(pyxel.KEY_Q):
+            self.auto_rotate_speed_index = (self.auto_rotate_speed_index + 1) % len(
+                AUTO_ROTATE_SPEEDS
+            )
         if pyxel.btnp(pyxel.KEY_V):
             self.auto_launch = not self.auto_launch
             if self.auto_launch:
@@ -703,7 +722,12 @@ class PreviewApp:
         label = self.last_launched_label if self.random_mode else self.burst_label
         pyxel.text(4, 4, f"Z:launch {self.mode_label}:{label}", 5)
         pyxel.text(4, 12, "1-5:salvo 0:rand-count H:height", 5)
-        pyxel.text(4, 20, f"G:scene {self.scenery.label} B:{self.scenery_visible}", 5)
+        pyxel.text(
+            4,
+            20,
+            f"G:scene {self.scenery.label} B:{self.scenery_visible} Q:rot",
+            5,
+        )
         if not self.debug:
             return
         pyxel.text(4, self.profile.height - 30, f"profile {self.profile.name}", 5)
@@ -723,7 +747,10 @@ class PreviewApp:
         pyxel.text(
             4,
             self.profile.height - 6,
-            f"zoom {self.camera.zoom:.2f} auto {self.auto_rotate}/{self.auto_launch}",
+            (
+                f"zoom {self.camera.zoom:.2f} auto {self.auto_rotate}/"
+                f"{self.auto_launch} rot {self.auto_rotate_speed_label}"
+            ),
             5,
         )
 

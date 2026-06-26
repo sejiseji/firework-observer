@@ -83,6 +83,14 @@ Preview-local behavior to promote includes:
 - Rendering order for box, interior stars, CITY, shells, particles, glitter residue, front box edges, and HUD.
 - Pyxel input mapping for development controls.
 
+`T0005.1` introduced the first package-side scaffold:
+
+- `src/pyxel_goal_game/runtime/__init__.py`
+- `src/pyxel_goal_game/runtime/state.py`
+- `src/pyxel_goal_game/runtime/show_controller.py`
+
+This scaffold is Pyxel-independent and import-safe. It models selected profile, selected firework kind, active scenery, first-generation toggles, salvo count mode, auto-rotate speed mode, frame count, and seed base. It also provides pure state-transition helpers for preview-equivalent control actions. The preview is not yet migrated to use this scaffold.
+
 ## Pure Logic And Pyxel Boundary
 
 Pure modules must not import Pyxel.

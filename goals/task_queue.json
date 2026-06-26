@@ -3,29 +3,6 @@
   "policy": "Keep tasks small enough for one Codex patch. Split ambiguous tasks before implementation.",
   "current": [
     {
-      "id": "T0005.1",
-      "title": "Extract preview runtime state/controller scaffold",
-      "goal": "Create package-side runtime state and controller scaffolding for preview-proven show behavior without changing visible behavior.",
-      "status": "todo",
-      "depends_on": [
-        "T0005.0"
-      ],
-      "constraints": [
-        "Do not modify standalone main.py",
-        "Do not import tools/preview_firework_box.py from runtime",
-        "Keep preview working",
-        "Do not change firework generation or visual tuning",
-        "Keep Pyxel drawing out of pure state/controller modules"
-      ],
-      "acceptance": [
-        "Package-side runtime state/controller scaffold exists",
-        "The scaffold can represent selected profile, selected firework kind, toggles, shells, particles, salvos, glitter residue, and scenery/star state",
-        "No visible behavior changes",
-        "Tests cover pure scaffold behavior where practical",
-        "Validation results are recorded"
-      ]
-    },
-    {
       "id": "T0005.2",
       "title": "Extract camera motion and auto-rotate comfort settings",
       "goal": "Move preview-proven auto-rotate speed modes and speed-dependent pitch sway into package runtime camera-motion helpers.",
@@ -299,6 +276,12 @@
     }
   ],
   "done": [
+    {
+      "id": "T0005.1",
+      "title": "Extract preview runtime state/controller scaffold",
+      "completed_on": "2026-06-26",
+      "summary": "Added Pyxel-independent package-side runtime state and show-controller scaffolding for first-generation preview-equivalent modes and toggles without changing preview behavior."
+    },
     {
       "id": "T0005.0",
       "title": "Preview-to-runtime integration contract",

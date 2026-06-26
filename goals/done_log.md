@@ -1061,3 +1061,24 @@ Record completed tasks here.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 193 passed.
   - Visual smoke was not run because this was a docs-only integration planning task.
 - Preservation: `main.py` unchanged. Source behavior, preview behavior, tests, firework generation, CITY, shell tail, stars, and production runtime unchanged.
+
+## 2026-06-26 T0005.1 Add runtime state/controller scaffold
+
+- Summary: Added the first package-side `pyxel_goal_game.runtime` scaffold with Pyxel-independent runtime state data and pure controller helpers for preview-equivalent state transitions.
+- Files changed: `src/pyxel_goal_game/runtime/__init__.py`, `src/pyxel_goal_game/runtime/state.py`, `src/pyxel_goal_game/runtime/show_controller.py`, `tests/unit/test_runtime_state.py`, `tests/unit/test_runtime_show_controller.py`, `docs/architecture/PREVIEW_TO_RUNTIME_INTEGRATION.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Behavior:
+  - Runtime state can represent selected profile, selected firework kind, active scenery, first-generation toggles, salvo count mode, auto-rotate speed mode, frame count, and seed base.
+  - Show-controller helpers cover firework cycling, random mode, auto launch, height variation, stars, scenery visibility, auto rotate, rotate speed cycling, fixed salvos, random-count salvos, frame ticking, and seed advancement.
+  - The scaffold is import-safe and does not import Pyxel or tools.
+  - Preview is not yet migrated to use the scaffold.
+- Tests:
+  - Targeted runtime scaffold pytest passed: 16 tests passed.
+  - Targeted runtime scaffold ruff check passed.
+  - `.venv/bin/python -m json.tool goals/task_queue.json` passed.
+  - `python3 -m compileall src tests scripts tools` passed.
+  - `.venv/bin/python -m pytest` passed: 209 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 209 passed.
+  - Visual smoke was not run because this scaffold task does not change visual behavior.
+- Preservation: `main.py` unchanged. `tools/preview_firework_box.py` behavior unchanged. Firework generation, shell tail behavior, glitter residue, CITY geometry, interior stars, preview controls, and production runtime unchanged.

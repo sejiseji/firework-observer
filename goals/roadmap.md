@@ -59,7 +59,7 @@
 - [x] reduce burst radius maximum width
 - [x] keep ceiling stars visible at near-parallel angles
 - [x] document preview-to-runtime integration contract
-- [ ] extract preview runtime state/controller scaffold
+- [x] extract preview runtime state/controller scaffold
 - [ ] extract camera motion and auto-rotate comfort settings
 - [ ] extract show launch/salvo scheduling
 - [ ] add runtime renderer using package state

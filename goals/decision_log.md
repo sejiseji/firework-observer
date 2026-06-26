@@ -712,3 +712,17 @@ Keep all behavior in the preview, rewrite `main.py` immediately, or start runtim
 
 Impact:
 This is documentation-only. `main.py`, source behavior, preview behavior, tests, and runtime gameplay remain unchanged. Future T0005.x tasks should extract package-side runtime state, camera motion, show scheduling, rendering, entrypoint, and final `main.py` handoff in small steps.
+
+## 2026-06-26 Add package-side runtime state/controller scaffold
+
+Decision:
+Create `src/pyxel_goal_game/runtime/` with Pyxel-independent state and show-controller scaffolding before migrating renderer or preview behavior.
+
+Reason:
+The first migration step needs a stable package-side place to represent selected profile, firework kind, toggles, salvo modes, auto-rotate speed mode, frame count, and seed base. Adding the scaffold first avoids importing `tools/preview_firework_box.py` from runtime and keeps later extraction tasks small.
+
+Alternatives:
+Move preview code directly, start with a renderer, or change `main.py` first.
+
+Impact:
+Runtime scaffold modules and tests were added. The scaffold does not open Pyxel, does not render, does not schedule real particles, and does not change preview behavior. `main.py`, production runtime gameplay, firework generation, CITY, shell tail, stars, and preview controls remain unchanged.

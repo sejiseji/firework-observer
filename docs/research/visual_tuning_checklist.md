@@ -548,9 +548,10 @@ Checks:
 
 - Dragging or flicking the play field rotates the camera by default.
 - The top-right `MENU` button opens and closes the mobile control panel.
-- Panel checkboxes change only the draft values until `APPLY` is pressed.
-- `APPLY` reflects random, height, auto launch, auto rotate, stars, UFO, audio, city, and rotate speed settings.
-- `CLOSE` dismisses the panel without applying draft changes.
+- Panel checkboxes immediately reflect random, height, auto launch, auto rotate, stars, UFO, audio, BGM, and city settings behind the panel.
+- `BGM` can be turned off while `audio` remains on, and explosion SFX still plays.
+- `speed` immediately cycles the auto-rotate speed.
+- `CLOSE` dismisses the panel without changing already-applied settings.
 - `LAUNCH` starts a single shell.
 - `NEXT` cycles the selected firework kind.
 - `RAND SALVO` starts random-count salvo mode.

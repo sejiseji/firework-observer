@@ -8,6 +8,7 @@ BGM_MELODY_SOUND_ID = 16
 BGM_HARMONY_SOUND_ID = 17
 BGM_SUPPORT_SOUND_ID = 18
 BGM_SOUND_IDS = (BGM_MELODY_SOUND_ID, BGM_HARMONY_SOUND_ID, BGM_SUPPORT_SOUND_ID)
+BGM_CHANNELS = (0, 1, 2)
 SFX_EXPLOSION_SOUND_ID = 0
 SFX_CHANNEL = 3
 EXPLOSION_SFX_COOLDOWN_FRAMES = 8
@@ -64,6 +65,7 @@ EXPLOSION_SFX_NOTES = "c1 c1 c0 c0 r"
 class RuntimeAudio:
     pyxel: Any
     enabled: bool = True
+    bgm_enabled: bool = True
     last_explosion_frame: int | None = None
 
     def setup(self) -> None:
@@ -102,7 +104,7 @@ class RuntimeAudio:
         )
 
     def start_bgm(self) -> None:
-        if self.enabled:
+        if self.enabled and self.bgm_enabled:
             self.pyxel.playm(BGM_MUSIC_ID, loop=True)
 
     def set_enabled(self, enabled: bool) -> None:
@@ -113,6 +115,19 @@ class RuntimeAudio:
             self.start_bgm()
         else:
             self.pyxel.stop()
+
+    def set_bgm_enabled(self, enabled: bool) -> None:
+        if self.bgm_enabled == enabled:
+            return
+        self.bgm_enabled = enabled
+        if enabled:
+            self.start_bgm()
+        else:
+            self.stop_bgm()
+
+    def stop_bgm(self) -> None:
+        for channel in BGM_CHANNELS:
+            self.pyxel.stop(channel)
 
     def play_explosion(self, frame: int) -> bool:
         if not self.enabled:

@@ -81,6 +81,7 @@
 - [x] scrub local paths and add public safety check
 - [x] add Japanese public README
 - [x] add mobile touch control panel
+- [x] make mobile panel instant and add BGM toggle
 - [ ] tune visual feel
 - [ ] tune performance budget
 - [ ] record user feedback

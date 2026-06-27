@@ -126,7 +126,11 @@ class RuntimeApp:
             title=f"Firework Observer Runtime - {self.profile.name}",
         )
         pyxel.mouse(True)
-        self.audio = RuntimeAudio(pyxel=pyxel, enabled=self.state.toggles.audio_enabled)
+        self.audio = RuntimeAudio(
+            pyxel=pyxel,
+            enabled=self.state.toggles.audio_enabled,
+            bgm_enabled=self.state.toggles.bgm_enabled,
+        )
         self.audio.setup()
         self.audio.start_bgm()
 
@@ -219,6 +223,10 @@ class RuntimeApp:
         self.state = show_controller.toggle_audio(self.state)
         self.audio.set_enabled(self.state.toggles.audio_enabled)
 
+    def toggle_bgm(self) -> None:
+        self.state = show_controller.toggle_bgm(self.state)
+        self.audio.set_bgm_enabled(self.state.toggles.bgm_enabled)
+
     def toggle_ufo(self) -> None:
         self.state = show_controller.toggle_ufo(self.state)
         self.ufo_state = toggle_ufo_enabled(
@@ -229,37 +237,33 @@ class RuntimeApp:
     def refresh_mobile_panel_draft(self) -> None:
         self.mobile_panel_draft = MobilePanelDraft.from_state(self.state)
 
-    def apply_mobile_panel_draft(self) -> None:
-        draft = self.mobile_panel_draft
-        previous_audio_enabled = self.state.toggles.audio_enabled
-        previous_ufo_enabled = self.state.toggles.ufo_enabled
-        toggles = replace(
-            self.state.toggles,
-            random_firework_mode=draft.random_firework_mode,
-            height_variation=draft.height_variation,
-            auto_launch=draft.auto_launch,
-            auto_rotate=draft.auto_rotate,
-            interior_stars_visible=draft.interior_stars_visible,
-            ufo_enabled=draft.ufo_enabled,
-            audio_enabled=draft.audio_enabled,
-            scenery_visible=draft.scenery_visible,
-        )
-        self.state = replace(
-            self.state,
-            toggles=toggles,
-            auto_rotate_speed_mode=draft.auto_rotate_speed_mode,
-            salvo_count_mode=(
-                SalvoCountMode.OFF if draft.auto_launch else self.state.salvo_count_mode
-            ),
-            salvo_count=1 if draft.auto_launch else self.state.salvo_count,
-        )
-        if previous_audio_enabled != draft.audio_enabled:
-            self.audio.set_enabled(draft.audio_enabled)
-        if previous_ufo_enabled != draft.ufo_enabled:
-            self.ufo_state = toggle_ufo_enabled(
-                self.ufo_state,
-                frame=pyxel.frame_count,
-            )
+    def apply_mobile_toggle(self, key: str) -> None:
+        if key == "random_firework_mode":
+            self.state = show_controller.toggle_random_mode(self.state)
+        elif key == "height_variation":
+            self.state = show_controller.toggle_height_variation(self.state)
+        elif key == "auto_launch":
+            self.state = show_controller.toggle_auto_launch(self.state)
+        elif key == "auto_rotate":
+            self.state = show_controller.toggle_auto_rotate(self.state)
+        elif key == "interior_stars_visible":
+            self.state = show_controller.toggle_stars(self.state)
+        elif key == "ufo_enabled":
+            self.toggle_ufo()
+        elif key == "audio_enabled":
+            self.toggle_audio()
+        elif key == "bgm_enabled":
+            self.toggle_bgm()
+        elif key == "scenery_visible":
+            self.state = show_controller.toggle_scenery_visible(self.state)
+        else:
+            msg = f"unknown mobile toggle: {key}"
+            raise ValueError(msg)
+        self.refresh_mobile_panel_draft()
+
+    def cycle_mobile_auto_rotate_speed(self) -> None:
+        self.state = show_controller.cycle_auto_rotate_speed(self.state)
+        self.refresh_mobile_panel_draft()
 
     def update_ufo(self) -> None:
         self.ufo_state = update_ufo_state(

@@ -76,15 +76,16 @@ pyxel run main.py
 
 - 画面をドラッグまたはフリック: カメラ回転
 - 右上の `MENU`: モバイル操作パネルを開く / 閉じる
-- パネル内チェック: random、height、auto、rotate、stars、UFO、audio、city の下書き変更
+- パネル内チェック: random、height、auto、rotate、stars、UFO、audio、BGM、city を即時反映
 - `speed`: 自動回転速度の切り替え
 - `LAUNCH`: 花火を1発打ち上げ
 - `NEXT`: 花火の種類を切り替え
 - `RAND SALVO`: ランダム数サルボ開始
 - `ZOOM+` / `ZOOM-`: ゲーム画面の拡大 / 縮小
-- `APPLY`: パネル内のチェックと速度を反映
-- `CLOSE`: 反映せずに閉じる
+- `CLOSE`: パネルを閉じる
 
+パネル内のチェックはタップした時点でメニュー裏のゲーム画面へ反映されます。
+`audio` は全体の音を ON/OFF し、`BGM` は花火爆発音を残したまま BGM だけを ON/OFF します。
 パネル内の文字はスマホで読めるように、通常の HUD より大きく表示しています。
 
 ## 主な機能

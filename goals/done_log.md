@@ -1537,9 +1537,21 @@ Record completed tasks here.
 - Behavior:
   - Dragging or flicking the play field rotates the camera by default.
   - The top-right `MENU` opens a mobile panel.
-  - Panel checkboxes stage changes for random mode, height variation, auto launch, auto rotate, stars, UFO, audio, and CITY visibility.
-  - `APPLY` reflects the staged settings and rotate speed.
+  - Panel checkboxes initially staged changes for random mode, height variation, auto launch, auto rotate, stars, UFO, audio, and CITY visibility.
+  - The initial staged settings flow was superseded by T0010.1's immediate-apply panel behavior.
   - Panel text uses scaled rendering so it is easier to read on phones.
   - `LAUNCH`, `NEXT`, `RAND SALVO`, `ZOOM+`, and `ZOOM-` provide touch-friendly action buttons.
   - Keyboard controls remain available.
 - Preservation: Firework generation, CITY, stars, UFO scheduling/geometry, audio definitions, shell tail, glitter, launcher behavior, and existing keyboard controls unchanged.
+
+## 2026-06-28 T0010.1 Make mobile panel instant and add BGM toggle
+
+- Summary: Changed the mobile control panel so checkbox taps apply immediately and added a BGM-only toggle.
+- Files changed: `src/pyxel_goal_game/runtime/state.py`, `src/pyxel_goal_game/runtime/show_controller.py`, `src/pyxel_goal_game/runtime/audio.py`, `src/pyxel_goal_game/runtime/app.py`, `src/pyxel_goal_game/runtime/input.py`, `src/pyxel_goal_game/runtime/mobile_ui.py`, `src/pyxel_goal_game/runtime/render.py`, runtime tests, README, integration docs, visual checklist, goals logs, task queue, roadmap, and `GPT_HANDOFF.md`.
+- Behavior:
+  - Mobile panel checkbox rows now apply random, height, auto launch, auto rotate, stars, UFO, audio, BGM, and CITY settings immediately.
+  - The old `APPLY` button is removed.
+  - `CLOSE` only dismisses the panel.
+  - The new `BGM` panel toggle stops or restarts only BGM channels while leaving explosion SFX available when overall audio is on.
+  - Debug HUD reports both overall audio and BGM states.
+- Preservation: Firework generation, CITY, stars, UFO scheduling/geometry, shell tail, glitter, launcher behavior, and existing keyboard controls unchanged.

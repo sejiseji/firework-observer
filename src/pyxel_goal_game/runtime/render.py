@@ -16,7 +16,6 @@ from pyxel_goal_game.runtime.effects import (
 from pyxel_goal_game.runtime.mobile_ui import (
     MOBILE_TOGGLE_SPECS,
     Rect,
-    apply_button_rect,
     checkbox_rect,
     checkbox_row_rect,
     close_button_rect,
@@ -255,7 +254,7 @@ class RuntimeRenderer:
         pyxel.text(
             4,
             self.app.profile.height - 46,
-            f"audio {state.toggles.audio_enabled}",
+            f"audio {state.toggles.audio_enabled} bgm {state.toggles.bgm_enabled}",
             5,
         )
         pyxel.text(4, self.app.profile.height - 30, f"profile {self.app.profile.name}", 5)
@@ -300,7 +299,7 @@ class RuntimeRenderer:
         pyxel.rect(panel.x, panel.y, panel.width, panel.height, 0)
         pyxel.rectb(panel.x, panel.y, panel.width, panel.height, 13)
         self.draw_scaled_text(panel.x + 10, panel.y + 12, "MOBILE", 7)
-        pyxel.text(panel.x + 10, panel.y + 30, "tap options, then APPLY", 5)
+        pyxel.text(panel.x + 10, panel.y + 30, "tap toggles for instant change", 5)
 
         for index, spec in enumerate(MOBILE_TOGGLE_SPECS):
             row = checkbox_row_rect(panel, index)
@@ -326,7 +325,6 @@ class RuntimeRenderer:
         self.draw_mobile_button(random_salvo_button_rect(panel), "RAND SALVO", 11)
         self.draw_mobile_button(zoom_in_button_rect(panel), "ZOOM+", 5)
         self.draw_mobile_button(zoom_out_button_rect(panel), "ZOOM-", 5)
-        self.draw_mobile_button(apply_button_rect(panel), "APPLY", 10)
         self.draw_mobile_button(close_button_rect(panel), "CLOSE", 8)
 
     def draw_mobile_button(self, rect: Rect, label: str, color: int) -> None:

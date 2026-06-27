@@ -1377,3 +1377,27 @@ Record completed tasks here.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_174453.txt`.
   - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with wireframe UFO integration and no immediate crash.
 - Preservation: Firework generation, CITY, stars, audio, shell tail, glitter visuals, camera motion, controls, and robust launcher behavior unchanged.
+
+## 2026-06-27 T0008.1 Tune UFO visibility and Long Willow trail mixture
+
+- Summary: Tuned UFO visibility with modestly larger wireframe geometry and deterministic low/middle/high flyby height bands, and tuned Long Willow to mix longer-trail branches with lighter falling embers.
+- Files changed: `src/pyxel_goal_game/runtime/ufo.py`, `src/pyxel_goal_game/firework_bursts.py`, UFO/firework tests, README, integration docs, visual checklist, goals logs, roadmap, task queue, and `GPT_HANDOFF.md`.
+- Behavior:
+  - UFO radius range increased modestly while keeping the same rare scheduling cadence.
+  - UFO flybys now record a deterministic `UfoHeightBand` and choose low, middle, or high upper-space pass bands.
+  - Low UFO passes remain above CITY.
+  - Long Willow keeps the same particle count but now mixes long-trail branches, short-trail embers, and no-trail embers.
+  - Baseline Willow remains the lighter willow variant.
+- Tests:
+  - `.venv/bin/python -m json.tool goals/task_queue.json` passed.
+  - Targeted UFO/firework tests passed before full validation: 113 passed.
+  - `python3 -m compileall src tests scripts tools main.py` passed.
+  - `.venv/bin/python -m pytest` passed: 274 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `.venv/bin/python main.py --help` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 274 passed.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_180003.txt`.
+  - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with UFO height bands and Long Willow trail mixture and no immediate crash.
+- Preservation: `main.py`, launcher behavior, CITY, stars, audio, shell tail, global glitter, UFO silence/no-beam/no-trail/no-particle constraints, firework order, random/salvo scheduling, and baseline Willow behavior unchanged.

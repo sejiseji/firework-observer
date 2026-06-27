@@ -117,6 +117,8 @@ Interaction rules:
 - Reads immediately as the stronger willow / 枝垂れ variant.
 - Falls longer and more gracefully than baseline Willow.
 - Does not become a full-screen rain curtain.
+- Includes both longer-trail falling branches and trail-light / no-long-trail embers.
+- The mixed trail structure adds depth without making the burst noisy.
 - Salvos remain readable and do not hide later bursts.
 - CITY and shell tails remain readable below it.
 
@@ -484,7 +486,7 @@ Checks:
 
 ## Runtime UFO Ambient Checks
 
-T0007.0 adds a rare official-runtime UFO ambient flyby. T0007.1 renders it as a small 3D wireframe saucer instead of a flat sprite-like mark. It is not part of firework generation and should not affect gameplay or audio.
+T0007.0 adds a rare official-runtime UFO ambient flyby. T0007.1 renders it as a small 3D wireframe saucer instead of a flat sprite-like mark. T0008.1 modestly increases UFO size and varies flyby height across deterministic low, middle, and high bands. It is not part of firework generation and should not affect gameplay or audio.
 
 Command:
 
@@ -499,6 +501,8 @@ Checks:
 - UFO appears only rarely during normal observation.
 - UFO passes calmly through the upper observation space.
 - UFO is a small 3D wireframe saucer, readable but not dominant.
+- UFO height varies across low, middle, and high bands.
+- Low UFO passes remain clearly above CITY.
 - Camera rotation helps the UFO feel placed inside the observation box.
 - UFO has no beam, trail, particles, collision, sound, or gameplay interaction.
 - Fireworks, CITY, stars, BGM, explosion SFX, shell tail, and glitter remain unchanged.

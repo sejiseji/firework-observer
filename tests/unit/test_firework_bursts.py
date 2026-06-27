@@ -573,6 +573,29 @@ def test_long_willow_generation_is_deterministic_and_more_falling() -> None:
     assert abs(LONG_WILLOW_PRESET.gravity) > abs(WILLOW_PRESET.gravity)
 
 
+def test_long_willow_mixes_long_trail_branches_and_light_embers() -> None:
+    particles = generate_long_willow_burst(origin=ORIGIN, seed=123)
+    long_trails = [
+        particle
+        for particle in particles
+        if particle.has_trail
+        and particle.trail_strength == 2
+        and particle.trail_until_age >= int(particle.life * 0.85)
+    ]
+    short_trails = [
+        particle
+        for particle in particles
+        if particle.has_trail
+        and particle.trail_strength == 1
+        and 0 < particle.trail_until_age <= int(particle.life * 0.35)
+    ]
+    no_trails = [particle for particle in particles if not particle.has_trail]
+
+    assert len(long_trails) == 39
+    assert len(short_trails) == 19
+    assert len(no_trails) == 38
+
+
 def test_generate_burst_supports_long_willow_variant() -> None:
     particles = generate_burst(preset=LONG_WILLOW_PRESET, origin=ORIGIN, seed=0)
 

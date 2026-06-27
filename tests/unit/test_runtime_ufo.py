@@ -5,7 +5,9 @@ import inspect
 from pyxel_goal_game.runtime import ufo
 from pyxel_goal_game.runtime.ufo import (
     UFO_CHECK_INTERVAL_FRAMES,
+    UFO_HEIGHT_BANDS,
     UFO_INITIAL_DELAY_FRAMES,
+    UfoHeightBand,
     UfoState,
     build_ufo_flyby,
     build_ufo_wireframe,
@@ -39,14 +41,35 @@ def test_ufo_flyby_is_deterministic_and_upper_region() -> None:
 
     assert first == second
     assert first.duration_frames > 0
-    assert first.radius > 0
+    assert first.radius >= min(profile.box_width, profile.box_depth) * 0.035
+    assert first.height_band in set(UfoHeightBand)
     half_width = profile.box_width / 2
     half_height = profile.box_height / 2
     half_depth = profile.box_depth / 2
+    band_min, band_max = UFO_HEIGHT_BANDS[first.height_band.value]
+    assert half_height * band_min <= first.start.y <= half_height * band_max
     for point in (first.start, first.end, first.position_at(first.start_frame + 30)):
         assert -half_width <= point.x <= half_width
         assert point.y > half_height * 0.25
         assert -half_depth <= point.z <= half_depth
+
+
+def test_ufo_height_bands_vary_by_seed_and_stay_above_city() -> None:
+    profile = get_screen_profile("iphone16_balanced")
+    half_height = profile.box_height / 2
+    flybys = tuple(
+        build_ufo_flyby(profile=profile, start_frame=100, seed=seed)
+        for seed in range(40, 70)
+    )
+    observed_bands = {flyby.height_band for flyby in flybys}
+
+    assert len(observed_bands) >= 2
+    assert UfoHeightBand.LOW in observed_bands
+    for flyby in flybys:
+        band_min, band_max = UFO_HEIGHT_BANDS[flyby.height_band.value]
+        assert half_height * band_min <= flyby.start.y <= half_height * band_max
+        assert flyby.start.y > half_height * 0.25
+        assert flyby.end.y < half_height * 0.90
 
 
 def test_ufo_wireframe_is_deterministic_3d_geometry() -> None:

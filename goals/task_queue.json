@@ -4,6 +4,12 @@
   "current": [],
   "done": [
     {
+      "id": "T0008.1",
+      "title": "Tune UFO visibility and Long Willow trail mixture",
+      "completed_on": "2026-06-27",
+      "summary": "Modestly increased UFO wireframe size, added deterministic low/middle/high UFO height bands, and tuned Long Willow to mix longer-trail falling branches with trail-light and no-trail falling embers."
+    },
+    {
       "id": "T0007.1",
       "title": "Replace UFO sprite with 3D wireframe saucer",
       "completed_on": "2026-06-27",

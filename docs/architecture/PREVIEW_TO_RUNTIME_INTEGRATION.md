@@ -143,6 +143,8 @@ Manual review found official runtime parity OK for `iphone16_balanced`. Startup,
 
 `T0008.0` added two required firework variants without replacing existing presets. `Sphere Bloom` is the explicit canonical sphere-like bloom, while `Long Willow` is the stronger longer-falling willow / 枝垂れ variant. Runtime and preview cycle order is now Kiku, Sphere Bloom, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo.
 
+`T0008.1` tuned second-phase additions without adding new systems. UFOs are modestly larger and choose deterministic low, middle, or high flyby height bands while remaining rare, silent, beamless, trailless, particleless, and non-interactive. `Long Willow` now mixes longer-trail falling branches with trail-light or no-long-trail falling embers.
+
 Primary launch commands:
 
 ```bash

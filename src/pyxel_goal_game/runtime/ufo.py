@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, replace
+from enum import Enum
 from math import cos, sin, tau
 from random import Random
 
@@ -15,6 +16,17 @@ UFO_MIN_DURATION_FRAMES = 300
 UFO_MAX_DURATION_FRAMES = 420
 UFO_DEFAULT_SEED = 20260627
 UFO_RIM_SEGMENTS = 12
+UFO_HEIGHT_BANDS = {
+    "low": (0.28, 0.40),
+    "middle": (0.45, 0.65),
+    "high": (0.70, 0.84),
+}
+
+
+class UfoHeightBand(Enum):
+    LOW = "low"
+    MIDDLE = "middle"
+    HIGH = "high"
 
 
 @dataclass(frozen=True)
@@ -37,6 +49,7 @@ class UfoFlyby:
     end: Vec3
     radius: float
     seed: int
+    height_band: UfoHeightBand
 
     @property
     def end_frame(self) -> int:
@@ -133,12 +146,14 @@ def build_ufo_flyby(
     x_margin = half_width * 0.92
     start_x = -x_margin if left_to_right else x_margin
     end_x = x_margin if left_to_right else -x_margin
-    y_base = half_height * rng.uniform(0.28, 0.48)
+    height_band = choose_ufo_height_band(rng)
+    band_min, band_max = UFO_HEIGHT_BANDS[height_band.value]
+    y_base = half_height * rng.uniform(band_min, band_max)
     end_y = y_base + half_height * rng.uniform(-0.05, 0.05)
     z_base = half_depth * rng.uniform(-0.35, 0.35)
     end_z = z_base + half_depth * rng.uniform(-0.15, 0.15)
     duration = rng.randint(UFO_MIN_DURATION_FRAMES, UFO_MAX_DURATION_FRAMES)
-    radius = max(2.0, min(profile.box_width, profile.box_depth) * rng.uniform(0.025, 0.04))
+    radius = max(2.6, min(profile.box_width, profile.box_depth) * rng.uniform(0.035, 0.052))
     return UfoFlyby(
         start_frame=start_frame,
         duration_frames=duration,
@@ -146,7 +161,16 @@ def build_ufo_flyby(
         end=Vec3(end_x, end_y, end_z),
         radius=radius,
         seed=seed,
+        height_band=height_band,
     )
+
+
+def choose_ufo_height_band(rng: Random) -> UfoHeightBand:
+    return (
+        UfoHeightBand.LOW,
+        UfoHeightBand.MIDDLE,
+        UfoHeightBand.HIGH,
+    )[rng.randrange(3)]
 
 
 def build_ufo_wireframe(

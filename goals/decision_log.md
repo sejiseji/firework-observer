@@ -908,3 +908,17 @@ Increase UFO spawn frequency, make it larger/brighter, add sound/trails/beams, o
 
 Impact:
 Only UFO geometry/rendering and related tests/docs changed. UFO scheduling frequency, rarity, `U` toggle behavior, silence, no-beam/no-trail/no-particle constraints, firework generation, CITY, stars, audio, shell tail, glitter, and controls remain unchanged.
+
+## 2026-06-27 Tune UFO height bands and Long Willow trails
+
+Decision:
+Modestly increase UFO wireframe size, choose UFO flyby altitude from deterministic low/middle/high bands, and tune `Long Willow` particles into mixed trail groups.
+
+Reason:
+UFO readability should improve through spatial clarity rather than frequency, brightness, sound, or effects. Long Willow should gain visual richness internally by mixing longer falling branches with lighter embers rather than adding another willow preset.
+
+Alternatives:
+Make UFO more frequent, add UFO sound/trails/beams, add another willow variant, or make all Long Willow particles use long trails.
+
+Impact:
+UFO scheduling cadence, rarity, `U` toggle behavior, no-sound/no-beam/no-trail/no-particle constraints, CITY, stars, audio, shell tail, global glitter, firework order, random/salvo scheduling, and baseline Willow remain unchanged.

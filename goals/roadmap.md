@@ -73,6 +73,7 @@
 - [x] add rare UFO ambient flyby to official runtime
 - [x] render UFO as 3D wireframe saucer
 - [x] add required sphere and willow firework variants
+- [x] tune UFO height bands and Long Willow trail mixture
 - [ ] tune visual feel
 - [ ] tune performance budget
 - [ ] record user feedback

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import math
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from random import Random
 
 from pyxel_goal_game.camera3d import Vec3
@@ -262,7 +262,10 @@ def generate_burst(
     if preset.shape is FireworkShape.SPIRAL:
         return generate_spiral_shape_burst(preset=preset, origin=origin, rng=rng)
     if preset.shape is FireworkShape.WILLOW:
-        return generate_willow_shape_burst(preset=preset, origin=origin, rng=rng)
+        particles = generate_willow_shape_burst(preset=preset, origin=origin, rng=rng)
+        if preset.kind is FireworkKind.LONG_WILLOW:
+            return tune_long_willow_trails(particles)
+        return particles
     if preset.shape is FireworkShape.SENRIN_SEED:
         return generate_senrin_shape_burst(preset=preset, origin=origin, rng=rng)
 
@@ -469,6 +472,46 @@ def generate_willow_shape_burst(
             )
         )
     return tuple(particles)
+
+
+def tune_long_willow_trails(
+    particles: tuple[ParticleSpawnSpec, ...],
+) -> tuple[ParticleSpawnSpec, ...]:
+    tuned: list[ParticleSpawnSpec] = []
+    for index, particle in enumerate(particles):
+        group = index % 5
+        if group in (0, 3):
+            tuned.append(
+                replace(
+                    particle,
+                    has_trail=True,
+                    trail_until_age=int(particle.life * 0.90),
+                    trail_strength=2,
+                    trail_draw_every=1,
+                )
+            )
+            continue
+        if group == 1:
+            tuned.append(
+                replace(
+                    particle,
+                    has_trail=True,
+                    trail_until_age=int(particle.life * 0.30),
+                    trail_strength=1,
+                    trail_draw_every=2,
+                )
+            )
+            continue
+        tuned.append(
+            replace(
+                particle,
+                has_trail=False,
+                trail_until_age=0,
+                trail_strength=1,
+                trail_draw_every=2,
+            )
+        )
+    return tuple(tuned)
 
 
 def generate_senrin_shape_burst(

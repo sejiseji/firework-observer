@@ -535,3 +535,25 @@ Checks:
 - UFO has no beam, trail, particles, collision, sound, or gameplay interaction.
 - Fireworks, CITY, stars, BGM, explosion SFX, shell tail, and glitter remain unchanged.
 - `R + H + 0` remains readable if a UFO appears.
+
+## Mobile Touch Control Checks
+
+Use the official runtime or Pyxel Web build on a touch-capable device.
+
+```bash
+.venv/bin/python main.py --profile iphone16_balanced
+```
+
+Checks:
+
+- Dragging or flicking the play field rotates the camera by default.
+- The top-right `MENU` button opens and closes the mobile control panel.
+- Panel checkboxes change only the draft values until `APPLY` is pressed.
+- `APPLY` reflects random, height, auto launch, auto rotate, stars, UFO, audio, city, and rotate speed settings.
+- `CLOSE` dismisses the panel without applying draft changes.
+- `LAUNCH` starts a single shell.
+- `NEXT` cycles the selected firework kind.
+- `RAND SALVO` starts random-count salvo mode.
+- Touch controls do not break keyboard controls.
+- The menu and panel remain readable on the `iphone16_balanced` profile.
+- Fireworks, CITY, stars, UFO, audio, shell tail, and glitter remain visually unchanged.

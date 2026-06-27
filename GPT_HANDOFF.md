@@ -262,6 +262,7 @@ After the task:
 - `T0008.3.2` added three deterministic color palette variants per firework kind. Each launch chooses a palette from the seed, while delayed mini-burst garnish inherits the selected parent palette. Geometry, timing, shell tail, global glitter, CITY, stars, UFO, and audio remain unchanged.
 - `T0009.0` scrubbed local absolute paths and local machine references from tracked files, added `scripts/check_public_safety.py`, and wired it into `scripts/check_all.py`. Future docs should use repository-relative paths or neutral placeholders.
 - `T0009.1` added `README.ja.md` as a Japanese public-facing README, linked it from `README.md`, and added `docs/release/public_release_checklist.md`.
+- `T0010.0` added official-runtime mobile touch controls. Drag/flick on the play field rotates the camera, and the top-right `MENU` opens a Pyxel-rendered panel with draft checkboxes plus `APPLY`, `LAUNCH`, `NEXT`, and `RAND SALVO` actions. Keyboard controls remain available.
 - Next recommended task should be chosen from visual review: tune the two new variants if they are too similar/dense, or proceed to the next planned feature.
 - Recommended visual review command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`.
 - Main stress sequence: press `R`, `H`, then `0` to combine random burst type, height variation, and random-count persistent salvos.

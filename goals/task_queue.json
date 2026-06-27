@@ -1,10 +1,16 @@
 {
   "version": 1,
   "policy": "Keep tasks small enough for one Codex patch. Split ambiguous tasks before implementation.",
-  "current": [],
-  "done": [
-    {
-      "id": "T0009.0",
+    "current": [],
+    "done": [
+        {
+            "id": "T0010.0",
+            "title": "Add mobile touch control panel",
+            "completed_on": "2026-06-27",
+            "summary": "Added drag/flick camera rotation and a top-right mobile control panel with draft checkboxes and an APPLY action for touch-friendly runtime control."
+        },
+        {
+            "id": "T0009.0",
       "title": "Scrub local absolute paths and add privacy checks",
       "completed_on": "2026-06-27",
       "summary": "Removed tracked local absolute paths and local machine references, added a tracked-file public safety checker, and wired it into scripts/check_all.py."

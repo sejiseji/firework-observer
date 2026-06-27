@@ -34,6 +34,7 @@ def test_runtime_input_maps_first_generation_controls() -> None:
         "KEY_RIGHT",
         "KEY_UP",
         "KEY_DOWN",
+        "MOUSE_BUTTON_LEFT",
     ):
         assert key_name in source
 
@@ -43,3 +44,19 @@ def test_runtime_input_does_not_import_tools_preview() -> None:
 
     assert "tools.preview_firework_box" not in source
     assert "preview_firework_box" not in source
+
+
+def test_runtime_input_maps_mobile_panel_actions() -> None:
+    source = inspect.getsource(input)
+
+    for name in (
+        "handle_mobile_input",
+        "handle_mobile_panel_click",
+        "menu_button_rect",
+        "apply_button_rect",
+        "launch_button_rect",
+        "next_button_rect",
+        "random_salvo_button_rect",
+        "speed_button_rect",
+    ):
+        assert name in source

@@ -38,6 +38,7 @@ Runtime audio is enabled by default. Press `M` to mute or restore the quiet chor
 A rare silent 3D wireframe UFO ambient flyby is enabled by default in the official runtime. UFOs use deterministic low, middle, or high pass heights. Press `U` to toggle it during review.
 
 The current firework cycle includes Kiku, Sphere Bloom, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo.
+Kiku, Sphere Bloom, Peony, and Multi-ring can occasionally produce small delayed mini-burst garnish near the main bloom.
 
 If you do not use `uv`, install dependencies manually from `pyproject.toml`.
 

@@ -1401,3 +1401,27 @@ Record completed tasks here.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_180003.txt`.
   - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with UFO height bands and Long Willow trail mixture and no immediate crash.
 - Preservation: `main.py`, launcher behavior, CITY, stars, audio, shell tail, global glitter, UFO silence/no-beam/no-trail/no-particle constraints, firework order, random/salvo scheduling, and baseline Willow behavior unchanged.
+
+## 2026-06-27 T0008.3 Add delayed mini-burst garnish
+
+- Summary: Added optional delayed mini-burst garnish for eligible main fireworks.
+- Files changed: `src/pyxel_goal_game/runtime/effects.py`, `src/pyxel_goal_game/runtime/app.py`, `tests/unit/test_runtime_effects.py`, README, product docs, integration docs, visual checklist, goals logs, roadmap, task queue, and `GPT_HANDOFF.md`.
+- Behavior:
+  - Eligible parents are Kiku, Sphere Bloom, Peony, and Multi-ring.
+  - Excluded parents remain Willow, Long Willow, Ring, Halo, Senrin, and Spiral.
+  - Garnish uses deterministic local random by parent kind and seed.
+  - Each garnish event schedules 2 to 5 small child sphere-like bursts near the parent origin with staggered delays.
+  - No new key binding or main firework kind was added.
+- Tests:
+  - `.venv/bin/python -m json.tool goals/task_queue.json` passed.
+  - Targeted runtime effects/import tests passed before full validation: 8 passed.
+  - `python3 -m compileall src tests scripts tools main.py` passed.
+  - `.venv/bin/python -m pytest` passed: 279 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `.venv/bin/python main.py --help` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 279 passed.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_185835.txt`.
+  - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with delayed mini-burst garnish and no immediate crash.
+- Preservation: `main.py`, launcher behavior, CITY, stars, UFO, audio, shell tail, global glitter behavior, firework order, random/salvo scheduling, and existing main firework kinds unchanged.

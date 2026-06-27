@@ -74,6 +74,7 @@
 - [x] render UFO as 3D wireframe saucer
 - [x] add required sphere and willow firework variants
 - [x] tune UFO height bands and Long Willow trail mixture
+- [x] add delayed mini-burst garnish
 - [ ] tune visual feel
 - [ ] tune performance budget
 - [ ] record user feedback

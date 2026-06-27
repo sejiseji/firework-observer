@@ -26,6 +26,7 @@ from pyxel_goal_game.firework_presets import (
     WILLOW_PRESET,
     FireworkKind,
     FireworkPreset,
+    TrailPreset,
 )
 
 SHELL_MIN_FLIGHT_FRAMES = 96
@@ -35,6 +36,19 @@ FIREWORK_SHELL_TAIL_LENGTH = len(FIREWORK_SHELL_TAIL_COLORS_NEW_TO_OLD)
 ACCENT_RAY_FRAMES = 12
 GLITTER_RESIDUE_LIFE_RANGE = (14, 24)
 GLITTER_RESIDUE_MAX = 96
+MINI_BURST_GARNISH_CHANCE = 0.45
+MINI_BURST_GARNISH_COUNT_RANGE = (2, 5)
+MINI_BURST_GARNISH_DELAY_RANGE = (14, 40)
+MINI_BURST_GARNISH_OFFSET_RANGE = (3.0, 10.0)
+MINI_BURST_GARNISH_PARTICLE_RANGE = (10, 18)
+MINI_BURST_GARNISH_ELIGIBLE_KINDS = frozenset(
+    {
+        FireworkKind.KIKU,
+        FireworkKind.SPHERE_BLOOM,
+        FireworkKind.PEONY,
+        FireworkKind.MULTI_RING,
+    }
+)
 
 FIREWORK_PRESETS_BY_KIND: dict[FireworkKind, FireworkPreset] = {
     FireworkKind.KIKU: KIKU_PRESET,
@@ -247,6 +261,13 @@ class GlitterResidue:
         return self.life > 0
 
 
+@dataclass(frozen=True)
+class DelayedMiniBurst:
+    trigger_frame: int
+    origin: Vec3
+    spec: SecondaryBurstSpec
+
+
 def choose_shell_flight_frames(
     *,
     launch_position: Vec3,
@@ -354,6 +375,79 @@ def build_active_particles_for_burst(
             accent_color=accent_color if index in accent_indexes else 0,
         )
         for index, spec in enumerate(specs)
+    )
+
+
+def build_delayed_mini_burst_garnish(
+    *,
+    firework_kind: FireworkKind,
+    origin: Vec3,
+    burst_frame: int,
+    seed: int,
+) -> tuple[DelayedMiniBurst, ...]:
+    if firework_kind not in MINI_BURST_GARNISH_ELIGIBLE_KINDS:
+        return ()
+    kind_index = tuple(FIREWORK_PRESETS_BY_KIND).index(firework_kind)
+    rng = Random(seed ^ ((kind_index + 1) * 0x45D9F3B))
+    if rng.random() >= MINI_BURST_GARNISH_CHANCE:
+        return ()
+
+    count = rng.randint(*MINI_BURST_GARNISH_COUNT_RANGE)
+    delay = rng.randint(*MINI_BURST_GARNISH_DELAY_RANGE)
+    bursts: list[DelayedMiniBurst] = []
+    for index in range(count):
+        offset_distance = rng.uniform(*MINI_BURST_GARNISH_OFFSET_RANGE)
+        theta = rng.uniform(0.0, math.tau)
+        z_scale = rng.uniform(0.55, 1.0)
+        offset = Vec3(
+            x=math.cos(theta) * offset_distance,
+            y=rng.uniform(-2.5, 5.0),
+            z=math.sin(theta) * offset_distance * z_scale,
+        )
+        child_origin = Vec3(
+            origin.x + offset.x,
+            origin.y + offset.y,
+            origin.z + offset.z,
+        )
+        bursts.append(
+            DelayedMiniBurst(
+                trigger_frame=burst_frame + delay,
+                origin=child_origin,
+                spec=SecondaryBurstSpec(
+                    delay_frames=0,
+                    particle_count=rng.randint(*MINI_BURST_GARNISH_PARTICLE_RANGE),
+                    seed=rng.randrange(1_000_000_000) + index,
+                    speed_range=(0.20, 0.44),
+                    life_range=(22, 38),
+                    palette=BURST_ACCENT_STYLES[firework_kind],
+                    fade_mid=5,
+                    fade_dark=1,
+                    tip_color=7,
+                    drag=0.978,
+                    gravity=-0.018,
+                    trail=TrailPreset(
+                        rate=0.18,
+                        speed_threshold=0.28,
+                        early_ratio=0.26,
+                        strong_speed=0.40,
+                        draw_every=2,
+                    ),
+                ),
+            )
+        )
+        delay += rng.randint(5, 10)
+    return tuple(bursts)
+
+
+def build_delayed_mini_burst_particles(
+    mini_burst: DelayedMiniBurst,
+) -> tuple[ActiveParticle, ...]:
+    return tuple(
+        ActiveParticle.from_spawn(spec)
+        for spec in generate_secondary_burst(
+            origin=mini_burst.origin,
+            spec=mini_burst.spec,
+        )
     )
 
 

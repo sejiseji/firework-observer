@@ -22,8 +22,11 @@ from pyxel_goal_game.runtime.effects import (
     GLITTER_RESIDUE_MAX,
     ActiveParticle,
     ActiveShell,
+    DelayedMiniBurst,
     GlitterResidue,
     build_active_particles_for_burst,
+    build_delayed_mini_burst_garnish,
+    build_delayed_mini_burst_particles,
     build_glitter_residue,
     build_secondary_particles,
     create_active_shell,
@@ -95,6 +98,7 @@ class RuntimeApp:
         self.particles: list[ActiveParticle] = []
         self.glitter: list[GlitterResidue] = []
         self.shells: list[ActiveShell] = []
+        self.mini_bursts: list[DelayedMiniBurst] = []
         self.preview_rng = Random(RUNTIME_RANDOM_SEED)
         self.last_launched_kind = DEFAULT_FIREWORK_KIND
         self.next_persistent_salvo_frame = 0
@@ -146,6 +150,7 @@ class RuntimeApp:
         self.schedule_persistent_salvo_if_needed()
         self.update_ufo()
         self.update_shells()
+        self.launch_due_mini_bursts()
         self.camera.step_toward_target()
         for particle in self.particles:
             particle.step()
@@ -352,8 +357,27 @@ class RuntimeApp:
                 seed=seed,
             )
         )
+        self.mini_bursts.extend(
+            build_delayed_mini_burst_garnish(
+                firework_kind=firework_kind,
+                origin=origin,
+                burst_frame=pyxel.frame_count,
+                seed=seed,
+            )
+        )
         if len(self.particles) > self.profile.max_particles:
             self.particles = self.particles[-self.profile.max_particles :]
+
+    def launch_due_mini_bursts(self) -> None:
+        pending: list[DelayedMiniBurst] = []
+        new_particles: list[ActiveParticle] = []
+        for mini_burst in self.mini_bursts:
+            if pyxel.frame_count >= mini_burst.trigger_frame:
+                new_particles.extend(build_delayed_mini_burst_particles(mini_burst))
+            else:
+                pending.append(mini_burst)
+        self.mini_bursts = pending
+        self.particles.extend(new_particles)
 
     def launch_secondary_bursts(self) -> None:
         new_particles: list[ActiveParticle] = []

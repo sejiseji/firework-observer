@@ -922,3 +922,17 @@ Make UFO more frequent, add UFO sound/trails/beams, add another willow variant, 
 
 Impact:
 UFO scheduling cadence, rarity, `U` toggle behavior, no-sound/no-beam/no-trail/no-particle constraints, CITY, stars, audio, shell tail, global glitter, firework order, random/salvo scheduling, and baseline Willow remain unchanged.
+
+## 2026-06-27 Add delayed mini-burst garnish
+
+Decision:
+Add delayed mini-burst garnish as an optional secondary show effect for Kiku, Sphere Bloom, Peony, and Multi-ring. The effect schedules a small deterministic set of nearby child blooms after staggered delays.
+
+Reason:
+The runtime already supports secondary particle spawning for Senrin, and a small delayed garnish adds show-like after-pop texture without adding a new main firework kind. Limiting the first pass to rounder / denser eligible parents avoids cluttering Willow, Long Willow, Ring, Halo, Senrin, and Spiral.
+
+Alternatives:
+Create a new mini-burst firework kind, attach garnish to every preset, make garnish always occur, add child-burst SFX/glitter, or postpone until after Smile.
+
+Impact:
+Runtime effects and app scheduling changed. Firework cycle/order, random/salvo scheduling, CITY, stars, UFO, audio, shell tail, global glitter behavior, launcher behavior, and existing main firework kinds remain unchanged.

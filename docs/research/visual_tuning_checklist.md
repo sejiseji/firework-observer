@@ -78,6 +78,7 @@ Interaction rules:
 - Density is full but not opaque.
 - Trails show motion without turning every particle into a line.
 - The shared white/yellow/brown shell tail and a few center accent rays make the opening readable.
+- Occasional delayed mini-burst garnish stays near the main burst and remains sparse.
 - Works as the reference preset for comparison with Peony and Senrin.
 
 ### Sphere Bloom
@@ -86,6 +87,7 @@ Interaction rules:
 - Feels smoother and more uniform than Kiku.
 - Stays distinct from Peony by being calmer and less pink/red.
 - Sparse trails do not make it noisy.
+- Occasional delayed mini-burst garnish reads as a small after-pop, not a second full explosion.
 - Salvos do not make it too dense.
 
 ### Ring
@@ -127,6 +129,7 @@ Interaction rules:
 - Looks shorter and brighter than Kiku.
 - Trails are restrained and points remain the main visual.
 - Brief accent rays make the first bloom feel bright.
+- Occasional delayed mini-burst garnish remains small enough that Peony still reads short and bright.
 - It is not too similar to Kiku.
 - It does not read like Willow or Ring.
 
@@ -136,6 +139,7 @@ Interaction rules:
 - It is clearly different from a single Ring.
 - A 5-shot salvo does not fully obscure the box.
 - Accent rays do not hide layer separation.
+- Occasional delayed mini-burst garnish does not hide layer separation.
 - Random mode density remains acceptable when Multi-ring appears with other presets.
 
 ### Senrin

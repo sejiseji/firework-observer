@@ -145,6 +145,8 @@ Manual review found official runtime parity OK for `iphone16_balanced`. Startup,
 
 `T0008.1` tuned second-phase additions without adding new systems. UFOs are modestly larger and choose deterministic low, middle, or high flyby height bands while remaining rare, silent, beamless, trailless, particleless, and non-interactive. `Long Willow` now mixes longer-trail falling branches with trail-light or no-long-trail falling embers.
 
+`T0008.3` added delayed mini-burst garnish for eligible fireworks. Kiku, Sphere Bloom, Peony, and Multi-ring can spawn a small deterministic set of nearby child blooms after staggered delays. The garnish is not a new main firework kind, has no key binding, and leaves CITY, stars, UFO, audio, shell tail, and global glitter behavior unchanged.
+
 Primary launch commands:
 
 ```bash

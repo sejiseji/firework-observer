@@ -45,6 +45,8 @@ The official runtime includes these first-class firework variants:
 
 `Sphere Bloom` is the explicit canonical sphere-like bloom. `Long Willow` is the explicit longer falling willow / 枝垂れ variant. Existing Kiku, Peony, and Willow remain distinct and available.
 
+Some eligible main fireworks can also produce delayed mini-burst garnish: small deterministic child blooms near the original burst after short staggered delays. This is a secondary show effect, not a separate main firework kind.
+
 ## Future observation space expansion
 
 Screen profile and scenery work should be designed together because the observation box scale, projection camera, UI placement, particle budget, and scenery proportions are linked.

@@ -1565,3 +1565,13 @@ Record completed tasks here.
   - Wheel zoom uses the same `MIN_ZOOM` / `MAX_ZOOM` bounds as `A` / `S` and touch zoom buttons.
   - No new visible UI or key binding was added.
 - Preservation: Firework generation, CITY, stars, UFO, audio, mobile panel behavior, shell tail, glitter, launcher behavior, and existing keyboard controls unchanged.
+
+## 2026-06-28 T0010.3 Compact mobile panel height
+
+- Summary: Shortened the mobile control panel so more of the scene remains visible behind it.
+- Files changed: `src/pyxel_goal_game/runtime/mobile_ui.py`, mobile UI tests, README, integration docs, visual checklist, goals logs, roadmap, task queue, and `GPT_HANDOFF.md`.
+- Behavior:
+  - The mobile panel uses a shorter maximum height.
+  - `ZOOM+`, `ZOOM-`, and `CLOSE` are equal-width buttons on one bottom row.
+  - Touch zoom can be reviewed with more of the scene still visible behind the panel.
+- Preservation: Firework generation, CITY, stars, UFO, audio, input semantics, shell tail, glitter, launcher behavior, and existing controls unchanged.

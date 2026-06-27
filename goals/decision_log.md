@@ -1054,3 +1054,17 @@ Keep zoom keyboard-only on PC, add separate zoom buttons for PC, or repurpose sc
 
 Impact:
 Runtime input handling, tests, README, integration docs, visual checklist, goals, and handoff records changed. Firework generation, CITY, stars, UFO, audio, mobile panel behavior, launcher behavior, and existing keyboard controls remain unchanged.
+
+## 2026-06-28 Compact mobile panel height
+
+Decision:
+Shorten the mobile control panel and place `ZOOM+`, `ZOOM-`, and `CLOSE` as equal-width buttons on one bottom row.
+
+Reason:
+The panel was tall enough to cover almost the entire viewport, making it hard to judge zoom changes without closing the panel. Keeping some of the scene visible behind the panel makes touch zoom review more direct.
+
+Alternatives:
+Keep the full-height panel, add panel transparency, or move zoom controls outside the panel.
+
+Impact:
+Runtime mobile UI geometry, tests, README, integration docs, visual checklist, goals, and handoff records changed. Firework generation, CITY, stars, UFO, audio, input semantics, launcher behavior, and existing controls remain unchanged.

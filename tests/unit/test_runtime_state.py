@@ -40,6 +40,7 @@ def test_default_toggles_are_explicit() -> None:
     assert toggles.interior_stars_visible is True
     assert toggles.auto_rotate is False
     assert toggles.audio_enabled is True
+    assert toggles.bgm_enabled is True
     assert toggles.ufo_enabled is True
 
 

@@ -36,6 +36,7 @@ def test_mobile_panel_draft_captures_runtime_state() -> None:
     assert draft.interior_stars_visible is state.toggles.interior_stars_visible
     assert draft.ufo_enabled is state.toggles.ufo_enabled
     assert draft.audio_enabled is state.toggles.audio_enabled
+    assert draft.bgm_enabled is state.toggles.bgm_enabled
     assert draft.scenery_visible is state.toggles.scenery_visible
     assert draft.auto_rotate_speed_mode is AutoRotateSpeedMode.NORMAL
 
@@ -46,6 +47,8 @@ def test_mobile_panel_draft_toggles_known_fields_only() -> None:
     for spec in MOBILE_TOGGLE_SPECS:
         updated = draft.toggle(spec.key)
         assert getattr(updated, spec.key) is not getattr(draft, spec.key)
+
+    assert "bgm_enabled" in {spec.key for spec in MOBILE_TOGGLE_SPECS}
 
     with pytest.raises(ValueError, match="unknown mobile toggle"):
         draft.toggle("not_a_real_toggle")

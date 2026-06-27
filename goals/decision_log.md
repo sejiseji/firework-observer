@@ -1026,3 +1026,17 @@ Only runtime input/render/app UI state, pure mobile UI helpers, tests, and docs 
 
 Follow-up:
 Mobile panel text now uses scaled rendering for readability, and the panel includes `ZOOM+` / `ZOOM-` buttons so touch users can zoom without a keyboard. PC zoom remains available through `A` / `S`.
+
+## 2026-06-28 Make mobile panel instant and add BGM toggle
+
+Decision:
+Change mobile panel checkboxes from staged draft controls to immediate toggles. Remove the `APPLY` step from the touch workflow, keep `CLOSE` as a simple dismiss action, and add a panel-only BGM toggle separate from the overall audio toggle.
+
+Reason:
+On a touch device, tapping a checkbox and seeing the game state change immediately behind the menu is more direct than staging changes and applying them later. BGM also needs a lighter control path: users may want quiet fireworks with explosion SFX intact.
+
+Alternatives:
+Keep `APPLY`, add a keyboard BGM shortcut, or make `M` cycle through audio states.
+
+Impact:
+Runtime mobile input, state/controller/audio behavior, panel rendering, tests, README, integration docs, visual checklist, goals, and handoff records changed. Firework generation, CITY, stars, UFO, shell tail, glitter, launcher behavior, and existing keyboard controls remain unchanged.

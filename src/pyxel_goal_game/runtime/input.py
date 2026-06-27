@@ -5,7 +5,6 @@ import pyxel
 from pyxel_goal_game.runtime import show_controller
 from pyxel_goal_game.runtime.mobile_ui import (
     MOBILE_TOGGLE_SPECS,
-    apply_button_rect,
     checkbox_row_rect,
     close_button_rect,
     launch_button_rect,
@@ -132,11 +131,11 @@ def handle_mobile_panel_click(app: object, mouse_x: int, mouse_y: int) -> bool:
 
     for index, spec in enumerate(MOBILE_TOGGLE_SPECS):
         if checkbox_row_rect(panel, index).contains(mouse_x, mouse_y):
-            app.mobile_panel_draft = app.mobile_panel_draft.toggle(spec.key)
+            app.apply_mobile_toggle(spec.key)
             return True
 
     if speed_button_rect(panel).contains(mouse_x, mouse_y):
-        app.mobile_panel_draft = app.mobile_panel_draft.cycle_auto_rotate_speed()
+        app.cycle_mobile_auto_rotate_speed()
         return True
     if launch_button_rect(panel).contains(mouse_x, mouse_y):
         app.launch()
@@ -154,10 +153,6 @@ def handle_mobile_panel_click(app: object, mouse_x: int, mouse_y: int) -> bool:
         return True
     if zoom_out_button_rect(panel).contains(mouse_x, mouse_y):
         app.camera.target_zoom = max(MIN_ZOOM, app.camera.target_zoom - 0.15)
-        return True
-    if apply_button_rect(panel).contains(mouse_x, mouse_y):
-        app.apply_mobile_panel_draft()
-        app.mobile_panel_open = False
         return True
     if close_button_rect(panel).contains(mouse_x, mouse_y):
         app.mobile_panel_open = False

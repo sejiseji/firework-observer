@@ -38,11 +38,11 @@ pyxel run main.py
 
 Before publishing, run `python3 scripts/check_public_safety.py`. Documentation and source files should use repository-relative paths such as `docs/...`, `src/...`, and `scripts/...`, not local machine paths.
 
-Runtime audio is enabled by default. Press `M` to mute or restore the quiet chord-harmony music-box BGM and restrained firework explosion SFX.
+Runtime audio is enabled by default. Press `M` to mute or restore all audio, including the quiet chord-harmony music-box BGM and restrained firework explosion SFX. The mobile panel can also turn only the BGM off while leaving explosion SFX enabled.
 
 A rare silent 3D wireframe UFO ambient flyby is enabled by default in the official runtime. UFOs use deterministic low, middle, or high pass heights. Press `U` to toggle it during review.
 
-On touch devices, drag/flick the play field to rotate the camera. Tap the top-right `MENU` button to open the mobile control panel, adjust checkboxes/options, then tap `APPLY` to reflect them. The panel uses larger text for readability and includes quick launch, next-firework, random-salvo, and `ZOOM+` / `ZOOM-` buttons.
+On touch devices, drag/flick the play field to rotate the camera. Tap the top-right `MENU` button to open the mobile control panel; checkbox changes apply immediately behind the panel. The panel uses larger text for readability and includes BGM-only toggle, quick launch, next-firework, random-salvo, and `ZOOM+` / `ZOOM-` buttons.
 
 The current firework cycle includes Kiku, Sphere Bloom, Smile, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo.
 Each firework kind has three deterministic per-burst color palette variants, selected from the launch seed.

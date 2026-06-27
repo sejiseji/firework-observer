@@ -71,6 +71,10 @@ def toggle_audio(state: RuntimeShowState) -> RuntimeShowState:
     return _replace_toggle(state, audio_enabled=not state.toggles.audio_enabled)
 
 
+def toggle_bgm(state: RuntimeShowState) -> RuntimeShowState:
+    return _replace_toggle(state, bgm_enabled=not state.toggles.bgm_enabled)
+
+
 def toggle_ufo(state: RuntimeShowState) -> RuntimeShowState:
     return _replace_toggle(state, ufo_enabled=not state.toggles.ufo_enabled)
 

@@ -4,10 +4,16 @@
     "current": [],
     "done": [
         {
+            "id": "T0010.1",
+            "title": "Make mobile panel instant and add BGM toggle",
+            "completed_on": "2026-06-28",
+            "summary": "Changed mobile panel checkbox rows to apply immediately, removed the APPLY step, and added a BGM-only toggle that leaves explosion SFX available when overall audio is on."
+        },
+        {
             "id": "T0010.0",
             "title": "Add mobile touch control panel",
             "completed_on": "2026-06-27",
-            "summary": "Added drag/flick camera rotation and a top-right mobile control panel with larger text, draft checkboxes, touch zoom buttons, and an APPLY action for touch-friendly runtime control."
+            "summary": "Added drag/flick camera rotation and a top-right mobile control panel with larger text, checkbox controls, and touch zoom buttons for touch-friendly runtime control."
         },
         {
             "id": "T0009.0",

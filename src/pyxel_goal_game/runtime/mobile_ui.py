@@ -39,6 +39,7 @@ MOBILE_TOGGLE_SPECS = (
     MobileToggleSpec("interior_stars_visible", "stars"),
     MobileToggleSpec("ufo_enabled", "ufo"),
     MobileToggleSpec("audio_enabled", "audio"),
+    MobileToggleSpec("bgm_enabled", "bgm"),
     MobileToggleSpec("scenery_visible", "city"),
 )
 
@@ -52,6 +53,7 @@ class MobilePanelDraft:
     interior_stars_visible: bool
     ufo_enabled: bool
     audio_enabled: bool
+    bgm_enabled: bool
     scenery_visible: bool
     auto_rotate_speed_mode: AutoRotateSpeedMode
 
@@ -65,6 +67,7 @@ class MobilePanelDraft:
             interior_stars_visible=state.toggles.interior_stars_visible,
             ufo_enabled=state.toggles.ufo_enabled,
             audio_enabled=state.toggles.audio_enabled,
+            bgm_enabled=state.toggles.bgm_enabled,
             scenery_visible=state.toggles.scenery_visible,
             auto_rotate_speed_mode=state.auto_rotate_speed_mode,
         )
@@ -124,31 +127,27 @@ def checkbox_row_rect(panel: Rect, index: int) -> Rect:
 
 
 def speed_button_rect(panel: Rect) -> Rect:
-    return Rect(panel.x + 10, panel.y + 242, panel.width - 20, 24)
+    return Rect(panel.x + 10, panel.y + 266, panel.width - 20, 24)
 
 
 def launch_button_rect(panel: Rect) -> Rect:
-    return Rect(panel.x + 10, panel.y + 276, 70, 26)
+    return Rect(panel.x + 10, panel.y + 300, 70, 26)
 
 
 def next_button_rect(panel: Rect) -> Rect:
-    return Rect(panel.x + 88, panel.y + 276, 56, 26)
+    return Rect(panel.x + 88, panel.y + 300, 56, 26)
 
 
 def random_salvo_button_rect(panel: Rect) -> Rect:
-    return Rect(panel.x + 10, panel.y + 310, panel.width - 20, 26)
+    return Rect(panel.x + 10, panel.y + 334, panel.width - 20, 26)
 
 
 def zoom_in_button_rect(panel: Rect) -> Rect:
-    return Rect(panel.x + 10, panel.y + 344, 78, 26)
+    return Rect(panel.x + 10, panel.y + 368, 78, 26)
 
 
 def zoom_out_button_rect(panel: Rect) -> Rect:
-    return Rect(panel.x + 96, panel.y + 344, 78, 26)
-
-
-def apply_button_rect(panel: Rect) -> Rect:
-    return Rect(panel.x + 10, panel.y + panel.height - 34, 70, 26)
+    return Rect(panel.x + 96, panel.y + 368, 78, 26)
 
 
 def close_button_rect(panel: Rect) -> Rect:

@@ -6,6 +6,7 @@ import pytest
 
 from pyxel_goal_game.runtime import audio
 from pyxel_goal_game.runtime.audio import (
+    BGM_CHANNELS,
     BGM_HARMONY_NOTES,
     BGM_HARMONY_SOUND_ID,
     BGM_HARMONY_VOLUME,
@@ -47,7 +48,7 @@ class FakePyxel:
         self.musics = [FakeMusic() for _ in range(4)]
         self.playm_calls: list[tuple[object, ...]] = []
         self.play_calls: list[tuple[object, ...]] = []
-        self.stop_calls = 0
+        self.stop_calls: list[object | None] = []
 
     def playm(self, *args: object, **kwargs: object) -> None:
         self.playm_calls.append((*args, kwargs))
@@ -55,8 +56,8 @@ class FakePyxel:
     def play(self, *args: object, **kwargs: object) -> None:
         self.play_calls.append((*args, kwargs))
 
-    def stop(self) -> None:
-        self.stop_calls += 1
+    def stop(self, channel: object | None = None) -> None:
+        self.stop_calls.append(channel)
 
 
 def test_audio_constants_reserve_bgm_and_sfx_channels() -> None:
@@ -125,9 +126,30 @@ def test_runtime_audio_mute_stops_audio_and_blocks_sfx() -> None:
     runtime_audio.set_enabled(False)
 
     assert runtime_audio.enabled is False
-    assert pyxel.stop_calls == 1
+    assert pyxel.stop_calls == [None]
     assert runtime_audio.play_explosion(20) is False
     assert pyxel.play_calls == []
+
+
+def test_runtime_audio_bgm_toggle_stops_bgm_without_blocking_sfx() -> None:
+    pyxel = FakePyxel()
+    runtime_audio = RuntimeAudio(pyxel=pyxel)
+
+    runtime_audio.set_bgm_enabled(False)
+
+    assert runtime_audio.bgm_enabled is False
+    assert pyxel.stop_calls == list(BGM_CHANNELS)
+    assert runtime_audio.play_explosion(20) is True
+    assert pyxel.play_calls == [(SFX_CHANNEL, SFX_EXPLOSION_SOUND_ID, {})]
+
+
+def test_runtime_audio_does_not_start_bgm_when_bgm_disabled() -> None:
+    pyxel = FakePyxel()
+    runtime_audio = RuntimeAudio(pyxel=pyxel, bgm_enabled=False)
+
+    runtime_audio.start_bgm()
+
+    assert pyxel.playm_calls == []
 
 
 def test_runtime_audio_explosion_uses_cooldown() -> None:

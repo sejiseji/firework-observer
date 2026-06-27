@@ -44,6 +44,12 @@
   ],
   "done": [
     {
+      "id": "T0006.1",
+      "title": "Add BGM harmony and extend loop length",
+      "completed_on": "2026-06-27",
+      "summary": "Extended runtime BGM into a longer three-channel music-box arrangement while keeping channel 3 reserved for explosion SFX."
+    },
+    {
       "id": "T0006.0",
       "title": "Add runtime audio scaffold with music-box BGM and explosion SFX",
       "completed_on": "2026-06-27",

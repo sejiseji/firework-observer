@@ -133,6 +133,8 @@ Manual review found official runtime parity OK for `iphone16_balanced`. Startup,
 
 `T0006.0` added the first official runtime audio layer. Audio is runtime-only for now: high-register, quiet music-box BGM loops on the BGM music channels, low restrained explosion SFX plays on burst events with a short cooldown, and `M` toggles audio on/off. The preview remains a visual development harness.
 
+`T0006.1` extended the BGM. Runtime audio now uses channels 0-2 for melody, arpeggio accompaniment, and sparse shimmer/counter notes. Channel 3 remains reserved for explosion SFX.
+
 Primary launch commands:
 
 ```bash

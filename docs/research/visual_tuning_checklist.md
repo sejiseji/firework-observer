@@ -453,8 +453,10 @@ Checks:
 
 - BGM starts on launch.
 - BGM reads as quiet, high-register, fragile music-box ambience.
+- BGM has subtle accompaniment/harmony and does not feel like a short single-note loop.
 - `M` toggles audio off and back on.
 - `Z` plays a low, restrained explosion SFX at burst timing, not at shell launch.
 - `1`-`5` salvos and `R + H + 0` do not stack explosion sounds into noise.
+- Explosion SFX remains separated on channel 3 and comes through the BGM.
 - Visual behavior remains unchanged.
 - No UFO appears.

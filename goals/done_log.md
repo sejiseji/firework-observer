@@ -1231,3 +1231,26 @@ Record completed tasks here.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_131819.txt`.
   - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with audio initialization and no immediate crash.
 - Preservation: Visual behavior, firework generation, preset constants, CITY geometry, stars, shell tail, glitter visuals, camera motion, show scheduling, preview harness, robust main launcher, and UFO exclusion unchanged.
+
+## 2026-06-27 T0006.1 Add BGM harmony and extend loop length
+
+- Summary: Extended runtime BGM from a short, simple line into a longer multi-channel music-box arrangement with melody, arpeggio accompaniment, and sparse shimmer accents.
+- Files changed: `src/pyxel_goal_game/runtime/audio.py`, `tests/unit/test_runtime_audio.py`, README, integration docs, visual checklist, goals logs, roadmap, task queue, and `GPT_HANDOFF.md`.
+- Behavior:
+  - BGM now uses three music channels for melody, high-register arpeggio, and sparse shimmer accents.
+  - Channel 3 remains reserved for explosion SFX.
+  - BGM loop phrase is longer and less repetitive.
+  - Explosion SFX, cooldown, and `M` toggle behavior are preserved.
+- Tests:
+  - `.venv/bin/python -m json.tool goals/task_queue.json` passed.
+  - `python3 -m compileall src tests scripts tools main.py` passed.
+  - `.venv/bin/python -m pytest` passed: 255 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `.venv/bin/python main.py --help` passed.
+  - Direct Pyxel audio setup smoke passed with `.venv/bin/python` and `RuntimeAudio`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 255 passed.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_161125.txt`.
+  - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with extended BGM initialization and no immediate crash.
+- Preservation: Visual behavior, firework generation, preset constants, CITY geometry, stars, shell tail, glitter visuals, camera motion, show scheduling, preview harness, robust main launcher, and UFO exclusion unchanged.

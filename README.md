@@ -33,7 +33,7 @@ pyxel run main.py
 
 `main.py` is the default public entrypoint. `scripts/run_runtime_app.py` remains an explicit runtime launcher for development, and `tools/preview_firework_box.py` remains the manual preview harness.
 
-Runtime audio is enabled by default. Press `M` to mute or restore the music-box BGM and restrained firework explosion SFX.
+Runtime audio is enabled by default. Press `M` to mute or restore the multi-channel music-box BGM and restrained firework explosion SFX.
 
 If you do not use `uv`, install dependencies manually from `pyproject.toml`.
 

@@ -824,3 +824,17 @@ Delay audio until after UFO work, add only explosion SFX, or implement audio ins
 
 Impact:
 Runtime audio is isolated in `src/pyxel_goal_game/runtime/audio.py`. BGM starts during runtime initialization, burst SFX triggers on actual burst events, and `M` toggles audio. Visual behavior, firework generation, CITY, stars, shell tail, glitter visuals, camera motion, preview harness, and UFO exclusion remain unchanged.
+
+## 2026-06-27 Extend BGM with harmony
+
+Decision:
+Extend runtime BGM into a longer three-channel music-box arrangement: channel 0 melody, channel 1 high-register arpeggio accompaniment, channel 2 sparse shimmer accents, with channel 3 still reserved for explosion SFX.
+
+Reason:
+The initial BGM could read as a short single-note loop. Adding subtle accompaniment and a longer phrase improves atmosphere without changing visuals or crowding the low explosion sound.
+
+Alternatives:
+Use block chords, add low bass notes, consume channel 3 for BGM, or postpone audio tuning until after UFO work.
+
+Impact:
+Only runtime audio definitions and audio tests changed. The `M` toggle, explosion cooldown, SFX channel, runtime visuals, firework generation, CITY, stars, shell tail, glitter visuals, and main launcher remain unchanged.

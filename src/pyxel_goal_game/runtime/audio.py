@@ -5,7 +5,9 @@ from typing import Any
 
 BGM_MUSIC_ID = 0
 BGM_MELODY_SOUND_ID = 16
-BGM_HARMONY_SOUND_ID = 17
+BGM_ARPEGGIO_SOUND_ID = 17
+BGM_SHIMMER_SOUND_ID = 18
+BGM_SOUND_IDS = (BGM_MELODY_SOUND_ID, BGM_ARPEGGIO_SOUND_ID, BGM_SHIMMER_SOUND_ID)
 SFX_EXPLOSION_SOUND_ID = 0
 SFX_CHANNEL = 3
 EXPLOSION_SFX_COOLDOWN_FRAMES = 8
@@ -13,18 +15,44 @@ EXPLOSION_SFX_COOLDOWN_FRAMES = 8
 BGM_MELODY_NOTES = (
     "c4 c4 g4 g4 a4 a4 g4 r "
     "f4 f4 e4 e4 d4 d4 c4 r "
+    "c4 r g4 g4 a4 r g4 r "
+    "f4 r e4 e4 d4 r c4 r "
+    "g4 a4 b4 r a4 g4 e4 r "
+    "f4 g4 a4 r g4 e4 d4 r "
     "g4 g4 f4 f4 e4 e4 d4 r "
     "g4 g4 f4 f4 e4 e4 d4 r "
+    "a4 r g4 r f4 e4 d4 r "
     "c4 c4 g4 g4 a4 a4 g4 r "
-    "f4 f4 e4 e4 d4 d4 c4 r"
+    "f4 f4 e4 e4 d4 d4 c4 r "
+    "r r g4 r e4 r c4 r"
 )
-BGM_HARMONY_NOTES = (
-    "c3 r r r e3 r r r "
-    "f3 r r r c3 r r r "
-    "e3 r r r d3 r r r "
-    "e3 r r r d3 r r r "
-    "c3 r r r e3 r r r "
-    "f3 r r r c3 r r r"
+BGM_ARPEGGIO_NOTES = (
+    "c4 e4 g4 e4 c4 e4 g4 r "
+    "f4 a4 b4 a4 e4 g4 b4 r "
+    "c4 e4 g4 r e4 g4 b4 r "
+    "f4 a4 b4 r d4 f4 a4 r "
+    "e4 g4 b4 g4 f4 a4 b4 r "
+    "d4 f4 a4 f4 e4 g4 b4 r "
+    "g4 b4 a4 b4 f4 a4 b4 r "
+    "g4 b4 a4 b4 e4 g4 b4 r "
+    "a4 b4 g4 r g4 b4 a4 r "
+    "c4 e4 g4 e4 c4 e4 g4 r "
+    "f4 a4 b4 a4 e4 g4 b4 r "
+    "b4 r g4 r e4 r c4 r"
+)
+BGM_SHIMMER_NOTES = (
+    "r r g4 r r r b4 r "
+    "r r a4 r r r b4 r "
+    "r r g4 r r r b4 r "
+    "r r a4 r r r b4 r "
+    "r r b4 r r r a4 r "
+    "r r a4 r r r b4 r "
+    "r r g4 r r r a4 r "
+    "r r g4 r r r b4 r "
+    "r r b4 r r r a4 r "
+    "r r g4 r r r b4 r "
+    "r r a4 r r r b4 r "
+    "r r r r g4 r r r"
 )
 EXPLOSION_SFX_NOTES = "c1 c1 c0 c0 r"
 
@@ -43,10 +71,17 @@ class RuntimeAudio:
             "n",
             28,
         )
-        self.pyxel.sounds[BGM_HARMONY_SOUND_ID].set(
-            BGM_HARMONY_NOTES,
+        self.pyxel.sounds[BGM_ARPEGGIO_SOUND_ID].set(
+            BGM_ARPEGGIO_NOTES,
             "p",
-            "101010101010101010101010101010101010101010101010",
+            "111011101110111011101110111011101110111011101110111011101110111011101110111011101110111011101110",
+            "n",
+            18,
+        )
+        self.pyxel.sounds[BGM_SHIMMER_SOUND_ID].set(
+            BGM_SHIMMER_NOTES,
+            "p",
+            "000100010001000100010001000100010001000100010001000100010001000100010001000100010001000100010001",
             "n",
             28,
         )
@@ -59,7 +94,8 @@ class RuntimeAudio:
         )
         self.pyxel.musics[BGM_MUSIC_ID].set(
             [BGM_MELODY_SOUND_ID],
-            [BGM_HARMONY_SOUND_ID],
+            [BGM_ARPEGGIO_SOUND_ID],
+            [BGM_SHIMMER_SOUND_ID],
         )
 
     def start_bgm(self) -> None:

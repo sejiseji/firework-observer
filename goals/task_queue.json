@@ -3,170 +3,52 @@
   "policy": "Keep tasks small enough for one Codex patch. Split ambiguous tasks before implementation.",
   "current": [
     {
-      "id": "T0004",
-      "title": "Recreate protected prototype viewpoint controls in package",
-      "goal": "Add package-side viewpoint/camera adjustment matching the protected main.py prototype behavior.",
+      "id": "T0007.0",
+      "title": "Add rare UFO ambient flyby to official runtime",
+      "goal": "Add a rare, subtle UFO flyby as an ambient official-runtime event without changing firework behavior.",
       "status": "todo",
-      "depends_on": [
-        "T0002.9"
-      ],
       "constraints": [
-        "Use T0002.5 migration notes as the source of truth",
-        "Do not invent unrelated camera behavior",
-        "Preserve the 256x144 transparent box viewing feel",
-        "Keep Pyxel input handling at the app/input boundary"
+        "Do not change firework generation",
+        "Do not change CITY, stars, shell tail, glitter, or audio behavior",
+        "Do not add gameplay interactions, beams, collisions, or scoring",
+        "Keep the UFO rare, quiet, and secondary to fireworks",
+        "Keep main.py thin and do not import from tools"
       ],
       "acceptance": [
-        "Relevant docs and T0002.5 migration notes were read",
-        "Package-side controls match the protected prototype intent",
-        "No unrelated gameplay or preset work was added",
-        "Tests or checklist were updated when relevant",
-        "Assumptions and risks were reported"
+        "Rare UFO ambient event exists in the official runtime",
+        "At most one UFO is active at a time",
+        "Fireworks, CITY, stars, and audio continue normally",
+        "Tests and smoke pass",
+        "Validation results are recorded"
       ]
     },
     {
-      "id": "T0005",
-      "title": "Add trail tuning checklist",
-      "goal": "Add trail tuning checklist",
+      "id": "T0008.0",
+      "title": "Add required sphere and willow firework variants",
+      "goal": "Add clear sphere and long-willow firework variants as new official runtime presets while preserving existing Kiku, Peony, and Willow behavior.",
       "status": "todo",
-      "acceptance": [
-        "Relevant docs were read",
-        "Patch is small and coherent",
-        "Tests or checklist were updated when relevant",
-        "Assumptions and risks were reported"
-      ]
-    },
-    {
-      "id": "T0006.0",
-      "title": "Add scenery preset data scaffold",
-      "goal": "Add data-only scaffolding for future selectable in-box scenery presets.",
-      "status": "todo",
-      "depends_on": [
-        "T0002.8"
-      ],
       "constraints": [
-        "Data scaffold only",
-        "Do not add full scenery rendering yet",
-        "Do not use screen-space backgrounds",
-        "Use y-up 3D box coordinates",
-        "Keep Pyxel calls outside scenery model definitions"
+        "Do not overwrite existing firework identities",
+        "Do not change CITY, stars, audio, shell tail, or runtime launcher behavior",
+        "Keep generation deterministic and Pyxel-independent",
+        "Keep preset additions small and reviewable"
       ],
       "acceptance": [
-        "SceneKind or equivalent enum exists",
-        "SceneryPreset or equivalent data type exists",
-        "Vec3, Line3D, and Polyline3D or equivalents are available",
-        "EMPTY preset exists",
-        "No visible behavior changes unless explicitly intended",
-        "Tests or compile checks are updated where practical"
-      ]
-    },
-    {
-      "id": "T0006.1",
-      "title": "Add EMPTY and MOUNTAINS scenery presets",
-      "goal": "Add the first scenery presets as quiet 3D line data inside the observation box.",
-      "status": "todo",
-      "depends_on": [
-        "T0006.0"
-      ],
-      "constraints": [
-        "Implement only EMPTY and MOUNTAINS",
-        "Use box-relative y-up 3D coordinates",
-        "Keep mountain geometry low-detail and dark",
-        "Do not use screen-space background drawing"
-      ],
-      "acceptance": [
-        "EMPTY preset remains visually empty",
-        "MOUNTAINS preset uses sparse rear-side 3D polyline data",
-        "Scenery stays quieter than fireworks",
-        "No unrelated firework preset work is added"
-      ]
-    },
-    {
-      "id": "T0006.2",
-      "title": "Add CITY skyline scenery preset",
-      "goal": "Add a quiet city skyline scenery preset using coarse 3D line segments.",
-      "status": "todo",
-      "depends_on": [
-        "T0006.1"
-      ],
-      "constraints": [
-        "Implement only CITY",
-        "Use coarse vertical and horizontal line segments",
-        "Do not add filled polygons",
-        "Do not use screen-space background drawing"
-      ],
-      "acceptance": [
-        "CITY preset is readable as a sparse skyline",
-        "Line density does not compete with fireworks",
-        "Scenery uses the shared 3D projection pipeline",
-        "No unrelated gameplay work is added"
-      ]
-    },
-    {
-      "id": "T0006.3",
-      "title": "Add FOREST scenery preset",
-      "goal": "Add a quiet forest scenery preset using simple trunks and sparse branch lines.",
-      "status": "todo",
-      "depends_on": [
-        "T0006.2"
-      ],
-      "constraints": [
-        "Implement only FOREST",
-        "Use simple trunks and sparse branch lines",
-        "Keep colors dark and low contrast",
-        "Do not use screen-space background drawing"
-      ],
-      "acceptance": [
-        "FOREST preset is readable without dense detail",
-        "Line count remains bounded",
-        "Scenery uses y-up 3D coordinates",
-        "No unrelated gameplay work is added"
-      ]
-    },
-    {
-      "id": "T0006.4",
-      "title": "Add RIVERBANK scenery preset",
-      "goal": "Add a quiet riverbank scenery preset using floor-plane polylines near the bottom of the box.",
-      "status": "todo",
-      "depends_on": [
-        "T0006.3"
-      ],
-      "constraints": [
-        "Implement only RIVERBANK",
-        "Use bottom-of-box floor-plane polylines",
-        "Do not implement reflections yet",
-        "Do not use screen-space background drawing"
-      ],
-      "acceptance": [
-        "RIVERBANK preset reads as low, quiet structure near the bottom of the box",
-        "No water reflection behavior is implemented",
-        "Scenery uses the shared 3D projection pipeline",
-        "No unrelated gameplay work is added"
-      ]
-    },
-    {
-      "id": "T0006.5",
-      "title": "Add scenery preset cycling UI",
-      "goal": "Add a minimal way to cycle available scenery presets without changing firework preset behavior.",
-      "status": "todo",
-      "depends_on": [
-        "T0006.4"
-      ],
-      "constraints": [
-        "Keep scenery selection minimal",
-        "Do not change firework preset cycling behavior",
-        "Do not add scoring, objectives, characters, or maps",
-        "Preserve current camera and observation feel"
-      ],
-      "acceptance": [
-        "Available scenery presets can be cycled or selected",
-        "UI remains unobtrusive",
-        "Firework controls remain intact",
+        "New sphere-like and long-willow variants are distinct from existing presets",
+        "Preview/runtime cycling and random mode include the new presets if implemented",
+        "Existing firework tests remain valid",
+        "Tests and smoke pass",
         "Validation results are recorded"
       ]
     }
   ],
   "done": [
+    {
+      "id": "T0006.0",
+      "title": "Add runtime audio scaffold with music-box BGM and explosion SFX",
+      "completed_on": "2026-06-27",
+      "summary": "Added official runtime audio with quiet music-box BGM, low restrained explosion SFX, burst SFX cooldown, and M mute toggle while preserving visual behavior."
+    },
     {
       "id": "T0005.6.1",
       "title": "Make main.py a robust simple launcher",

@@ -186,12 +186,18 @@ class RuntimeRenderer:
             20,
             (
                 f"G:scene {self.app.scenery.label} B:{state.toggles.scenery_visible} "
-                f"T:stars {state.toggles.interior_stars_visible} Q:rot"
+                f"T:stars {state.toggles.interior_stars_visible} M:audio Q:rot"
             ),
             5,
         )
         if not self.app.debug:
             return
+        pyxel.text(
+            4,
+            self.app.profile.height - 46,
+            f"audio {state.toggles.audio_enabled}",
+            5,
+        )
         pyxel.text(4, self.app.profile.height - 30, f"profile {self.app.profile.name}", 5)
         pyxel.text(4, self.app.profile.height - 22, f"particles {len(self.app.particles)}", 5)
         pyxel.text(

@@ -39,6 +39,7 @@ def test_default_toggles_are_explicit() -> None:
     assert toggles.scenery_visible is True
     assert toggles.interior_stars_visible is True
     assert toggles.auto_rotate is False
+    assert toggles.audio_enabled is True
 
 
 def test_first_generation_firework_order_matches_preview_cycle() -> None:

@@ -249,6 +249,8 @@ After the task:
 - `T0005.5` recorded manual runtime parity review in `docs/research/runtime_parity_review_20260626.md`. Official runtime parity is OK, runtime stability is OK, and `main.py` handoff readiness is READY.
 - `T0005.6` converted `main.py` into a thin launcher for `pyxel_goal_game.runtime.app.main`. Do not move runtime logic back into `main.py`; runtime behavior belongs in `src/pyxel_goal_game/runtime/`.
 - `T0005.6.1` made `main.py` robust for simple public startup. Preferred launch paths are `python main.py`, `python3 main.py`, and `pyxel run main.py`. The runtime CLI normalizes Pyxel wrapper argv prefixes like `run main.py`, while preserving normal argparse failures for real invalid arguments. The default runtime profile is `iphone16_balanced`.
+- `T0006.0` added official runtime audio in `runtime/audio.py`. Audio is enabled by default, `M` toggles mute, BGM is quiet high-register music-box style, and low restrained explosion SFX plays on burst events with a short cooldown. Preview remains visual-only unless a future task explicitly adds preview audio.
+- Next recommended task is `T0007.0`: add a rare, subtle UFO ambient flyby to the official runtime. Keep it secondary; do not add beams, interactions, scoring, or new firework presets in that task.
 - Recommended visual review command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`.
 - Main stress sequence: press `R`, `H`, then `0` to combine random burst type, height variation, and random-count persistent salvos.
 - `classic` remains unchanged as the baseline ScreenProfile, but the public runtime launcher defaults to `iphone16_balanced`.

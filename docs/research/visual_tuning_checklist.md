@@ -438,3 +438,23 @@ The explicit runtime launcher remains available:
 
 - `.venv/bin/python main.py --profile iphone16_balanced`
 - `.venv/bin/python scripts/run_runtime_app.py --profile iphone16_balanced`
+
+## Runtime Audio Checks
+
+T0006.0 adds official runtime audio. Check it from the default runtime path, not the manual preview harness.
+
+Command:
+
+```bash
+.venv/bin/python main.py --profile iphone16_balanced
+```
+
+Checks:
+
+- BGM starts on launch.
+- BGM reads as quiet, high-register, fragile music-box ambience.
+- `M` toggles audio off and back on.
+- `Z` plays a low, restrained explosion SFX at burst timing, not at shell launch.
+- `1`-`5` salvos and `R + H + 0` do not stack explosion sounds into noise.
+- Visual behavior remains unchanged.
+- No UFO appears.

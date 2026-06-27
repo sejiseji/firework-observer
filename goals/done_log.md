@@ -1205,3 +1205,29 @@ Record completed tasks here.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_100216.txt`.
   - `.venv/bin/pyxel run main.py` was launched briefly and terminated after confirming it did not immediately fail with the prior `unrecognized arguments: run main.py` argparse error.
 - Preservation: Runtime visual behavior, firework generation, preset constants, CITY, stars, shell tail, glitter residue, key bindings, preview harness, and UFO exclusion unchanged.
+
+## 2026-06-27 T0006.0 Add runtime audio scaffold with music-box BGM and explosion SFX
+
+- Summary: Added the first official runtime audio layer with high-register music-box BGM, low restrained explosion SFX, burst SFX cooldown, and `M` mute toggle.
+- Files changed: `src/pyxel_goal_game/runtime/audio.py`, runtime state/controller/input/app/render modules, runtime audio tests, README, integration docs, visual checklist, goals logs, roadmap, task queue, and `GPT_HANDOFF.md`.
+- Behavior:
+  - Runtime audio starts by default when the official runtime initializes.
+  - BGM uses quiet high-register music-box-style sound/music definitions.
+  - Explosion SFX plays on actual burst events, not shell launch.
+  - Explosion SFX uses a short frame cooldown to avoid excessive salvo stacking.
+  - `M` toggles audio off and on.
+  - Debug HUD reports audio enabled/disabled state.
+- Tests:
+  - `.venv/bin/python -m json.tool goals/task_queue.json` passed.
+  - `python3 -m compileall src tests scripts tools main.py` passed.
+  - `.venv/bin/python -m pytest` passed: 254 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `.venv/bin/python main.py --help` passed.
+  - `.venv/bin/python scripts/run_runtime_app.py --help` passed.
+  - Direct Pyxel audio setup smoke passed with `.venv/bin/python` and `RuntimeAudio`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 254 passed.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_131819.txt`.
+  - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with audio initialization and no immediate crash.
+- Preservation: Visual behavior, firework generation, preset constants, CITY geometry, stars, shell tail, glitter visuals, camera motion, show scheduling, preview harness, robust main launcher, and UFO exclusion unchanged.

@@ -12,6 +12,7 @@ from pyxel_goal_game.camera3d import Camera3D, Vec3
 from pyxel_goal_game.firework_bursts import RingOrientationBank, build_ring_orientation_bank
 from pyxel_goal_game.firework_presets import FireworkKind
 from pyxel_goal_game.runtime import show_controller
+from pyxel_goal_game.runtime.audio import RuntimeAudio
 from pyxel_goal_game.runtime.camera_motion import (
     compute_pitch_sway,
     get_auto_rotate_yaw_delta,
@@ -102,6 +103,9 @@ class RuntimeApp:
             fps=60,
             title=f"Firework Observer Runtime - {self.profile.name}",
         )
+        self.audio = RuntimeAudio(pyxel=pyxel, enabled=self.state.toggles.audio_enabled)
+        self.audio.setup()
+        self.audio.start_bgm()
 
     @property
     def burst_label(self) -> str:
@@ -185,6 +189,10 @@ class RuntimeApp:
         self.camera.target_yaw = 0.6
         self.camera.target_pitch = 0.3
         self.camera.target_zoom = 1.0
+
+    def toggle_audio(self) -> None:
+        self.state = show_controller.toggle_audio(self.state)
+        self.audio.set_enabled(self.state.toggles.audio_enabled)
 
     def launch(self) -> None:
         schedule = build_single_launch_schedule(
@@ -303,6 +311,7 @@ class RuntimeApp:
         seed: int,
     ) -> None:
         self.last_launched_kind = firework_kind
+        self.audio.play_explosion(pyxel.frame_count)
         self.particles.extend(
             build_active_particles_for_burst(
                 firework_kind=firework_kind,

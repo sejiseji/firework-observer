@@ -23,6 +23,7 @@ def test_runtime_input_maps_first_generation_controls() -> None:
         "KEY_X",
         "KEY_Q",
         "KEY_T",
+        "KEY_M",
         "KEY_G",
         "KEY_B",
         "KEY_D",

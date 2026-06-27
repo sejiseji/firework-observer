@@ -66,16 +66,9 @@
 - [x] review runtime parity and decide main.py handoff
 - [x] convert main.py to official runtime launcher
 - [x] make main.py robust for simple public startup
-- [ ] tune city scenery readability against fireworks
-- [ ] add scenery preset data scaffold
-- [ ] add EMPTY and MOUNTAINS scenery presets
-- [ ] add CITY skyline scenery preset
-- [ ] add FOREST scenery preset
-- [ ] add RIVERBANK scenery preset
-- [ ] add scenery preset cycling UI
-- [ ] recreate protected prototype viewpoint controls in the package
-- [ ] add trail tuning checklist
-- [ ] implement core verb: observe, rotate camera, trigger fireworks, adjust viewpoint
+- [x] add runtime audio scaffold with BGM and explosion SFX
+- [ ] add rare UFO ambient flyby to official runtime
+- [ ] add required sphere and willow firework variants
 - [ ] tune visual feel
 - [ ] tune performance budget
 - [ ] record user feedback

@@ -60,3 +60,5 @@ def handle_runtime_input(app: object) -> None:
         app.state = show_controller.toggle_scenery_visible(app.state)
     if pyxel.btnp(pyxel.KEY_T):
         app.state = show_controller.toggle_stars(app.state)
+    if pyxel.btnp(pyxel.KEY_M):
+        app.toggle_audio()

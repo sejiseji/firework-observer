@@ -810,3 +810,17 @@ Keep `.venv/bin/python main.py --profile iphone16_balanced` as the only supporte
 
 Impact:
 `main.py` remains a thin launcher and does not import from `tools/`. The runtime CLI now defaults to `iphone16_balanced` and normalizes `run <entry>.py` prefixes. Runtime visuals, firework generation, CITY, stars, shell tail, glitter, controls, and preview behavior remain unchanged.
+
+## 2026-06-27 Add runtime audio scaffold
+
+Decision:
+Add official runtime audio with quiet high-register music-box BGM, low restrained explosion SFX, channel separation, burst SFX cooldown, and `M` audio toggle.
+
+Reason:
+The first-generation visual runtime is stable, but the experience lacks audio presence. A simple runtime audio layer can add atmosphere without changing visual systems or preview behavior.
+
+Alternatives:
+Delay audio until after UFO work, add only explosion SFX, or implement audio inside `main.py` or the preview harness.
+
+Impact:
+Runtime audio is isolated in `src/pyxel_goal_game/runtime/audio.py`. BGM starts during runtime initialization, burst SFX triggers on actual burst events, and `M` toggles audio. Visual behavior, firework generation, CITY, stars, shell tail, glitter visuals, camera motion, preview harness, and UFO exclusion remain unchanged.

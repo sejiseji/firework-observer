@@ -14,6 +14,7 @@ from pyxel_goal_game.runtime.show_controller import (
     set_fixed_salvo_mode,
     set_random_salvo_mode,
     tick_frame,
+    toggle_audio,
     toggle_auto_launch,
     toggle_auto_rotate,
     toggle_height_variation,
@@ -71,6 +72,7 @@ def test_toggles_flip_deterministically() -> None:
     assert toggle_stars(state).toggles.interior_stars_visible is False
     assert toggle_scenery_visible(state).toggles.scenery_visible is False
     assert toggle_auto_rotate(state).toggles.auto_rotate is True
+    assert toggle_audio(state).toggles.audio_enabled is False
 
     assert toggle_random_mode(toggle_random_mode(state)).toggles.random_firework_mode is False
 

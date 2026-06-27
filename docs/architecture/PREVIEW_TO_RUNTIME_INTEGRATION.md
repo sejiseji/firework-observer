@@ -131,6 +131,8 @@ Manual review found official runtime parity OK for `iphone16_balanced`. Startup,
 
 `T0005.6.1` made the launcher robust for simple public startup. The runtime CLI normalizes Pyxel wrapper arguments such as `pyxel run main.py`, and the default runtime profile is `iphone16_balanced`.
 
+`T0006.0` added the first official runtime audio layer. Audio is runtime-only for now: high-register, quiet music-box BGM loops on the BGM music channels, low restrained explosion SFX plays on burst events with a short cooldown, and `M` toggles audio on/off. The preview remains a visual development harness.
+
 Primary launch commands:
 
 ```bash
@@ -168,6 +170,7 @@ src/pyxel_goal_game/runtime/
   state.py
   input.py
   render.py
+  audio.py
   show_controller.py
   camera_motion.py
   show_schedule.py
@@ -180,6 +183,7 @@ Responsibilities:
 - `state.py`: runtime state, active fireworks, scheduled salvos, active shells, active particles, glitter residue, toggles, selected profile, selected firework kind, selected scenery, and selected camera mode.
 - `input.py`: maps keys to runtime actions without embedding generation logic.
 - `render.py`: Pyxel-bound drawing, draw order, box, CITY, stars, shells, particles, glitter residue, and optional HUD.
+- `audio.py`: Pyxel sound/music setup, BGM playback, explosion SFX playback, and audio cooldown/mute policy.
 - `show_controller.py`: single launch, salvo launch, random firework selection, height variation, scheduled launches, and secondary burst triggering.
 - `camera_motion.py`: auto rotate ON/OFF, speed modes, speed-dependent pitch sway, and manual rotation helpers if cleanly extractable.
 - `show_schedule.py`: immutable launch schedule construction for single launches, salvos, random type selection, and height variation.

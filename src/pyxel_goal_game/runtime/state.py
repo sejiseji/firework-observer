@@ -52,6 +52,7 @@ class RuntimeToggles:
     scenery_visible: bool = True
     interior_stars_visible: bool = True
     auto_rotate: bool = False
+    audio_enabled: bool = True
 
 
 @dataclass(frozen=True)

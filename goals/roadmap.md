@@ -82,6 +82,7 @@
 - [x] add Japanese public README
 - [x] add mobile touch control panel
 - [x] make mobile panel instant and add BGM toggle
+- [x] add PC mouse-wheel zoom
 - [ ] tune visual feel
 - [ ] tune performance budget
 - [ ] record user feedback

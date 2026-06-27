@@ -3,26 +3,6 @@
   "policy": "Keep tasks small enough for one Codex patch. Split ambiguous tasks before implementation.",
   "current": [
     {
-      "id": "T0007.0",
-      "title": "Add rare UFO ambient flyby to official runtime",
-      "goal": "Add a rare, subtle UFO flyby as an ambient official-runtime event without changing firework behavior.",
-      "status": "todo",
-      "constraints": [
-        "Do not change firework generation",
-        "Do not change CITY, stars, shell tail, glitter, or audio behavior",
-        "Do not add gameplay interactions, beams, collisions, or scoring",
-        "Keep the UFO rare, quiet, and secondary to fireworks",
-        "Keep main.py thin and do not import from tools"
-      ],
-      "acceptance": [
-        "Rare UFO ambient event exists in the official runtime",
-        "At most one UFO is active at a time",
-        "Fireworks, CITY, stars, and audio continue normally",
-        "Tests and smoke pass",
-        "Validation results are recorded"
-      ]
-    },
-    {
       "id": "T0008.0",
       "title": "Add required sphere and willow firework variants",
       "goal": "Add clear sphere and long-willow firework variants as new official runtime presets while preserving existing Kiku, Peony, and Willow behavior.",
@@ -43,6 +23,12 @@
     }
   ],
   "done": [
+    {
+      "id": "T0007.0",
+      "title": "Add rare UFO ambient flyby to official runtime",
+      "completed_on": "2026-06-27",
+      "summary": "Added a rare silent official-runtime UFO ambient flyby with deterministic Pyxel-independent scheduling/path helpers, Pyxel-bound rendering, and U toggle while preserving fireworks, CITY, stars, audio, shell tail, and glitter."
+    },
     {
       "id": "T0006.3",
       "title": "Tune BGM support rhythm and lower overall volume",

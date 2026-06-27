@@ -53,6 +53,7 @@ class RuntimeToggles:
     interior_stars_visible: bool = True
     auto_rotate: bool = False
     audio_enabled: bool = True
+    ufo_enabled: bool = True
 
 
 @dataclass(frozen=True)

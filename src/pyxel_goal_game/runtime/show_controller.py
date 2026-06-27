@@ -71,6 +71,10 @@ def toggle_audio(state: RuntimeShowState) -> RuntimeShowState:
     return _replace_toggle(state, audio_enabled=not state.toggles.audio_enabled)
 
 
+def toggle_ufo(state: RuntimeShowState) -> RuntimeShowState:
+    return _replace_toggle(state, ufo_enabled=not state.toggles.ufo_enabled)
+
+
 def cycle_auto_rotate_speed(state: RuntimeShowState) -> RuntimeShowState:
     return replace(
         state,

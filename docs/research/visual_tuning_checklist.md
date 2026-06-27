@@ -464,4 +464,25 @@ Checks:
 - `1`-`5` salvos and `R + H + 0` do not stack explosion sounds into noise.
 - Explosion SFX remains separated on channel 3 and is the primary audio subject.
 - Visual behavior remains unchanged.
-- No UFO appears.
+- UFO has no sound.
+
+## Runtime UFO Ambient Checks
+
+T0007.0 adds a rare official-runtime UFO ambient flyby. It is not part of firework generation and should not affect gameplay or audio.
+
+Command:
+
+```bash
+.venv/bin/python main.py --profile iphone16_balanced
+```
+
+Checks:
+
+- UFO ambient is enabled by default.
+- `U` toggles UFO ambient on and off.
+- UFO appears only rarely during normal observation.
+- UFO passes calmly through the upper observation space.
+- UFO is a small line/pixel saucer, readable but not dominant.
+- UFO has no beam, trail, particles, collision, sound, or gameplay interaction.
+- Fireworks, CITY, stars, BGM, explosion SFX, shell tail, and glitter remain unchanged.
+- `R + H + 0` remains readable if a UFO appears.

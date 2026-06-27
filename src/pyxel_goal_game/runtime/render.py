@@ -3,7 +3,7 @@ from __future__ import annotations
 import pyxel
 
 from pyxel_goal_game.ambient_box_stars import is_interior_face_visible, star_twinkle_color
-from pyxel_goal_game.camera3d import Camera3D, ProjectedPoint
+from pyxel_goal_game.camera3d import Camera3D, ProjectedPoint, Vec3
 from pyxel_goal_game.runtime.effects import (
     FIREWORK_SHELL_TAIL_COLORS_NEW_TO_OLD,
     FIREWORK_SHELL_TAIL_LENGTH,
@@ -28,6 +28,7 @@ class RuntimeRenderer:
         )
         self.draw_edges(projected_edges[:8], far=True)
         self.draw_box_stars()
+        self.draw_ufo()
         self.draw_scenery_phase("back")
         self.draw_firework_shells()
         self.draw_particles()
@@ -61,6 +62,32 @@ class RuntimeRenderer:
                 continue
             projected = self.camera.project(star.position)
             pyxel.pset(projected.sx, projected.sy, color)
+
+    def draw_ufo(self) -> None:
+        flyby = self.app.ufo_state.active
+        if flyby is None or not flyby.is_active(pyxel.frame_count):
+            return
+        center = flyby.position_at(pyxel.frame_count)
+        radius = flyby.radius
+        body_left = self.camera.project(self.offset_ufo(center, -radius, 0, 0))
+        body_right = self.camera.project(self.offset_ufo(center, radius, 0, 0))
+        body_front = self.camera.project(self.offset_ufo(center, 0, 0, -radius * 0.35))
+        body_back = self.camera.project(self.offset_ufo(center, 0, 0, radius * 0.35))
+        dome_top = self.camera.project(self.offset_ufo(center, 0, radius * 0.45, 0))
+        center_projected = self.camera.project(center)
+        pyxel.line(body_left.sx, body_left.sy, body_right.sx, body_right.sy, 5)
+        pyxel.line(body_front.sx, body_front.sy, body_back.sx, body_back.sy, 5)
+        pyxel.line(body_left.sx, body_left.sy, dome_top.sx, dome_top.sy, 6)
+        pyxel.line(dome_top.sx, dome_top.sy, body_right.sx, body_right.sy, 6)
+        pyxel.pset(center_projected.sx, center_projected.sy, 7)
+        for offset in (-0.45, 0.45):
+            light = self.camera.project(
+                self.offset_ufo(center, radius * offset, -radius * 0.08, 0)
+            )
+            pyxel.pset(light.sx, light.sy, 10)
+
+    def offset_ufo(self, center: Vec3, x: float, y: float, z: float) -> Vec3:
+        return Vec3(center.x + x, center.y + y, center.z + z)
 
     def edge_color(self, *, edge: ProjectedEdge, far: bool) -> int:
         if far:
@@ -186,8 +213,14 @@ class RuntimeRenderer:
             20,
             (
                 f"G:scene {self.app.scenery.label} B:{state.toggles.scenery_visible} "
-                f"T:stars {state.toggles.interior_stars_visible} M:audio Q:rot"
+                f"T:stars {state.toggles.interior_stars_visible}"
             ),
+            5,
+        )
+        pyxel.text(
+            4,
+            28,
+            f"M:audio U:ufo {state.toggles.ufo_enabled} Q:rot",
             5,
         )
         if not self.app.debug:

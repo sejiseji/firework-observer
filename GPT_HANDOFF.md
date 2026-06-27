@@ -253,7 +253,8 @@ After the task:
 - `T0006.1` extended the BGM into a longer three-channel music-box arrangement. Channels 0-2 are melody, arpeggio accompaniment, and sparse shimmer; channel 3 remains reserved for explosion SFX.
 - `T0006.2` rebuilt the BGM as simple chord harmony. Channels 0-2 are now melody, harmony, and soft support with a large/medium/small volume hierarchy; channel 3 remains reserved for explosion SFX.
 - `T0006.3` lowered BGM volume and changed channel 2 into calm mid-register rhythmic support. Channel 3 remains reserved for explosion SFX, which should be the primary audio subject.
-- Next recommended task is `T0007.0`: add a rare, subtle UFO ambient flyby to the official runtime. Keep it secondary; do not add beams, interactions, scoring, or new firework presets in that task.
+- `T0007.0` added a rare, silent UFO ambient flyby to the official runtime. UFO scheduling/path logic is in `runtime/ufo.py`, `U` toggles the ambient layer, and UFOs have no beam, trail, sound, particles, collision, or gameplay interaction.
+- Next recommended task is `T0008.0`: add required sphere and willow firework variants, unless UFO visibility needs a tuning pass first.
 - Recommended visual review command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`.
 - Main stress sequence: press `R`, `H`, then `0` to combine random burst type, height variation, and random-count persistent salvos.
 - `classic` remains unchanged as the baseline ScreenProfile, but the public runtime launcher defaults to `iphone16_balanced`.

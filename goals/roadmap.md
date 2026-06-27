@@ -70,7 +70,7 @@
 - [x] extend BGM with harmony
 - [x] rebuild BGM as simple chord harmony
 - [x] tune BGM support rhythm and volume
-- [ ] add rare UFO ambient flyby to official runtime
+- [x] add rare UFO ambient flyby to official runtime
 - [ ] add required sphere and willow firework variants
 - [ ] tune visual feel
 - [ ] tune performance budget

@@ -35,6 +35,8 @@ pyxel run main.py
 
 Runtime audio is enabled by default. Press `M` to mute or restore the quiet chord-harmony music-box BGM and restrained firework explosion SFX.
 
+A rare silent UFO ambient flyby is enabled by default in the official runtime. Press `U` to toggle it during review.
+
 If you do not use `uv`, install dependencies manually from `pyproject.toml`.
 
 ## Main idea

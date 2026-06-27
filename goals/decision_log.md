@@ -866,3 +866,17 @@ Raise explosion SFX, remove support entirely, keep high support notes, or delay 
 
 Impact:
 Only runtime audio definitions, audio tests, and project records changed. Visual behavior, firework generation, CITY, stars, shell tail, glitter visuals, key bindings, `M` toggle semantics, explosion SFX channel, and main launcher remain unchanged.
+
+## 2026-06-27 Add rare UFO ambient flyby
+
+Decision:
+Add a rare, silent UFO flyby as an official-runtime ambient layer, with deterministic package-side scheduling/path helpers and Pyxel-bound line/pixel rendering. Add `U` as a review toggle.
+
+Reason:
+The first-generation runtime has stable visuals and audio. A rare non-interactive upper-space flyby adds a small surprise without changing firework behavior, CITY, stars, audio, or gameplay rules.
+
+Alternatives:
+Postpone UFO until after new firework presets, make UFO preview-only, add UFO sound/beam/interactions immediately, or make UFO frequent for visibility.
+
+Impact:
+Runtime now has `runtime/ufo.py` pure helpers and app/render/input integration. UFOs are rare, silent, non-interactive, and visually secondary. Firework generation, CITY, stars, shell tail, glitter, camera motion, audio, main launcher, and tools preview imports remain unchanged.

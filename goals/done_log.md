@@ -1305,3 +1305,28 @@ Record completed tasks here.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_163441.txt`.
   - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with calmer BGM support initialization and no immediate crash.
 - Preservation: Visual behavior, firework generation, preset constants, CITY geometry, stars, shell tail, glitter visuals, camera motion, show scheduling, preview harness, robust main launcher, and UFO exclusion unchanged.
+
+## 2026-06-27 T0007.0 Add rare UFO ambient flyby to official runtime
+
+- Summary: Added a rare silent UFO ambient flyby to the official runtime as a non-interactive upper-space visual surprise.
+- Files changed: `src/pyxel_goal_game/runtime/ufo.py`, runtime state/controller/app/input/render modules, runtime UFO/input/state/controller tests, README, integration docs, visual checklist, goals logs, roadmap, task queue, and `GPT_HANDOFF.md`.
+- Behavior:
+  - UFO scheduling/path helpers are Pyxel-independent and deterministic.
+  - At most one UFO flyby is active at a time.
+  - UFOs are delayed, rare, and use cooldown/check windows.
+  - UFOs render as small low-detail line/pixel saucers in the 3D scene.
+  - `U` toggles UFO ambient on/off for review.
+  - UFOs have no beam, trail, sound, particles, collision, scoring, or gameplay interaction.
+- Tests:
+  - `.venv/bin/python -m json.tool goals/task_queue.json` passed.
+  - `.venv/bin/python -m pytest tests/unit/test_runtime_ufo.py tests/unit/test_runtime_state.py tests/unit/test_runtime_show_controller.py tests/unit/test_runtime_input.py tests/unit/test_runtime_app_imports.py` passed: 28 tests passed.
+  - `python3 -m compileall src tests scripts tools main.py` passed.
+  - `.venv/bin/python -m pytest` passed: 263 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `.venv/bin/python main.py --help` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 263 passed.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_170034.txt`.
+  - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with UFO ambient integration and no immediate crash.
+- Preservation: Firework generation, preset constants, CITY geometry, stars, shell tail, glitter visuals, camera motion, show scheduling, audio behavior, preview harness, and robust main launcher unchanged.

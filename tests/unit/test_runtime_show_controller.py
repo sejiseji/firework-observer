@@ -21,6 +21,7 @@ from pyxel_goal_game.runtime.show_controller import (
     toggle_random_mode,
     toggle_scenery_visible,
     toggle_stars,
+    toggle_ufo,
 )
 from pyxel_goal_game.runtime.state import (
     AutoRotateSpeedMode,
@@ -73,6 +74,7 @@ def test_toggles_flip_deterministically() -> None:
     assert toggle_scenery_visible(state).toggles.scenery_visible is False
     assert toggle_auto_rotate(state).toggles.auto_rotate is True
     assert toggle_audio(state).toggles.audio_enabled is False
+    assert toggle_ufo(state).toggles.ufo_enabled is False
 
     assert toggle_random_mode(toggle_random_mode(state)).toggles.random_firework_mode is False
 

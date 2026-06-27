@@ -41,6 +41,12 @@ from pyxel_goal_game.runtime.state import (
     RuntimeShowState,
     SalvoCountMode,
 )
+from pyxel_goal_game.runtime.ufo import (
+    UfoState,
+    initial_ufo_state,
+    toggle_ufo_enabled,
+    update_ufo_state,
+)
 from pyxel_goal_game.scenery_presets import (
     SCENERY_PRESET_NAMES,
     SceneryPreset,
@@ -95,6 +101,9 @@ class RuntimeApp:
         self.debug = True
         self.scenery = self.load_scenery()
         self.star_field: BoxStarField = build_box_star_field(self.profile)
+        self.ufo_state: UfoState = initial_ufo_state(
+            enabled=self.state.toggles.ufo_enabled,
+        )
         self.handle_runtime_input = handle_runtime_input
         self.renderer = RuntimeRenderer(self)
         pyxel.init(
@@ -135,6 +144,7 @@ class RuntimeApp:
         if self.state.toggles.auto_launch and pyxel.frame_count % AUTO_LAUNCH_FRAMES == 0:
             self.launch()
         self.schedule_persistent_salvo_if_needed()
+        self.update_ufo()
         self.update_shells()
         self.camera.step_toward_target()
         for particle in self.particles:
@@ -193,6 +203,21 @@ class RuntimeApp:
     def toggle_audio(self) -> None:
         self.state = show_controller.toggle_audio(self.state)
         self.audio.set_enabled(self.state.toggles.audio_enabled)
+
+    def toggle_ufo(self) -> None:
+        self.state = show_controller.toggle_ufo(self.state)
+        self.ufo_state = toggle_ufo_enabled(
+            self.ufo_state,
+            frame=pyxel.frame_count,
+        )
+
+    def update_ufo(self) -> None:
+        self.ufo_state = update_ufo_state(
+            self.ufo_state,
+            frame=pyxel.frame_count,
+            profile=self.profile,
+            seed=RUNTIME_RANDOM_SEED,
+        )
 
     def launch(self) -> None:
         schedule = build_single_launch_schedule(

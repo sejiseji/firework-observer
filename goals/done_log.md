@@ -1555,3 +1555,13 @@ Record completed tasks here.
   - The new `BGM` panel toggle stops or restarts only BGM channels while leaving explosion SFX available when overall audio is on.
   - Debug HUD reports both overall audio and BGM states.
 - Preservation: Firework generation, CITY, stars, UFO scheduling/geometry, shell tail, glitter, launcher behavior, and existing keyboard controls unchanged.
+
+## 2026-06-28 T0010.2 Add PC mouse-wheel zoom
+
+- Summary: Added PC mouse-wheel zoom to the official runtime.
+- Files changed: `src/pyxel_goal_game/runtime/input.py`, runtime input tests, README, integration docs, visual checklist, goals logs, roadmap, task queue, and `GPT_HANDOFF.md`.
+- Behavior:
+  - Mouse wheel vertical scrolling adjusts the camera zoom target.
+  - Wheel zoom uses the same `MIN_ZOOM` / `MAX_ZOOM` bounds as `A` / `S` and touch zoom buttons.
+  - No new visible UI or key binding was added.
+- Preservation: Firework generation, CITY, stars, UFO, audio, mobile panel behavior, shell tail, glitter, launcher behavior, and existing keyboard controls unchanged.

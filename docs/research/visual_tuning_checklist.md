@@ -547,6 +547,7 @@ Use the official runtime or Pyxel Web build on a touch-capable device.
 Checks:
 
 - Dragging or flicking the play field rotates the camera by default.
+- On PC, mouse wheel changes camera zoom within the same safe range as `A` / `S`.
 - The top-right `MENU` button opens and closes the mobile control panel.
 - Panel checkboxes immediately reflect random, height, auto launch, auto rotate, stars, UFO, audio, BGM, and city settings behind the panel.
 - `BGM` can be turned off while `audio` remains on, and explosion SFX still plays.
@@ -557,6 +558,6 @@ Checks:
 - `RAND SALVO` starts random-count salvo mode.
 - `ZOOM+` and `ZOOM-` change the camera zoom on touch devices.
 - Mobile panel text is larger than the normal HUD text and remains readable on a phone.
-- Touch controls do not break keyboard controls.
+- Touch controls do not break keyboard or mouse-wheel controls.
 - The menu and panel remain readable on the `iphone16_balanced` profile.
 - Fireworks, CITY, stars, UFO, audio, shell tail, and glitter remain visually unchanged.

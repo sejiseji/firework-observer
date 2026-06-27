@@ -35,6 +35,8 @@ def test_runtime_input_maps_first_generation_controls() -> None:
         "KEY_UP",
         "KEY_DOWN",
         "MOUSE_BUTTON_LEFT",
+        "MOUSE_WHEEL_Y",
+        "btnv",
     ):
         assert key_name in source
 

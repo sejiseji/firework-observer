@@ -1040,3 +1040,17 @@ Keep `APPLY`, add a keyboard BGM shortcut, or make `M` cycle through audio state
 
 Impact:
 Runtime mobile input, state/controller/audio behavior, panel rendering, tests, README, integration docs, visual checklist, goals, and handoff records changed. Firework generation, CITY, stars, UFO, shell tail, glitter, launcher behavior, and existing keyboard controls remain unchanged.
+
+## 2026-06-28 Add PC mouse-wheel zoom
+
+Decision:
+Map `MOUSE_WHEEL_Y` to the runtime camera zoom target, using the same `MIN_ZOOM` / `MAX_ZOOM` bounds as keyboard and touch zoom controls.
+
+Reason:
+PC users naturally expect mouse-wheel scrolling to zoom the view. The feature complements existing `A` / `S` keyboard zoom and mobile `ZOOM+` / `ZOOM-` buttons without adding new visible UI.
+
+Alternatives:
+Keep zoom keyboard-only on PC, add separate zoom buttons for PC, or repurpose scroll for menu navigation.
+
+Impact:
+Runtime input handling, tests, README, integration docs, visual checklist, goals, and handoff records changed. Firework generation, CITY, stars, UFO, audio, mobile panel behavior, launcher behavior, and existing keyboard controls remain unchanged.

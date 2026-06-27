@@ -21,6 +21,7 @@ MAX_PITCH = 1.2
 MIN_PITCH = -1.2
 MAX_ZOOM = 2.2
 MIN_ZOOM = 0.45
+MOUSE_WHEEL_ZOOM_STEP = 0.12
 
 
 def handle_runtime_input(app: object) -> None:
@@ -38,6 +39,15 @@ def handle_runtime_input(app: object) -> None:
         app.camera.target_zoom = min(MAX_ZOOM, app.camera.target_zoom + 0.025)
     if pyxel.btn(pyxel.KEY_S):
         app.camera.target_zoom = max(MIN_ZOOM, app.camera.target_zoom - 0.025)
+    mouse_wheel_y = pyxel.btnv(pyxel.MOUSE_WHEEL_Y)
+    if mouse_wheel_y:
+        app.camera.target_zoom = max(
+            MIN_ZOOM,
+            min(
+                MAX_ZOOM,
+                app.camera.target_zoom + mouse_wheel_y * MOUSE_WHEEL_ZOOM_STEP,
+            ),
+        )
 
     if pyxel.btnp(pyxel.KEY_Z):
         app.launch()

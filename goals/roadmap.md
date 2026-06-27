@@ -86,6 +86,7 @@
 - [x] compact mobile panel height
 - [x] add mobile salvo count selector
 - [x] show current firework kind on mobile selector
+- [x] connect mobile count selector to salvo state
 - [ ] tune visual feel
 - [ ] tune performance budget
 - [ ] record user feedback

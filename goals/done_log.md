@@ -1595,3 +1595,13 @@ Record completed tasks here.
   - The selector now stretches to the right edge of the panel row.
   - The selector label shows the currently selected firework kind and still cycles kinds when tapped.
 - Preservation: Firework generation, CITY, stars, UFO, audio playback behavior, shell tail, glitter, launcher behavior, and keyboard controls unchanged.
+
+## 2026-06-28 T0010.6 Connect mobile count selector to salvo state
+
+- Summary: Fixed the mobile `COUNT` selector so it updates the runtime salvo count used by `SALVO START`.
+- Files changed: `src/pyxel_goal_game/runtime/app.py`, runtime app tests, integration docs, visual checklist, goals logs, task queue, and `GPT_HANDOFF.md`.
+- Behavior:
+  - Cycling `COUNT` updates `RuntimeShowState.salvo_count` for fixed counts.
+  - If a persistent salvo is already active, cycling `COUNT` updates the active salvo mode for subsequent repeats.
+  - `SALVO START` uses the synced runtime count instead of a panel-only value.
+- Preservation: Firework generation, CITY, stars, UFO, audio playback behavior, shell tail, glitter, launcher behavior, panel layout, and keyboard controls unchanged.

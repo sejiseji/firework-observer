@@ -552,6 +552,7 @@ Checks:
 - Panel checkboxes immediately reflect random, height, auto launch, auto rotate, stars, UFO, audio/BGM, and city settings behind the panel.
 - `COUNT` cycles salvo count selection through `1`, `2`, `3`, `4`, `5`, and `RND`.
 - `COUNT` updates the runtime salvo count state, so `SALVO START` and active salvo repeats use the selected count.
+- `AUTO` uses the selected `COUNT` value for automatic launches instead of forcing single-shell launches.
 - `BGM` can be turned off while `audio` remains on, and explosion SFX still plays.
 - `speed` immediately cycles the auto-rotate speed.
 - `CLOSE` dismisses the panel without changing already-applied settings.

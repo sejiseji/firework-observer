@@ -61,3 +61,40 @@ def test_mobile_salvo_start_uses_synced_runtime_count() -> None:
     app.RuntimeApp.start_mobile_salvo_loop(fake_app)
 
     assert called == [3]
+
+
+def test_mobile_auto_launch_toggle_preserves_selected_count() -> None:
+    fake_app = SimpleNamespace(
+        mobile_salvo_count_choice=4,
+        state=RuntimeShowState(salvo_count=4),
+    )
+
+    app.RuntimeApp.toggle_mobile_auto_launch(fake_app)
+
+    assert fake_app.state.toggles.auto_launch is True
+    assert fake_app.state.salvo_count == 4
+    assert fake_app.state.salvo_count_mode is SalvoCountMode.OFF
+
+
+def test_mobile_auto_launch_uses_selected_count() -> None:
+    called: list[int] = []
+    fake_app = SimpleNamespace(
+        mobile_salvo_count_choice=4,
+        schedule_salvo=called.append,
+    )
+
+    app.RuntimeApp.schedule_mobile_auto_launch(fake_app)
+
+    assert called == [4]
+
+
+def test_mobile_auto_launch_uses_random_count_choice() -> None:
+    called: list[str] = []
+    fake_app = SimpleNamespace(
+        mobile_salvo_count_choice=None,
+        schedule_random_count_salvo=lambda: called.append("random"),
+    )
+
+    app.RuntimeApp.schedule_mobile_auto_launch(fake_app)
+
+    assert called == ["random"]

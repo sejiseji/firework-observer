@@ -1605,3 +1605,13 @@ Record completed tasks here.
   - If a persistent salvo is already active, cycling `COUNT` updates the active salvo mode for subsequent repeats.
   - `SALVO START` uses the synced runtime count instead of a panel-only value.
 - Preservation: Firework generation, CITY, stars, UFO, audio playback behavior, shell tail, glitter, launcher behavior, panel layout, and keyboard controls unchanged.
+
+## 2026-06-28 T0010.7 Connect mobile auto launch to selected count
+
+- Summary: Fixed mobile `AUTO` so automatic launches use the selected `COUNT`.
+- Files changed: `src/pyxel_goal_game/runtime/app.py`, runtime app tests, integration docs, visual checklist, goals logs, task queue, and `GPT_HANDOFF.md`.
+- Behavior:
+  - `AUTO` with `COUNT 1` still launches one shell per auto interval.
+  - `AUTO` with `COUNT 2` through `COUNT 5` schedules that many shells per auto interval.
+  - `AUTO` with `COUNT RND` uses random-count salvo scheduling per auto interval.
+- Preservation: Firework generation, CITY, stars, UFO, audio playback behavior, shell tail, glitter, launcher behavior, panel layout, and keyboard controls unchanged.

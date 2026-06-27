@@ -1110,3 +1110,17 @@ Keep `COUNT` as a pending selection that only applies on `SALVO START`, or split
 
 Impact:
 Runtime mobile salvo state handling and tests changed. Firework generation, CITY, stars, UFO, audio, shell tail, glitter, launcher behavior, panel layout, and keyboard controls remain unchanged.
+
+## 2026-06-28 Connect mobile auto launch to selected count
+
+Decision:
+Make mobile-panel `AUTO` launches use the selected `COUNT` value instead of always scheduling a single-shell launch.
+
+Reason:
+The touch panel presents `AUTO` beside the `COUNT` selector, so users expect automatic launches to honor the selected count. Keeping `AUTO` as single-shell only made the panel feel disconnected.
+
+Alternatives:
+Keep `AUTO` as keyboard-equivalent single-shell auto launch, require `SALVO START` for multi-shell automatic repeats, or add a separate auto-salvo toggle.
+
+Impact:
+Runtime mobile auto-launch scheduling and tests changed. Firework generation, CITY, stars, UFO, audio, shell tail, glitter, launcher behavior, panel layout, and keyboard controls remain unchanged.

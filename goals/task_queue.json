@@ -4,6 +4,12 @@
     "current": [],
     "done": [
         {
+            "id": "T0010.7",
+            "title": "Connect mobile auto launch to selected count",
+            "completed_on": "2026-06-28",
+            "summary": "Fixed mobile AUTO so automatic launches use the selected COUNT value instead of forcing one-shell launches."
+        },
+        {
             "id": "T0010.6",
             "title": "Connect mobile count selector to salvo state",
             "completed_on": "2026-06-28",

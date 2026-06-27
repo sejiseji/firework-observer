@@ -161,7 +161,7 @@ class RuntimeApp:
                 mode=mode,
             )
         if self.state.toggles.auto_launch and pyxel.frame_count % AUTO_LAUNCH_FRAMES == 0:
-            self.launch()
+            self.schedule_mobile_auto_launch()
         self.schedule_persistent_salvo_if_needed()
         self.update_ufo()
         self.update_shells()
@@ -244,7 +244,7 @@ class RuntimeApp:
         elif key == "height_variation":
             self.state = show_controller.toggle_height_variation(self.state)
         elif key == "auto_launch":
-            self.state = show_controller.toggle_auto_launch(self.state)
+            self.toggle_mobile_auto_launch()
         elif key == "auto_rotate":
             self.state = show_controller.toggle_auto_rotate(self.state)
         elif key == "interior_stars_visible":
@@ -318,6 +318,20 @@ class RuntimeApp:
             self.start_random_salvo_loop()
         else:
             self.start_fixed_salvo_loop(self.state.salvo_count)
+
+    def toggle_mobile_auto_launch(self) -> None:
+        enabling = not self.state.toggles.auto_launch
+        self.state = show_controller.toggle_auto_launch(self.state)
+        if enabling and self.mobile_salvo_count_choice is not None:
+            self.state = replace(self.state, salvo_count=self.mobile_salvo_count_choice)
+
+    def schedule_mobile_auto_launch(self) -> None:
+        if self.mobile_salvo_count_choice is None:
+            self.schedule_random_count_salvo()
+        elif self.mobile_salvo_count_choice == 1:
+            self.launch()
+        else:
+            self.schedule_salvo(self.mobile_salvo_count_choice)
 
     def mobile_salvo_count_label(self) -> str:
         if self.mobile_salvo_count_choice is None:

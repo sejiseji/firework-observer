@@ -555,7 +555,7 @@ Checks:
 - `speed` immediately cycles the auto-rotate speed.
 - `CLOSE` dismisses the panel without changing already-applied settings.
 - `LAUNCH` starts a single shell.
-- `NEXT` cycles the selected firework kind.
+- The wide firework-kind button displays the current firework name and cycles the selected kind.
 - `SALVO START` starts the currently selected `COUNT` salvo mode.
 - `ZOOM+` and `ZOOM-` change the camera zoom on touch devices.
 - `ZOOM+`, `ZOOM-`, and `CLOSE` share one compact bottom row so some of the scene remains visible behind the panel.

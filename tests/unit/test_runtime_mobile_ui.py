@@ -12,7 +12,9 @@ from pyxel_goal_game.runtime.mobile_ui import (
     bgm_checkbox_rect,
     bgm_toggle_rect,
     close_button_rect,
+    launch_button_rect,
     menu_button_rect,
+    next_button_rect,
     panel_rect,
     salvo_count_button_rect,
     zoom_in_button_rect,
@@ -100,6 +102,17 @@ def test_mobile_bottom_buttons_are_equal_width_on_one_row() -> None:
     assert zoom_in.width == zoom_out.width == close.width
     assert zoom_in.height == zoom_out.height == close.height
     assert zoom_in.x < zoom_out.x < close.x
+
+
+def test_mobile_firework_kind_button_is_wide_and_beside_launch() -> None:
+    panel = panel_rect(236, 512)
+    launch = launch_button_rect(panel)
+    kind = next_button_rect(panel)
+
+    assert launch.y == kind.y
+    assert launch.x < kind.x
+    assert kind.width > launch.width
+    assert panel.contains(kind.x + kind.width - 1, kind.y + kind.height - 1)
 
 
 def test_mobile_audio_and_bgm_share_one_toggle_row() -> None:

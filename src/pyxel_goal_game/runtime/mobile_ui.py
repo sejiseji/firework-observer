@@ -165,7 +165,7 @@ def launch_button_rect(panel: Rect) -> Rect:
 
 
 def next_button_rect(panel: Rect) -> Rect:
-    return Rect(panel.x + 88, panel.y + 300, 56, ACTION_BUTTON_HEIGHT)
+    return Rect(panel.x + 88, panel.y + 300, panel.width - 98, ACTION_BUTTON_HEIGHT)
 
 
 def random_salvo_button_rect(panel: Rect) -> Rect:

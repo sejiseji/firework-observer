@@ -15,6 +15,8 @@ def test_mobile_panel_uses_scaled_text_and_zoom_buttons() -> None:
     assert "ZOOM-" in source
     assert "COUNT " in source
     assert "SALVO START" in source
+    assert "burst_label.upper()" in source
+    assert '"NEXT"' not in source
     assert "BGM" in source
     assert "tap toggles for instant change" in source
     assert "APPLY" not in source

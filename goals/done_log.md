@@ -1585,3 +1585,13 @@ Record completed tasks here.
   - `COUNT` cycles salvo selection through `1`, `2`, `3`, `4`, `5`, and `RND`.
   - `SALVO START` starts the currently selected count instead of always starting random salvo.
 - Preservation: Firework generation, CITY, stars, UFO, audio playback behavior, shell tail, glitter, launcher behavior, and keyboard controls unchanged.
+
+## 2026-06-28 T0010.5 Show current firework kind on mobile selector
+
+- Summary: Replaced the small mobile `NEXT` button label with a wider current-firework selector.
+- Files changed: `src/pyxel_goal_game/runtime/mobile_ui.py`, `src/pyxel_goal_game/runtime/render.py`, runtime mobile/render tests, README, integration docs, visual checklist, goals logs, roadmap, task queue, and `GPT_HANDOFF.md`.
+- Behavior:
+  - The firework selector remains beside `LAUNCH`.
+  - The selector now stretches to the right edge of the panel row.
+  - The selector label shows the currently selected firework kind and still cycles kinds when tapped.
+- Preservation: Firework generation, CITY, stars, UFO, audio playback behavior, shell tail, glitter, launcher behavior, and keyboard controls unchanged.

@@ -28,6 +28,23 @@ Firework Observer
 - space: launch firework
 - z_x: change firework preset later
 
+## Current firework set
+
+The official runtime includes these first-class firework variants:
+
+- Kiku
+- Sphere Bloom
+- Ring
+- Spiral
+- Willow
+- Long Willow
+- Peony
+- Multi-ring
+- Senrin
+- Halo
+
+`Sphere Bloom` is the explicit canonical sphere-like bloom. `Long Willow` is the explicit longer falling willow / 枝垂れ variant. Existing Kiku, Peony, and Willow remain distinct and available.
+
 ## Future observation space expansion
 
 Screen profile and scenery work should be designed together because the observation box scale, projection camera, UI placement, particle budget, and scenery proportions are linked.

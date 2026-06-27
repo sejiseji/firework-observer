@@ -8,10 +8,12 @@ from pyxel_goal_game.camera3d import Vec3
 from pyxel_goal_game.firework_presets import (
     HALO_PRESET,
     KIKU_PRESET,
+    LONG_WILLOW_PRESET,
     MULTI_RING_PRESET,
     PEONY_PRESET,
     RING_PRESET,
     SENRIN_PRESET,
+    SPHERE_BLOOM_PRESET,
     SPIRAL_PRESET,
     WILLOW_PRESET,
     FireworkKind,
@@ -36,11 +38,13 @@ MULTI_RING_LAYERS = (
 BURST_RADIUS_SCALE = 0.80
 BURST_RADIUS_VARIATION_BY_KIND = {
     FireworkKind.KIKU: 0.04,
+    FireworkKind.SPHERE_BLOOM: 0.025,
     FireworkKind.PEONY: 0.04,
     FireworkKind.RING: 0.03,
     FireworkKind.MULTI_RING: 0.03,
     FireworkKind.HALO: 0.025,
     FireworkKind.WILLOW: 0.04,
+    FireworkKind.LONG_WILLOW: 0.03,
     FireworkKind.SPIRAL: 0.035,
     FireworkKind.SENRIN: 0.03,
 }
@@ -167,6 +171,15 @@ def generate_peony_burst(
     return generate_burst(preset=preset, origin=origin, seed=seed)
 
 
+def generate_sphere_bloom_burst(
+    *,
+    origin: Vec3,
+    seed: int,
+    preset: FireworkPreset = SPHERE_BLOOM_PRESET,
+) -> tuple[ParticleSpawnSpec, ...]:
+    return generate_burst(preset=preset, origin=origin, seed=seed)
+
+
 def generate_senrin_burst(
     *,
     origin: Vec3,
@@ -190,6 +203,15 @@ def generate_willow_burst(
     origin: Vec3,
     seed: int,
     preset: FireworkPreset = WILLOW_PRESET,
+) -> tuple[ParticleSpawnSpec, ...]:
+    return generate_burst(preset=preset, origin=origin, seed=seed)
+
+
+def generate_long_willow_burst(
+    *,
+    origin: Vec3,
+    seed: int,
+    preset: FireworkPreset = LONG_WILLOW_PRESET,
 ) -> tuple[ParticleSpawnSpec, ...]:
     return generate_burst(preset=preset, origin=origin, seed=seed)
 

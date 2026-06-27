@@ -17,9 +17,11 @@ from pyxel_goal_game.firework_presets import (
 def test_future_firework_kinds_exist() -> None:
     assert set(FUTURE_FIREWORK_KINDS) == {
         FireworkKind.KIKU,
+        FireworkKind.SPHERE_BLOOM,
         FireworkKind.PEONY,
         FireworkKind.RING,
         FireworkKind.WILLOW,
+        FireworkKind.LONG_WILLOW,
         FireworkKind.SPIRAL,
         FireworkKind.MULTI_RING,
         FireworkKind.HALO,

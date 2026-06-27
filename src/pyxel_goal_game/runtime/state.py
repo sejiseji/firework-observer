@@ -22,9 +22,11 @@ class SalvoCountMode(Enum):
 
 FIRST_GENERATION_FIREWORK_ORDER = (
     FireworkKind.KIKU,
+    FireworkKind.SPHERE_BLOOM,
     FireworkKind.RING,
     FireworkKind.SPIRAL,
     FireworkKind.WILLOW,
+    FireworkKind.LONG_WILLOW,
     FireworkKind.PEONY,
     FireworkKind.MULTI_RING,
     FireworkKind.SENRIN,

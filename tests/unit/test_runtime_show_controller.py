@@ -34,15 +34,17 @@ def test_firework_kind_cycle_follows_preview_order() -> None:
     state = RuntimeShowState()
     observed = []
 
-    for _ in range(8):
+    for _ in range(10):
         observed.append(state.selected_firework_kind)
         state = cycle_firework_kind(state)
 
     assert tuple(observed) == (
         FireworkKind.KIKU,
+        FireworkKind.SPHERE_BLOOM,
         FireworkKind.RING,
         FireworkKind.SPIRAL,
         FireworkKind.WILLOW,
+        FireworkKind.LONG_WILLOW,
         FireworkKind.PEONY,
         FireworkKind.MULTI_RING,
         FireworkKind.SENRIN,

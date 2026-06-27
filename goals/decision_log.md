@@ -880,3 +880,17 @@ Postpone UFO until after new firework presets, make UFO preview-only, add UFO so
 
 Impact:
 Runtime now has `runtime/ufo.py` pure helpers and app/render/input integration. UFOs are rare, silent, non-interactive, and visually secondary. Firework generation, CITY, stars, shell tail, glitter, camera motion, audio, main launcher, and tools preview imports remain unchanged.
+
+## 2026-06-27 Add sphere bloom and long willow fireworks
+
+Decision:
+Add `Sphere Bloom` and `Long Willow` as first-class firework variants. Keep existing Kiku, Peony, and Willow behavior available.
+
+Reason:
+The project already had sphere-like Kiku/Peony and a baseline Willow, but the required sphere and willow categories needed clearer explicit variants. `Sphere Bloom` provides a clean canonical sphere. `Long Willow` provides a stronger, longer falling willow / 枝垂れ behavior.
+
+Alternatives:
+Retune Kiku, Peony, or Willow in place; add only one variant; or delay new firework variants until after more UFO tuning.
+
+Impact:
+Pure preset/generation data, runtime ordering, preview ordering, tests, and docs changed. CITY, stars, UFO behavior, audio, shell tail, glitter, camera motion, and main launcher remain unchanged.

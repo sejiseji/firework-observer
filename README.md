@@ -37,6 +37,8 @@ Runtime audio is enabled by default. Press `M` to mute or restore the quiet chor
 
 A rare silent UFO ambient flyby is enabled by default in the official runtime. Press `U` to toggle it during review.
 
+The current firework cycle includes Kiku, Sphere Bloom, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo.
+
 If you do not use `uv`, install dependencies manually from `pyproject.toml`.
 
 ## Main idea

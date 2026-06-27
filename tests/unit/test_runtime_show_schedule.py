@@ -159,10 +159,10 @@ def test_scheduled_firework_kind_is_frozen_per_slot() -> None:
 
     assert tuple(slot.firework_kind for slot in schedule.slots) == (
         FireworkKind.KIKU,
+        FireworkKind.SPHERE_BLOOM,
         FireworkKind.RING,
-        FireworkKind.SPIRAL,
-        FireworkKind.MULTI_RING,
-        FireworkKind.SPIRAL,
+        FireworkKind.LONG_WILLOW,
+        FireworkKind.RING,
     )
 
 

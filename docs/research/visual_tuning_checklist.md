@@ -4,7 +4,7 @@
 
 This checklist defines how to evaluate the current Firework Box preview before changing preset parameters or adding more effects.
 
-Use it to judge Kiku, Ring, Spiral, Willow, Peony, Multi-ring, Senrin, and Halo in the manual preview. Do not treat this document as permission to change preset values, production runtime behavior, scenery, or `main.py`.
+Use it to judge Kiku, Sphere Bloom, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo in the manual preview and official runtime. Do not treat this document as permission to change preset values, production runtime behavior, scenery, or `main.py`.
 
 ## Profile Policy
 
@@ -80,6 +80,14 @@ Interaction rules:
 - The shared white/yellow/brown shell tail and a few center accent rays make the opening readable.
 - Works as the reference preset for comparison with Peony and Senrin.
 
+### Sphere Bloom
+
+- Reads as the clean canonical sphere-like firework.
+- Feels smoother and more uniform than Kiku.
+- Stays distinct from Peony by being calmer and less pink/red.
+- Sparse trails do not make it noisy.
+- Salvos do not make it too dense.
+
 ### Ring
 
 - Orientation varies across launches.
@@ -103,6 +111,14 @@ Interaction rules:
 - Trail density is high enough for afterglow but not high enough to cover later salvos.
 - The shared shell tail and accent rays do not compete with Willow's falling particle trails.
 - It remains distinct from Kiku and Peony.
+
+### Long Willow
+
+- Reads immediately as the stronger willow / 枝垂れ variant.
+- Falls longer and more gracefully than baseline Willow.
+- Does not become a full-screen rain curtain.
+- Salvos remain readable and do not hide later bursts.
+- CITY and shell tails remain readable below it.
 
 ### Peony
 
@@ -195,7 +211,7 @@ Interaction rules:
    - Observe combined type, count, and height variation.
 
 11. Burst radius variation check:
-   - Select Kiku, Peony, Ring, Spiral, Willow, Multi-ring, Senrin, and Halo.
+   - Select Kiku, Sphere Bloom, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo.
    - Press `Z` for each type.
    - Confirm burst radii are subtly uneven but compact enough that bursts do not feel over-expanded.
    - Confirm maximum burst radius reads about 80% of the previous wide spread.
@@ -389,7 +405,7 @@ Parity checks:
 - `iphone16_balanced` should remain the primary visual target.
 - `classic` should remain the default compatibility baseline.
 - The runtime should preserve the same 3D cuboid observation-box feel.
-- Kiku, Ring, Spiral, Willow, Peony, Multi-ring, Senrin, and Halo should remain available.
+- Kiku, Sphere Bloom, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo should remain available.
 - Shell launch, short shell tail, compact burst radius, deterministic wobble, pre-scale trail decisions, and glitter residue should match the preview direction.
 - CITY should preserve 48 building cuboids, central boulevard, tower, ferris wheel, signs, sparse windows, and interleaved two-blue building outlines.
 - Interior stars should remain attached to top and upper side faces, never exterior-facing surfaces.

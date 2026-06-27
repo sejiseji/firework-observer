@@ -191,6 +191,18 @@ external 2D shape idea
 - Preview-first: yes.
 - Notes:
   - Useful as confirmation that true 3D sphere generation belongs natively in Firework Observer, not as imported 2D projection math.
+  - `T0008.0` addressed the required canonical sphere role with `Sphere Bloom`, implemented as native deterministic `Vec3` sphere generation rather than external 2D projection logic.
+
+### Required Willow Variant Follow-Up
+
+- Source idea: stronger willow / falling-tail family.
+- Firework Observer translation:
+  - Keep the existing baseline Willow intact.
+  - Add a separate longer-falling willow variant with stronger downward gravity, longer lifetime, and more visible trail emphasis.
+- Status:
+  - `T0008.0` added `Long Willow` for this role.
+- Notes:
+  - Future tuning should compare baseline Willow and Long Willow side by side instead of merging their identities.
 
 ## Implementation Guidance
 
@@ -227,13 +239,14 @@ Add a future `ShapePlaneOrientationBank` only when implementing:
 
 ## Recommended Follow-Up Tasks
 
-1. `T0003.10`: Implement Orbit / Elliptical preset.
-2. `T0003.11`: Implement Golden Bloom / Fibonacci preset.
-3. `T0003.12`: Implement Counter Ring preset.
-4. `T0003.13`: Add shape-plane burst scaffold.
-5. `T0003.14`: Implement Star preset.
-6. `T0003.15`: Implement Heart preset.
-8. `T0003.16`: Evaluate Sierpinski / Magic Square geometry bursts.
+1. `T0008.1`: Visual review and tune Sphere Bloom / Long Willow if needed.
+2. `T0008.2`: Implement Orbit / Elliptical preset.
+3. `T0008.3`: Implement Golden Bloom / Fibonacci preset.
+4. `T0008.4`: Implement Counter Ring preset.
+5. `T0008.5`: Add shape-plane burst scaffold.
+6. `T0008.6`: Implement Star preset.
+7. `T0008.7`: Implement Heart preset.
+8. `T0008.8`: Evaluate Sierpinski / Magic Square geometry bursts.
 
 Before starting those, run the existing visual tuning checklist against `iphone16_balanced`. If Senrin, Multi-ring, or Willow are already too dense, tune density first.
 
@@ -245,4 +258,4 @@ Do manual visual review first:
 .venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced
 ```
 
-If density is stable, implement Halo next. If density is not stable, tune Senrin, Multi-ring, or Willow before adding new presets.
+Sphere Bloom and Long Willow now cover the required sphere and willow roles. Review them in the official runtime first; if density is stable, proceed to Orbit / Elliptical or another clearly distinct preset. If density is not stable, tune Sphere Bloom, Long Willow, Senrin, Multi-ring, or Willow before adding more presets.

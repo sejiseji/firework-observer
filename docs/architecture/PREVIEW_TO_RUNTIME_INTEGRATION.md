@@ -19,7 +19,7 @@ The first official runtime should preserve these preview-proven behaviors:
 - `classic` remains the default profile.
 - `iphone16_balanced` remains the primary portrait visual target: screen `236x512`, box `120x260x120`.
 - The scene is a 3D cuboid observation box using package-side `Camera3D` and `WireBox` projection.
-- Firework presets are Kiku, Ring, Spiral, Willow, Peony, Multi-ring, Senrin, and Halo.
+- Firework presets are Kiku, Sphere Bloom, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo.
 - Rising launch objects are firework shells, not rockets.
 - Firework shells use the short white/yellow/brown shell tail, not a full launch-to-current path line.
 - Primary burst radius uses the compact 80% scale and deterministic bounded wobble.
@@ -39,7 +39,7 @@ The first official runtime should preserve these preview-proven behaviors:
 
 These are intentionally outside the first runtime promotion:
 
-- New firework presets beyond Halo.
+- Additional firework presets beyond Sphere Bloom and Long Willow.
 - Ferris wheel animation.
 - Gameplay scoring.
 - Conversation, story, or event systems.
@@ -138,6 +138,8 @@ Manual review found official runtime parity OK for `iphone16_balanced`. Startup,
 `T0006.3` lowered overall BGM volume and changed channel 2 from high soft support into a calm mid-register rhythmic pulse. Explosion SFX remains on channel 3 and should read as the primary audio subject.
 
 `T0007.0` added a rare silent UFO ambient flyby to the official runtime. UFO scheduling and path helpers live in Pyxel-independent runtime code, rendering is Pyxel-bound, and `U` toggles the ambient layer. UFOs do not interact with fireworks and have no sound, beam, trail, particles, or gameplay behavior.
+
+`T0008.0` added two required firework variants without replacing existing presets. `Sphere Bloom` is the explicit canonical sphere-like bloom, while `Long Willow` is the stronger longer-falling willow / 枝垂れ variant. Runtime and preview cycle order is now Kiku, Sphere Bloom, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo.
 
 Primary launch commands:
 
@@ -240,7 +242,7 @@ The first official runtime is acceptable when it:
 - Keeps `main.py` thin and free of runtime logic.
 - Supports the `iphone16_balanced` visual target.
 - Preserves the 3D cuboid observation box.
-- Preserves the eight first-generation firework presets.
+- Preserves the ten first-generation firework presets.
 - Preserves shell launch, shell tail, compact burst radius, deterministic wobble, pre-scale trail decisions, and glitter residue.
 - Preserves CITY, boulevard, tower, ferris wheel, signs, windows, and 48-building density.
 - Preserves interior star placement and visibility rules.

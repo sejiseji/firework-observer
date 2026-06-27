@@ -73,9 +73,9 @@ def test_auto_rotate_q_cycle_order_wraps() -> None:
 
 
 def test_glitter_residue_counts_are_sparse() -> None:
-    assert len(GLITTER_RESIDUE_COUNTS) == 8
+    assert len(GLITTER_RESIDUE_COUNTS) == 10
     assert max(GLITTER_RESIDUE_COUNTS) <= 12
-    assert GLITTER_RESIDUE_COUNTS[6] <= 2
+    assert GLITTER_RESIDUE_COUNTS[8] <= 2
 
 
 def test_glitter_residue_lifetime_is_short() -> None:

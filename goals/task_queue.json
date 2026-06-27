@@ -1,28 +1,14 @@
 {
   "version": 1,
   "policy": "Keep tasks small enough for one Codex patch. Split ambiguous tasks before implementation.",
-  "current": [
+  "current": [],
+  "done": [
     {
       "id": "T0008.0",
       "title": "Add required sphere and willow firework variants",
-      "goal": "Add clear sphere and long-willow firework variants as new official runtime presets while preserving existing Kiku, Peony, and Willow behavior.",
-      "status": "todo",
-      "constraints": [
-        "Do not overwrite existing firework identities",
-        "Do not change CITY, stars, audio, shell tail, or runtime launcher behavior",
-        "Keep generation deterministic and Pyxel-independent",
-        "Keep preset additions small and reviewable"
-      ],
-      "acceptance": [
-        "New sphere-like and long-willow variants are distinct from existing presets",
-        "Preview/runtime cycling and random mode include the new presets if implemented",
-        "Existing firework tests remain valid",
-        "Tests and smoke pass",
-        "Validation results are recorded"
-      ]
-    }
-  ],
-  "done": [
+      "completed_on": "2026-06-27",
+      "summary": "Added Sphere Bloom as the explicit canonical sphere-like firework and Long Willow as the explicit longer falling willow variant while preserving existing Kiku, Peony, and Willow behavior."
+    },
     {
       "id": "T0007.0",
       "title": "Add rare UFO ambient flyby to official runtime",

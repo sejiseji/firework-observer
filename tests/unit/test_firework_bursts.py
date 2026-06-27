@@ -15,11 +15,13 @@ from pyxel_goal_game.firework_bursts import (
     generate_burst,
     generate_halo_burst,
     generate_kiku_burst,
+    generate_long_willow_burst,
     generate_multi_ring_burst,
     generate_peony_burst,
     generate_ring_burst,
     generate_secondary_burst,
     generate_senrin_burst,
+    generate_sphere_bloom_burst,
     generate_spiral_burst,
     generate_willow_burst,
     length_vec3,
@@ -28,11 +30,13 @@ from pyxel_goal_game.firework_bursts import (
 from pyxel_goal_game.firework_presets import (
     HALO_PRESET,
     KIKU_PRESET,
+    LONG_WILLOW_PRESET,
     MULTI_RING_PRESET,
     PEONY_PRESET,
     RING_PRESET,
     SENRIN_PRESET,
     SENRIN_SECONDARY_PRESET,
+    SPHERE_BLOOM_PRESET,
     SPIRAL_PRESET,
     WILLOW_PRESET,
     FireworkKind,
@@ -127,13 +131,41 @@ def test_kiku_velocity_distribution_is_3d_not_flat() -> None:
     assert any(abs(particle.velocity.z) > 0.01 for particle in particles)
 
 
+def test_sphere_bloom_preset_is_canonical_sphere_variant() -> None:
+    assert SPHERE_BLOOM_PRESET.kind is FireworkKind.SPHERE_BLOOM
+    assert SPHERE_BLOOM_PRESET.shape is FireworkShape.SPHERE
+    assert SPHERE_BLOOM_PRESET.particle_count == 100
+    assert SPHERE_BLOOM_PRESET.speed_range == (0.76, 1.28)
+    assert SPHERE_BLOOM_PRESET.life_range == (62, 88)
+    assert SPHERE_BLOOM_PRESET.palette == (7, 10, 12)
+    assert SPHERE_BLOOM_PRESET.trail.rate < KIKU_PRESET.trail.rate
+    assert SPHERE_BLOOM_PRESET.trail.draw_every == 2
+
+
+def test_sphere_bloom_generation_is_deterministic_and_spherical() -> None:
+    first = generate_sphere_bloom_burst(origin=ORIGIN, seed=123)
+    second = generate_sphere_bloom_burst(origin=ORIGIN, seed=123)
+
+    assert first == second
+    assert len(first) == SPHERE_BLOOM_PRESET.particle_count
+    assert any(abs(particle.velocity.x) > 0.01 for particle in first)
+    assert any(abs(particle.velocity.y) > 0.01 for particle in first)
+    assert any(abs(particle.velocity.z) > 0.01 for particle in first)
+    assert all(
+        speed_in_scaled_range(speed_of(particle.velocity), SPHERE_BLOOM_PRESET.speed_range)
+        for particle in first
+    )
+
+
 @pytest.mark.parametrize(
     "preset",
     [
         KIKU_PRESET,
+        SPHERE_BLOOM_PRESET,
         RING_PRESET,
         SPIRAL_PRESET,
         WILLOW_PRESET,
+        LONG_WILLOW_PRESET,
         PEONY_PRESET,
         MULTI_RING_PRESET,
         HALO_PRESET,
@@ -512,6 +544,39 @@ def test_generate_burst_supports_willow_shape() -> None:
     particles = generate_burst(preset=WILLOW_PRESET, origin=ORIGIN, seed=0)
 
     assert particles == generate_willow_burst(origin=ORIGIN, seed=0)
+
+
+def test_long_willow_preset_is_stronger_willow_variant() -> None:
+    assert LONG_WILLOW_PRESET.kind is FireworkKind.LONG_WILLOW
+    assert LONG_WILLOW_PRESET.shape is FireworkShape.WILLOW
+    assert LONG_WILLOW_PRESET.particle_count == 96
+    assert LONG_WILLOW_PRESET.speed_range == (0.38, 0.88)
+    assert LONG_WILLOW_PRESET.life_range == (110, 160)
+    assert LONG_WILLOW_PRESET.gravity < WILLOW_PRESET.gravity
+    assert LONG_WILLOW_PRESET.trail.rate > WILLOW_PRESET.trail.rate
+    assert LONG_WILLOW_PRESET.trail.early_ratio > WILLOW_PRESET.trail.early_ratio
+
+
+def test_long_willow_generation_is_deterministic_and_more_falling() -> None:
+    long_willow = generate_long_willow_burst(origin=ORIGIN, seed=123)
+    baseline = generate_willow_burst(origin=ORIGIN, seed=123)
+
+    assert long_willow == generate_long_willow_burst(origin=ORIGIN, seed=123)
+    assert len(long_willow) == LONG_WILLOW_PRESET.particle_count
+    assert all(
+        LONG_WILLOW_PRESET.life_range[0] <= particle.life <= LONG_WILLOW_PRESET.life_range[1]
+        for particle in long_willow
+    )
+    assert sum(particle.life for particle in long_willow) / len(long_willow) > (
+        sum(particle.life for particle in baseline) / len(baseline)
+    )
+    assert abs(LONG_WILLOW_PRESET.gravity) > abs(WILLOW_PRESET.gravity)
+
+
+def test_generate_burst_supports_long_willow_variant() -> None:
+    particles = generate_burst(preset=LONG_WILLOW_PRESET, origin=ORIGIN, seed=0)
+
+    assert particles == generate_long_willow_burst(origin=ORIGIN, seed=0)
 
 
 def test_peony_preset_uses_documented_values() -> None:

@@ -1330,3 +1330,27 @@ Record completed tasks here.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_170034.txt`.
   - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with UFO ambient integration and no immediate crash.
 - Preservation: Firework generation, preset constants, CITY geometry, stars, shell tail, glitter visuals, camera motion, show scheduling, audio behavior, preview harness, and robust main launcher unchanged.
+
+## 2026-06-27 T0008.0 Add required sphere and willow firework variants
+
+- Summary: Added `Sphere Bloom` as the explicit canonical sphere-like firework and `Long Willow` as the explicit longer falling willow / 枝垂れ variant.
+- Files changed: `src/pyxel_goal_game/firework_presets.py`, `src/pyxel_goal_game/firework_bursts.py`, runtime ordering/effects modules, preview ordering/effects, firework/runtime tests, README, product docs, research docs, visual checklist, goals logs, roadmap, task queue, and `GPT_HANDOFF.md`.
+- Behavior:
+  - Runtime and preview cycle order is now Kiku, Sphere Bloom, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo.
+  - Random mode and salvo scheduling include both new variants through the shared runtime order.
+  - `Sphere Bloom` uses deterministic native 3D spherical generation with a clean moderate particle count and restrained trails.
+  - `Long Willow` uses deterministic willow generation with longer life, stronger fall, and stronger trail emphasis than baseline Willow.
+  - Existing Kiku, Peony, and Willow remain available.
+- Tests:
+  - `.venv/bin/python -m json.tool goals/task_queue.json` passed.
+  - Targeted firework/runtime/preview tests passed before full validation: 149 passed.
+  - `python3 -m compileall src tests scripts tools main.py` passed.
+  - `.venv/bin/python -m pytest` passed: 270 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `.venv/bin/python main.py --help` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 270 passed.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_171343.txt`.
+  - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with Sphere Bloom / Long Willow integration and no immediate crash.
+- Preservation: `main.py` unchanged. CITY, stars, UFO behavior, audio, shell tail, glitter visuals, camera motion, and robust launcher behavior unchanged.

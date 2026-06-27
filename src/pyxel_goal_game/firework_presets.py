@@ -6,9 +6,11 @@ from enum import Enum, auto
 
 class FireworkKind(Enum):
     KIKU = auto()
+    SPHERE_BLOOM = auto()
     PEONY = auto()
     RING = auto()
     WILLOW = auto()
+    LONG_WILLOW = auto()
     SPIRAL = auto()
     MULTI_RING = auto()
     HALO = auto()
@@ -75,9 +77,11 @@ class FireworkPreset:
 
 FUTURE_FIREWORK_KINDS = (
     FireworkKind.KIKU,
+    FireworkKind.SPHERE_BLOOM,
     FireworkKind.PEONY,
     FireworkKind.RING,
     FireworkKind.WILLOW,
+    FireworkKind.LONG_WILLOW,
     FireworkKind.SPIRAL,
     FireworkKind.MULTI_RING,
     FireworkKind.HALO,
@@ -106,6 +110,31 @@ KIKU_PRESET = FireworkPreset(
     drag=0.985,
     gravity=-0.025,
     trail=KIKU_TRAIL_PRESET,
+)
+
+
+SPHERE_BLOOM_TRAIL_PRESET = TrailPreset(
+    rate=0.14,
+    speed_threshold=0.95,
+    early_ratio=0.30,
+    strong_speed=1.20,
+    draw_every=2,
+)
+
+SPHERE_BLOOM_PRESET = FireworkPreset(
+    kind=FireworkKind.SPHERE_BLOOM,
+    label="Sphere Bloom",
+    shape=FireworkShape.SPHERE,
+    particle_count=100,
+    speed_range=(0.76, 1.28),
+    life_range=(62, 88),
+    palette=(7, 10, 12),
+    fade_mid=10,
+    fade_dark=1,
+    tip_color=7,
+    drag=0.988,
+    gravity=-0.018,
+    trail=SPHERE_BLOOM_TRAIL_PRESET,
 )
 
 
@@ -251,6 +280,30 @@ WILLOW_PRESET = FireworkPreset(
     drag=0.976,
     gravity=-0.040,
     trail=WILLOW_TRAIL_PRESET,
+)
+
+
+LONG_WILLOW_TRAIL_PRESET = TrailPreset(
+    rate=0.78,
+    speed_threshold=0.32,
+    early_ratio=0.82,
+    strong_speed=0.62,
+)
+
+LONG_WILLOW_PRESET = FireworkPreset(
+    kind=FireworkKind.LONG_WILLOW,
+    label="Long Willow",
+    shape=FireworkShape.WILLOW,
+    particle_count=96,
+    speed_range=(0.38, 0.88),
+    life_range=(110, 160),
+    palette=(10, 9, 4, 7),
+    fade_mid=4,
+    fade_dark=2,
+    tip_color=10,
+    drag=0.972,
+    gravity=-0.052,
+    trail=LONG_WILLOW_TRAIL_PRESET,
 )
 
 

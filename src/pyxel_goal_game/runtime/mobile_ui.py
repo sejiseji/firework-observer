@@ -8,10 +8,14 @@ MENU_BUTTON_WIDTH = 44
 MENU_BUTTON_HEIGHT = 20
 MENU_BUTTON_MARGIN = 4
 PANEL_WIDTH = 228
-PANEL_HEIGHT = 480
+PANEL_HEIGHT = 420
 PANEL_MARGIN = 4
 CHECKBOX_SIZE = 12
 CHECKBOX_ROW_HEIGHT = 24
+BOTTOM_BUTTON_Y = 368
+BOTTOM_BUTTON_WIDTH = 64
+BOTTOM_BUTTON_GAP = 8
+ACTION_BUTTON_HEIGHT = 26
 
 
 @dataclass(frozen=True)
@@ -131,24 +135,39 @@ def speed_button_rect(panel: Rect) -> Rect:
 
 
 def launch_button_rect(panel: Rect) -> Rect:
-    return Rect(panel.x + 10, panel.y + 300, 70, 26)
+    return Rect(panel.x + 10, panel.y + 300, 70, ACTION_BUTTON_HEIGHT)
 
 
 def next_button_rect(panel: Rect) -> Rect:
-    return Rect(panel.x + 88, panel.y + 300, 56, 26)
+    return Rect(panel.x + 88, panel.y + 300, 56, ACTION_BUTTON_HEIGHT)
 
 
 def random_salvo_button_rect(panel: Rect) -> Rect:
-    return Rect(panel.x + 10, panel.y + 334, panel.width - 20, 26)
+    return Rect(panel.x + 10, panel.y + 334, panel.width - 20, ACTION_BUTTON_HEIGHT)
 
 
 def zoom_in_button_rect(panel: Rect) -> Rect:
-    return Rect(panel.x + 10, panel.y + 368, 78, 26)
+    return Rect(
+        panel.x + 10,
+        panel.y + BOTTOM_BUTTON_Y,
+        BOTTOM_BUTTON_WIDTH,
+        ACTION_BUTTON_HEIGHT,
+    )
 
 
 def zoom_out_button_rect(panel: Rect) -> Rect:
-    return Rect(panel.x + 96, panel.y + 368, 78, 26)
+    return Rect(
+        panel.x + 10 + BOTTOM_BUTTON_WIDTH + BOTTOM_BUTTON_GAP,
+        panel.y + BOTTOM_BUTTON_Y,
+        BOTTOM_BUTTON_WIDTH,
+        ACTION_BUTTON_HEIGHT,
+    )
 
 
 def close_button_rect(panel: Rect) -> Rect:
-    return Rect(panel.x + panel.width - 80, panel.y + panel.height - 34, 70, 26)
+    return Rect(
+        panel.x + 10 + (BOTTOM_BUTTON_WIDTH + BOTTOM_BUTTON_GAP) * 2,
+        panel.y + BOTTOM_BUTTON_Y,
+        BOTTOM_BUTTON_WIDTH,
+        ACTION_BUTTON_HEIGHT,
+    )

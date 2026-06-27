@@ -557,6 +557,7 @@ Checks:
 - `NEXT` cycles the selected firework kind.
 - `RAND SALVO` starts random-count salvo mode.
 - `ZOOM+` and `ZOOM-` change the camera zoom on touch devices.
+- `ZOOM+`, `ZOOM-`, and `CLOSE` share one compact bottom row so some of the scene remains visible behind the panel.
 - Mobile panel text is larger than the normal HUD text and remains readable on a phone.
 - Touch controls do not break keyboard or mouse-wheel controls.
 - The menu and panel remain readable on the `iphone16_balanced` profile.

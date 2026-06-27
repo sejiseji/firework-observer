@@ -83,6 +83,7 @@
 - [x] add mobile touch control panel
 - [x] make mobile panel instant and add BGM toggle
 - [x] add PC mouse-wheel zoom
+- [x] compact mobile panel height
 - [ ] tune visual feel
 - [ ] tune performance budget
 - [ ] record user feedback

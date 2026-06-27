@@ -77,11 +77,12 @@ pyxel run main.py
 
 - 画面をドラッグまたはフリック: カメラ回転
 - 右上の `MENU`: モバイル操作パネルを開く / 閉じる
-- パネル内チェック: random、height、auto、rotate、stars、UFO、audio、BGM、city を即時反映
+- パネル内チェック: random、height、auto、rotate、stars、UFO、audio / BGM、city を即時反映
+- `COUNT`: サルボ発射数を 1 / 2 / 3 / 4 / 5 / RND で切り替え
 - `speed`: 自動回転速度の切り替え
 - `LAUNCH`: 花火を1発打ち上げ
 - `NEXT`: 花火の種類を切り替え
-- `RAND SALVO`: ランダム数サルボ開始
+- `SALVO START`: `COUNT` で選んだ発射数のサルボ開始
 - `ZOOM+` / `ZOOM-`: ゲーム画面の拡大 / 縮小
 - `CLOSE`: パネルを閉じる
 

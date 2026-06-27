@@ -16,6 +16,7 @@ from pyxel_goal_game.runtime.effects import (
 from pyxel_goal_game.runtime.mobile_ui import (
     MOBILE_TOGGLE_SPECS,
     Rect,
+    bgm_checkbox_rect,
     checkbox_rect,
     checkbox_row_rect,
     close_button_rect,
@@ -24,6 +25,7 @@ from pyxel_goal_game.runtime.mobile_ui import (
     next_button_rect,
     panel_rect,
     random_salvo_button_rect,
+    salvo_count_button_rect,
     speed_button_rect,
     zoom_in_button_rect,
     zoom_out_button_rect,
@@ -319,6 +321,12 @@ class RuntimeRenderer:
         self.draw_scaled_text(panel.x + 10, panel.y + 12, "MOBILE", 7)
         pyxel.text(panel.x + 10, panel.y + 30, "tap toggles for instant change", 5)
 
+        self.draw_mobile_button(
+            salvo_count_button_rect(panel),
+            f"COUNT {self.app.mobile_salvo_count_label()}",
+            10,
+        )
+
         for index, spec in enumerate(MOBILE_TOGGLE_SPECS):
             row = checkbox_row_rect(panel, index)
             box = checkbox_rect(panel, index)
@@ -328,6 +336,25 @@ class RuntimeRenderer:
                 pyxel.line(box.x + 2, box.y + 6, box.x + 5, box.y + 10, 7)
                 pyxel.line(box.x + 5, box.y + 10, box.x + 10, box.y + 2, 7)
             self.draw_scaled_text(row.x + 24, row.y + 5, spec.label.upper(), 5)
+            if spec.key == "audio_enabled":
+                bgm_box = bgm_checkbox_rect(panel)
+                pyxel.rectb(bgm_box.x, bgm_box.y, bgm_box.width, bgm_box.height, 5)
+                if draft.bgm_enabled:
+                    pyxel.line(
+                        bgm_box.x + 2,
+                        bgm_box.y + 6,
+                        bgm_box.x + 5,
+                        bgm_box.y + 10,
+                        7,
+                    )
+                    pyxel.line(
+                        bgm_box.x + 5,
+                        bgm_box.y + 10,
+                        bgm_box.x + 10,
+                        bgm_box.y + 2,
+                        7,
+                    )
+                self.draw_scaled_text(bgm_box.x + 18, row.y + 5, "BGM", 5)
 
         speed = speed_button_rect(panel)
         pyxel.rectb(speed.x, speed.y, speed.width, speed.height, 5)
@@ -340,7 +367,7 @@ class RuntimeRenderer:
 
         self.draw_mobile_button(launch_button_rect(panel), "LAUNCH", 11)
         self.draw_mobile_button(next_button_rect(panel), "NEXT", 11)
-        self.draw_mobile_button(random_salvo_button_rect(panel), "RAND SALVO", 11)
+        self.draw_mobile_button(random_salvo_button_rect(panel), "SALVO START", 11)
         self.draw_mobile_button(zoom_in_button_rect(panel), "ZOOM+", 5)
         self.draw_mobile_button(zoom_out_button_rect(panel), "ZOOM-", 5)
         self.draw_mobile_button(close_button_rect(panel), "CLOSE", 8)

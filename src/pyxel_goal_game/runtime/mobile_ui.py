@@ -12,10 +12,13 @@ PANEL_HEIGHT = 420
 PANEL_MARGIN = 4
 CHECKBOX_SIZE = 12
 CHECKBOX_ROW_HEIGHT = 24
+SALVO_COUNT_BUTTON_Y = 42
+CHECKBOX_START_Y = 66
 BOTTOM_BUTTON_Y = 368
 BOTTOM_BUTTON_WIDTH = 64
 BOTTOM_BUTTON_GAP = 8
 ACTION_BUTTON_HEIGHT = 26
+AUDIO_BGM_ROW_INDEX = 6
 
 
 @dataclass(frozen=True)
@@ -43,7 +46,6 @@ MOBILE_TOGGLE_SPECS = (
     MobileToggleSpec("interior_stars_visible", "stars"),
     MobileToggleSpec("ufo_enabled", "ufo"),
     MobileToggleSpec("audio_enabled", "audio"),
-    MobileToggleSpec("bgm_enabled", "bgm"),
     MobileToggleSpec("scenery_visible", "city"),
 )
 
@@ -115,7 +117,7 @@ def panel_rect(screen_width: int, screen_height: int) -> Rect:
 def checkbox_rect(panel: Rect, index: int) -> Rect:
     return Rect(
         x=panel.x + 10,
-        y=panel.y + 48 + index * CHECKBOX_ROW_HEIGHT,
+        y=panel.y + CHECKBOX_START_Y + 6 + index * CHECKBOX_ROW_HEIGHT,
         width=CHECKBOX_SIZE,
         height=CHECKBOX_SIZE,
     )
@@ -124,10 +126,34 @@ def checkbox_rect(panel: Rect, index: int) -> Rect:
 def checkbox_row_rect(panel: Rect, index: int) -> Rect:
     return Rect(
         x=panel.x + 6,
-        y=panel.y + 42 + index * CHECKBOX_ROW_HEIGHT,
+        y=panel.y + CHECKBOX_START_Y + index * CHECKBOX_ROW_HEIGHT,
         width=panel.width - 8,
         height=CHECKBOX_ROW_HEIGHT,
     )
+
+
+def audio_toggle_rect(panel: Rect) -> Rect:
+    row = checkbox_row_rect(panel, AUDIO_BGM_ROW_INDEX)
+    return Rect(row.x, row.y, row.width // 2, row.height)
+
+
+def bgm_toggle_rect(panel: Rect) -> Rect:
+    row = checkbox_row_rect(panel, AUDIO_BGM_ROW_INDEX)
+    return Rect(row.x + row.width // 2, row.y, row.width - row.width // 2, row.height)
+
+
+def bgm_checkbox_rect(panel: Rect) -> Rect:
+    row = checkbox_row_rect(panel, AUDIO_BGM_ROW_INDEX)
+    return Rect(
+        x=row.x + row.width // 2 + 6,
+        y=row.y + 6,
+        width=CHECKBOX_SIZE,
+        height=CHECKBOX_SIZE,
+    )
+
+
+def salvo_count_button_rect(panel: Rect) -> Rect:
+    return Rect(panel.x + 10, panel.y + SALVO_COUNT_BUTTON_Y, panel.width - 20, 20)
 
 
 def speed_button_rect(panel: Rect) -> Rect:

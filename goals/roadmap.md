@@ -84,6 +84,7 @@
 - [x] make mobile panel instant and add BGM toggle
 - [x] add PC mouse-wheel zoom
 - [x] compact mobile panel height
+- [x] add mobile salvo count selector
 - [ ] tune visual feel
 - [ ] tune performance budget
 - [ ] record user feedback

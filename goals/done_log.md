@@ -1575,3 +1575,13 @@ Record completed tasks here.
   - `ZOOM+`, `ZOOM-`, and `CLOSE` are equal-width buttons on one bottom row.
   - Touch zoom can be reviewed with more of the scene still visible behind the panel.
 - Preservation: Firework generation, CITY, stars, UFO, audio, input semantics, shell tail, glitter, launcher behavior, and existing controls unchanged.
+
+## 2026-06-28 T0010.4 Add mobile salvo count selector
+
+- Summary: Added a mobile `COUNT` selector for fixed and random salvo counts.
+- Files changed: `src/pyxel_goal_game/runtime/mobile_ui.py`, `src/pyxel_goal_game/runtime/input.py`, `src/pyxel_goal_game/runtime/render.py`, `src/pyxel_goal_game/runtime/app.py`, runtime mobile/input/render tests, README, integration docs, visual checklist, goals logs, roadmap, task queue, and `GPT_HANDOFF.md`.
+- Behavior:
+  - BGM now shares the audio row in the mobile panel.
+  - `COUNT` cycles salvo selection through `1`, `2`, `3`, `4`, `5`, and `RND`.
+  - `SALVO START` starts the currently selected count instead of always starting random salvo.
+- Preservation: Firework generation, CITY, stars, UFO, audio playback behavior, shell tail, glitter, launcher behavior, and keyboard controls unchanged.

@@ -549,6 +549,7 @@ Checks:
 - Dragging or flicking the play field rotates the camera by default.
 - On PC, mouse wheel changes camera zoom within the same safe range as `A` / `S`.
 - The top-right `MENU` button opens and closes the mobile control panel.
+- The public Pyxel Web build should not show Pyxel's default virtual d-pad/buttons.
 - Panel checkboxes immediately reflect random, height, auto launch, auto rotate, stars, UFO, audio/BGM, and city settings behind the panel.
 - `COUNT` cycles salvo count selection through `1`, `2`, `3`, `4`, `5`, and `RND`.
 - `COUNT` updates the runtime salvo count state, so `SALVO START` and active salvo repeats use the selected count.

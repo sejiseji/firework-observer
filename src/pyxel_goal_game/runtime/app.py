@@ -103,6 +103,7 @@ class RuntimeApp:
         self.preview_rng = Random(RUNTIME_RANDOM_SEED)
         self.last_launched_kind = DEFAULT_FIREWORK_KIND
         self.next_persistent_salvo_frame = 0
+        self.mobile_salvo_count_choice: int | None = 1
         self.debug = True
         self.mobile_panel_open = False
         self.mobile_panel_draft = MobilePanelDraft.from_state(self.state)
@@ -295,6 +296,22 @@ class RuntimeApp:
         self.state = show_controller.set_random_salvo_mode(self.state)
         self.schedule_random_count_salvo()
         self.next_persistent_salvo_frame = pyxel.frame_count + PERSISTENT_SALVO_REPEAT_FRAMES
+
+    def cycle_mobile_salvo_count_choice(self) -> None:
+        order: tuple[int | None, ...] = (1, 2, 3, 4, 5, None)
+        index = order.index(self.mobile_salvo_count_choice)
+        self.mobile_salvo_count_choice = order[(index + 1) % len(order)]
+
+    def start_mobile_salvo_loop(self) -> None:
+        if self.mobile_salvo_count_choice is None:
+            self.start_random_salvo_loop()
+        else:
+            self.start_fixed_salvo_loop(self.mobile_salvo_count_choice)
+
+    def mobile_salvo_count_label(self) -> str:
+        if self.mobile_salvo_count_choice is None:
+            return "RND"
+        return str(self.mobile_salvo_count_choice)
 
     def schedule_salvo(self, count: int) -> None:
         schedule = build_fixed_salvo_schedule(

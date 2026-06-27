@@ -8,9 +8,13 @@ import pytest
 from pyxel_goal_game.runtime.mobile_ui import (
     MOBILE_TOGGLE_SPECS,
     MobilePanelDraft,
+    audio_toggle_rect,
+    bgm_checkbox_rect,
+    bgm_toggle_rect,
     close_button_rect,
     menu_button_rect,
     panel_rect,
+    salvo_count_button_rect,
     zoom_in_button_rect,
     zoom_out_button_rect,
 )
@@ -49,7 +53,8 @@ def test_mobile_panel_draft_toggles_known_fields_only() -> None:
         updated = draft.toggle(spec.key)
         assert getattr(updated, spec.key) is not getattr(draft, spec.key)
 
-    assert "bgm_enabled" in {spec.key for spec in MOBILE_TOGGLE_SPECS}
+    assert "audio_enabled" in {spec.key for spec in MOBILE_TOGGLE_SPECS}
+    assert "bgm_enabled" not in {spec.key for spec in MOBILE_TOGGLE_SPECS}
 
     with pytest.raises(ValueError, match="unknown mobile toggle"):
         draft.toggle("not_a_real_toggle")
@@ -71,6 +76,7 @@ def test_mobile_layout_stays_inside_portrait_profile() -> None:
     zoom_in = zoom_in_button_rect(panel)
     zoom_out = zoom_out_button_rect(panel)
     close = close_button_rect(panel)
+    salvo_count = salvo_count_button_rect(panel)
 
     assert 0 <= menu.x < 236
     assert 0 <= menu.y < 512
@@ -78,6 +84,7 @@ def test_mobile_layout_stays_inside_portrait_profile() -> None:
     assert panel.x + panel.width <= 236
     assert panel.y + panel.height <= 512
     assert panel.height < 512 - panel.y
+    assert panel.contains(salvo_count.x, salvo_count.y)
     assert panel.contains(zoom_in.x, zoom_in.y)
     assert panel.contains(zoom_out.x + zoom_out.width - 1, zoom_out.y + zoom_out.height - 1)
     assert panel.contains(close.x + close.width - 1, close.y + close.height - 1)
@@ -93,3 +100,16 @@ def test_mobile_bottom_buttons_are_equal_width_on_one_row() -> None:
     assert zoom_in.width == zoom_out.width == close.width
     assert zoom_in.height == zoom_out.height == close.height
     assert zoom_in.x < zoom_out.x < close.x
+
+
+def test_mobile_audio_and_bgm_share_one_toggle_row() -> None:
+    panel = panel_rect(236, 512)
+    audio = audio_toggle_rect(panel)
+    bgm = bgm_toggle_rect(panel)
+    bgm_box = bgm_checkbox_rect(panel)
+
+    assert audio.y == bgm.y
+    assert audio.height == bgm.height
+    assert audio.x < bgm.x
+    assert audio.x + audio.width == bgm.x
+    assert bgm.contains(bgm_box.x, bgm_box.y)

@@ -4,6 +4,12 @@
     "current": [],
     "done": [
         {
+            "id": "T0010.4",
+            "title": "Add mobile salvo count selector",
+            "completed_on": "2026-06-28",
+            "summary": "Moved BGM beside audio and added a top COUNT selector cycling 1, 2, 3, 4, 5, and RND, with SALVO START using the selected count."
+        },
+        {
             "id": "T0010.3",
             "title": "Compact mobile panel height",
             "completed_on": "2026-06-28",

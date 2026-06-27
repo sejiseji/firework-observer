@@ -549,13 +549,14 @@ Checks:
 - Dragging or flicking the play field rotates the camera by default.
 - On PC, mouse wheel changes camera zoom within the same safe range as `A` / `S`.
 - The top-right `MENU` button opens and closes the mobile control panel.
-- Panel checkboxes immediately reflect random, height, auto launch, auto rotate, stars, UFO, audio, BGM, and city settings behind the panel.
+- Panel checkboxes immediately reflect random, height, auto launch, auto rotate, stars, UFO, audio/BGM, and city settings behind the panel.
+- `COUNT` cycles salvo count selection through `1`, `2`, `3`, `4`, `5`, and `RND`.
 - `BGM` can be turned off while `audio` remains on, and explosion SFX still plays.
 - `speed` immediately cycles the auto-rotate speed.
 - `CLOSE` dismisses the panel without changing already-applied settings.
 - `LAUNCH` starts a single shell.
 - `NEXT` cycles the selected firework kind.
-- `RAND SALVO` starts random-count salvo mode.
+- `SALVO START` starts the currently selected `COUNT` salvo mode.
 - `ZOOM+` and `ZOOM-` change the camera zoom on touch devices.
 - `ZOOM+`, `ZOOM-`, and `CLOSE` share one compact bottom row so some of the scene remains visible behind the panel.
 - Mobile panel text is larger than the normal HUD text and remains readable on a phone.

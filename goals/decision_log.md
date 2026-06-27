@@ -1068,3 +1068,17 @@ Keep the full-height panel, add panel transparency, or move zoom controls outsid
 
 Impact:
 Runtime mobile UI geometry, tests, README, integration docs, visual checklist, goals, and handoff records changed. Firework generation, CITY, stars, UFO, audio, input semantics, launcher behavior, and existing controls remain unchanged.
+
+## 2026-06-28 Add mobile salvo count selector
+
+Decision:
+Move BGM onto the same mobile panel row as audio, and use the freed row for a top `COUNT` selector that cycles `1`, `2`, `3`, `4`, `5`, and `RND`. The existing mobile salvo action becomes `SALVO START` and starts the currently selected count.
+
+Reason:
+Audio and BGM are closely related toggles and fit naturally on one row. Touch users also need access to fixed-count salvos without keyboard number keys, but changing the count should not immediately fire while the user is cycling through choices.
+
+Alternatives:
+Keep BGM on its own row, make the count selector fire immediately, add six separate count buttons, or leave fixed-count salvos keyboard-only.
+
+Impact:
+Runtime mobile UI geometry, input handling, app mobile panel state, tests, README, integration docs, visual checklist, goals, and handoff records changed. Firework generation, CITY, stars, UFO, audio playback behavior, shell tail, glitter, launcher behavior, and keyboard controls remain unchanged.

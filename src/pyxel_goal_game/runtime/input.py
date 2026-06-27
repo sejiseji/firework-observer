@@ -5,6 +5,8 @@ import pyxel
 from pyxel_goal_game.runtime import show_controller
 from pyxel_goal_game.runtime.mobile_ui import (
     MOBILE_TOGGLE_SPECS,
+    audio_toggle_rect,
+    bgm_toggle_rect,
     checkbox_row_rect,
     close_button_rect,
     launch_button_rect,
@@ -12,6 +14,7 @@ from pyxel_goal_game.runtime.mobile_ui import (
     next_button_rect,
     panel_rect,
     random_salvo_button_rect,
+    salvo_count_button_rect,
     speed_button_rect,
     zoom_in_button_rect,
     zoom_out_button_rect,
@@ -139,8 +142,18 @@ def handle_mobile_panel_click(app: object, mouse_x: int, mouse_y: int) -> bool:
     if not panel.contains(mouse_x, mouse_y):
         return False
 
+    if salvo_count_button_rect(panel).contains(mouse_x, mouse_y):
+        app.cycle_mobile_salvo_count_choice()
+        return True
+
     for index, spec in enumerate(MOBILE_TOGGLE_SPECS):
         if checkbox_row_rect(panel, index).contains(mouse_x, mouse_y):
+            if spec.key == "audio_enabled":
+                if bgm_toggle_rect(panel).contains(mouse_x, mouse_y):
+                    app.apply_mobile_toggle("bgm_enabled")
+                elif audio_toggle_rect(panel).contains(mouse_x, mouse_y):
+                    app.apply_mobile_toggle("audio_enabled")
+                return True
             app.apply_mobile_toggle(spec.key)
             return True
 
@@ -155,7 +168,7 @@ def handle_mobile_panel_click(app: object, mouse_x: int, mouse_y: int) -> bool:
         app.refresh_mobile_panel_draft()
         return True
     if random_salvo_button_rect(panel).contains(mouse_x, mouse_y):
-        app.start_random_salvo_loop()
+        app.start_mobile_salvo_loop()
         app.refresh_mobile_panel_draft()
         return True
     if zoom_in_button_rect(panel).contains(mouse_x, mouse_y):

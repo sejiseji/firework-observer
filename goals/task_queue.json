@@ -4,6 +4,12 @@
     "current": [],
     "done": [
         {
+            "id": "T0010.6",
+            "title": "Connect mobile count selector to salvo state",
+            "completed_on": "2026-06-28",
+            "summary": "Fixed the mobile COUNT selector so it updates runtime salvo count state and SALVO START uses the selected count."
+        },
+        {
             "id": "T0010.5",
             "title": "Show current firework kind on mobile selector",
             "completed_on": "2026-06-28",

@@ -301,12 +301,23 @@ class RuntimeApp:
         order: tuple[int | None, ...] = (1, 2, 3, 4, 5, None)
         index = order.index(self.mobile_salvo_count_choice)
         self.mobile_salvo_count_choice = order[(index + 1) % len(order)]
+        if self.mobile_salvo_count_choice is None:
+            if self.state.salvo_count_mode is not SalvoCountMode.OFF:
+                self.state = show_controller.set_random_salvo_mode(self.state)
+            return
+        if self.state.salvo_count_mode is SalvoCountMode.OFF:
+            self.state = replace(self.state, salvo_count=self.mobile_salvo_count_choice)
+            return
+        self.state = show_controller.set_fixed_salvo_mode(
+            self.state,
+            self.mobile_salvo_count_choice,
+        )
 
     def start_mobile_salvo_loop(self) -> None:
         if self.mobile_salvo_count_choice is None:
             self.start_random_salvo_loop()
         else:
-            self.start_fixed_salvo_loop(self.mobile_salvo_count_choice)
+            self.start_fixed_salvo_loop(self.state.salvo_count)
 
     def mobile_salvo_count_label(self) -> str:
         if self.mobile_salvo_count_choice is None:

@@ -1096,3 +1096,17 @@ Keep `NEXT`, add a separate read-only label, or move firework selection into a l
 
 Impact:
 Runtime mobile UI geometry/rendering, mobile UI tests, README, integration docs, visual checklist, goals, and handoff records changed. Firework generation, CITY, stars, UFO, audio, shell tail, glitter, launcher behavior, and keyboard controls remain unchanged.
+
+## 2026-06-28 Connect mobile count selector to salvo state
+
+Decision:
+Make the mobile `COUNT` selector update runtime salvo state, not only the panel-local label.
+
+Reason:
+The panel showed `COUNT` cycling, but `SALVO START` and active persistent salvos could continue using the old runtime count, making the UI look disconnected from the actual launched salvo size.
+
+Alternatives:
+Keep `COUNT` as a pending selection that only applies on `SALVO START`, or split the UI into separate apply/start controls.
+
+Impact:
+Runtime mobile salvo state handling and tests changed. Firework generation, CITY, stars, UFO, audio, shell tail, glitter, launcher behavior, panel layout, and keyboard controls remain unchanged.

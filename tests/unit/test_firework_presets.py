@@ -6,6 +6,7 @@ import pytest
 
 from pyxel_goal_game.firework_presets import (
     FUTURE_FIREWORK_KINDS,
+    SMILE_PRESET,
     FireworkKind,
     FireworkPreset,
     FireworkShape,
@@ -18,6 +19,7 @@ def test_future_firework_kinds_exist() -> None:
     assert set(FUTURE_FIREWORK_KINDS) == {
         FireworkKind.KIKU,
         FireworkKind.SPHERE_BLOOM,
+        FireworkKind.SMILE,
         FireworkKind.PEONY,
         FireworkKind.RING,
         FireworkKind.WILLOW,
@@ -32,6 +34,7 @@ def test_future_firework_kinds_exist() -> None:
 def test_future_firework_shapes_exist() -> None:
     assert {shape.name for shape in FireworkShape} == {
         "SPHERE",
+        "SMILE",
         "RING",
         "WILLOW",
         "SPIRAL",
@@ -116,6 +119,16 @@ def test_secondary_preset_construction() -> None:
 
     assert secondary.gravity < 0.0
     assert secondary.trail.draw_every == 2
+
+
+def test_smile_preset_is_shaped_firework() -> None:
+    assert SMILE_PRESET.kind is FireworkKind.SMILE
+    assert SMILE_PRESET.label == "Smile"
+    assert SMILE_PRESET.shape is FireworkShape.SMILE
+    assert SMILE_PRESET.particle_count == 82
+    assert SMILE_PRESET.speed_range == (0.62, 1.08)
+    assert SMILE_PRESET.trail.draw_every == 2
+    assert SMILE_PRESET.secondary is None
 
 
 def test_firework_preset_module_has_no_pyxel_dependency() -> None:

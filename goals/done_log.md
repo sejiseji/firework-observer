@@ -1425,3 +1425,26 @@ Record completed tasks here.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_185835.txt`.
   - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with delayed mini-burst garnish and no immediate crash.
 - Preservation: `main.py`, launcher behavior, CITY, stars, UFO, audio, shell tail, global glitter behavior, firework order, random/salvo scheduling, and existing main firework kinds unchanged.
+
+## 2026-06-27 T0008.4 Add smile firework preset
+
+- Summary: Added Smile as a first-class shaped firework preset.
+- Files changed: `src/pyxel_goal_game/firework_presets.py`, `src/pyxel_goal_game/firework_bursts.py`, runtime/preview firework ordering, tests, README, product docs, integration docs, visual checklist, external candidate notes, goals logs, roadmap, task queue, and `GPT_HANDOFF.md`.
+- Behavior:
+  - `FireworkKind.SMILE` and `SMILE_PRESET` now exist.
+  - Smile uses two small eye clusters and a smiling mouth arc in a front-biased 3D plane.
+  - Runtime and preview cycle order is Kiku, Sphere Bloom, Smile, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo.
+  - Random mode and salvos can select Smile.
+  - Smile is excluded from delayed mini-burst garnish so the face shape remains readable.
+- Tests:
+  - Targeted firework/runtime tests passed before full validation: 161 passed.
+  - `python3 -m compileall src tests scripts tools main.py` passed.
+  - `.venv/bin/python -m pytest` passed: 285 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `.venv/bin/python main.py --help` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 285 passed.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_191737.txt`.
+  - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with Smile preset integration and no immediate crash.
+- Preservation: `main.py`, launcher behavior, CITY, stars, UFO, audio, shell tail, global glitter behavior, delayed mini-burst garnish behavior for existing eligible kinds, and existing firework variants unchanged.

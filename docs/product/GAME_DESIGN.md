@@ -34,6 +34,7 @@ The official runtime includes these first-class firework variants:
 
 - Kiku
 - Sphere Bloom
+- Smile
 - Ring
 - Spiral
 - Willow
@@ -43,9 +44,10 @@ The official runtime includes these first-class firework variants:
 - Senrin
 - Halo
 
-`Sphere Bloom` is the explicit canonical sphere-like bloom. `Long Willow` is the explicit longer falling willow / 枝垂れ variant. Existing Kiku, Peony, and Willow remain distinct and available.
+`Sphere Bloom` is the explicit canonical sphere-like bloom. `Smile` is a shaped burst with two eyes and a smiling mouth arc. `Long Willow` is the explicit longer falling willow / 枝垂れ variant. Existing Kiku, Peony, and Willow remain distinct and available.
 
 Some eligible main fireworks can also produce delayed mini-burst garnish: small deterministic child blooms near the original burst after short staggered delays. This is a secondary show effect, not a separate main firework kind.
+`Smile` does not use delayed mini-burst garnish so the face shape stays readable.
 
 ## Future observation space expansion
 

@@ -13,6 +13,7 @@ from pyxel_goal_game.firework_presets import (
     PEONY_PRESET,
     RING_PRESET,
     SENRIN_PRESET,
+    SMILE_PRESET,
     SPHERE_BLOOM_PRESET,
     SPIRAL_PRESET,
     WILLOW_PRESET,
@@ -40,6 +41,7 @@ BURST_RADIUS_VARIATION_BY_KIND = {
     FireworkKind.KIKU: 0.04,
     FireworkKind.SPHERE_BLOOM: 0.025,
     FireworkKind.PEONY: 0.04,
+    FireworkKind.SMILE: 0.025,
     FireworkKind.RING: 0.03,
     FireworkKind.MULTI_RING: 0.03,
     FireworkKind.HALO: 0.025,
@@ -180,6 +182,15 @@ def generate_sphere_bloom_burst(
     return generate_burst(preset=preset, origin=origin, seed=seed)
 
 
+def generate_smile_burst(
+    *,
+    origin: Vec3,
+    seed: int,
+    preset: FireworkPreset = SMILE_PRESET,
+) -> tuple[ParticleSpawnSpec, ...]:
+    return generate_burst(preset=preset, origin=origin, seed=seed)
+
+
 def generate_senrin_burst(
     *,
     origin: Vec3,
@@ -226,6 +237,8 @@ def generate_burst(
     rng = Random(seed)
     if preset.shape is FireworkShape.SPHERE:
         return generate_sphere_burst(preset=preset, origin=origin, rng=rng)
+    if preset.shape is FireworkShape.SMILE:
+        return generate_smile_shape_burst(preset=preset, origin=origin, rng=rng)
     if preset.shape is FireworkShape.RING:
         orientation = choose_ring_orientation(
             seed=seed,
@@ -330,6 +343,78 @@ def generate_ring_shape_burst(
             )
         )
     return tuple(particles)
+
+
+def generate_smile_shape_burst(
+    *,
+    preset: FireworkPreset,
+    origin: Vec3,
+    rng: Random,
+) -> tuple[ParticleSpawnSpec, ...]:
+    points = build_smile_shape_points()
+    if len(points) != preset.particle_count:
+        msg = "Smile shape point count must match particle_count"
+        raise ValueError(msg)
+    yaw = rng.uniform(-0.16, 0.16)
+    pitch = rng.uniform(-0.07, 0.07)
+    particles: list[ParticleSpawnSpec] = []
+    for index, (local_x, local_y) in enumerate(points):
+        speed = varied_burst_speed(
+            base_speed=rng.uniform(*preset.speed_range),
+            preset=preset,
+            index=index,
+        )
+        direction = smile_plane_direction(
+            local_x=local_x,
+            local_y=local_y,
+            yaw=yaw,
+            pitch=pitch,
+            depth_jitter=rng.uniform(-0.035, 0.035),
+        )
+        particles.append(
+            make_particle_spec(
+                origin=origin,
+                velocity=scale_vec3(direction, speed),
+                speed=trail_speed_from_radius_speed(speed),
+                preset=preset,
+                rng=rng,
+            )
+        )
+    return tuple(particles)
+
+
+def build_smile_shape_points() -> tuple[tuple[float, float], ...]:
+    points: list[tuple[float, float]] = []
+    for eye_center_x in (-0.42, 0.42):
+        for index in range(12):
+            theta = index / 12 * math.tau
+            points.append(
+                (
+                    eye_center_x + math.cos(theta) * 0.095,
+                    0.30 + math.sin(theta) * 0.095,
+                )
+            )
+    for index in range(58):
+        t = index / 57
+        theta = math.radians(205 + 130 * t)
+        points.append((math.cos(theta) * 0.62, math.sin(theta) * 0.46 - 0.03))
+    return tuple(points)
+
+
+def smile_plane_direction(
+    *,
+    local_x: float,
+    local_y: float,
+    yaw: float,
+    pitch: float,
+    depth_jitter: float,
+) -> Vec3:
+    z = depth_jitter + local_y * 0.08
+    x1 = local_x * math.cos(yaw) + z * math.sin(yaw)
+    z1 = -local_x * math.sin(yaw) + z * math.cos(yaw)
+    y1 = local_y * math.cos(pitch) - z1 * math.sin(pitch)
+    z2 = local_y * math.sin(pitch) + z1 * math.cos(pitch)
+    return normalize_vec3(Vec3(x1, y1, z2))
 
 
 def generate_multi_ring_shape_burst(

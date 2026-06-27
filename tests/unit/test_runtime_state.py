@@ -47,6 +47,7 @@ def test_first_generation_firework_order_matches_preview_cycle() -> None:
     assert FIRST_GENERATION_FIREWORK_ORDER == (
         FireworkKind.KIKU,
         FireworkKind.SPHERE_BLOOM,
+        FireworkKind.SMILE,
         FireworkKind.RING,
         FireworkKind.SPIRAL,
         FireworkKind.WILLOW,

@@ -936,3 +936,17 @@ Create a new mini-burst firework kind, attach garnish to every preset, make garn
 
 Impact:
 Runtime effects and app scheduling changed. Firework cycle/order, random/salvo scheduling, CITY, stars, UFO, audio, shell tail, global glitter behavior, launcher behavior, and existing main firework kinds remain unchanged.
+
+## 2026-06-27 Add smile firework preset
+
+Decision:
+Add `Smile` as a first-class shaped firework preset. The burst uses two eye clusters and a smiling mouth arc embedded in a front-biased 3D plane.
+
+Reason:
+The current set already covers natural sphere, ring, spiral, willow, multi-ring, Senrin, and Halo patterns. A simple shaped Smile preset adds a readable playful show element while staying within the existing deterministic burst model.
+
+Alternatives:
+Implement Star or Heart first, add Smile as a garnish instead of a main preset, or attach delayed mini-burst garnish to Smile.
+
+Impact:
+Preset/generation dispatch, runtime and preview firework order, random/salvo selection, tests, and docs changed. Smile is excluded from delayed mini-burst garnish so after-pops do not obscure the face. `main.py`, launcher behavior, CITY, stars, UFO, audio, shell tail, global glitter, and existing firework behavior remain unchanged.

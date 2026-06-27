@@ -7,6 +7,7 @@ from enum import Enum, auto
 class FireworkKind(Enum):
     KIKU = auto()
     SPHERE_BLOOM = auto()
+    SMILE = auto()
     PEONY = auto()
     RING = auto()
     WILLOW = auto()
@@ -19,6 +20,7 @@ class FireworkKind(Enum):
 
 class FireworkShape(Enum):
     SPHERE = auto()
+    SMILE = auto()
     RING = auto()
     WILLOW = auto()
     SPIRAL = auto()
@@ -78,6 +80,7 @@ class FireworkPreset:
 FUTURE_FIREWORK_KINDS = (
     FireworkKind.KIKU,
     FireworkKind.SPHERE_BLOOM,
+    FireworkKind.SMILE,
     FireworkKind.PEONY,
     FireworkKind.RING,
     FireworkKind.WILLOW,
@@ -135,6 +138,31 @@ SPHERE_BLOOM_PRESET = FireworkPreset(
     drag=0.988,
     gravity=-0.018,
     trail=SPHERE_BLOOM_TRAIL_PRESET,
+)
+
+
+SMILE_TRAIL_PRESET = TrailPreset(
+    rate=0.10,
+    speed_threshold=0.70,
+    early_ratio=0.24,
+    strong_speed=1.00,
+    draw_every=2,
+)
+
+SMILE_PRESET = FireworkPreset(
+    kind=FireworkKind.SMILE,
+    label="Smile",
+    shape=FireworkShape.SMILE,
+    particle_count=82,
+    speed_range=(0.62, 1.08),
+    life_range=(64, 92),
+    palette=(10, 7, 12),
+    fade_mid=6,
+    fade_dark=1,
+    tip_color=7,
+    drag=0.989,
+    gravity=-0.010,
+    trail=SMILE_TRAIL_PRESET,
 )
 
 

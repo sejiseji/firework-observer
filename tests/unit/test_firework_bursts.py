@@ -11,6 +11,7 @@ from pyxel_goal_game.firework_bursts import (
     DEFAULT_RING_ORIENTATION_COUNT,
     RingOrientationBank,
     build_ring_orientation_bank,
+    build_smile_shape_points,
     dot_vec3,
     generate_burst,
     generate_halo_burst,
@@ -21,6 +22,7 @@ from pyxel_goal_game.firework_bursts import (
     generate_ring_burst,
     generate_secondary_burst,
     generate_senrin_burst,
+    generate_smile_burst,
     generate_sphere_bloom_burst,
     generate_spiral_burst,
     generate_willow_burst,
@@ -36,6 +38,7 @@ from pyxel_goal_game.firework_presets import (
     RING_PRESET,
     SENRIN_PRESET,
     SENRIN_SECONDARY_PRESET,
+    SMILE_PRESET,
     SPHERE_BLOOM_PRESET,
     SPIRAL_PRESET,
     WILLOW_PRESET,
@@ -157,11 +160,70 @@ def test_sphere_bloom_generation_is_deterministic_and_spherical() -> None:
     )
 
 
+def test_smile_preset_uses_readable_shaped_burst_values() -> None:
+    assert SMILE_PRESET.kind is FireworkKind.SMILE
+    assert SMILE_PRESET.shape is FireworkShape.SMILE
+    assert SMILE_PRESET.particle_count == 82
+    assert SMILE_PRESET.speed_range == (0.62, 1.08)
+    assert SMILE_PRESET.life_range == (64, 92)
+    assert SMILE_PRESET.palette == (10, 7, 12)
+    assert SMILE_PRESET.trail.rate < SPHERE_BLOOM_PRESET.trail.rate
+    assert SMILE_PRESET.secondary is None
+
+
+def test_smile_shape_points_have_eyes_and_mouth_arc() -> None:
+    points = build_smile_shape_points()
+
+    assert len(points) == SMILE_PRESET.particle_count
+    eye_points = points[:24]
+    mouth_points = points[24:]
+
+    left_eye = eye_points[:12]
+    right_eye = eye_points[12:]
+    assert max(x for x, _y in left_eye) < -0.30
+    assert min(x for x, _y in right_eye) > 0.30
+    assert all(y > 0.18 for _x, y in eye_points)
+
+    mouth_xs = [x for x, _y in mouth_points]
+    mouth_ys = [y for _x, y in mouth_points]
+    assert max(mouth_xs) - min(mouth_xs) > 1.0
+    assert max(mouth_ys) < 0.0
+    assert mouth_ys[len(mouth_ys) // 2] < mouth_ys[0]
+    assert mouth_ys[len(mouth_ys) // 2] < mouth_ys[-1]
+
+
+def test_smile_generation_is_deterministic_and_front_readable() -> None:
+    first = generate_smile_burst(origin=ORIGIN, seed=123)
+    second = generate_smile_burst(origin=ORIGIN, seed=123)
+
+    assert first == second
+    assert len(first) == SMILE_PRESET.particle_count
+    assert all(
+        speed_in_scaled_range(speed_of(particle.velocity), SMILE_PRESET.speed_range)
+        for particle in first
+    )
+
+    xs = [particle.velocity.x for particle in first]
+    ys = [particle.velocity.y for particle in first]
+    zs = [particle.velocity.z for particle in first]
+    assert max(xs) - min(xs) > 0.75
+    assert max(ys) - min(ys) > 0.45
+    assert max(zs) - min(zs) < max(xs) - min(xs)
+
+
+def test_generate_burst_dispatches_smile_shape() -> None:
+    assert generate_burst(preset=SMILE_PRESET, origin=ORIGIN, seed=44) == generate_smile_burst(
+        origin=ORIGIN,
+        seed=44,
+    )
+
+
 @pytest.mark.parametrize(
     "preset",
     [
         KIKU_PRESET,
         SPHERE_BLOOM_PRESET,
+        SMILE_PRESET,
         RING_PRESET,
         SPIRAL_PRESET,
         WILLOW_PRESET,

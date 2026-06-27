@@ -75,6 +75,7 @@
 - [x] add required sphere and willow firework variants
 - [x] tune UFO height bands and Long Willow trail mixture
 - [x] add delayed mini-burst garnish
+- [x] add smile firework preset
 - [ ] tune visual feel
 - [ ] tune performance budget
 - [ ] record user feedback

@@ -145,6 +145,16 @@ external 2D shape idea
   - Strong novelty preset.
   - More symbolic than the current Firework Box direction; delay until core presets are stable.
 
+### Smile
+
+- Source idea: shaped / symbolic burst family.
+- Firework Observer translation:
+  - `T0008.4` implemented Smile as a first-class shaped burst using local 2D eye clusters and a smiling mouth arc embedded in a front-biased 3D plane.
+  - It is included in cycle, random mode, and salvos.
+  - It intentionally does not use delayed mini-burst garnish so the face remains readable.
+- Suggested category: plane shape.
+- Status: implemented.
+
 ### Sierpinski
 
 - Source idea: `sierpinski_triangle_burst`
@@ -242,11 +252,12 @@ Add a future `ShapePlaneOrientationBank` only when implementing:
 1. `T0008.1`: Visual review and tune Sphere Bloom / Long Willow if needed.
 2. `T0008.2`: Implement Orbit / Elliptical preset.
 3. `T0008.3`: Implement Golden Bloom / Fibonacci preset.
-4. `T0008.4`: Implement Counter Ring preset.
-5. `T0008.5`: Add shape-plane burst scaffold.
-6. `T0008.6`: Implement Star preset.
-7. `T0008.7`: Implement Heart preset.
-8. `T0008.8`: Evaluate Sierpinski / Magic Square geometry bursts.
+4. `T0008.4`: Add Smile firework preset.
+5. Future: Implement Counter Ring preset.
+6. Future: Add shape-plane burst scaffold for additional symbols.
+7. Future: Implement Star preset.
+8. Future: Implement Heart preset.
+9. Future: Evaluate Sierpinski / Magic Square geometry bursts.
 
 Before starting those, run the existing visual tuning checklist against `iphone16_balanced`. If Senrin, Multi-ring, or Willow are already too dense, tune density first.
 
@@ -258,4 +269,4 @@ Do manual visual review first:
 .venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced
 ```
 
-Sphere Bloom and Long Willow now cover the required sphere and willow roles. Review them in the official runtime first; if density is stable, proceed to Orbit / Elliptical or another clearly distinct preset. If density is not stable, tune Sphere Bloom, Long Willow, Senrin, Multi-ring, or Willow before adding more presets.
+Sphere Bloom and Long Willow now cover the required sphere and willow roles, and Smile covers the first readable symbolic shaped burst. Review them in the official runtime first; if density is stable, proceed to Orbit / Elliptical, Counter Ring, or another clearly distinct preset. If density is not stable, tune Sphere Bloom, Smile, Long Willow, Senrin, Multi-ring, or Willow before adding more presets.

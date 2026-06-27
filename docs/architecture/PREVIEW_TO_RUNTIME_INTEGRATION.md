@@ -19,7 +19,7 @@ The first official runtime should preserve these preview-proven behaviors:
 - `classic` remains the default profile.
 - `iphone16_balanced` remains the primary portrait visual target: screen `236x512`, box `120x260x120`.
 - The scene is a 3D cuboid observation box using package-side `Camera3D` and `WireBox` projection.
-- Firework presets are Kiku, Sphere Bloom, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo.
+- Firework presets are Kiku, Sphere Bloom, Smile, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo.
 - Rising launch objects are firework shells, not rockets.
 - Firework shells use the short white/yellow/brown shell tail, not a full launch-to-current path line.
 - Primary burst radius uses the compact 80% scale and deterministic bounded wobble.
@@ -39,7 +39,7 @@ The first official runtime should preserve these preview-proven behaviors:
 
 These are intentionally outside the first runtime promotion:
 
-- Additional firework presets beyond Sphere Bloom and Long Willow.
+- Additional firework presets beyond Smile.
 - Ferris wheel animation.
 - Gameplay scoring.
 - Conversation, story, or event systems.
@@ -141,11 +141,13 @@ Manual review found official runtime parity OK for `iphone16_balanced`. Startup,
 
 `T0007.1` changed the UFO visual from a flat sprite-like saucer into a small 3D wireframe saucer. Geometry construction remains Pyxel-independent in `runtime/ufo.py`, while Pyxel drawing remains isolated to `runtime/render.py`. Scheduling frequency, rarity, silence, `U` toggle behavior, and non-interaction constraints are unchanged.
 
-`T0008.0` added two required firework variants without replacing existing presets. `Sphere Bloom` is the explicit canonical sphere-like bloom, while `Long Willow` is the stronger longer-falling willow / 枝垂れ variant. Runtime and preview cycle order is now Kiku, Sphere Bloom, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo.
+`T0008.0` added two required firework variants without replacing existing presets. `Sphere Bloom` is the explicit canonical sphere-like bloom, while `Long Willow` is the stronger longer-falling willow / 枝垂れ variant.
 
 `T0008.1` tuned second-phase additions without adding new systems. UFOs are modestly larger and choose deterministic low, middle, or high flyby height bands while remaining rare, silent, beamless, trailless, particleless, and non-interactive. `Long Willow` now mixes longer-trail falling branches with trail-light or no-long-trail falling embers.
 
 `T0008.3` added delayed mini-burst garnish for eligible fireworks. Kiku, Sphere Bloom, Peony, and Multi-ring can spawn a small deterministic set of nearby child blooms after staggered delays. The garnish is not a new main firework kind, has no key binding, and leaves CITY, stars, UFO, audio, shell tail, and global glitter behavior unchanged.
+
+`T0008.4` added `Smile` as a shaped burst with two eyes and a smiling mouth arc. It is included in runtime and preview cycle/random/salvo selection. Smile intentionally does not use delayed mini-burst garnish so the face shape remains readable.
 
 Primary launch commands:
 
@@ -248,7 +250,7 @@ The first official runtime is acceptable when it:
 - Keeps `main.py` thin and free of runtime logic.
 - Supports the `iphone16_balanced` visual target.
 - Preserves the 3D cuboid observation box.
-- Preserves the ten first-generation firework presets.
+- Preserves the eleven first-generation firework presets.
 - Preserves shell launch, shell tail, compact burst radius, deterministic wobble, pre-scale trail decisions, and glitter residue.
 - Preserves CITY, boulevard, tower, ferris wheel, signs, windows, and 48-building density.
 - Preserves interior star placement and visibility rules.

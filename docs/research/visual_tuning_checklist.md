@@ -4,7 +4,7 @@
 
 This checklist defines how to evaluate the current Firework Box preview before changing preset parameters or adding more effects.
 
-Use it to judge Kiku, Sphere Bloom, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo in the manual preview and official runtime. Do not treat this document as permission to change preset values, production runtime behavior, scenery, or `main.py`.
+Use it to judge Kiku, Sphere Bloom, Smile, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo in the manual preview and official runtime. Do not treat this document as permission to change preset values, production runtime behavior, scenery, or `main.py`.
 
 ## Profile Policy
 
@@ -89,6 +89,15 @@ Interaction rules:
 - Sparse trails do not make it noisy.
 - Occasional delayed mini-burst garnish reads as a small after-pop, not a second full explosion.
 - Salvos do not make it too dense.
+
+### Smile
+
+- Reads as a smile face in `iphone16_balanced`.
+- Both eyes are visible.
+- The mouth arc is visible and reads as a smile, not a random curve.
+- The shaped plane avoids extreme edge-on angles.
+- It stays playful but does not dominate the show.
+- Delayed mini-burst garnish does not apply to Smile, so after-pops do not obscure the face.
 
 ### Ring
 
@@ -217,7 +226,7 @@ Interaction rules:
    - Observe combined type, count, and height variation.
 
 11. Burst radius variation check:
-   - Select Kiku, Sphere Bloom, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo.
+   - Select Kiku, Sphere Bloom, Smile, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo.
    - Press `Z` for each type.
    - Confirm burst radii are subtly uneven but compact enough that bursts do not feel over-expanded.
    - Confirm maximum burst radius reads about 80% of the previous wide spread.
@@ -411,7 +420,7 @@ Parity checks:
 - `iphone16_balanced` should remain the primary visual target.
 - `classic` should remain the default compatibility baseline.
 - The runtime should preserve the same 3D cuboid observation-box feel.
-- Kiku, Sphere Bloom, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo should remain available.
+- Kiku, Sphere Bloom, Smile, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo should remain available.
 - Shell launch, short shell tail, compact burst radius, deterministic wobble, pre-scale trail decisions, and glitter residue should match the preview direction.
 - CITY should preserve 48 building cuboids, central boulevard, tower, ferris wheel, signs, sparse windows, and interleaved two-blue building outlines.
 - Interior stars should remain attached to top and upper side faces, never exterior-facing surfaces.

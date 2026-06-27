@@ -35,6 +35,7 @@ from pyxel_goal_game.firework_bursts import (  # noqa: E402
     generate_ring_burst,
     generate_secondary_burst,
     generate_senrin_burst,
+    generate_smile_burst,
     generate_sphere_bloom_burst,
     generate_spiral_burst,
     generate_willow_burst,
@@ -84,6 +85,7 @@ PREVIEW_RANDOM_SEED = 20260625
 BURST_LABELS = (
     "Kiku",
     "Sphere Bloom",
+    "Smile",
     "Ring",
     "Spiral",
     "Willow",
@@ -96,6 +98,7 @@ BURST_LABELS = (
 BURST_KINDS = (
     FireworkKind.KIKU,
     FireworkKind.SPHERE_BLOOM,
+    FireworkKind.SMILE,
     FireworkKind.RING,
     FireworkKind.SPIRAL,
     FireworkKind.WILLOW,
@@ -108,6 +111,7 @@ BURST_KINDS = (
 BURST_ACCENT_STYLES = (
     (10, 9, 7),
     (7, 10, 12),
+    (10, 7, 12),
     (12, 6, 7),
     (11, 10, 7),
     (10, 9, 4),
@@ -117,9 +121,9 @@ BURST_ACCENT_STYLES = (
     (7, 10, 14),
     (7, 10, 12),
 )
-ACCENT_COUNTS = (8, 7, 6, 8, 5, 4, 10, 6, 4, 5)
+ACCENT_COUNTS = (8, 7, 5, 6, 8, 5, 4, 10, 6, 4, 5)
 ACCENT_RAY_FRAMES = 12
-GLITTER_RESIDUE_COUNTS = (8, 6, 6, 7, 5, 4, 8, 6, 2, 5)
+GLITTER_RESIDUE_COUNTS = (8, 6, 4, 6, 7, 5, 4, 8, 6, 2, 5)
 GLITTER_RESIDUE_LIFE_RANGE = (14, 24)
 GLITTER_RESIDUE_MAX = 96
 
@@ -466,26 +470,28 @@ class PreviewApp:
         elif burst_index == 1:
             specs = generate_sphere_bloom_burst(origin=origin, seed=seed)
         elif burst_index == 2:
+            specs = generate_smile_burst(origin=origin, seed=seed)
+        elif burst_index == 3:
             specs = generate_ring_burst(
                 origin=origin,
                 seed=seed,
                 orientation_bank=self.ring_orientation_bank,
             )
-        elif burst_index == 3:
-            specs = generate_spiral_burst(origin=origin, seed=seed)
         elif burst_index == 4:
-            specs = generate_willow_burst(origin=origin, seed=seed)
+            specs = generate_spiral_burst(origin=origin, seed=seed)
         elif burst_index == 5:
-            specs = generate_long_willow_burst(origin=origin, seed=seed)
+            specs = generate_willow_burst(origin=origin, seed=seed)
         elif burst_index == 6:
-            specs = generate_peony_burst(origin=origin, seed=seed)
+            specs = generate_long_willow_burst(origin=origin, seed=seed)
         elif burst_index == 7:
+            specs = generate_peony_burst(origin=origin, seed=seed)
+        elif burst_index == 8:
             specs = generate_multi_ring_burst(
                 origin=origin,
                 seed=seed,
                 orientation_bank=self.ring_orientation_bank,
             )
-        elif burst_index == 8:
+        elif burst_index == 9:
             specs = generate_senrin_burst(origin=origin, seed=seed)
         else:
             specs = generate_halo_burst(

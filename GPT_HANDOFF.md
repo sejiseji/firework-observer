@@ -254,9 +254,10 @@ After the task:
 - `T0006.2` rebuilt the BGM as simple chord harmony. Channels 0-2 are now melody, harmony, and soft support with a large/medium/small volume hierarchy; channel 3 remains reserved for explosion SFX.
 - `T0006.3` lowered BGM volume and changed channel 2 into calm mid-register rhythmic support. Channel 3 remains reserved for explosion SFX, which should be the primary audio subject.
 - `T0007.0` added a rare, silent UFO ambient flyby to the official runtime. `T0007.1` upgraded the visual to a small 3D wireframe saucer built from Pyxel-independent geometry in `runtime/ufo.py`. `U` toggles the ambient layer, and UFOs still have no beam, trail, sound, particles, collision, or gameplay interaction.
-- `T0008.0` added `Sphere Bloom` and `Long Willow` as first-class firework variants. Runtime and preview cycle order is Kiku, Sphere Bloom, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, Halo. Existing Kiku, Peony, and Willow behavior remains available.
+- `T0008.0` added `Sphere Bloom` and `Long Willow` as first-class firework variants. `T0008.4` added `Smile` as a shaped firework with two eyes and a smiling mouth arc. Runtime and preview cycle order is Kiku, Sphere Bloom, Smile, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, Halo. Existing Kiku, Peony, and Willow behavior remains available.
 - `T0008.1` modestly increased UFO wireframe size, added deterministic low/middle/high UFO height bands, and tuned `Long Willow` to mix longer-trail falling branches with trail-light/no-trail embers.
 - `T0008.3` added delayed mini-burst garnish for eligible runtime fireworks: Kiku, Sphere Bloom, Peony, and Multi-ring can create small staggered child blooms near the parent burst. This is not a new main firework kind and has no new control.
+- `Smile` is intentionally excluded from delayed mini-burst garnish so the face shape stays readable.
 - Next recommended task should be chosen from visual review: tune the two new variants if they are too similar/dense, or proceed to the next planned feature.
 - Recommended visual review command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`.
 - Main stress sequence: press `R`, `H`, then `0` to combine random burst type, height variation, and random-count persistent salvos.

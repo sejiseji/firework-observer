@@ -4,6 +4,12 @@
   "current": [],
   "done": [
     {
+      "id": "T0008.4",
+      "title": "Add smile firework preset",
+      "completed_on": "2026-06-27",
+      "summary": "Added Smile as a shaped firework preset with eye clusters and a smiling mouth arc, included it in cycle/random/salvo selection, and kept delayed mini-burst garnish disabled for Smile readability."
+    },
+    {
       "id": "T0008.3",
       "title": "Add delayed mini-burst garnish",
       "completed_on": "2026-06-27",

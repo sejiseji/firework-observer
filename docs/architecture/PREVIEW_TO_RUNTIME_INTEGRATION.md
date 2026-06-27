@@ -139,6 +139,8 @@ Manual review found official runtime parity OK for `iphone16_balanced`. Startup,
 
 `T0007.0` added a rare silent UFO ambient flyby to the official runtime. UFO scheduling and path helpers live in Pyxel-independent runtime code, rendering is Pyxel-bound, and `U` toggles the ambient layer. UFOs do not interact with fireworks and have no sound, beam, trail, particles, or gameplay behavior.
 
+`T0007.1` changed the UFO visual from a flat sprite-like saucer into a small 3D wireframe saucer. Geometry construction remains Pyxel-independent in `runtime/ufo.py`, while Pyxel drawing remains isolated to `runtime/render.py`. Scheduling frequency, rarity, silence, `U` toggle behavior, and non-interaction constraints are unchanged.
+
 `T0008.0` added two required firework variants without replacing existing presets. `Sphere Bloom` is the explicit canonical sphere-like bloom, while `Long Willow` is the stronger longer-falling willow / 枝垂れ variant. Runtime and preview cycle order is now Kiku, Sphere Bloom, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo.
 
 Primary launch commands:

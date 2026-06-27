@@ -1354,3 +1354,26 @@ Record completed tasks here.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_171343.txt`.
   - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with Sphere Bloom / Long Willow integration and no immediate crash.
 - Preservation: `main.py` unchanged. CITY, stars, UFO behavior, audio, shell tail, glitter visuals, camera motion, and robust launcher behavior unchanged.
+
+## 2026-06-27 T0007.1 Replace UFO sprite with 3D wireframe saucer
+
+- Summary: Replaced the official-runtime UFO's flat sprite-like drawing with a small 3D wireframe saucer built from Pyxel-independent `Vec3` geometry.
+- Files changed: `src/pyxel_goal_game/runtime/ufo.py`, `src/pyxel_goal_game/runtime/render.py`, `tests/unit/test_runtime_ufo.py`, README, integration docs, visual checklist, goals logs, roadmap, task queue, and `GPT_HANDOFF.md`.
+- Behavior:
+  - UFO wireframe includes an elliptical rim, dome, shallow lower body, and three small light points.
+  - UFO geometry follows the flyby position and travel direction and is projected through `Camera3D`.
+  - UFO scheduling frequency, initial delay, cooldown, rarity, and `U` toggle behavior are unchanged.
+  - UFO remains silent, beamless, trailless, particle-free, and non-interactive.
+- Tests:
+  - `.venv/bin/python -m json.tool goals/task_queue.json` passed.
+  - Targeted UFO/runtime tests passed before full validation: 24 passed.
+  - `python3 -m compileall src tests scripts tools main.py` passed.
+  - `.venv/bin/python -m pytest` passed: 272 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `.venv/bin/python main.py --help` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 272 passed.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_174453.txt`.
+  - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with wireframe UFO integration and no immediate crash.
+- Preservation: Firework generation, CITY, stars, audio, shell tail, glitter visuals, camera motion, controls, and robust launcher behavior unchanged.

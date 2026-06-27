@@ -4,6 +4,12 @@
   "current": [],
   "done": [
     {
+      "id": "T0007.1",
+      "title": "Replace UFO sprite with 3D wireframe saucer",
+      "completed_on": "2026-06-27",
+      "summary": "Replaced the UFO's flat sprite-like drawing with a small 3D wireframe saucer while preserving rare scheduling, U toggle behavior, silence, no-beam/no-trail/no-particle constraints, and all firework/CITY/audio behavior."
+    },
+    {
       "id": "T0008.0",
       "title": "Add required sphere and willow firework variants",
       "completed_on": "2026-06-27",

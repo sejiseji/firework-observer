@@ -35,7 +35,7 @@ pyxel run main.py
 
 Runtime audio is enabled by default. Press `M` to mute or restore the quiet chord-harmony music-box BGM and restrained firework explosion SFX.
 
-A rare silent UFO ambient flyby is enabled by default in the official runtime. Press `U` to toggle it during review.
+A rare silent 3D wireframe UFO ambient flyby is enabled by default in the official runtime. Press `U` to toggle it during review.
 
 The current firework cycle includes Kiku, Sphere Bloom, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo.
 

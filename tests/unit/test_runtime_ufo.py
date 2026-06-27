@@ -8,6 +8,7 @@ from pyxel_goal_game.runtime.ufo import (
     UFO_INITIAL_DELAY_FRAMES,
     UfoState,
     build_ufo_flyby,
+    build_ufo_wireframe,
     initial_ufo_state,
     toggle_ufo_enabled,
     update_ufo_state,
@@ -46,6 +47,45 @@ def test_ufo_flyby_is_deterministic_and_upper_region() -> None:
         assert -half_width <= point.x <= half_width
         assert point.y > half_height * 0.25
         assert -half_depth <= point.z <= half_depth
+
+
+def test_ufo_wireframe_is_deterministic_3d_geometry() -> None:
+    profile = get_screen_profile("iphone16_balanced")
+    flyby = build_ufo_flyby(profile=profile, start_frame=100, seed=1234)
+    first = flyby.wireframe_at(flyby.start_frame + 60)
+    second = flyby.wireframe_at(flyby.start_frame + 60)
+
+    assert first == second
+    assert len(first.edges) >= 20
+    assert len(first.lights) == 3
+
+    points = tuple(point for edge in first.edges for point in (edge.start, edge.end))
+    points += first.lights
+    width = max(point.x for point in points) - min(point.x for point in points)
+    height = max(point.y for point in points) - min(point.y for point in points)
+    depth = max(point.z for point in points) - min(point.z for point in points)
+
+    assert width > flyby.radius
+    assert height > flyby.radius * 0.5
+    assert depth > flyby.radius * 0.5
+
+
+def test_ufo_wireframe_helper_builds_non_flat_saucer() -> None:
+    flyby = build_ufo_flyby(
+        profile=get_screen_profile("iphone16_balanced"),
+        start_frame=0,
+        seed=88,
+    )
+    wireframe = build_ufo_wireframe(
+        center=flyby.position_at(30),
+        radius=4.0,
+        travel_start=flyby.start,
+        travel_end=flyby.end,
+    )
+
+    points = tuple(point for edge in wireframe.edges for point in (edge.start, edge.end))
+    assert len(wireframe.edges) == 22
+    assert len({round(point.y, 3) for point in points}) > 3
 
 
 def test_ufo_state_never_stacks_active_flybys() -> None:

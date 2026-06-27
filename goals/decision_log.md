@@ -894,3 +894,17 @@ Retune Kiku, Peony, or Willow in place; add only one variant; or delay new firew
 
 Impact:
 Pure preset/generation data, runtime ordering, preview ordering, tests, and docs changed. CITY, stars, UFO behavior, audio, shell tail, glitter, camera motion, and main launcher remain unchanged.
+
+## 2026-06-27 Render UFO as wireframe saucer
+
+Decision:
+Replace the UFO's flat sprite-like runtime drawing with a small 3D wireframe saucer built from Pyxel-independent `Vec3` geometry and rendered through the existing `Camera3D` projection.
+
+Reason:
+The previous UFO was easy to miss because it read as a small 2D mark while the rest of the scene uses 3D projected line geometry. A wireframe saucer matches the CITY, ferris wheel, box, and firework projection language without increasing frequency or adding effects.
+
+Alternatives:
+Increase UFO spawn frequency, make it larger/brighter, add sound/trails/beams, or leave it as a flat mark.
+
+Impact:
+Only UFO geometry/rendering and related tests/docs changed. UFO scheduling frequency, rarity, `U` toggle behavior, silence, no-beam/no-trail/no-particle constraints, firework generation, CITY, stars, audio, shell tail, glitter, and controls remain unchanged.

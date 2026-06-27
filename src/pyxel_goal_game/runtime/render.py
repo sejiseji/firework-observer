@@ -3,7 +3,7 @@ from __future__ import annotations
 import pyxel
 
 from pyxel_goal_game.ambient_box_stars import is_interior_face_visible, star_twinkle_color
-from pyxel_goal_game.camera3d import Camera3D, ProjectedPoint, Vec3
+from pyxel_goal_game.camera3d import Camera3D, ProjectedPoint
 from pyxel_goal_game.runtime.effects import (
     FIREWORK_SHELL_TAIL_COLORS_NEW_TO_OLD,
     FIREWORK_SHELL_TAIL_LENGTH,
@@ -67,27 +67,14 @@ class RuntimeRenderer:
         flyby = self.app.ufo_state.active
         if flyby is None or not flyby.is_active(pyxel.frame_count):
             return
-        center = flyby.position_at(pyxel.frame_count)
-        radius = flyby.radius
-        body_left = self.camera.project(self.offset_ufo(center, -radius, 0, 0))
-        body_right = self.camera.project(self.offset_ufo(center, radius, 0, 0))
-        body_front = self.camera.project(self.offset_ufo(center, 0, 0, -radius * 0.35))
-        body_back = self.camera.project(self.offset_ufo(center, 0, 0, radius * 0.35))
-        dome_top = self.camera.project(self.offset_ufo(center, 0, radius * 0.45, 0))
-        center_projected = self.camera.project(center)
-        pyxel.line(body_left.sx, body_left.sy, body_right.sx, body_right.sy, 5)
-        pyxel.line(body_front.sx, body_front.sy, body_back.sx, body_back.sy, 5)
-        pyxel.line(body_left.sx, body_left.sy, dome_top.sx, dome_top.sy, 6)
-        pyxel.line(dome_top.sx, dome_top.sy, body_right.sx, body_right.sy, 6)
-        pyxel.pset(center_projected.sx, center_projected.sy, 7)
-        for offset in (-0.45, 0.45):
-            light = self.camera.project(
-                self.offset_ufo(center, radius * offset, -radius * 0.08, 0)
-            )
-            pyxel.pset(light.sx, light.sy, 10)
-
-    def offset_ufo(self, center: Vec3, x: float, y: float, z: float) -> Vec3:
-        return Vec3(center.x + x, center.y + y, center.z + z)
+        wireframe = flyby.wireframe_at(pyxel.frame_count)
+        for edge in wireframe.edges:
+            start = self.camera.project(edge.start)
+            end = self.camera.project(edge.end)
+            pyxel.line(start.sx, start.sy, end.sx, end.sy, 5)
+        for light in wireframe.lights:
+            projected = self.camera.project(light)
+            pyxel.pset(projected.sx, projected.sy, 7)
 
     def edge_color(self, *, edge: ProjectedEdge, far: bool) -> int:
         if far:

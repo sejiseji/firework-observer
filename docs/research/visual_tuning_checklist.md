@@ -484,7 +484,7 @@ Checks:
 
 ## Runtime UFO Ambient Checks
 
-T0007.0 adds a rare official-runtime UFO ambient flyby. It is not part of firework generation and should not affect gameplay or audio.
+T0007.0 adds a rare official-runtime UFO ambient flyby. T0007.1 renders it as a small 3D wireframe saucer instead of a flat sprite-like mark. It is not part of firework generation and should not affect gameplay or audio.
 
 Command:
 
@@ -498,7 +498,8 @@ Checks:
 - `U` toggles UFO ambient on and off.
 - UFO appears only rarely during normal observation.
 - UFO passes calmly through the upper observation space.
-- UFO is a small line/pixel saucer, readable but not dominant.
+- UFO is a small 3D wireframe saucer, readable but not dominant.
+- Camera rotation helps the UFO feel placed inside the observation box.
 - UFO has no beam, trail, particles, collision, sound, or gameplay interaction.
 - Fireworks, CITY, stars, BGM, explosion SFX, shell tail, and glitter remain unchanged.
 - `R + H + 0` remains readable if a UFO appears.

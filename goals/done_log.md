@@ -1539,6 +1539,7 @@ Record completed tasks here.
   - The top-right `MENU` opens a mobile panel.
   - Panel checkboxes stage changes for random mode, height variation, auto launch, auto rotate, stars, UFO, audio, and CITY visibility.
   - `APPLY` reflects the staged settings and rotate speed.
-  - `LAUNCH`, `NEXT`, and `RAND SALVO` provide touch-friendly action buttons.
+  - Panel text uses scaled rendering so it is easier to read on phones.
+  - `LAUNCH`, `NEXT`, `RAND SALVO`, `ZOOM+`, and `ZOOM-` provide touch-friendly action buttons.
   - Keyboard controls remain available.
 - Preservation: Firework generation, CITY, stars, UFO scheduling/geometry, audio definitions, shell tail, glitter, launcher behavior, and existing keyboard controls unchanged.

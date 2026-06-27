@@ -7,7 +7,7 @@
             "id": "T0010.0",
             "title": "Add mobile touch control panel",
             "completed_on": "2026-06-27",
-            "summary": "Added drag/flick camera rotation and a top-right mobile control panel with draft checkboxes and an APPLY action for touch-friendly runtime control."
+            "summary": "Added drag/flick camera rotation and a top-right mobile control panel with larger text, draft checkboxes, touch zoom buttons, and an APPLY action for touch-friendly runtime control."
         },
         {
             "id": "T0009.0",

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Any
+
 import pyxel
 
 from pyxel_goal_game.ambient_box_stars import is_interior_face_visible, star_twinkle_color
@@ -24,6 +26,8 @@ from pyxel_goal_game.runtime.mobile_ui import (
     panel_rect,
     random_salvo_button_rect,
     speed_button_rect,
+    zoom_in_button_rect,
+    zoom_out_button_rect,
 )
 from pyxel_goal_game.scenery_presets import SceneryLine, SceneryPolyline
 from pyxel_goal_game.wire_box import ProjectedEdge
@@ -32,6 +36,7 @@ from pyxel_goal_game.wire_box import ProjectedEdge
 class RuntimeRenderer:
     def __init__(self, app: object) -> None:
         self.app = app
+        self._scaled_text_image: Any | None = None
 
     def draw(self) -> None:
         pyxel.cls(0)
@@ -285,7 +290,7 @@ class RuntimeRenderer:
         menu_color = 13 if self.app.mobile_panel_open else 5
         pyxel.rect(menu.x, menu.y, menu.width, menu.height, 0)
         pyxel.rectb(menu.x, menu.y, menu.width, menu.height, menu_color)
-        pyxel.text(menu.x + 3, menu.y + 5, "MENU", menu_color)
+        self.draw_scaled_text(menu.x + 6, menu.y + 5, "MENU", menu_color)
         if self.app.mobile_panel_open:
             self.draw_mobile_panel()
 
@@ -294,7 +299,8 @@ class RuntimeRenderer:
         draft = self.app.mobile_panel_draft
         pyxel.rect(panel.x, panel.y, panel.width, panel.height, 0)
         pyxel.rectb(panel.x, panel.y, panel.width, panel.height, 13)
-        pyxel.text(panel.x + 8, panel.y + 7, "MOBILE PANEL", 7)
+        self.draw_scaled_text(panel.x + 10, panel.y + 12, "MOBILE", 7)
+        pyxel.text(panel.x + 10, panel.y + 30, "tap options, then APPLY", 5)
 
         for index, spec in enumerate(MOBILE_TOGGLE_SPECS):
             row = checkbox_row_rect(panel, index)
@@ -302,25 +308,44 @@ class RuntimeRenderer:
             value = bool(getattr(draft, spec.key))
             pyxel.rectb(box.x, box.y, box.width, box.height, 5)
             if value:
-                pyxel.line(box.x + 1, box.y + 4, box.x + 3, box.y + 6, 7)
-                pyxel.line(box.x + 3, box.y + 6, box.x + 6, box.y + 1, 7)
-            pyxel.text(row.x + 16, row.y + 2, spec.label, 5)
+                pyxel.line(box.x + 2, box.y + 6, box.x + 5, box.y + 10, 7)
+                pyxel.line(box.x + 5, box.y + 10, box.x + 10, box.y + 2, 7)
+            self.draw_scaled_text(row.x + 24, row.y + 5, spec.label.upper(), 5)
 
         speed = speed_button_rect(panel)
         pyxel.rectb(speed.x, speed.y, speed.width, speed.height, 5)
-        pyxel.text(
+        self.draw_scaled_text(
             speed.x + 5,
-            speed.y + 4,
-            f"speed {draft.auto_rotate_speed_mode.value}",
+            speed.y + 7,
+            f"SPEED {draft.auto_rotate_speed_mode.value.upper()}",
             5,
         )
 
         self.draw_mobile_button(launch_button_rect(panel), "LAUNCH", 11)
         self.draw_mobile_button(next_button_rect(panel), "NEXT", 11)
         self.draw_mobile_button(random_salvo_button_rect(panel), "RAND SALVO", 11)
+        self.draw_mobile_button(zoom_in_button_rect(panel), "ZOOM+", 5)
+        self.draw_mobile_button(zoom_out_button_rect(panel), "ZOOM-", 5)
         self.draw_mobile_button(apply_button_rect(panel), "APPLY", 10)
         self.draw_mobile_button(close_button_rect(panel), "CLOSE", 8)
 
     def draw_mobile_button(self, rect: Rect, label: str, color: int) -> None:
         pyxel.rectb(rect.x, rect.y, rect.width, rect.height, color)
-        pyxel.text(rect.x + 4, rect.y + 5, label, color)
+        self.draw_scaled_text(rect.x + 6, rect.y + 7, label, color)
+
+    def draw_scaled_text(
+        self,
+        x: int,
+        y: int,
+        text: str,
+        color: int,
+        *,
+        scale: int = 2,
+    ) -> None:
+        if self._scaled_text_image is None:
+            self._scaled_text_image = pyxel.Image(128, 8)
+        image = self._scaled_text_image
+        image.cls(0)
+        image.text(0, 0, text, color)
+        width = min(image.width, max(1, len(text) * 4 + 2))
+        pyxel.blt(x, y, image, 0, 0, width, 7, 0, scale=scale)

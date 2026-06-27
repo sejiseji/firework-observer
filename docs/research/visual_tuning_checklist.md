@@ -554,6 +554,8 @@ Checks:
 - `LAUNCH` starts a single shell.
 - `NEXT` cycles the selected firework kind.
 - `RAND SALVO` starts random-count salvo mode.
+- `ZOOM+` and `ZOOM-` change the camera zoom on touch devices.
+- Mobile panel text is larger than the normal HUD text and remains readable on a phone.
 - Touch controls do not break keyboard controls.
 - The menu and panel remain readable on the `iphone16_balanced` profile.
 - Fireworks, CITY, stars, UFO, audio, shell tail, and glitter remain visually unchanged.

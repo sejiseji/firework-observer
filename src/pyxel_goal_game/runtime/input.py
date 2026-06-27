@@ -14,6 +14,8 @@ from pyxel_goal_game.runtime.mobile_ui import (
     panel_rect,
     random_salvo_button_rect,
     speed_button_rect,
+    zoom_in_button_rect,
+    zoom_out_button_rect,
 )
 
 MAX_PITCH = 1.2
@@ -146,6 +148,12 @@ def handle_mobile_panel_click(app: object, mouse_x: int, mouse_y: int) -> bool:
     if random_salvo_button_rect(panel).contains(mouse_x, mouse_y):
         app.start_random_salvo_loop()
         app.refresh_mobile_panel_draft()
+        return True
+    if zoom_in_button_rect(panel).contains(mouse_x, mouse_y):
+        app.camera.target_zoom = min(MAX_ZOOM, app.camera.target_zoom + 0.15)
+        return True
+    if zoom_out_button_rect(panel).contains(mouse_x, mouse_y):
+        app.camera.target_zoom = max(MIN_ZOOM, app.camera.target_zoom - 0.15)
         return True
     if apply_button_rect(panel).contains(mouse_x, mouse_y):
         app.apply_mobile_panel_draft()

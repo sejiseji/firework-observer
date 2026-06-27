@@ -42,7 +42,7 @@ Runtime audio is enabled by default. Press `M` to mute or restore the quiet chor
 
 A rare silent 3D wireframe UFO ambient flyby is enabled by default in the official runtime. UFOs use deterministic low, middle, or high pass heights. Press `U` to toggle it during review.
 
-On touch devices, drag/flick the play field to rotate the camera. Tap the top-right `MENU` button to open the mobile control panel, adjust checkboxes/options, then tap `APPLY` to reflect them. The panel also includes quick launch, next-firework, and random-salvo buttons.
+On touch devices, drag/flick the play field to rotate the camera. Tap the top-right `MENU` button to open the mobile control panel, adjust checkboxes/options, then tap `APPLY` to reflect them. The panel uses larger text for readability and includes quick launch, next-firework, random-salvo, and `ZOOM+` / `ZOOM-` buttons.
 
 The current firework cycle includes Kiku, Sphere Bloom, Smile, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo.
 Each firework kind has three deterministic per-burst color palette variants, selected from the launch seed.

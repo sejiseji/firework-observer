@@ -1495,6 +1495,7 @@ Record completed tasks here.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_194247.txt`.
   - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with Long Willow trail decay and no immediate crash.
   - Follow-up shortening: Long branch trail history was reduced from 84 frames to 56 frames.
+  - Follow-up fall-speed tuning: Long branch particles use softened downward velocity and reduced gravity so they fall more gently and avoid punching through the box floor.
   - Follow-up validation:
     - Targeted Long Willow/runtime tests passed: 117 passed.
     - `python3 -m compileall src tests scripts tools main.py` passed.

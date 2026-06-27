@@ -133,6 +133,7 @@ Interaction rules:
 - Does not become a full-screen rain curtain.
 - Includes both longer-trail falling branches and trail-light / no-long-trail embers.
 - Long branches leave roughly 0.93 seconds of falling trail history.
+- Long branches fall gently enough to stay inside the observation box instead of punching through the floor.
 - Older rear trail sections become sparse and broken instead of remaining solid.
 - The mixed trail structure adds depth without making the burst noisy.
 - Salvos remain readable and do not hide later bursts.

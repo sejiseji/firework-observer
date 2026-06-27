@@ -51,6 +51,8 @@ BURST_RADIUS_VARIATION_BY_KIND = {
     FireworkKind.SPIRAL: 0.035,
     FireworkKind.SENRIN: 0.03,
 }
+LONG_WILLOW_BRANCH_GRAVITY = -0.034
+LONG_WILLOW_BRANCH_DOWNWARD_VELOCITY_SCALE = 0.55
 
 
 @dataclass(frozen=True)
@@ -582,6 +584,8 @@ def tune_long_willow_trails(
             tuned.append(
                 replace(
                     particle,
+                    velocity=soften_long_willow_branch_velocity(particle.velocity),
+                    gravity=LONG_WILLOW_BRANCH_GRAVITY,
                     has_trail=True,
                     trail_until_age=int(particle.life * 0.90),
                     trail_strength=2,
@@ -613,6 +617,16 @@ def tune_long_willow_trails(
             )
         )
     return tuple(tuned)
+
+
+def soften_long_willow_branch_velocity(velocity: Vec3) -> Vec3:
+    if velocity.y >= 0.0:
+        return velocity
+    return Vec3(
+        velocity.x,
+        velocity.y * LONG_WILLOW_BRANCH_DOWNWARD_VELOCITY_SCALE,
+        velocity.z,
+    )
 
 
 def generate_senrin_shape_burst(

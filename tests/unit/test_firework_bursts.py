@@ -9,6 +9,8 @@ from pyxel_goal_game.camera3d import Vec3
 from pyxel_goal_game.firework_bursts import (
     BURST_RADIUS_SCALE,
     DEFAULT_RING_ORIENTATION_COUNT,
+    LONG_WILLOW_BRANCH_DOWNWARD_VELOCITY_SCALE,
+    LONG_WILLOW_BRANCH_GRAVITY,
     RingOrientationBank,
     build_ring_orientation_bank,
     build_smile_shape_points,
@@ -672,6 +674,18 @@ def test_long_willow_mixes_long_trail_branches_and_light_embers() -> None:
     assert len(long_trails) == 39
     assert len(short_trails) == 19
     assert len(no_trails) == 38
+
+
+def test_long_willow_long_trail_branches_fall_more_gently() -> None:
+    particles = generate_long_willow_burst(origin=ORIGIN, seed=123)
+    long_trails = [particle for particle in particles if particle.trail_history_frames == 56]
+    other_particles = [particle for particle in particles if particle.trail_history_frames == 0]
+
+    assert long_trails
+    assert all(particle.gravity == LONG_WILLOW_BRANCH_GRAVITY for particle in long_trails)
+    assert all(particle.gravity == LONG_WILLOW_PRESET.gravity for particle in other_particles)
+    assert abs(LONG_WILLOW_BRANCH_GRAVITY) < abs(LONG_WILLOW_PRESET.gravity)
+    assert LONG_WILLOW_BRANCH_DOWNWARD_VELOCITY_SCALE < 1.0
 
 
 def test_long_willow_long_trail_decay_does_not_affect_baseline_willow() -> None:

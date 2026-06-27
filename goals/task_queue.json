@@ -7,7 +7,7 @@
       "id": "T0008.3.1",
       "title": "Tune Long Willow long trail decay",
       "completed_on": "2026-06-27",
-      "summary": "Added Long Willow-only long branch trail history of about 56 frames with sparse broken rear decay while preserving baseline Willow, shell tail, global glitter, and palette variant behavior."
+      "summary": "Added Long Willow-only long branch trail history of about 56 frames with sparse broken rear decay and gentler long-branch fall speed while preserving baseline Willow, shell tail, global glitter, and palette variant behavior."
     },
     {
       "id": "T0008.3.2",

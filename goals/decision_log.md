@@ -978,3 +978,6 @@ Increase global trail lifetime, retune baseline Willow, add global glitter, or m
 
 Impact:
 Particle trail metadata, runtime/preview particle history rendering, Long Willow tests, and docs changed. Baseline Willow, shell tail, global glitter, Long Willow palette variants, mini-burst garnish palette inheritance, CITY, stars, UFO, audio, firework geometry, and launcher behavior remain unchanged.
+
+Follow-up:
+Long Willow long-branch particles now use softened downward velocity and reduced gravity so their lingering trails fall more slowly and stay inside the observation box. The change remains scoped to the long-trail branch subgroup.

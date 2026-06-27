@@ -79,6 +79,7 @@
 - [x] add smile firework preset
 - [x] add per-burst color palette variants
 - [x] scrub local paths and add public safety check
+- [x] add Japanese public README
 - [ ] tune visual feel
 - [ ] tune performance budget
 - [ ] record user feedback

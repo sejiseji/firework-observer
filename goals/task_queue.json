@@ -10,6 +10,12 @@
       "summary": "Removed tracked local absolute paths and local machine references, added a tracked-file public safety checker, and wired it into scripts/check_all.py."
     },
     {
+      "id": "T0009.1",
+      "title": "Add Japanese README",
+      "completed_on": "2026-06-27",
+      "summary": "Added README.ja.md as a natural Japanese public README, linked it from README.md, and added a public release checklist."
+    },
+    {
       "id": "T0008.3.1",
       "title": "Tune Long Willow long trail decay",
       "completed_on": "2026-06-27",

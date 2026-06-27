@@ -995,3 +995,17 @@ Manually review only before release, leave historical logs untouched, or rely on
 
 Impact:
 Docs/goals/handoff records now use repository-relative paths or neutral placeholders. `scripts/check_public_safety.py` scans tracked files for local absolute path patterns, and `scripts/check_all.py` runs it before tests and lint. Runtime behavior and visuals remain unchanged.
+
+## 2026-06-27 Add Japanese public README
+
+Decision:
+Add `README.ja.md` as a Japanese public-facing README, keep `README.md` as the main entry, and cross-link the two files.
+
+Reason:
+Firework Observer's intended mood and usage are easier to explain naturally in Japanese. A separate Japanese README keeps the public entry clear without replacing the current main README.
+
+Alternatives:
+Make `README.md` Japanese-primary and add `README.en.md`, or keep only an English README.
+
+Impact:
+README documentation and release checklist changed. Runtime behavior, launchers, firework generation, CITY, stars, UFO, audio, and safety checker behavior remain unchanged.

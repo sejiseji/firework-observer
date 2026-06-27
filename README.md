@@ -1,5 +1,7 @@
 # Pyxel Goal-Oriented Codex Template
 
+Japanese: [README.ja.md](README.ja.md)
+
 A project template for semi-automatic Pyxel game development with Codex.
 
 This repository is designed to make development stable by keeping the following information explicit:

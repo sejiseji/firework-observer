@@ -1519,3 +1519,13 @@ Record completed tasks here.
   - `scripts/check_all.py` runs the public safety check before pytest and ruff.
   - Runtime visual behavior is unchanged.
 - Preservation: `main.py`, launcher behavior, firework generation, CITY, stars, UFO, audio, shell tail, glitter, and runtime controls unchanged.
+
+## 2026-06-27 T0009.1 Add Japanese README
+
+- Summary: Added a Japanese public-facing README and a public release checklist.
+- Files changed: `README.md`, `README.ja.md`, `docs/release/public_release_checklist.md`, goals logs, roadmap, task queue, and `GPT_HANDOFF.md`.
+- Behavior:
+  - `README.md` links to the Japanese version near the top.
+  - `README.ja.md` describes the project, launch paths, controls, features, development checks, public safety check, release notes, and current license/status in Japanese.
+  - `docs/release/public_release_checklist.md` records pre-release entrypoint, README, safety, validation, and release-decision checks.
+- Preservation: Runtime behavior, launchers, firework generation, CITY, stars, UFO, audio, shell tail, glitter, and controls unchanged.

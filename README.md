@@ -20,6 +20,7 @@ uv sync
 python main.py
 uv run pytest
 uv run ruff check .
+python3 scripts/check_public_safety.py
 ```
 
 Other supported launch paths:
@@ -32,6 +33,8 @@ pyxel run main.py
 ```
 
 `main.py` is the default public entrypoint. `scripts/run_runtime_app.py` remains an explicit runtime launcher for development, and `tools/preview_firework_box.py` remains the manual preview harness.
+
+Before publishing, run `python3 scripts/check_public_safety.py`. Documentation and source files should use repository-relative paths such as `docs/...`, `src/...`, and `scripts/...`, not local machine paths.
 
 Runtime audio is enabled by default. Press `M` to mute or restore the quiet chord-harmony music-box BGM and restrained firework explosion SFX.
 

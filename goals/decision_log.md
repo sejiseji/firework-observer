@@ -981,3 +981,17 @@ Particle trail metadata, runtime/preview particle history rendering, Long Willow
 
 Follow-up:
 Long Willow long-branch particles now use softened downward velocity and reduced gravity so their lingering trails fall more slowly and stay inside the observation box. The change remains scoped to the long-trail branch subgroup.
+
+## 2026-06-27 Scrub local paths and add public safety check
+
+Decision:
+Remove local absolute paths, local machine references, and user-specific fragments from tracked source, docs, goals, and handoff records. Add a release safety checker and run it as part of `scripts/check_all.py`.
+
+Reason:
+The project is moving toward public release. Durable docs and handoff files can accidentally preserve private machine paths, so release hygiene needs both one-time cleanup and an automated guard.
+
+Alternatives:
+Manually review only before release, leave historical logs untouched, or rely on external repository scanning.
+
+Impact:
+Docs/goals/handoff records now use repository-relative paths or neutral placeholders. `scripts/check_public_safety.py` scans tracked files for local absolute path patterns, and `scripts/check_all.py` runs it before tests and lint. Runtime behavior and visuals remain unchanged.

@@ -6,6 +6,8 @@ This checklist defines how to evaluate the current Firework Box preview before c
 
 Use it to judge Kiku, Sphere Bloom, Smile, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo in the manual preview and official runtime. Do not treat this document as permission to change preset values, production runtime behavior, scenery, or `main.py`.
 
+Before public release, run `python3 scripts/check_public_safety.py` and keep documentation paths repository-relative.
+
 ## Profile Policy
 
 - `classic` remains the compatibility and test baseline.

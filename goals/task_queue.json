@@ -4,6 +4,12 @@
   "current": [],
   "done": [
     {
+      "id": "T0009.0",
+      "title": "Scrub local absolute paths and add privacy checks",
+      "completed_on": "2026-06-27",
+      "summary": "Removed tracked local absolute paths and local machine references, added a tracked-file public safety checker, and wired it into scripts/check_all.py."
+    },
+    {
       "id": "T0008.3.1",
       "title": "Tune Long Willow long trail decay",
       "completed_on": "2026-06-27",

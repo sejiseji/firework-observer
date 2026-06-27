@@ -3,6 +3,7 @@ from __future__ import annotations
 import subprocess
 
 COMMANDS = [
+    ["python3", "scripts/check_public_safety.py"],
     ["uv", "run", "pytest"],
     ["uv", "run", "ruff", "check", "."],
 ]

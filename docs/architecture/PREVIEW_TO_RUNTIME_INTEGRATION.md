@@ -153,6 +153,8 @@ Manual review found official runtime parity OK for `iphone16_balanced`. Startup,
 
 `T0008.3.1` tuned `Long Willow` long branch trail decay. Only the long-trail branch subgroup keeps about 56 frames of trail history, uses softened downward velocity and gravity, and draws older rear trail sections sparsely broken so the willow lingers without becoming a solid curtain or falling through the box floor. Baseline Willow, shell tail, global glitter, palette selection, CITY, stars, UFO, and audio remain unchanged.
 
+`T0009.0` scrubbed local absolute paths and local machine references from tracked source, docs, goals, and handoff records. Public-facing docs should use repository-relative paths such as `docs/...`, `src/...`, and `scripts/...`; the release safety checker in `scripts/check_public_safety.py` is part of `scripts/check_all.py`.
+
 Primary launch commands:
 
 ```bash

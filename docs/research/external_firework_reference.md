@@ -2,7 +2,7 @@
 
 Source reviewed:
 
-- `/Users/toytoytoy330/Desktop/AllMyFiles/Pyxel/01_kamito/Firework.py`
+- `<external-firework-reference>/Firework.py`
 
 Review date: 2026-06-23
 

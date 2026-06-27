@@ -24,7 +24,7 @@ Record completed tasks here.
 
 ## 2026-06-23 T0002.6 Review external firework reference files
 
-- Summary: Reviewed `/Users/toytoytoy330/Desktop/AllMyFiles/Pyxel/01_kamito/Firework.py` as reference material and created `docs/research/external_firework_reference.md`.
+- Summary: Reviewed `<external-firework-reference>/Firework.py` as reference material and created `docs/research/external_firework_reference.md`.
 - Tests: Not applicable; documentation-only research task.
 - User-visible behavior: No gameplay behavior changed.
 - Risks: The external file is 2D screen-space code and should not be imported directly into the 3D Firework Box package.
@@ -38,7 +38,7 @@ Record completed tasks here.
 - Setup:
   - Created project `.venv`.
   - Installed `pyxel`, `pytest`, and `ruff` into `.venv` via project dependency sync.
-  - Installed `uv` as a user-level CLI with `pipx`, available at `/Users/toytoytoy330/.local/bin/uv`.
+  - Installed `uv` as a user-level CLI with `pipx`, available at `<user-local-bin>/uv`.
   - `uv sync --extra dev` selected Python 3.12.13 and generated `uv.lock`.
 - Tests:
   - `python3 -c 'import sys; sys.path.insert(0, "src"); import pyxel_goal_game; import pyxel_goal_game.model.firework; import pyxel_goal_game.systems.particle_system; print("package import ok")'` passed.
@@ -96,7 +96,7 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `python3 -m pytest` failed because `/opt/homebrew/opt/python@3.14/bin/python3.14` does not have `pytest` installed.
   - `python3 -m ruff check .` failed because `/opt/homebrew/opt/python@3.14/bin/python3.14` does not have `ruff` installed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when rerun with approved cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 9 passed.
 - Missing dependency note: global `python3` is Python 3.14 and lacks `pytest` and `ruff`. Use the project-managed path via `python3 scripts/check_all.py`, or install/sync the dev environment with `uv sync --extra dev`.
 - User-visible behavior: No gameplay behavior changed.
@@ -110,7 +110,7 @@ Record completed tasks here.
 - Files changed: `docs/architecture/PROTOTYPE_RECONCILIATION.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
 - Tests:
   - `python3 -m compileall src tests scripts tools` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 9 passed.
 - User-visible behavior: No gameplay behavior changed.
 - Preservation: `main.py` was unchanged. `src` gameplay behavior was unchanged. No screen profile implementation, scenery rendering, or firework preset implementation was added.
@@ -126,7 +126,7 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 14 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 14 passed.
 - User-visible behavior: Package default screen settings now resolve through the `classic` profile values, and the HUD bottom line anchors to the active profile height. No firework preset, scenery, or `main.py` behavior was changed.
 - Preservation: `main.py` was unchanged. No scenery rendering, new firework presets, or external Firework.py code was added.
@@ -142,7 +142,7 @@ Record completed tasks here.
   - `.venv/bin/python -m pytest tests/unit/test_camera3d.py` passed: 6 tests passed.
   - `.venv/bin/python -m pytest` passed: 20 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 20 passed.
 - User-visible behavior: No visible gameplay behavior changed.
 - Preservation: `main.py` was unchanged. Default profile remains `classic`. No firework presets, scenery rendering, rocket migration, particle migration, or external Firework.py code was added.
@@ -158,7 +158,7 @@ Record completed tasks here.
   - `.venv/bin/python -m pytest tests/unit/test_wire_box.py` passed: 7 tests passed.
   - `.venv/bin/python -m pytest` passed: 27 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 27 passed.
 - User-visible behavior: No visible gameplay behavior changed.
 - Preservation: `main.py` was unchanged. Default profile remains `classic`. No firework presets, scenery rendering, rocket migration, particle migration, or external Firework.py code was added.
@@ -174,7 +174,7 @@ Record completed tasks here.
   - `.venv/bin/python -m pytest tests/unit/test_firework_presets.py` passed: 7 tests passed.
   - `.venv/bin/python -m pytest` passed: 34 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 34 passed.
 - User-visible behavior: No visible gameplay behavior changed.
 - Preservation: `main.py` was unchanged. Default profile remains `classic`. No runtime firework behavior, scenery rendering, rocket migration, particle migration, or external Firework.py code was added.
@@ -190,7 +190,7 @@ Record completed tasks here.
   - `.venv/bin/python -m pytest tests/unit/test_firework_bursts.py tests/unit/test_firework_presets.py` passed: 16 tests passed.
   - `.venv/bin/python -m pytest` passed: 43 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 43 passed.
 - User-visible behavior: No visible gameplay behavior changed.
 - Preservation: `main.py` was unchanged. Default profile remains `classic`. No runtime Rocket or Particle migration, Pyxel rendering connection, Ring/Spiral/Willow/Peony/Multi-ring/Halo/Senrin implementation, scenery rendering, or external Firework.py code was added.
@@ -206,7 +206,7 @@ Record completed tasks here.
   - `.venv/bin/python -m pytest tests/unit/test_firework_bursts.py tests/unit/test_firework_presets.py` passed: 25 tests passed.
   - `.venv/bin/python -m pytest` passed: 52 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 52 passed.
 - User-visible behavior: No visible gameplay behavior changed.
 - Preservation: `main.py` was unchanged. Default profile remains `classic`. No runtime Rocket or Particle migration, Pyxel rendering connection, Spiral/Willow/Peony/Multi-ring/Halo/Senrin implementation, scenery rendering, or external Firework.py code was added.
@@ -224,7 +224,7 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 52 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 52 passed.
 - User-visible behavior: No production gameplay behavior changed. The preview opens a Pyxel window only when run manually.
 - Preservation: `main.py` was unchanged. Default profile remains `classic`. No Spiral/Willow/Peony/Multi-ring/Halo/Senrin implementation, scenery rendering, production runtime migration, or external Firework.py code was added.
@@ -243,7 +243,7 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 54 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 54 passed.
 - User-visible behavior: No production gameplay behavior changed. The tuned profile values affect only code that explicitly selects those larger profiles.
 - Preservation: `main.py` was unchanged. Default profile remains `classic`. No new firework types, scenery rendering, production runtime migration, or external Firework.py code was added.
@@ -263,7 +263,7 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 54 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 54 passed.
 - User-visible behavior: No production gameplay behavior changed. The tuned profile values affect only code that explicitly selects those larger profiles.
 - Preservation: `main.py` was unchanged. Default profile remains `classic`. No new firework types, scenery rendering, production runtime migration, or external Firework.py code was added.
@@ -283,7 +283,7 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 63 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 63 passed.
 - User-visible behavior: Production gameplay remains unchanged. Manual preview Ring bursts can now vary orientation deterministically.
 - Preservation: `main.py` was unchanged. Default profile remains `classic`. No Spiral/Willow/Peony/Multi-ring/Halo/Senrin implementation, scenery rendering, production runtime migration, or external Firework.py code was added.
@@ -303,7 +303,7 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 72 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 72 passed.
 - User-visible behavior: Production gameplay remains unchanged. Manual preview can now inspect Spiral.
 - Preservation: `main.py` was unchanged. Default profile remains `classic`. `iphone16_balanced` remains screen `236x512` and box `120x260x120`. No Willow/Peony/Multi-ring/Halo/Senrin implementation, scenery rendering, production runtime migration, or external Firework.py code was added.
@@ -323,7 +323,7 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 82 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 82 passed.
 - User-visible behavior: Production gameplay remains unchanged. Manual preview can now inspect Willow.
 - Preservation: `main.py` was unchanged. Default profile remains `classic`. `iphone16_balanced` remains screen `236x512` and box `120x260x120`. No Peony/Multi-ring/Halo/Senrin implementation, scenery rendering, production runtime migration, or external Firework.py code was added.
@@ -343,7 +343,7 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 91 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 91 passed.
 - User-visible behavior: Production gameplay remains unchanged. Manual preview can now inspect Peony.
 - Preservation: `main.py` was unchanged. Default profile remains `classic`. `iphone16_balanced` remains screen `236x512` and box `120x260x120`. No Multi-ring/Halo/Senrin implementation, scenery rendering, production runtime migration, or external Firework.py code was added.
@@ -363,7 +363,7 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 91 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 91 passed.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - User-visible behavior: Production gameplay remains unchanged. Manual preview can now randomize existing burst types for visual inspection.
@@ -386,7 +386,7 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 108 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 108 passed.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - User-visible behavior: Production gameplay remains unchanged. Manual preview can now inspect 1-5 burst compositions.
@@ -408,7 +408,7 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 119 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 119 passed.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - User-visible behavior: Production gameplay remains unchanged. Manual preview can now inspect Multi-ring alone, in random mode, and in 1-5 salvos.
@@ -431,7 +431,7 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 132 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 132 passed.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - User-visible behavior: Production gameplay remains unchanged. Manual preview can now inspect Senrin primary and secondary burst behavior.
@@ -457,7 +457,7 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 132 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 132 passed.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - User-visible behavior: Production gameplay remains unchanged. Manual preview can now run repeated fixed-count or random-count salvo compositions.
@@ -481,7 +481,7 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 132 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 132 passed.
 - User-visible behavior: None. This was a documentation/checklist task.
 - Preservation: `main.py` was unchanged. Production runtime, preset parameters, pure generation behavior, Halo, and scenery were unchanged.
@@ -504,7 +504,7 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 132 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 132 passed.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - User-visible behavior: Production gameplay remains unchanged. Manual preview rocket launches are slower, less uniform, and draw short tails.
@@ -513,7 +513,7 @@ Record completed tasks here.
 
 ## 2026-06-25 T0003.8.5 Review external Firework.py for future preset candidates
 
-- Summary: Reviewed `/Users/toytoytoy330/Desktop/AllMyFiles/Pyxel/01_kamito/Firework.py` as reference material only and documented future preset candidates in `docs/research/external_firework_candidates_20260625.md`.
+- Summary: Reviewed `<external-firework-reference>/Firework.py` as reference material only and documented future preset candidates in `docs/research/external_firework_candidates_20260625.md`.
 - Pre-task git state: branch `main`; worktree clean; latest commit `2c57a7b Fix preview rocket launch pacing`.
 - Files changed: `docs/research/external_firework_candidates_20260625.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
 - Analysis covered:
@@ -533,7 +533,7 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 132 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 132 passed.
 - User-visible behavior: None. This was a documentation-only research task.
 - Preservation: `main.py` was unchanged. Production runtime, preset parameters, pure generation behavior, preview behavior, Halo implementation, and scenery were unchanged. No external code was copied.
@@ -555,7 +555,7 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 132 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 132 passed.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - User-visible behavior: Production gameplay remains unchanged. Manual preview launches and burst starts are more readable and type-aware.
@@ -574,7 +574,7 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 132 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 132 passed.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` was unchanged. Production runtime, preset parameters, pure generation behavior, Halo, and scenery were unchanged.
@@ -592,7 +592,7 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 132 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 132 passed.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` was unchanged. Production runtime, preset parameters, pure generation behavior, Halo, and scenery were unchanged.
@@ -610,7 +610,7 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 132 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 132 passed.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` was unchanged. Production runtime, preset parameters, pure generation behavior, Halo, and scenery were unchanged.
@@ -628,7 +628,7 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 132 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 132 passed.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` was unchanged. Production runtime, preset parameters, pure generation behavior, Halo, and scenery were unchanged.
@@ -647,7 +647,7 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 132 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 132 passed.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` was unchanged. Production runtime, preset parameters, pure generation behavior, Halo, and scenery were unchanged.
@@ -668,9 +668,9 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 151 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 151 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260625_230244.txt`.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` was unchanged. Production runtime, firework preset parameters, pure firework generation behavior, Halo, and external Firework.py integration were unchanged.
@@ -690,9 +690,9 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 148 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 148 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260625_232113.txt`.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` was unchanged. Production runtime, firework preset parameters, pure firework generation behavior, Halo, and external Firework.py integration were unchanged.
@@ -711,9 +711,9 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 150 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 150 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_062740.txt`.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` was unchanged. Production runtime, firework preset parameters, pure firework generation behavior, Halo, and external Firework.py integration were unchanged.
@@ -732,9 +732,9 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 157 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 157 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_071945.txt`.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` was unchanged. Production runtime, firework shell tail rendering, CITY scenery, preview controls, preset constants, Halo, and external Firework.py integration were unchanged.
@@ -754,9 +754,9 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 158 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 158 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_080011.txt`.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` was unchanged. Production runtime, firework presets, pure firework generation, shell tail behavior, preview controls, Halo, and external Firework.py integration were unchanged.
@@ -776,9 +776,9 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 167 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 167 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_174429.txt`.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` unchanged. Production runtime, CITY scenery, shell tail behavior, and existing firework preset parameters unchanged.
@@ -799,9 +799,9 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 170 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 170 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_190406.txt`.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` unchanged. Production runtime, firework generation, firework presets, shell tail behavior, preview controls, and Halo unchanged.
@@ -819,9 +819,9 @@ Record completed tasks here.
   - `python3 -m compileall tools/preview_firework_box.py` passed.
   - `.venv/bin/python -m pytest` passed: 170 tests passed.
   - `.venv/bin/python -m ruff check tools/preview_firework_box.py` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 170 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_202712.txt`.
 - Preservation: `main.py` unchanged. Production runtime, firework generation, scenery, shell tail behavior, and preview launch controls unchanged.
 
@@ -840,9 +840,9 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 172 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 172 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_204005.txt`.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` unchanged. Production runtime, firework generation, firework presets, shell tail behavior, preview controls, and auto-rotate speed control unchanged.
@@ -862,9 +862,9 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 182 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 182 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_204637.txt`.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` unchanged. Production runtime, firework generation, burst radius variation, firework presets, shell tail behavior, CITY geometry, UFO, and existing preview controls unchanged.
@@ -885,9 +885,9 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 183 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 183 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_212142.txt`.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` unchanged. Production runtime, preview controls, shell tail behavior, interior stars, UFO, and firework preset constants unchanged.
@@ -907,10 +907,10 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 188 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` then failed under approved `uv` cache access because `uv run pytest` did not include the repo root on `sys.path` for `tests/unit/test_preview_auto_rotate.py`; the test was updated to insert the repo root explicitly.
   - `python3 scripts/check_all.py` passed after the import-path test fix; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 188 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_212808.txt`.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` unchanged. Production runtime, firework generation, burst radius variation, shell tail behavior, CITY geometry, ferris wheel geometry, boulevard layout, interior stars, UFO, and firework preset constants unchanged.
@@ -933,9 +933,9 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 192 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 192 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_215154.txt`.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` unchanged. Production runtime, preview controls, shell tail behavior, burst compactness, auto-rotate comfort, UFO, and firework preset constants unchanged.
@@ -953,9 +953,9 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 192 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 192 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_220014.txt`.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` unchanged. Production runtime, firework generation, shell tail behavior, CITY, glitter residue, auto-rotate comfort, UFO, and preview controls unchanged.
@@ -973,9 +973,9 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 193 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 193 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_220645.txt`.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` unchanged. Production runtime, firework generation, shell tail behavior, CITY geometry, tower, ferris wheel, signage, windows, UFO, and preview controls unchanged.
@@ -994,9 +994,9 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 193 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 193 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_221128.txt`.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` unchanged. Production runtime, firework generation, shell tail behavior, tower, ferris wheel, signage, windows, UFO, and preview controls unchanged.
@@ -1015,9 +1015,9 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 193 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 193 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_221728.txt`.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` unchanged. Production runtime, firework preset constants, Senrin secondary, shell tail behavior, CITY, UFO, and preview controls unchanged.
@@ -1035,9 +1035,9 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 193 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 193 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_222047.txt`.
 - Manual preview command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`
 - Preservation: `main.py` unchanged. Production runtime, firework generation, shell tail behavior, CITY, UFO, and preview controls unchanged.
@@ -1057,7 +1057,7 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 193 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 193 passed.
   - Visual smoke was not run because this was a docs-only integration planning task.
 - Preservation: `main.py` unchanged. Source behavior, preview behavior, tests, firework generation, CITY, shell tail, stars, and production runtime unchanged.
@@ -1078,7 +1078,7 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 209 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 209 passed.
   - Visual smoke was not run because this scaffold task does not change visual behavior.
 - Preservation: `main.py` unchanged. `tools/preview_firework_box.py` behavior unchanged. Firework generation, shell tail behavior, glitter residue, CITY geometry, interior stars, preview controls, and production runtime unchanged.
@@ -1098,7 +1098,7 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 217 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 217 passed.
   - Visual smoke was not run because preview behavior was intended to remain equivalent.
 - Preservation: `main.py` unchanged. Firework generation, firework preset constants, burst radius scaling, shell tail, glitter residue, CITY, interior stars, UFO, and production runtime unchanged.
@@ -1118,9 +1118,9 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 233 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 233 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260626_235351.txt`.
 - Preservation: `main.py` unchanged. Firework generation, firework preset constants, burst radius scaling, shell tail, glitter residue, CITY, interior stars, camera motion, UFO, and production runtime unchanged.
 
@@ -1153,7 +1153,7 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools` passed.
   - `.venv/bin/python -m pytest` passed: 238 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 238 passed.
   - Visual smoke was not run because this was a documentation-only parity recording task.
 - Preservation: `main.py` unchanged. Runtime behavior, preview behavior, firework generation, CITY, stars, shell tail, glitter residue, and controls unchanged.
@@ -1175,9 +1175,9 @@ Record completed tasks here.
   - `python3 -m compileall src tests scripts tools main.py` passed.
   - `.venv/bin/python -m pytest` passed: 239 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 239 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_080123.txt`.
 - Preservation: Firework generation, preset constants, burst radius scaling, shell tail, glitter residue, CITY, interior stars, camera motion, show scheduling, preview behavior, and UFO exclusion unchanged.
 
@@ -1199,9 +1199,9 @@ Record completed tasks here.
   - `.venv/bin/python scripts/run_runtime_app.py --help` passed.
   - `python3 main.py --help` passed.
   - `python main.py --help` could not run because this shell has no `python` command (`zsh:1: command not found: python`).
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 248 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_100216.txt`.
   - `.venv/bin/pyxel run main.py` was launched briefly and terminated after confirming it did not immediately fail with the prior `unrecognized arguments: run main.py` argparse error.
 - Preservation: Runtime visual behavior, firework generation, preset constants, CITY, stars, shell tail, glitter residue, key bindings, preview harness, and UFO exclusion unchanged.
@@ -1225,9 +1225,9 @@ Record completed tasks here.
   - `.venv/bin/python main.py --help` passed.
   - `.venv/bin/python scripts/run_runtime_app.py --help` passed.
   - Direct Pyxel audio setup smoke passed with `.venv/bin/python` and `RuntimeAudio`.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 254 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_131819.txt`.
   - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with audio initialization and no immediate crash.
 - Preservation: Visual behavior, firework generation, preset constants, CITY geometry, stars, shell tail, glitter visuals, camera motion, show scheduling, preview harness, robust main launcher, and UFO exclusion unchanged.
@@ -1248,9 +1248,9 @@ Record completed tasks here.
   - `.venv/bin/python -m ruff check .` passed.
   - `.venv/bin/python main.py --help` passed.
   - Direct Pyxel audio setup smoke passed with `.venv/bin/python` and `RuntimeAudio`.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 255 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_161125.txt`.
   - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with extended BGM initialization and no immediate crash.
 - Preservation: Visual behavior, firework generation, preset constants, CITY geometry, stars, shell tail, glitter visuals, camera motion, show scheduling, preview harness, robust main launcher, and UFO exclusion unchanged.
@@ -1274,9 +1274,9 @@ Record completed tasks here.
   - `.venv/bin/python -m ruff check .` passed.
   - `.venv/bin/python main.py --help` passed.
   - Direct Pyxel audio setup smoke passed with `.venv/bin/python` and `RuntimeAudio`.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 255 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_162233.txt`.
   - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with chord-harmony BGM initialization and no immediate crash.
 - Preservation: Visual behavior, firework generation, preset constants, CITY geometry, stars, shell tail, glitter visuals, camera motion, show scheduling, preview harness, robust main launcher, and UFO exclusion unchanged.
@@ -1299,9 +1299,9 @@ Record completed tasks here.
   - `.venv/bin/python -m ruff check .` passed.
   - `.venv/bin/python main.py --help` passed.
   - Direct Pyxel audio setup smoke passed with `.venv/bin/python` and `RuntimeAudio`.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 256 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_163441.txt`.
   - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with calmer BGM support initialization and no immediate crash.
 - Preservation: Visual behavior, firework generation, preset constants, CITY geometry, stars, shell tail, glitter visuals, camera motion, show scheduling, preview harness, robust main launcher, and UFO exclusion unchanged.
@@ -1324,9 +1324,9 @@ Record completed tasks here.
   - `.venv/bin/python -m pytest` passed: 263 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
   - `.venv/bin/python main.py --help` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 263 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_170034.txt`.
   - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with UFO ambient integration and no immediate crash.
 - Preservation: Firework generation, preset constants, CITY geometry, stars, shell tail, glitter visuals, camera motion, show scheduling, audio behavior, preview harness, and robust main launcher unchanged.
@@ -1348,9 +1348,9 @@ Record completed tasks here.
   - `.venv/bin/python -m pytest` passed: 270 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
   - `.venv/bin/python main.py --help` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 270 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_171343.txt`.
   - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with Sphere Bloom / Long Willow integration and no immediate crash.
 - Preservation: `main.py` unchanged. CITY, stars, UFO behavior, audio, shell tail, glitter visuals, camera motion, and robust launcher behavior unchanged.
@@ -1371,9 +1371,9 @@ Record completed tasks here.
   - `.venv/bin/python -m pytest` passed: 272 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
   - `.venv/bin/python main.py --help` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 272 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_174453.txt`.
   - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with wireframe UFO integration and no immediate crash.
 - Preservation: Firework generation, CITY, stars, audio, shell tail, glitter visuals, camera motion, controls, and robust launcher behavior unchanged.
@@ -1395,9 +1395,9 @@ Record completed tasks here.
   - `.venv/bin/python -m pytest` passed: 274 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
   - `.venv/bin/python main.py --help` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 274 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_180003.txt`.
   - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with UFO height bands and Long Willow trail mixture and no immediate crash.
 - Preservation: `main.py`, launcher behavior, CITY, stars, audio, shell tail, global glitter, UFO silence/no-beam/no-trail/no-particle constraints, firework order, random/salvo scheduling, and baseline Willow behavior unchanged.
@@ -1419,9 +1419,9 @@ Record completed tasks here.
   - `.venv/bin/python -m pytest` passed: 279 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
   - `.venv/bin/python main.py --help` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 279 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_185835.txt`.
   - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with delayed mini-burst garnish and no immediate crash.
 - Preservation: `main.py`, launcher behavior, CITY, stars, UFO, audio, shell tail, global glitter behavior, firework order, random/salvo scheduling, and existing main firework kinds unchanged.
@@ -1442,9 +1442,9 @@ Record completed tasks here.
   - `.venv/bin/python -m pytest` passed: 285 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
   - `.venv/bin/python main.py --help` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 285 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_191737.txt`.
   - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with Smile preset integration and no immediate crash.
 - Preservation: `main.py`, launcher behavior, CITY, stars, UFO, audio, shell tail, global glitter behavior, delayed mini-burst garnish behavior for existing eligible kinds, and existing firework variants unchanged.
@@ -1466,9 +1466,9 @@ Record completed tasks here.
   - `.venv/bin/python -m pytest` passed: 290 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
   - `.venv/bin/python main.py --help` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 290 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_193029.txt`.
   - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with palette variants and no immediate crash.
 - Preservation: `main.py`, launcher behavior, CITY, stars, UFO, audio, shell tail, global glitter behavior, Long Willow trail behavior, Smile behavior, and existing firework geometry unchanged.
@@ -1489,9 +1489,9 @@ Record completed tasks here.
   - `.venv/bin/python -m pytest` passed: 292 tests passed.
   - `.venv/bin/python -m ruff check .` passed.
   - `.venv/bin/python main.py --help` passed.
-  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 292 passed.
-  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_194247.txt`.
   - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with Long Willow trail decay and no immediate crash.
   - Follow-up shortening: Long branch trail history was reduced from 84 frames to 56 frames.
@@ -1502,9 +1502,20 @@ Record completed tasks here.
     - `.venv/bin/python -m pytest` passed: 292 tests passed.
     - `.venv/bin/python -m ruff check .` passed.
     - `.venv/bin/python main.py --help` passed.
-    - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+    - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
     - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 292 passed.
-    - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+    - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `<uv-cache>`.
     - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_194909.txt`.
     - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with shorter Long Willow trail decay and no immediate crash.
 - Preservation: `main.py`, launcher behavior, baseline Willow, shell tail, global glitter, CITY, stars, UFO, audio, Long Willow palette variants, mini-burst garnish palette inheritance, and firework geometry unchanged.
+
+## 2026-06-27 T0009.0 Scrub local paths and add public safety check
+
+- Summary: Removed tracked local absolute paths, local machine references, and user-specific path fragments from docs, goals, and handoff records.
+- Files changed: `scripts/check_public_safety.py`, `scripts/check_all.py`, tests, README, integration docs, visual checklist, goals logs, roadmap, task queue, and `GPT_HANDOFF.md`.
+- Behavior:
+  - Public-facing records now use repository-relative paths or neutral placeholders.
+  - `scripts/check_public_safety.py` scans tracked files and reports file path, line number, and reason for any forbidden local path reference.
+  - `scripts/check_all.py` runs the public safety check before pytest and ruff.
+  - Runtime visual behavior is unchanged.
+- Preservation: `main.py`, launcher behavior, firework generation, CITY, stars, UFO, audio, shell tail, glitter, and runtime controls unchanged.

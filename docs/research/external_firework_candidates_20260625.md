@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document reviews `/Users/toytoytoy330/Desktop/AllMyFiles/Pyxel/01_kamito/Firework.py` as visual and mathematical reference material for future Firework Observer presets.
+This document reviews `<external-firework-reference>/Firework.py` as visual and mathematical reference material for future Firework Observer presets.
 
 Do not copy code from that file into this project. The old file is a 2D complex-plane Pyxel sketch. Firework Observer should translate useful ideas into deterministic 3D `Vec3` / `ParticleSpawnSpec` generation.
 

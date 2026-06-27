@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.venv/
+.env
+
+# Build
+build/
+dist/
+*.egg-info/
+*.pyxapp
+*.html
+
+# Reports
+reports/**/*.png
+reports/**/*.json
+reports/**/*.txt
+
+# OS / editors
+.DS_Store
+.vscode/
+.idea/
+
+# Keep directory placeholders
+!reports/.gitkeep
+!reports/codex_runs/.gitkeep
+!reports/visual_smoke/.gitkeep
+!reports/performance/.gitkeep
+!assets/generated/.gitkeep
+!assets/exports/.gitkeep

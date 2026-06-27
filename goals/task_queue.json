@@ -1,0 +1,415 @@
+{
+  "version": 1,
+  "policy": "Keep tasks small enough for one Codex patch. Split ambiguous tasks before implementation.",
+  "current": [],
+  "done": [
+    {
+      "id": "T0009.0",
+      "title": "Scrub local absolute paths and add privacy checks",
+      "completed_on": "2026-06-27",
+      "summary": "Removed tracked local absolute paths and local machine references, added a tracked-file public safety checker, and wired it into scripts/check_all.py."
+    },
+    {
+      "id": "T0009.1",
+      "title": "Add Japanese README",
+      "completed_on": "2026-06-27",
+      "summary": "Added README.ja.md as a natural Japanese public README, linked it from README.md, and added a public release checklist."
+    },
+    {
+      "id": "T0008.3.1",
+      "title": "Tune Long Willow long trail decay",
+      "completed_on": "2026-06-27",
+      "summary": "Added Long Willow-only long branch trail history of about 56 frames with sparse broken rear decay and gentler long-branch fall speed while preserving baseline Willow, shell tail, global glitter, and palette variant behavior."
+    },
+    {
+      "id": "T0008.3.2",
+      "title": "Add per-burst color palette variants",
+      "completed_on": "2026-06-27",
+      "summary": "Added three deterministic color palette variants per firework kind, selected by launch seed, with delayed mini-burst garnish inheriting the selected parent palette."
+    },
+    {
+      "id": "T0008.4",
+      "title": "Add smile firework preset",
+      "completed_on": "2026-06-27",
+      "summary": "Added Smile as a shaped firework preset with eye clusters and a smiling mouth arc, included it in cycle/random/salvo selection, and kept delayed mini-burst garnish disabled for Smile readability."
+    },
+    {
+      "id": "T0008.3",
+      "title": "Add delayed mini-burst garnish",
+      "completed_on": "2026-06-27",
+      "summary": "Added optional deterministic delayed mini-burst garnish for Kiku, Sphere Bloom, Peony, and Multi-ring, spawning 2 to 5 small staggered child blooms near eligible parent bursts without adding a new main firework kind."
+    },
+    {
+      "id": "T0008.1",
+      "title": "Tune UFO visibility and Long Willow trail mixture",
+      "completed_on": "2026-06-27",
+      "summary": "Modestly increased UFO wireframe size, added deterministic low/middle/high UFO height bands, and tuned Long Willow to mix longer-trail falling branches with trail-light and no-trail falling embers."
+    },
+    {
+      "id": "T0007.1",
+      "title": "Replace UFO sprite with 3D wireframe saucer",
+      "completed_on": "2026-06-27",
+      "summary": "Replaced the UFO's flat sprite-like drawing with a small 3D wireframe saucer while preserving rare scheduling, U toggle behavior, silence, no-beam/no-trail/no-particle constraints, and all firework/CITY/audio behavior."
+    },
+    {
+      "id": "T0008.0",
+      "title": "Add required sphere and willow firework variants",
+      "completed_on": "2026-06-27",
+      "summary": "Added Sphere Bloom as the explicit canonical sphere-like firework and Long Willow as the explicit longer falling willow variant while preserving existing Kiku, Peony, and Willow behavior."
+    },
+    {
+      "id": "T0007.0",
+      "title": "Add rare UFO ambient flyby to official runtime",
+      "completed_on": "2026-06-27",
+      "summary": "Added a rare silent official-runtime UFO ambient flyby with deterministic Pyxel-independent scheduling/path helpers, Pyxel-bound rendering, and U toggle while preserving fireworks, CITY, stars, audio, shell tail, and glitter."
+    },
+    {
+      "id": "T0006.3",
+      "title": "Tune BGM support rhythm and lower overall volume",
+      "completed_on": "2026-06-27",
+      "summary": "Lowered runtime BGM volume and changed channel 2 into sparse mid-register rhythmic support so explosion SFX remains the primary audio subject."
+    },
+    {
+      "id": "T0006.2",
+      "title": "Rebuild BGM as simple chord harmony",
+      "completed_on": "2026-06-27",
+      "summary": "Rebuilt runtime BGM from arpeggio/shimmer counter-lines into aligned melody, harmony, and soft support channels with a clear large/medium/small volume hierarchy."
+    },
+    {
+      "id": "T0006.1",
+      "title": "Add BGM harmony and extend loop length",
+      "completed_on": "2026-06-27",
+      "summary": "Extended runtime BGM into a longer three-channel music-box arrangement while keeping channel 3 reserved for explosion SFX."
+    },
+    {
+      "id": "T0006.0",
+      "title": "Add runtime audio scaffold with music-box BGM and explosion SFX",
+      "completed_on": "2026-06-27",
+      "summary": "Added official runtime audio with quiet music-box BGM, low restrained explosion SFX, burst SFX cooldown, and M mute toggle while preserving visual behavior."
+    },
+    {
+      "id": "T0005.6.1",
+      "title": "Make main.py a robust simple launcher",
+      "completed_on": "2026-06-27",
+      "summary": "Made python main.py, python3 main.py, and pyxel run main.py first-class launch paths by keeping main.py as a thin src-bootstrap launcher and normalizing Pyxel wrapper argv in the runtime CLI."
+    },
+    {
+      "id": "T0005.6",
+      "title": "Convert main.py to official runtime launcher",
+      "completed_on": "2026-06-27",
+      "summary": "Converted main.py from the old standalone prototype into a thin launcher that delegates to the official package runtime app."
+    },
+    {
+      "id": "T0005.5",
+      "title": "Runtime parity review and main.py handoff decision",
+      "completed_on": "2026-06-26",
+      "summary": "Recorded manual preview/runtime parity review as OK and marked main.py handoff readiness as READY for a separate thin-launcher task."
+    },
+    {
+      "id": "T0005.4",
+      "title": "Add first official runtime app and entrypoint",
+      "completed_on": "2026-06-26",
+      "summary": "Added the first package-side official runtime app, Pyxel input/render/effects boundaries, and a separate launcher without touching protected main.py or importing from the preview tool."
+    },
+    {
+      "id": "T0005.3",
+      "title": "Extract show launch and salvo scheduling",
+      "completed_on": "2026-06-26",
+      "summary": "Moved single launch, fixed salvo, random-count salvo, random firework kind, and height variation schedule construction into Pyxel-independent runtime helpers, with preview consuming immutable launch schedules."
+    },
+    {
+      "id": "T0005.2",
+      "title": "Extract camera motion and auto-rotate comfort settings",
+      "completed_on": "2026-06-26",
+      "summary": "Moved settled auto-rotate speed and pitch sway comfort settings into Pyxel-independent runtime camera motion helpers, and updated the preview to consume them without changing behavior."
+    },
+    {
+      "id": "T0005.1",
+      "title": "Extract preview runtime state/controller scaffold",
+      "completed_on": "2026-06-26",
+      "summary": "Added Pyxel-independent package-side runtime state and show-controller scaffolding for first-generation preview-equivalent modes and toggles without changing preview behavior."
+    },
+    {
+      "id": "T0005.0",
+      "title": "Preview-to-runtime integration contract",
+      "completed_on": "2026-06-26",
+      "summary": "Documented the contract for promoting first-generation preview behavior into package runtime while keeping main.py protected and preserving the preview as a development harness."
+    },
+    {
+      "id": "T0001",
+      "title": "Initialize docs from project brief",
+      "completed_on": "2026-06-23",
+      "summary": "Created project_brief.json from the template example and generated the initial product docs, goal state, roadmap, and task queue."
+    },
+    {
+      "id": "T0002.6",
+      "title": "Review external firework reference files",
+      "completed_on": "2026-06-23",
+      "summary": "Reviewed the external Firework.py as reference material only and documented adaptable burst ideas, coordinate risks, trail risks, and suggested preset candidates in docs/research/external_firework_reference.md."
+    },
+    {
+      "id": "T0002",
+      "title": "Verify package imports and tests",
+      "completed_on": "2026-06-23",
+      "summary": "Set up local validation tools and verified package import, compile, pytest, ruff, uv, and check_all status. pyxel, pytest, ruff, and uv are installed; compileall, pytest, ruff, and check_all pass."
+    },
+    {
+      "id": "T0002.7",
+      "title": "Document screen profiles and in-box scenery architecture",
+      "completed_on": "2026-06-24",
+      "summary": "Completed as a documentation-only planning task. Added screen profile strategy, in-box 3D scenery architecture, future task ordering, and the requirement that scenery must not be a 2D screen-space background."
+    },
+    {
+      "id": "T0002.5",
+      "title": "Reconcile standalone prototype with package architecture",
+      "completed_on": "2026-06-24",
+      "summary": "Inspected protected standalone main.py, documented its Camera3D, box, rocket, particle, trail, render, and UI behavior, and mapped a staged package migration strategy in docs/architecture/PROTOTYPE_RECONCILIATION.md."
+    },
+    {
+      "id": "T0002.8",
+      "title": "Add screen profile configuration scaffold",
+      "completed_on": "2026-06-24",
+      "summary": "Added package-side ScreenProfile configuration data with classic as the default profile and iphone16_balanced and iphone16_large as selectable data."
+    },
+    {
+      "id": "T0002.9",
+      "title": "Add package-side Camera3D and projection scaffold",
+      "completed_on": "2026-06-24",
+      "summary": "Added Pyxel-independent Camera3D projection scaffold using ScreenProfile values and tests for y-up projection, profile-dependent centers, depth guard, determinism, and smoothing."
+    },
+    {
+      "id": "T0002.10",
+      "title": "Add package-side wire box scaffold",
+      "completed_on": "2026-06-24",
+      "summary": "Added Pyxel-independent WireBox geometry scaffold using ScreenProfile box dimensions and Camera3D projection, with tests for dimensions, vertices, edges, centering, edge groups, and deterministic projected edges."
+    },
+    {
+      "id": "T0003.0",
+      "title": "Establish firework preset scaffold",
+      "completed_on": "2026-06-24",
+      "summary": "Added Pyxel-independent firework preset scaffold with FireworkKind, FireworkShape, TrailPreset, SecondaryPreset, and FireworkPreset data types."
+    },
+    {
+      "id": "T0003.1",
+      "title": "Implement deterministic radial / kiku preset",
+      "completed_on": "2026-06-24",
+      "summary": "Added KIKU_PRESET and deterministic Pyxel-independent spherical burst generation that returns ParticleSpawnSpec values with partial trail data."
+    },
+    {
+      "id": "T0003.2",
+      "title": "Implement ring preset",
+      "completed_on": "2026-06-24",
+      "summary": "Added RING_PRESET and deterministic Pyxel-independent ring burst generation with mostly planar velocities, small z thickness, and partial trail data."
+    },
+    {
+      "id": "T0003.2.5",
+      "title": "Add manual Pyxel preview for Kiku and Ring bursts",
+      "completed_on": "2026-06-24",
+      "summary": "Added a manual tools/preview_firework_box.py Pyxel preview harness for visually inspecting package-side Camera3D, WireBox, Kiku, and Ring burst behavior before Spiral work."
+    },
+    {
+      "id": "T0003.2.6",
+      "title": "Tune iPhone screen profiles to portrait firework volume",
+      "completed_on": "2026-06-24",
+      "summary": "Adjusted iPhone-style profiles so the internal observation box becomes a tall portrait firework volume."
+    },
+    {
+      "id": "T0003.2.7",
+      "title": "Tune iPhone screen profiles to portrait Pyxel viewport",
+      "completed_on": "2026-06-24",
+      "summary": "Changed iPhone-style Pyxel screen profiles from landscape to portrait while preserving the tall firework volume and classic default."
+    },
+    {
+      "id": "T0003.2.8",
+      "title": "Add deterministic Ring orientation bank",
+      "completed_on": "2026-06-25",
+      "summary": "Added Pyxel-independent RingOrientation and RingOrientationBank support with stratified deterministic orientations, and connected the manual preview to use a 24-orientation bank for Ring bursts."
+    },
+    {
+      "id": "T0003.3",
+      "title": "Implement spiral preset",
+      "completed_on": "2026-06-25",
+      "summary": "Added SPIRAL_PRESET and deterministic Pyxel-independent 3D spiral burst generation, and extended the manual preview to cycle Kiku, Ring, and Spiral."
+    },
+    {
+      "id": "T0003.4",
+      "title": "Implement willow preset",
+      "completed_on": "2026-06-25",
+      "summary": "Added WILLOW_PRESET and deterministic Pyxel-independent willow burst generation with stronger negative gravity, longer partial trails, and manual preview cycling."
+    },
+    {
+      "id": "T0003.5",
+      "title": "Implement peony preset",
+      "completed_on": "2026-06-25",
+      "summary": "Added PEONY_PRESET and deterministic Pyxel-independent peony burst generation with short life, bright palette, restrained trails, and manual preview cycling."
+    },
+    {
+      "id": "T0003.5.5",
+      "title": "Add random burst selection mode to preview",
+      "completed_on": "2026-06-25",
+      "summary": "Added preview-only random burst selection mode with R to enter random mode, SPACE to return to sequential mode, and deterministic random choices for manual and auto launches."
+    },
+    {
+      "id": "T0003.5.6",
+      "title": "Add fixed-position salvo launch plans to preview",
+      "completed_on": "2026-06-25",
+      "summary": "Added Pyxel-independent fixed-position salvo plans and preview number-key scheduling for 1 through 5 profile-scaled burst launches."
+    },
+    {
+      "id": "T0003.6",
+      "title": "Implement multi-ring preset",
+      "completed_on": "2026-06-25",
+      "summary": "Added MULTI_RING_PRESET and deterministic Pyxel-independent three-layer multi-ring burst generation, with preview random and salvo support."
+    },
+    {
+      "id": "T0003.7",
+      "title": "Implement senrin / secondary burst preset",
+      "completed_on": "2026-06-25",
+      "summary": "Added SENRIN_PRESET, deterministic primary seed generation, optional SecondaryBurstSpec data, deterministic secondary burst generation, and preview-only secondary execution."
+    },
+    {
+      "id": "T0003.7.5",
+      "title": "Add persistent preview salvo controls",
+      "completed_on": "2026-06-25",
+      "summary": "Changed preview number keys into persistent salvo loops, added 0 as random-count salvo mode, added H height variation, and drew preview-only launch-to-burst rocket trajectories."
+    },
+    {
+      "id": "T0003.7.6",
+      "title": "Fix preview rocket tail, flight pacing, and launch speed variation",
+      "completed_on": "2026-06-25",
+      "summary": "Changed preview rockets to launch before bursting, draw only short recent-motion tails, use longer distance-aware flight times, and vary launch speeds per rocket."
+    },
+    {
+      "id": "T0003.8",
+      "title": "Add preset cycling and visual tuning checklist",
+      "completed_on": "2026-06-25",
+      "summary": "Added docs/research/visual_tuning_checklist.md to define profile targets, preview commands, controls, per-preset visual checks, stress sequences, density risks, and follow-up tuning candidates."
+    },
+    {
+      "id": "T0003.8.5",
+      "title": "Review external Firework.py for future preset candidates",
+      "completed_on": "2026-06-25",
+      "summary": "Reviewed external Firework.py as reference material only and documented future preset candidates, 3D translation strategy, risks, and recommended order in docs/research/external_firework_candidates_20260625.md."
+    },
+    {
+      "id": "T0003.8.6",
+      "title": "Add type-colored rocket tails and burst accent rays",
+      "completed_on": "2026-06-25",
+      "summary": "Added preview-only burst-type rocket tail colors and short-lived center-outward accent rays for selected explosion particles without changing pure generation or production runtime behavior."
+    },
+    {
+      "id": "T0003.8.7",
+      "title": "Restore simple gradient firework shell tail",
+      "completed_on": "2026-06-25",
+      "summary": "Restored the preview rising launch visual to a shared firework shell tail using a short white/yellow/brown gradient and removed type-specific shell tail geometry."
+    },
+    {
+      "id": "T0004.0",
+      "title": "Add preview scenery preset scaffold and switching",
+      "completed_on": "2026-06-25",
+      "summary": "Added Pyxel-independent in-box 3D scenery preset data for EMPTY, MOUNTAINS, CITY, and RIVERBANK, plus preview G cycling and B visibility toggle."
+    },
+    {
+      "id": "T0004.1",
+      "title": "Refocus scenery to city-only 3D urban kit",
+      "completed_on": "2026-06-25",
+      "summary": "Refocused active preview scenery to EMPTY and CITY, and rebuilt CITY as profile-scaled 3D cuboid building blocks with sparse lit windows."
+    },
+    {
+      "id": "T0004.1.1",
+      "title": "Ground city building wireframes",
+      "completed_on": "2026-06-26",
+      "summary": "Omitted CITY building bottom-face perimeter edges while keeping vertical and top edges, and slightly reduced current city block scale and height so buildings read as rising from the cut floor plane."
+    },
+    {
+      "id": "T0003.8.9",
+      "title": "Add subtle burst radius variation",
+      "completed_on": "2026-06-26",
+      "summary": "Added bounded deterministic per-particle velocity magnitude wobble to pure burst generation so explosion radii feel less mechanically uniform while preserving preset identities."
+    },
+    {
+      "id": "T0004.2",
+      "title": "Add city landmark, utility poles, and wires",
+      "completed_on": "2026-06-26",
+      "summary": "Added CITY-only low-detail 3D urban details: a landmark tower, utility poles, and sagging overhead wire polylines, while keeping scenery Pyxel-independent and subordinate to fireworks."
+    },
+    {
+      "id": "T0003.9",
+      "title": "Implement Halo preset",
+      "completed_on": "2026-06-26",
+      "summary": "Added HALO_PRESET and deterministic Pyxel-independent Halo burst generation as a light, soft, wobbling ring-like firework, with preview sequential, random, and salvo support."
+    },
+    {
+      "id": "T0004.2.1",
+      "title": "Densify city blocks and replace utility poles with signage",
+      "completed_on": "2026-06-26",
+      "summary": "Refined active CITY into a denser cutaway urban mass with more grounded building blocks, a larger grounded landmark tower, removed utility poles/wires, and low-detail building signage."
+    },
+    {
+      "id": "T0004.2.1.1",
+      "title": "Add preview auto-rotation speed cycling",
+      "completed_on": "2026-06-26",
+      "summary": "Added preview-only Q control to cycle auto-rotation speed through slow, normal, and fast while preserving X as auto-rotate ON/OFF."
+    },
+    {
+      "id": "T0004.2.3",
+      "title": "Add ferris wheel and full-footprint city coverage",
+      "completed_on": "2026-06-26",
+      "summary": "Expanded active CITY building coverage across the lower observation-box footprint and added one low-detail ferris wheel while preserving preview controls and firework behavior."
+    },
+    {
+      "id": "T0004.2.4",
+      "title": "Add interior twinkling box stars with toggle",
+      "completed_on": "2026-06-26",
+      "summary": "Added preview-only twinkling stars attached to the observation box's interior top and upper side faces, with T toggling and conservative interior-face visibility."
+    },
+    {
+      "id": "T0004.2.5",
+      "title": "Tune burst compactness and city landmark layout",
+      "completed_on": "2026-06-26",
+      "summary": "Tightened deterministic burst radius wobble, enlarged the CITY ferris wheel, and preserved a central boulevard-like open corridor through the dense city footprint."
+    },
+    {
+      "id": "T0004.2.6",
+      "title": "Tune preview auto rotate comfort",
+      "completed_on": "2026-06-26",
+      "summary": "Reduced preview auto-rotate normal and fast speeds and scaled vertical sway by speed mode while preserving X and Q controls."
+    },
+    {
+      "id": "T0004.2.8",
+      "title": "Tune ceiling stars, glitter residue, ferris wheel roundness, and city edge coverage",
+      "completed_on": "2026-06-26",
+      "summary": "Relaxed top-face star visibility while preserving side-wall thresholds, added sparse preview-only glitter residue, rounded the CITY ferris wheel, and added peripheral CITY buildings while preserving the central boulevard."
+    },
+    {
+      "id": "T0004.2.8.1",
+      "title": "Relax ceiling star shallow-angle visibility",
+      "completed_on": "2026-06-26",
+      "summary": "Relaxed only the top-face interior star visibility threshold further so ceiling stars remain visible at smaller eye-line-to-ceiling angles, while side-wall star visibility remains unchanged."
+    },
+    {
+      "id": "T0004.2.9",
+      "title": "Balance city building outline brightness",
+      "completed_on": "2026-06-26",
+      "summary": "Changed CITY building cuboid outlines to an even, interleaved bright-blue/dark-blue distribution while leaving the tower, ferris wheel, signs, windows, and geometry unchanged."
+    },
+    {
+      "id": "T0004.2.10",
+      "title": "Increase city building count to 48",
+      "completed_on": "2026-06-26",
+      "summary": "Increased active CITY building cuboids to 48 while preserving the balanced bright-blue/dark-blue distribution, central boulevard, and existing tower, ferris wheel, signage, and window behavior."
+    },
+    {
+      "id": "T0003.8.11",
+      "title": "Reduce burst radius maximum width",
+      "completed_on": "2026-06-26",
+      "summary": "Scaled primary burst velocity radius to 80% of the previous maximum while preserving deterministic wobble, trail tendencies, preset constants, Senrin secondary, CITY, and preview controls."
+    },
+    {
+      "id": "T0004.2.8.2",
+      "title": "Keep ceiling stars visible at near-parallel angles",
+      "completed_on": "2026-06-26",
+      "summary": "Widened only the top-face interior star visibility threshold so ceiling stars remain visible at near-parallel eye-line-to-ceiling angles while side-wall visibility remains unchanged."
+    }
+  ]
+}

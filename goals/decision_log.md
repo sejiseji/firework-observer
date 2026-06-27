@@ -1082,3 +1082,17 @@ Keep BGM on its own row, make the count selector fire immediately, add six separ
 
 Impact:
 Runtime mobile UI geometry, input handling, app mobile panel state, tests, README, integration docs, visual checklist, goals, and handoff records changed. Firework generation, CITY, stars, UFO, audio playback behavior, shell tail, glitter, launcher behavior, and keyboard controls remain unchanged.
+
+## 2026-06-28 Show current firework kind on mobile selector
+
+Decision:
+Replace the small mobile `NEXT` label with a wider button labeled by the currently selected firework kind.
+
+Reason:
+Touch users could cycle firework kinds, but the panel did not make the current selection clear. Showing the selected kind directly makes the button both a status display and the cycle control.
+
+Alternatives:
+Keep `NEXT`, add a separate read-only label, or move firework selection into a larger list/menu.
+
+Impact:
+Runtime mobile UI geometry/rendering, mobile UI tests, README, integration docs, visual checklist, goals, and handoff records changed. Firework generation, CITY, stars, UFO, audio, shell tail, glitter, launcher behavior, and keyboard controls remain unchanged.

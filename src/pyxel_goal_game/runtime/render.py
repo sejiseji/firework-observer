@@ -366,7 +366,7 @@ class RuntimeRenderer:
         )
 
         self.draw_mobile_button(launch_button_rect(panel), "LAUNCH", 11)
-        self.draw_mobile_button(next_button_rect(panel), "NEXT", 11)
+        self.draw_mobile_button(next_button_rect(panel), self.app.burst_label.upper(), 11)
         self.draw_mobile_button(random_salvo_button_rect(panel), "SALVO START", 11)
         self.draw_mobile_button(zoom_in_button_rect(panel), "ZOOM+", 5)
         self.draw_mobile_button(zoom_out_button_rect(panel), "ZOOM-", 5)

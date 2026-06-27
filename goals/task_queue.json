@@ -4,6 +4,12 @@
     "current": [],
     "done": [
         {
+            "id": "T0010.5",
+            "title": "Show current firework kind on mobile selector",
+            "completed_on": "2026-06-28",
+            "summary": "Replaced the small NEXT label with a wider mobile firework selector labeled by the currently selected kind."
+        },
+        {
             "id": "T0010.4",
             "title": "Add mobile salvo count selector",
             "completed_on": "2026-06-28",

@@ -129,9 +129,14 @@ Manual review found official runtime parity OK for `iphone16_balanced`. Startup,
 
 `T0005.6` applied the handoff. `main.py` is now a thin launcher to `pyxel_goal_game.runtime.app.main` and does not contain runtime logic or import from `tools/`.
 
+`T0005.6.1` made the launcher robust for simple public startup. The runtime CLI normalizes Pyxel wrapper arguments such as `pyxel run main.py`, and the default runtime profile is `iphone16_balanced`.
+
 Primary launch commands:
 
 ```bash
+python main.py
+python3 main.py
+pyxel run main.py
 .venv/bin/python main.py
 .venv/bin/python scripts/run_runtime_app.py --profile iphone16_balanced
 ```

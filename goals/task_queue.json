@@ -168,6 +168,12 @@
   ],
   "done": [
     {
+      "id": "T0005.6.1",
+      "title": "Make main.py a robust simple launcher",
+      "completed_on": "2026-06-27",
+      "summary": "Made python main.py, python3 main.py, and pyxel run main.py first-class launch paths by keeping main.py as a thin src-bootstrap launcher and normalizing Pyxel wrapper argv in the runtime CLI."
+    },
+    {
       "id": "T0005.6",
       "title": "Convert main.py to official runtime launcher",
       "completed_on": "2026-06-27",

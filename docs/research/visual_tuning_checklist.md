@@ -428,10 +428,13 @@ Result:
 - Runtime stability: OK.
 - `main.py` handoff readiness: READY.
 
-Default entry path after T0005.6:
+Default public entry paths after T0005.6.1:
 
-- `.venv/bin/python main.py`
+- `python main.py`
+- `python3 main.py`
+- `pyxel run main.py`
 
 The explicit runtime launcher remains available:
 
+- `.venv/bin/python main.py --profile iphone16_balanced`
 - `.venv/bin/python scripts/run_runtime_app.py --profile iphone16_balanced`

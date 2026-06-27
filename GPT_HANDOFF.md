@@ -31,7 +31,7 @@ The project now includes:
 - `docs/architecture/SCENERY_OBJECTS.md`: planning for future quiet 3D line scenery inside the observation box.
 - `docs/architecture/PROTOTYPE_RECONCILIATION.md`: inventory of protected `main.py` behavior and package migration strategy.
 
-`main.py` has completed handoff and is now a thin launcher for the official package runtime. The old standalone prototype behavior is documented in `docs/architecture/PROTOTYPE_RECONCILIATION.md`.
+`main.py` has completed handoff and is now a robust thin launcher for the official package runtime. The old standalone prototype behavior is documented in `docs/architecture/PROTOTYPE_RECONCILIATION.md`.
 
 ## Product Direction
 
@@ -248,9 +248,10 @@ After the task:
 - `T0005.4` added the first official package-side runtime app and entrypoint without touching protected `main.py` or importing `tools/preview_firework_box.py`. Launch it with `.venv/bin/python scripts/run_runtime_app.py --profile iphone16_balanced`. Runtime modules now include `runtime/app.py`, `runtime/input.py`, `runtime/render.py`, and `runtime/effects.py`; the preview remains available as a regression viewer.
 - `T0005.5` recorded manual runtime parity review in `docs/research/runtime_parity_review_20260626.md`. Official runtime parity is OK, runtime stability is OK, and `main.py` handoff readiness is READY.
 - `T0005.6` converted `main.py` into a thin launcher for `pyxel_goal_game.runtime.app.main`. Do not move runtime logic back into `main.py`; runtime behavior belongs in `src/pyxel_goal_game/runtime/`.
+- `T0005.6.1` made `main.py` robust for simple public startup. Preferred launch paths are `python main.py`, `python3 main.py`, and `pyxel run main.py`. The runtime CLI normalizes Pyxel wrapper argv prefixes like `run main.py`, while preserving normal argparse failures for real invalid arguments. The default runtime profile is `iphone16_balanced`.
 - Recommended visual review command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`.
 - Main stress sequence: press `R`, `H`, then `0` to combine random burst type, height variation, and random-count persistent salvos.
-- `classic` remains unchanged and remains the default profile.
+- `classic` remains unchanged as the baseline ScreenProfile, but the public runtime launcher defaults to `iphone16_balanced`.
 - If the user changes the game direction, update `project_brief.json` and regenerate or manually update the related docs.
 - The standalone `main.py` migration is complete; use `docs/architecture/PROTOTYPE_RECONCILIATION.md` for historical reference only.
 - Use `docs/architecture/PROTOTYPE_RECONCILIATION.md` as the source of truth for preserving protected prototype behavior during migration.

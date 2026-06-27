@@ -1180,3 +1180,28 @@ Record completed tasks here.
   - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_080123.txt`.
 - Preservation: Firework generation, preset constants, burst radius scaling, shell tail, glitter residue, CITY, interior stars, camera motion, show scheduling, preview behavior, and UFO exclusion unchanged.
+
+## 2026-06-27 T0005.6.1 Make main.py a robust simple launcher
+
+- Summary: Made the default launcher robust for source-checkout and Pyxel-run startup. `main.py` keeps only the minimal `src/` bootstrap and official runtime delegation, while runtime CLI parsing normalizes Pyxel wrapper arguments such as `run main.py`.
+- Files changed: `src/pyxel_goal_game/runtime/app.py`, `tests/unit/test_runtime_app_cli.py`, `README.md`, `docs/architecture/PREVIEW_TO_RUNTIME_INTEGRATION.md`, `docs/research/runtime_parity_review_20260626.md`, `docs/research/visual_tuning_checklist.md`, `goals/decision_log.md`, `goals/roadmap.md`, `goals/task_queue.json`, `goals/done_log.md`, and `GPT_HANDOFF.md`.
+- Behavior:
+  - `python main.py`, `python3 main.py`, `.venv/bin/python main.py`, and `pyxel run main.py` are documented as first-class launch paths.
+  - `pyxel run main.py` style argv is normalized before argparse sees runtime options.
+  - Default runtime profile is now `iphone16_balanced`.
+  - Real invalid arguments still fail through argparse.
+- Tests:
+  - `.venv/bin/python -m json.tool goals/task_queue.json` passed.
+  - `python3 -m compileall src tests scripts tools main.py` passed.
+  - `.venv/bin/python -m pytest` passed: 248 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `.venv/bin/python main.py --help` passed.
+  - `.venv/bin/python scripts/run_runtime_app.py --help` passed.
+  - `python3 main.py --help` passed.
+  - `python main.py --help` could not run because this shell has no `python` command (`zsh:1: command not found: python`).
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 248 passed.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_100216.txt`.
+  - `.venv/bin/pyxel run main.py` was launched briefly and terminated after confirming it did not immediately fail with the prior `unrecognized arguments: run main.py` argparse error.
+- Preservation: Runtime visual behavior, firework generation, preset constants, CITY, stars, shell tail, glitter residue, key bindings, preview harness, and UFO exclusion unchanged.

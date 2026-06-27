@@ -65,6 +65,7 @@
 - [x] add first official runtime app and entrypoint
 - [x] review runtime parity and decide main.py handoff
 - [x] convert main.py to official runtime launcher
+- [x] make main.py robust for simple public startup
 - [ ] tune city scenery readability against fireworks
 - [ ] add scenery preset data scaffold
 - [ ] add EMPTY and MOUNTAINS scenery presets

@@ -796,3 +796,17 @@ Keep `main.py` as the old standalone prototype, duplicate runtime logic into `ma
 
 Impact:
 `main.py` no longer contains the old single-file prototype implementation. It imports the official runtime app entrypoint and calls it. Runtime behavior remains owned by `src/pyxel_goal_game/runtime/`; the preview remains available as a development harness.
+
+## 2026-06-27 Make main launcher robust for simple startup
+
+Decision:
+Treat `python main.py`, `python3 main.py`, and `pyxel run main.py` as first-class public launch paths. Keep `main.py` thin with only `src/` bootstrap and runtime delegation, and normalize Pyxel wrapper arguments in the runtime CLI layer.
+
+Reason:
+The default entrypoint should work from a source checkout or Pyxel's official runner without requiring users to know the internal runtime script or pass a profile argument. `pyxel run main.py` can pass `run main.py` through to the script, so the runtime parser must strip that wrapper prefix while still rejecting real invalid arguments.
+
+Alternatives:
+Keep `.venv/bin/python main.py --profile iphone16_balanced` as the only supported path, duplicate CLI parsing in `main.py`, or silently ignore arbitrary unknown arguments.
+
+Impact:
+`main.py` remains a thin launcher and does not import from `tools/`. The runtime CLI now defaults to `iphone16_balanced` and normalizes `run <entry>.py` prefixes. Runtime visuals, firework generation, CITY, stars, shell tail, glitter, controls, and preview behavior remain unchanged.

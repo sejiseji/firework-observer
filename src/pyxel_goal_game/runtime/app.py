@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import argparse
+import sys
+from collections.abc import Sequence
 from dataclasses import replace
 from random import Random
-
-import pyxel
+from typing import Any
 
 from pyxel_goal_game.ambient_box_stars import BoxStarField, build_box_star_field
 from pyxel_goal_game.camera3d import Camera3D, Vec3
@@ -26,8 +27,6 @@ from pyxel_goal_game.runtime.effects import (
     build_secondary_particles,
     create_active_shell,
 )
-from pyxel_goal_game.runtime.input import handle_runtime_input
-from pyxel_goal_game.runtime.render import RuntimeRenderer
 from pyxel_goal_game.runtime.show_schedule import (
     PERSISTENT_SALVO_REPEAT_FRAMES,
     RuntimeLaunchSchedule,
@@ -46,16 +45,35 @@ from pyxel_goal_game.scenery_presets import (
     SceneryPreset,
     get_scenery_preset,
 )
-from pyxel_goal_game.screen_profiles import DEFAULT_SCREEN_PROFILE_NAME, get_screen_profile
+from pyxel_goal_game.screen_profiles import get_screen_profile
 from pyxel_goal_game.wire_box import WireBox
 
 AUTO_LAUNCH_FRAMES = 120
 RING_ORIENTATION_BANK_SEED = 20260623
 RUNTIME_RANDOM_SEED = 20260625
+DEFAULT_RUNTIME_PROFILE_NAME = "iphone16_balanced"
+
+try:
+    import pyxel
+except ModuleNotFoundError:
+    pyxel: Any = None
+
+
+def require_pyxel() -> Any:
+    if pyxel is None:
+        raise RuntimeError(
+            "Pyxel is required to launch Firework Observer. "
+            "Install project dependencies or use the project virtual environment."
+        )
+    return pyxel
 
 
 class RuntimeApp:
-    def __init__(self, profile_name: str = DEFAULT_SCREEN_PROFILE_NAME) -> None:
+    def __init__(self, profile_name: str = DEFAULT_RUNTIME_PROFILE_NAME) -> None:
+        require_pyxel()
+        from pyxel_goal_game.runtime.input import handle_runtime_input
+        from pyxel_goal_game.runtime.render import RuntimeRenderer
+
         self.profile = get_screen_profile(profile_name)
         self.state = RuntimeShowState(
             profile_name=profile_name,
@@ -76,6 +94,7 @@ class RuntimeApp:
         self.debug = True
         self.scenery = self.load_scenery()
         self.star_field: BoxStarField = build_box_star_field(self.profile)
+        self.handle_runtime_input = handle_runtime_input
         self.renderer = RuntimeRenderer(self)
         pyxel.init(
             self.profile.width,
@@ -101,7 +120,7 @@ class RuntimeApp:
 
     def update(self) -> None:
         self.state = replace(self.state, frame_count=pyxel.frame_count)
-        handle_runtime_input(self)
+        self.handle_runtime_input(self)
         if self.state.toggles.auto_rotate:
             mode = self.state.auto_rotate_speed_mode
             self.camera.target_yaw += get_auto_rotate_yaw_delta(mode)
@@ -322,15 +341,26 @@ class RuntimeApp:
         return str(self.state.salvo_count)
 
 
-def parse_args() -> argparse.Namespace:
+def normalize_runtime_argv(argv: Sequence[str]) -> list[str]:
+    normalized = list(argv)
+    if (
+        len(normalized) >= 2
+        and normalized[0] == "run"
+        and normalized[1].endswith(".py")
+    ):
+        return normalized[2:]
+    return normalized
+
+
+def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run the official Firework Observer runtime.")
     parser.add_argument(
         "--profile",
-        default=DEFAULT_SCREEN_PROFILE_NAME,
+        default=DEFAULT_RUNTIME_PROFILE_NAME,
         choices=("classic", "iphone16_balanced", "iphone16_large"),
         help="Screen profile to run.",
     )
-    return parser.parse_args()
+    return parser.parse_args(normalize_runtime_argv(sys.argv[1:] if argv is None else argv))
 
 
 def main() -> None:

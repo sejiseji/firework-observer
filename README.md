@@ -17,10 +17,21 @@ This repository is designed to make development stable by keeping the following 
 
 ```bash
 uv sync
-uv run python -m pyxel_goal_game
+python main.py
 uv run pytest
 uv run ruff check .
 ```
+
+Other supported launch paths:
+
+```bash
+python3 main.py
+pyxel run main.py
+.venv/bin/python main.py --profile iphone16_balanced
+.venv/bin/python scripts/run_runtime_app.py --profile iphone16_balanced
+```
+
+`main.py` is the default public entrypoint. `scripts/run_runtime_app.py` remains an explicit runtime launcher for development, and `tools/preview_firework_box.py` remains the manual preview harness.
 
 If you do not use `uv`, install dependencies manually from `pyproject.toml`.
 

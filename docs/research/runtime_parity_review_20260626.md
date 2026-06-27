@@ -99,3 +99,18 @@ Explicit runtime launcher remains available:
 ```bash
 .venv/bin/python scripts/run_runtime_app.py --profile iphone16_balanced
 ```
+
+## T0005.6.1 Launcher Robustness
+
+Status: `APPLIED`
+
+`main.py` remains thin, but now supports simple startup paths expected from a source checkout or Pyxel wrapper:
+
+```bash
+python main.py
+python3 main.py
+pyxel run main.py
+.venv/bin/python main.py --profile iphone16_balanced
+```
+
+The runtime CLI strips Pyxel wrapper arguments shaped like `run <entry>.py` before parsing runtime options. Invalid unrelated arguments still fail through `argparse`.

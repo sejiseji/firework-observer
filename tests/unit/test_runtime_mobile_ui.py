@@ -10,6 +10,8 @@ from pyxel_goal_game.runtime.mobile_ui import (
     MobilePanelDraft,
     menu_button_rect,
     panel_rect,
+    zoom_in_button_rect,
+    zoom_out_button_rect,
 )
 from pyxel_goal_game.runtime.state import AutoRotateSpeedMode, RuntimeShowState
 
@@ -62,9 +64,13 @@ def test_mobile_panel_draft_cycles_speed_modes() -> None:
 def test_mobile_layout_stays_inside_portrait_profile() -> None:
     menu = menu_button_rect(236)
     panel = panel_rect(236, 512)
+    zoom_in = zoom_in_button_rect(panel)
+    zoom_out = zoom_out_button_rect(panel)
 
     assert 0 <= menu.x < 236
     assert 0 <= menu.y < 512
     assert menu.x + menu.width <= 236
     assert panel.x + panel.width <= 236
     assert panel.y + panel.height <= 512
+    assert panel.contains(zoom_in.x, zoom_in.y)
+    assert panel.contains(zoom_out.x + zoom_out.width - 1, zoom_out.y + zoom_out.height - 1)

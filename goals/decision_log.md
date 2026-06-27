@@ -1023,3 +1023,6 @@ Add many always-visible touch buttons, require a hardware keyboard, or build a D
 
 Impact:
 Only runtime input/render/app UI state, pure mobile UI helpers, tests, and docs changed. Firework generation, CITY, stars, UFO, audio behavior, shell tail, glitter, launcher behavior, and keyboard controls remain unchanged.
+
+Follow-up:
+Mobile panel text now uses scaled rendering for readability, and the panel includes `ZOOM+` / `ZOOM-` buttons so touch users can zoom without a keyboard. PC zoom remains available through `A` / `S`.

@@ -4,14 +4,14 @@ from dataclasses import dataclass, replace
 
 from pyxel_goal_game.runtime.state import AutoRotateSpeedMode, RuntimeShowState
 
-MENU_BUTTON_WIDTH = 28
-MENU_BUTTON_HEIGHT = 15
+MENU_BUTTON_WIDTH = 44
+MENU_BUTTON_HEIGHT = 20
 MENU_BUTTON_MARGIN = 4
-PANEL_WIDTH = 146
-PANEL_HEIGHT = 214
-PANEL_MARGIN = 8
-CHECKBOX_SIZE = 7
-CHECKBOX_ROW_HEIGHT = 13
+PANEL_WIDTH = 228
+PANEL_HEIGHT = 480
+PANEL_MARGIN = 4
+CHECKBOX_SIZE = 12
+CHECKBOX_ROW_HEIGHT = 24
 
 
 @dataclass(frozen=True)
@@ -107,8 +107,8 @@ def panel_rect(screen_width: int, screen_height: int) -> Rect:
 
 def checkbox_rect(panel: Rect, index: int) -> Rect:
     return Rect(
-        x=panel.x + 8,
-        y=panel.y + 23 + index * CHECKBOX_ROW_HEIGHT,
+        x=panel.x + 10,
+        y=panel.y + 48 + index * CHECKBOX_ROW_HEIGHT,
         width=CHECKBOX_SIZE,
         height=CHECKBOX_SIZE,
     )
@@ -116,32 +116,40 @@ def checkbox_rect(panel: Rect, index: int) -> Rect:
 
 def checkbox_row_rect(panel: Rect, index: int) -> Rect:
     return Rect(
-        x=panel.x + 4,
-        y=panel.y + 19 + index * CHECKBOX_ROW_HEIGHT,
+        x=panel.x + 6,
+        y=panel.y + 42 + index * CHECKBOX_ROW_HEIGHT,
         width=panel.width - 8,
         height=CHECKBOX_ROW_HEIGHT,
     )
 
 
 def speed_button_rect(panel: Rect) -> Rect:
-    return Rect(panel.x + 8, panel.y + 127, panel.width - 16, 13)
+    return Rect(panel.x + 10, panel.y + 242, panel.width - 20, 24)
 
 
 def launch_button_rect(panel: Rect) -> Rect:
-    return Rect(panel.x + 8, panel.y + 145, 45, 14)
+    return Rect(panel.x + 10, panel.y + 276, 70, 26)
 
 
 def next_button_rect(panel: Rect) -> Rect:
-    return Rect(panel.x + 58, panel.y + 145, 40, 14)
+    return Rect(panel.x + 88, panel.y + 276, 56, 26)
 
 
 def random_salvo_button_rect(panel: Rect) -> Rect:
-    return Rect(panel.x + 8, panel.y + 164, panel.width - 16, 14)
+    return Rect(panel.x + 10, panel.y + 310, panel.width - 20, 26)
+
+
+def zoom_in_button_rect(panel: Rect) -> Rect:
+    return Rect(panel.x + 10, panel.y + 344, 78, 26)
+
+
+def zoom_out_button_rect(panel: Rect) -> Rect:
+    return Rect(panel.x + 96, panel.y + 344, 78, 26)
 
 
 def apply_button_rect(panel: Rect) -> Rect:
-    return Rect(panel.x + 8, panel.y + panel.height - 23, 55, 15)
+    return Rect(panel.x + 10, panel.y + panel.height - 34, 70, 26)
 
 
 def close_button_rect(panel: Rect) -> Rect:
-    return Rect(panel.x + panel.width - 39, panel.y + panel.height - 23, 31, 15)
+    return Rect(panel.x + panel.width - 80, panel.y + panel.height - 34, 70, 26)

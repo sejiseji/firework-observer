@@ -58,5 +58,7 @@ def test_runtime_input_maps_mobile_panel_actions() -> None:
         "next_button_rect",
         "random_salvo_button_rect",
         "speed_button_rect",
+        "zoom_in_button_rect",
+        "zoom_out_button_rect",
     ):
         assert name in source

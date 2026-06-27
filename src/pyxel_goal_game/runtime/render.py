@@ -31,6 +31,24 @@ from pyxel_goal_game.runtime.mobile_ui import (
 from pyxel_goal_game.scenery_presets import SceneryLine, SceneryPolyline
 from pyxel_goal_game.wire_box import ProjectedEdge
 
+PYXEL_FONT_HEIGHT = 7
+
+
+def scaled_blt_top_left_position(
+    x: int,
+    y: int,
+    width: int,
+    height: int,
+    scale: int,
+) -> tuple[int, int]:
+    if scale < 1:
+        msg = "scale must be at least 1"
+        raise ValueError(msg)
+    return (
+        x + (width * (scale - 1) + 1) // 2,
+        y + (height * (scale - 1) + 1) // 2,
+    )
+
 
 class RuntimeRenderer:
     def __init__(self, app: object) -> None:
@@ -346,4 +364,11 @@ class RuntimeRenderer:
         image.cls(0)
         image.text(0, 0, text, color)
         width = min(image.width, max(1, len(text) * 4 + 2))
-        pyxel.blt(x, y, image, 0, 0, width, 7, 0, scale=scale)
+        blt_x, blt_y = scaled_blt_top_left_position(
+            x,
+            y,
+            width,
+            PYXEL_FONT_HEIGHT,
+            scale,
+        )
+        pyxel.blt(blt_x, blt_y, image, 0, 0, width, PYXEL_FONT_HEIGHT, 0, scale=scale)

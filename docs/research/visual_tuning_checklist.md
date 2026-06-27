@@ -452,14 +452,16 @@ Command:
 Checks:
 
 - BGM starts on launch.
-- BGM reads as quiet, high-register, fragile music-box ambience.
-- BGM uses simple chord harmony: channel 0 melody, channel 1 harmony, channel 2 soft support.
-- Melody remains dominant; harmony/support do not read as independent counter-lines.
-- BGM volume hierarchy is clear: melody large, harmony medium, support small.
+- BGM reads as quiet, fragile music-box ambience and does not command attention.
+- BGM uses simple chord harmony: channel 0 melody, channel 1 harmony, channel 2 calm mid-register support.
+- Melody remains clear, but the BGM sits behind the fireworks.
+- Harmony/support do not read as independent counter-lines.
+- Support feels like a slow `tan` / `ta-tan` pulse, not high shimmer.
+- BGM volume hierarchy is clear and restrained: melody medium-low, harmony lower, support soft.
 - BGM loop still does not feel like a short single-note loop.
 - `M` toggles audio off and back on.
 - `Z` plays a low, restrained explosion SFX at burst timing, not at shell launch.
 - `1`-`5` salvos and `R + H + 0` do not stack explosion sounds into noise.
-- Explosion SFX remains separated on channel 3 and comes through the BGM.
+- Explosion SFX remains separated on channel 3 and is the primary audio subject.
 - Visual behavior remains unchanged.
 - No UFO appears.

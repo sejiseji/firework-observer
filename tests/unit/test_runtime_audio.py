@@ -79,6 +79,17 @@ def test_bgm_uses_aligned_chord_harmony() -> None:
     assert len(melody_notes) >= 80
     assert support_notes.count("r") > harmony_notes.count("r")
     assert int(BGM_MELODY_VOLUME) > int(BGM_HARMONY_VOLUME) > int(BGM_SUPPORT_VOLUME)
+    assert int(BGM_MELODY_VOLUME) <= 4
+    assert int(BGM_HARMONY_VOLUME) <= 2
+
+
+def test_bgm_support_is_calm_mid_register_rhythm() -> None:
+    support_notes = BGM_SUPPORT_NOTES.split()
+    support_tones = [note for note in support_notes if note != "r"]
+
+    assert len(support_tones) < len(support_notes) // 3
+    assert {note[-1] for note in support_tones} == {"3"}
+    assert set(support_tones) <= {"c3", "d3", "e3", "f3", "g3", "a3"}
 
 
 def test_explosion_sfx_cooldown_policy_is_deterministic() -> None:

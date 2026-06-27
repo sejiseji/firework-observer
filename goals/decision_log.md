@@ -852,3 +852,17 @@ Keep tuning the arpeggio/shimmer arrangement, return to single-line BGM, use low
 
 Impact:
 Only runtime audio definitions, audio tests, and project records changed. Visual behavior, firework generation, CITY, stars, shell tail, glitter visuals, key bindings, `M` toggle semantics, explosion SFX channel, and main launcher remain unchanged.
+
+## 2026-06-27 Tune BGM support rhythm and volume
+
+Decision:
+Lower overall runtime BGM volume and change channel 2 from high soft support into a sparse mid-register rhythmic support pulse. Keep channel 3 reserved for explosion SFX.
+
+Reason:
+Even low-volume high notes can feel sharp or noisy. Moving support into a slower mid-register `tan` / `ta-tan` role and lowering melody/harmony volume makes the BGM sit behind the fireworks while preserving the music-box character.
+
+Alternatives:
+Raise explosion SFX, remove support entirely, keep high support notes, or delay audio tuning until after UFO work.
+
+Impact:
+Only runtime audio definitions, audio tests, and project records changed. Visual behavior, firework generation, CITY, stars, shell tail, glitter visuals, key bindings, `M` toggle semantics, explosion SFX channel, and main launcher remain unchanged.

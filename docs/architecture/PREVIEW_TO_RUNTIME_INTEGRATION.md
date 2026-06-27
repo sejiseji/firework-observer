@@ -136,6 +136,8 @@ Manual review found official runtime parity OK for `iphone16_balanced`. Startup,
 
 `T0006.2` rebuilt the BGM as simple chord harmony. Channels 0-2 now act as melody, harmony, and soft support with large/medium/small volume hierarchy. Channel 3 remains reserved for explosion SFX.
 
+`T0006.3` lowered overall BGM volume and changed channel 2 from high soft support into a calm mid-register rhythmic pulse. Explosion SFX remains on channel 3 and should read as the primary audio subject.
+
 Primary launch commands:
 
 ```bash

@@ -44,6 +44,12 @@
   ],
   "done": [
     {
+      "id": "T0006.3",
+      "title": "Tune BGM support rhythm and lower overall volume",
+      "completed_on": "2026-06-27",
+      "summary": "Lowered runtime BGM volume and changed channel 2 into sparse mid-register rhythmic support so explosion SFX remains the primary audio subject."
+    },
+    {
       "id": "T0006.2",
       "title": "Rebuild BGM as simple chord harmony",
       "completed_on": "2026-06-27",

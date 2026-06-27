@@ -152,6 +152,17 @@ def test_runtime_audio_does_not_start_bgm_when_bgm_disabled() -> None:
     assert pyxel.playm_calls == []
 
 
+def test_runtime_audio_retries_bgm_after_user_gesture_once() -> None:
+    pyxel = FakePyxel()
+    runtime_audio = RuntimeAudio(pyxel=pyxel)
+
+    runtime_audio.notify_user_gesture()
+    runtime_audio.notify_user_gesture()
+
+    assert runtime_audio.user_gesture_unlocked is True
+    assert pyxel.playm_calls == [(BGM_MUSIC_ID, {"loop": True})]
+
+
 def test_runtime_audio_explosion_uses_cooldown() -> None:
     pyxel = FakePyxel()
     runtime_audio = RuntimeAudio(pyxel=pyxel)

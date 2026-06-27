@@ -100,6 +100,7 @@ def handle_mobile_input(app: object) -> None:
     mouse_y = int(pyxel.mouse_y)
 
     if pyxel.btnp(button):
+        app.notify_audio_user_gesture()
         if menu_button_rect(app.profile.width).contains(mouse_x, mouse_y):
             app.mobile_panel_open = not app.mobile_panel_open
             if app.mobile_panel_open:

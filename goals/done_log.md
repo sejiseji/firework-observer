@@ -1625,3 +1625,13 @@ Record completed tasks here.
   - The in-app `MENU` panel remains the smartphone control surface.
   - The helper script is idempotent and fails clearly if the Pyxel gamepad setting is missing.
 - Preservation: Runtime visuals, input handling, firework generation, CITY, stars, UFO, audio playback behavior, shell tail, glitter, launcher behavior, and keyboard controls unchanged.
+
+## 2026-06-28 T0010.9 Retry audio startup after mobile touch
+
+- Summary: Retried BGM startup on the first mobile/touch input so Safari can unlock audio after a user gesture.
+- Files changed: `src/pyxel_goal_game/runtime/audio.py`, `src/pyxel_goal_game/runtime/app.py`, `src/pyxel_goal_game/runtime/input.py`, runtime tests, README, integration docs, visual checklist, goals logs, task queue, roadmap, and `GPT_HANDOFF.md`.
+- Behavior:
+  - Runtime audio still starts normally during initialization where the browser allows it.
+  - The first touch/click input calls the audio user-gesture unlock path and retries BGM startup once.
+  - Repeated touch inputs do not repeatedly restart BGM.
+- Preservation: Visuals, firework generation, CITY, stars, UFO, shell tail, glitter, launcher behavior, controls, and Pyxel Web gamepad disabling remain unchanged.

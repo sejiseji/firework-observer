@@ -39,6 +39,7 @@ pyxel run main.py
 Before publishing, run `python3 scripts/check_public_safety.py`. Documentation and source files should use repository-relative paths such as `docs/...`, `src/...`, and `scripts/...`, not local machine paths.
 
 Runtime audio is enabled by default. Press `M` to mute or restore all audio, including the quiet chord-harmony music-box BGM and restrained firework explosion SFX. The mobile panel can also turn only the BGM off while leaving explosion SFX enabled.
+On mobile Safari, audio may start only after the first tap because of browser autoplay rules; the runtime retries BGM startup on the first touch input.
 
 A rare silent 3D wireframe UFO ambient flyby is enabled by default in the official runtime. UFOs use deterministic low, middle, or high pass heights. Press `U` to toggle it during review.
 

@@ -4,6 +4,12 @@
     "current": [],
     "done": [
         {
+            "id": "T0010.9",
+            "title": "Retry audio startup after mobile touch",
+            "completed_on": "2026-06-28",
+            "summary": "Retried BGM startup on the first mobile touch input so Safari can unlock audio after a user gesture."
+        },
+        {
             "id": "T0010.8",
             "title": "Disable Pyxel Web virtual gamepad",
             "completed_on": "2026-06-28",

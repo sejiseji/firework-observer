@@ -1009,3 +1009,17 @@ Make `README.md` Japanese-primary and add `README.en.md`, or keep only an Englis
 
 Impact:
 README documentation and release checklist changed. Runtime behavior, launchers, firework generation, CITY, stars, UFO, audio, and safety checker behavior remain unchanged.
+
+## 2026-06-27 Add mobile touch control panel
+
+Decision:
+Add touch-friendly official-runtime controls: drag/flick camera rotation on the play field and a top-right `MENU` button that opens a Pyxel-rendered mobile panel. Panel checkbox/settings changes are staged as a draft and reflected only by pressing `APPLY`.
+
+Reason:
+The public Pyxel Web build should be playable on smartphones without a keyboard. Keeping the controls behind a compact panel avoids covering the fireworks while still making key runtime toggles available.
+
+Alternatives:
+Add many always-visible touch buttons, require a hardware keyboard, or build a DOM overlay outside Pyxel.
+
+Impact:
+Only runtime input/render/app UI state, pure mobile UI helpers, tests, and docs changed. Firework generation, CITY, stars, UFO, audio behavior, shell tail, glitter, launcher behavior, and keyboard controls remain unchanged.

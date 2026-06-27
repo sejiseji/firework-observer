@@ -11,6 +11,20 @@ from pyxel_goal_game.runtime.effects import (
     ActiveShell,
     GlitterResidue,
 )
+from pyxel_goal_game.runtime.mobile_ui import (
+    MOBILE_TOGGLE_SPECS,
+    Rect,
+    apply_button_rect,
+    checkbox_rect,
+    checkbox_row_rect,
+    close_button_rect,
+    launch_button_rect,
+    menu_button_rect,
+    next_button_rect,
+    panel_rect,
+    random_salvo_button_rect,
+    speed_button_rect,
+)
 from pyxel_goal_game.scenery_presets import SceneryLine, SceneryPolyline
 from pyxel_goal_game.wire_box import ProjectedEdge
 
@@ -36,6 +50,7 @@ class RuntimeRenderer:
         self.draw_scenery_phase("front")
         self.draw_edges(projected_edges[8:], far=False)
         self.draw_hud()
+        self.draw_mobile_ui()
 
     @property
     def camera(self) -> Camera3D:
@@ -264,3 +279,48 @@ class RuntimeRenderer:
             ),
             5,
         )
+
+    def draw_mobile_ui(self) -> None:
+        menu = menu_button_rect(self.app.profile.width)
+        menu_color = 13 if self.app.mobile_panel_open else 5
+        pyxel.rect(menu.x, menu.y, menu.width, menu.height, 0)
+        pyxel.rectb(menu.x, menu.y, menu.width, menu.height, menu_color)
+        pyxel.text(menu.x + 3, menu.y + 5, "MENU", menu_color)
+        if self.app.mobile_panel_open:
+            self.draw_mobile_panel()
+
+    def draw_mobile_panel(self) -> None:
+        panel = panel_rect(self.app.profile.width, self.app.profile.height)
+        draft = self.app.mobile_panel_draft
+        pyxel.rect(panel.x, panel.y, panel.width, panel.height, 0)
+        pyxel.rectb(panel.x, panel.y, panel.width, panel.height, 13)
+        pyxel.text(panel.x + 8, panel.y + 7, "MOBILE PANEL", 7)
+
+        for index, spec in enumerate(MOBILE_TOGGLE_SPECS):
+            row = checkbox_row_rect(panel, index)
+            box = checkbox_rect(panel, index)
+            value = bool(getattr(draft, spec.key))
+            pyxel.rectb(box.x, box.y, box.width, box.height, 5)
+            if value:
+                pyxel.line(box.x + 1, box.y + 4, box.x + 3, box.y + 6, 7)
+                pyxel.line(box.x + 3, box.y + 6, box.x + 6, box.y + 1, 7)
+            pyxel.text(row.x + 16, row.y + 2, spec.label, 5)
+
+        speed = speed_button_rect(panel)
+        pyxel.rectb(speed.x, speed.y, speed.width, speed.height, 5)
+        pyxel.text(
+            speed.x + 5,
+            speed.y + 4,
+            f"speed {draft.auto_rotate_speed_mode.value}",
+            5,
+        )
+
+        self.draw_mobile_button(launch_button_rect(panel), "LAUNCH", 11)
+        self.draw_mobile_button(next_button_rect(panel), "NEXT", 11)
+        self.draw_mobile_button(random_salvo_button_rect(panel), "RAND SALVO", 11)
+        self.draw_mobile_button(apply_button_rect(panel), "APPLY", 10)
+        self.draw_mobile_button(close_button_rect(panel), "CLOSE", 8)
+
+    def draw_mobile_button(self, rect: Rect, label: str, color: int) -> None:
+        pyxel.rectb(rect.x, rect.y, rect.width, rect.height, color)
+        pyxel.text(rect.x + 4, rect.y + 5, label, color)

@@ -1529,3 +1529,16 @@ Record completed tasks here.
   - `README.ja.md` describes the project, launch paths, controls, features, development checks, public safety check, release notes, and current license/status in Japanese.
   - `docs/release/public_release_checklist.md` records pre-release entrypoint, README, safety, validation, and release-decision checks.
 - Preservation: Runtime behavior, launchers, firework generation, CITY, stars, UFO, audio, shell tail, glitter, and controls unchanged.
+
+## 2026-06-27 T0010.0 Add mobile touch control panel
+
+- Summary: Added touch-friendly controls to the official runtime.
+- Files changed: `src/pyxel_goal_game/runtime/mobile_ui.py`, `src/pyxel_goal_game/runtime/input.py`, `src/pyxel_goal_game/runtime/render.py`, `src/pyxel_goal_game/runtime/app.py`, runtime mobile/input tests, README, integration docs, visual checklist, goals logs, roadmap, task queue, and `GPT_HANDOFF.md`.
+- Behavior:
+  - Dragging or flicking the play field rotates the camera by default.
+  - The top-right `MENU` opens a mobile panel.
+  - Panel checkboxes stage changes for random mode, height variation, auto launch, auto rotate, stars, UFO, audio, and CITY visibility.
+  - `APPLY` reflects the staged settings and rotate speed.
+  - `LAUNCH`, `NEXT`, and `RAND SALVO` provide touch-friendly action buttons.
+  - Keyboard controls remain available.
+- Preservation: Firework generation, CITY, stars, UFO scheduling/geometry, audio definitions, shell tail, glitter, launcher behavior, and existing keyboard controls unchanged.

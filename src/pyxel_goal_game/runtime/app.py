@@ -31,6 +31,7 @@ from pyxel_goal_game.runtime.effects import (
     build_secondary_particles,
     create_active_shell,
 )
+from pyxel_goal_game.runtime.mobile_ui import MobilePanelDraft
 from pyxel_goal_game.runtime.show_schedule import (
     PERSISTENT_SALVO_REPEAT_FRAMES,
     RuntimeLaunchSchedule,
@@ -103,6 +104,14 @@ class RuntimeApp:
         self.last_launched_kind = DEFAULT_FIREWORK_KIND
         self.next_persistent_salvo_frame = 0
         self.debug = True
+        self.mobile_panel_open = False
+        self.mobile_panel_draft = MobilePanelDraft.from_state(self.state)
+        self.mobile_pointer_down = False
+        self.mobile_dragging = False
+        self.mobile_drag_start_x = 0
+        self.mobile_drag_start_y = 0
+        self.mobile_drag_last_x = 0
+        self.mobile_drag_last_y = 0
         self.scenery = self.load_scenery()
         self.star_field: BoxStarField = build_box_star_field(self.profile)
         self.ufo_state: UfoState = initial_ufo_state(
@@ -116,6 +125,7 @@ class RuntimeApp:
             fps=60,
             title=f"Firework Observer Runtime - {self.profile.name}",
         )
+        pyxel.mouse(True)
         self.audio = RuntimeAudio(pyxel=pyxel, enabled=self.state.toggles.audio_enabled)
         self.audio.setup()
         self.audio.start_bgm()
@@ -215,6 +225,41 @@ class RuntimeApp:
             self.ufo_state,
             frame=pyxel.frame_count,
         )
+
+    def refresh_mobile_panel_draft(self) -> None:
+        self.mobile_panel_draft = MobilePanelDraft.from_state(self.state)
+
+    def apply_mobile_panel_draft(self) -> None:
+        draft = self.mobile_panel_draft
+        previous_audio_enabled = self.state.toggles.audio_enabled
+        previous_ufo_enabled = self.state.toggles.ufo_enabled
+        toggles = replace(
+            self.state.toggles,
+            random_firework_mode=draft.random_firework_mode,
+            height_variation=draft.height_variation,
+            auto_launch=draft.auto_launch,
+            auto_rotate=draft.auto_rotate,
+            interior_stars_visible=draft.interior_stars_visible,
+            ufo_enabled=draft.ufo_enabled,
+            audio_enabled=draft.audio_enabled,
+            scenery_visible=draft.scenery_visible,
+        )
+        self.state = replace(
+            self.state,
+            toggles=toggles,
+            auto_rotate_speed_mode=draft.auto_rotate_speed_mode,
+            salvo_count_mode=(
+                SalvoCountMode.OFF if draft.auto_launch else self.state.salvo_count_mode
+            ),
+            salvo_count=1 if draft.auto_launch else self.state.salvo_count,
+        )
+        if previous_audio_enabled != draft.audio_enabled:
+            self.audio.set_enabled(draft.audio_enabled)
+        if previous_ufo_enabled != draft.ufo_enabled:
+            self.ufo_state = toggle_ufo_enabled(
+                self.ufo_state,
+                frame=pyxel.frame_count,
+            )
 
     def update_ufo(self) -> None:
         self.ufo_state = update_ufo_state(

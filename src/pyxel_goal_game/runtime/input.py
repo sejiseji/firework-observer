@@ -3,6 +3,18 @@ from __future__ import annotations
 import pyxel
 
 from pyxel_goal_game.runtime import show_controller
+from pyxel_goal_game.runtime.mobile_ui import (
+    MOBILE_TOGGLE_SPECS,
+    apply_button_rect,
+    checkbox_row_rect,
+    close_button_rect,
+    launch_button_rect,
+    menu_button_rect,
+    next_button_rect,
+    panel_rect,
+    random_salvo_button_rect,
+    speed_button_rect,
+)
 
 MAX_PITCH = 1.2
 MIN_PITCH = -1.2
@@ -11,6 +23,8 @@ MIN_ZOOM = 0.45
 
 
 def handle_runtime_input(app: object) -> None:
+    handle_mobile_input(app)
+
     if pyxel.btn(pyxel.KEY_LEFT):
         app.camera.target_yaw -= 0.035
     if pyxel.btn(pyxel.KEY_RIGHT):
@@ -64,3 +78,81 @@ def handle_runtime_input(app: object) -> None:
         app.toggle_audio()
     if pyxel.btnp(pyxel.KEY_U):
         app.toggle_ufo()
+
+
+def handle_mobile_input(app: object) -> None:
+    button = getattr(pyxel, "MOUSE_BUTTON_LEFT", 0)
+    mouse_x = int(pyxel.mouse_x)
+    mouse_y = int(pyxel.mouse_y)
+
+    if pyxel.btnp(button):
+        if menu_button_rect(app.profile.width).contains(mouse_x, mouse_y):
+            app.mobile_panel_open = not app.mobile_panel_open
+            if app.mobile_panel_open:
+                app.refresh_mobile_panel_draft()
+            app.mobile_pointer_down = False
+            return
+        if app.mobile_panel_open:
+            if handle_mobile_panel_click(app, mouse_x, mouse_y):
+                app.mobile_pointer_down = False
+                return
+        app.mobile_pointer_down = True
+        app.mobile_dragging = False
+        app.mobile_drag_start_x = mouse_x
+        app.mobile_drag_start_y = mouse_y
+        app.mobile_drag_last_x = mouse_x
+        app.mobile_drag_last_y = mouse_y
+
+    if pyxel.btn(button) and app.mobile_pointer_down:
+        dx = mouse_x - app.mobile_drag_last_x
+        dy = mouse_y - app.mobile_drag_last_y
+        total_dx = mouse_x - app.mobile_drag_start_x
+        total_dy = mouse_y - app.mobile_drag_start_y
+        if app.mobile_dragging or abs(total_dx) + abs(total_dy) >= 3:
+            app.mobile_dragging = True
+            app.camera.target_yaw += dx * 0.010
+            app.camera.target_pitch = max(
+                MIN_PITCH,
+                min(MAX_PITCH, app.camera.target_pitch - dy * 0.008),
+            )
+        app.mobile_drag_last_x = mouse_x
+        app.mobile_drag_last_y = mouse_y
+
+    if not pyxel.btn(button):
+        app.mobile_pointer_down = False
+        app.mobile_dragging = False
+
+
+def handle_mobile_panel_click(app: object, mouse_x: int, mouse_y: int) -> bool:
+    panel = panel_rect(app.profile.width, app.profile.height)
+    if not panel.contains(mouse_x, mouse_y):
+        return False
+
+    for index, spec in enumerate(MOBILE_TOGGLE_SPECS):
+        if checkbox_row_rect(panel, index).contains(mouse_x, mouse_y):
+            app.mobile_panel_draft = app.mobile_panel_draft.toggle(spec.key)
+            return True
+
+    if speed_button_rect(panel).contains(mouse_x, mouse_y):
+        app.mobile_panel_draft = app.mobile_panel_draft.cycle_auto_rotate_speed()
+        return True
+    if launch_button_rect(panel).contains(mouse_x, mouse_y):
+        app.launch()
+        return True
+    if next_button_rect(panel).contains(mouse_x, mouse_y):
+        app.handle_space_cycle()
+        app.refresh_mobile_panel_draft()
+        return True
+    if random_salvo_button_rect(panel).contains(mouse_x, mouse_y):
+        app.start_random_salvo_loop()
+        app.refresh_mobile_panel_draft()
+        return True
+    if apply_button_rect(panel).contains(mouse_x, mouse_y):
+        app.apply_mobile_panel_draft()
+        app.mobile_panel_open = False
+        return True
+    if close_button_rect(panel).contains(mouse_x, mouse_y):
+        app.mobile_panel_open = False
+        return True
+
+    return True

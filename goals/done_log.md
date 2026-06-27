@@ -1615,3 +1615,13 @@ Record completed tasks here.
   - `AUTO` with `COUNT 2` through `COUNT 5` schedules that many shells per auto interval.
   - `AUTO` with `COUNT RND` uses random-count salvo scheduling per auto interval.
 - Preservation: Firework generation, CITY, stars, UFO, audio playback behavior, shell tail, glitter, launcher behavior, panel layout, and keyboard controls unchanged.
+
+## 2026-06-28 T0010.8 Disable Pyxel Web virtual gamepad
+
+- Summary: Disabled the default Pyxel Web virtual d-pad/buttons for the public HTML build.
+- Files changed: `scripts/disable_pyxel_web_gamepad.py`, script tests, README, release checklist, integration docs, visual checklist, goals logs, task queue, and `GPT_HANDOFF.md`.
+- Behavior:
+  - The public Web HTML uses `gamepad: "disabled"` in the Pyxel launcher config.
+  - The in-app `MENU` panel remains the smartphone control surface.
+  - The helper script is idempotent and fails clearly if the Pyxel gamepad setting is missing.
+- Preservation: Runtime visuals, input handling, firework generation, CITY, stars, UFO, audio playback behavior, shell tail, glitter, launcher behavior, and keyboard controls unchanged.

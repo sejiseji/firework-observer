@@ -1124,3 +1124,17 @@ Keep `AUTO` as keyboard-equivalent single-shell auto launch, require `SALVO STAR
 
 Impact:
 Runtime mobile auto-launch scheduling and tests changed. Firework generation, CITY, stars, UFO, audio, shell tail, glitter, launcher behavior, panel layout, and keyboard controls remain unchanged.
+
+## 2026-06-28 Disable Pyxel Web virtual gamepad
+
+Decision:
+Disable Pyxel Web's default virtual d-pad/buttons in the public generated HTML.
+
+Reason:
+The runtime now has an in-app mobile control panel and drag/flick camera controls. Showing Pyxel's separate virtual gamepad on phones duplicates controls and covers the visual scene.
+
+Alternatives:
+Keep the Pyxel Web gamepad, hide it with custom CSS, or ask users to ignore it.
+
+Impact:
+Added a release helper script and tests, patched public Web HTML generation output, and updated docs. Runtime visuals, input handling, firework generation, CITY, stars, UFO, audio, shell tail, glitter, launcher behavior, and keyboard controls remain unchanged.

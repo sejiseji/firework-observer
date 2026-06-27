@@ -29,6 +29,7 @@
 - [ ] `.venv/bin/python -m ruff check .`
 - [ ] `python3 scripts/check_all.py`
 - [ ] `uv run python scripts/capture_smoke.py`
+- [ ] After `pyxel app2html`, run `python3 scripts/disable_pyxel_web_gamepad.py index.html` for the public Web build.
 
 ## Release Decisions
 

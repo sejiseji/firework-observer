@@ -453,7 +453,10 @@ Checks:
 
 - BGM starts on launch.
 - BGM reads as quiet, high-register, fragile music-box ambience.
-- BGM has subtle accompaniment/harmony and does not feel like a short single-note loop.
+- BGM uses simple chord harmony: channel 0 melody, channel 1 harmony, channel 2 soft support.
+- Melody remains dominant; harmony/support do not read as independent counter-lines.
+- BGM volume hierarchy is clear: melody large, harmony medium, support small.
+- BGM loop still does not feel like a short single-note loop.
 - `M` toggles audio off and back on.
 - `Z` plays a low, restrained explosion SFX at burst timing, not at shell launch.
 - `1`-`5` salvos and `R + H + 0` do not stack explosion sounds into noise.

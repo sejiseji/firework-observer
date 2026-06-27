@@ -5,9 +5,9 @@ from typing import Any
 
 BGM_MUSIC_ID = 0
 BGM_MELODY_SOUND_ID = 16
-BGM_ARPEGGIO_SOUND_ID = 17
-BGM_SHIMMER_SOUND_ID = 18
-BGM_SOUND_IDS = (BGM_MELODY_SOUND_ID, BGM_ARPEGGIO_SOUND_ID, BGM_SHIMMER_SOUND_ID)
+BGM_HARMONY_SOUND_ID = 17
+BGM_SUPPORT_SOUND_ID = 18
+BGM_SOUND_IDS = (BGM_MELODY_SOUND_ID, BGM_HARMONY_SOUND_ID, BGM_SUPPORT_SOUND_ID)
 SFX_EXPLOSION_SOUND_ID = 0
 SFX_CHANNEL = 3
 EXPLOSION_SFX_COOLDOWN_FRAMES = 8
@@ -26,34 +26,37 @@ BGM_MELODY_NOTES = (
     "f4 f4 e4 e4 d4 d4 c4 r "
     "r r g4 r e4 r c4 r"
 )
-BGM_ARPEGGIO_NOTES = (
-    "c4 e4 g4 e4 c4 e4 g4 r "
-    "f4 a4 b4 a4 e4 g4 b4 r "
-    "c4 e4 g4 r e4 g4 b4 r "
-    "f4 a4 b4 r d4 f4 a4 r "
-    "e4 g4 b4 g4 f4 a4 b4 r "
-    "d4 f4 a4 f4 e4 g4 b4 r "
-    "g4 b4 a4 b4 f4 a4 b4 r "
-    "g4 b4 a4 b4 e4 g4 b4 r "
-    "a4 b4 g4 r g4 b4 a4 r "
-    "c4 e4 g4 e4 c4 e4 g4 r "
-    "f4 a4 b4 a4 e4 g4 b4 r "
-    "b4 r g4 r e4 r c4 r"
+BGM_HARMONY_NOTES = (
+    "e4 e4 e4 e4 f4 f4 e4 r "
+    "a4 a4 g4 g4 f4 f4 e4 r "
+    "e4 r e4 e4 f4 r e4 r "
+    "a4 r g4 g4 f4 r e4 r "
+    "e4 f4 g4 r f4 e4 c4 r "
+    "a4 b4 c4 r b4 g4 f4 r "
+    "b4 b4 a4 a4 g4 g4 f4 r "
+    "b4 b4 a4 a4 g4 g4 f4 r "
+    "f4 r e4 r d4 c4 f4 r "
+    "e4 e4 e4 e4 f4 f4 e4 r "
+    "a4 a4 g4 g4 f4 f4 e4 r "
+    "r r e4 r c4 r e4 r"
 )
-BGM_SHIMMER_NOTES = (
-    "r r g4 r r r b4 r "
-    "r r a4 r r r b4 r "
-    "r r g4 r r r b4 r "
-    "r r a4 r r r b4 r "
-    "r r b4 r r r a4 r "
-    "r r a4 r r r b4 r "
-    "r r g4 r r r a4 r "
-    "r r g4 r r r b4 r "
-    "r r b4 r r r a4 r "
-    "r r g4 r r r b4 r "
-    "r r a4 r r r b4 r "
-    "r r r r g4 r r r"
+BGM_SUPPORT_NOTES = (
+    "g4 r c4 r c4 r c4 r "
+    "c4 r c4 r g4 r c4 r "
+    "g4 r c4 r c4 r c4 r "
+    "c4 r c4 r g4 r c4 r "
+    "g4 r b4 r c4 r c4 r "
+    "c4 r d4 r e4 r g4 r "
+    "d4 r d4 r c4 r g4 r "
+    "d4 r d4 r c4 r g4 r "
+    "c4 r c4 r a4 r g4 r "
+    "g4 r c4 r c4 r c4 r "
+    "c4 r c4 r g4 r c4 r "
+    "r r c4 r g4 r c4 r"
 )
+BGM_MELODY_VOLUME = "5"
+BGM_HARMONY_VOLUME = "3"
+BGM_SUPPORT_VOLUME = "1"
 EXPLOSION_SFX_NOTES = "c1 c1 c0 c0 r"
 
 
@@ -67,21 +70,21 @@ class RuntimeAudio:
         self.pyxel.sounds[BGM_MELODY_SOUND_ID].set(
             BGM_MELODY_NOTES,
             "p",
-            "332232223222322232223222322232223222322232223222",
+            BGM_MELODY_VOLUME,
             "n",
             28,
         )
-        self.pyxel.sounds[BGM_ARPEGGIO_SOUND_ID].set(
-            BGM_ARPEGGIO_NOTES,
+        self.pyxel.sounds[BGM_HARMONY_SOUND_ID].set(
+            BGM_HARMONY_NOTES,
             "p",
-            "111011101110111011101110111011101110111011101110111011101110111011101110111011101110111011101110",
+            BGM_HARMONY_VOLUME,
             "n",
-            18,
+            28,
         )
-        self.pyxel.sounds[BGM_SHIMMER_SOUND_ID].set(
-            BGM_SHIMMER_NOTES,
+        self.pyxel.sounds[BGM_SUPPORT_SOUND_ID].set(
+            BGM_SUPPORT_NOTES,
             "p",
-            "000100010001000100010001000100010001000100010001000100010001000100010001000100010001000100010001",
+            BGM_SUPPORT_VOLUME,
             "n",
             28,
         )
@@ -94,8 +97,8 @@ class RuntimeAudio:
         )
         self.pyxel.musics[BGM_MUSIC_ID].set(
             [BGM_MELODY_SOUND_ID],
-            [BGM_ARPEGGIO_SOUND_ID],
-            [BGM_SHIMMER_SOUND_ID],
+            [BGM_HARMONY_SOUND_ID],
+            [BGM_SUPPORT_SOUND_ID],
         )
 
     def start_bgm(self) -> None:

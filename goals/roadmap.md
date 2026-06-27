@@ -68,6 +68,7 @@
 - [x] make main.py robust for simple public startup
 - [x] add runtime audio scaffold with BGM and explosion SFX
 - [x] extend BGM with harmony
+- [x] rebuild BGM as simple chord harmony
 - [ ] add rare UFO ambient flyby to official runtime
 - [ ] add required sphere and willow firework variants
 - [ ] tune visual feel

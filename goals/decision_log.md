@@ -838,3 +838,17 @@ Use block chords, add low bass notes, consume channel 3 for BGM, or postpone aud
 
 Impact:
 Only runtime audio definitions and audio tests changed. The `M` toggle, explosion cooldown, SFX channel, runtime visuals, firework generation, CITY, stars, shell tail, glitter visuals, and main launcher remain unchanged.
+
+## 2026-06-27 Rebuild BGM as simple chord harmony
+
+Decision:
+Replace the arpeggio/shimmer BGM arrangement with simple aligned chord harmony: channel 0 melody, channel 1 harmony, channel 2 soft support, and channel 3 reserved for explosion SFX.
+
+Reason:
+The previous secondary lines could read as independent melodies rather than harmony. Aligning the BGM channels rhythmically and using a clear large/medium/small volume hierarchy supports the melody without creating conflicting counter-lines.
+
+Alternatives:
+Keep tuning the arpeggio/shimmer arrangement, return to single-line BGM, use low bass support, or consume channel 3 for richer harmony.
+
+Impact:
+Only runtime audio definitions, audio tests, and project records changed. Visual behavior, firework generation, CITY, stars, shell tail, glitter visuals, key bindings, `M` toggle semantics, explosion SFX channel, and main launcher remain unchanged.

@@ -44,6 +44,12 @@
   ],
   "done": [
     {
+      "id": "T0006.2",
+      "title": "Rebuild BGM as simple chord harmony",
+      "completed_on": "2026-06-27",
+      "summary": "Rebuilt runtime BGM from arpeggio/shimmer counter-lines into aligned melody, harmony, and soft support channels with a clear large/medium/small volume hierarchy."
+    },
+    {
       "id": "T0006.1",
       "title": "Add BGM harmony and extend loop length",
       "completed_on": "2026-06-27",

@@ -47,7 +47,6 @@ These are intentionally outside the first runtime promotion:
 - Combat, collection, objective, or win/lose loops.
 - Mobile-specific deployment.
 - Further `main.py` logic changes beyond thin-launcher delegation.
-- Sound, unless a later task explicitly stabilizes it.
 
 ## Preview-Only Versus Runtime
 
@@ -134,6 +133,8 @@ Manual review found official runtime parity OK for `iphone16_balanced`. Startup,
 `T0006.0` added the first official runtime audio layer. Audio is runtime-only for now: high-register, quiet music-box BGM loops on the BGM music channels, low restrained explosion SFX plays on burst events with a short cooldown, and `M` toggles audio on/off. The preview remains a visual development harness.
 
 `T0006.1` extended the BGM. Runtime audio now uses channels 0-2 for melody, arpeggio accompaniment, and sparse shimmer/counter notes. Channel 3 remains reserved for explosion SFX.
+
+`T0006.2` rebuilt the BGM as simple chord harmony. Channels 0-2 now act as melody, harmony, and soft support with large/medium/small volume hierarchy. Channel 3 remains reserved for explosion SFX.
 
 Primary launch commands:
 

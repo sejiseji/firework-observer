@@ -41,6 +41,7 @@ The current firework cycle includes Kiku, Sphere Bloom, Smile, Ring, Spiral, Wil
 Each firework kind has three deterministic per-burst color palette variants, selected from the launch seed.
 Kiku, Sphere Bloom, Peony, and Multi-ring can occasionally produce small delayed mini-burst garnish near the main bloom.
 Smile is a shaped face burst and does not use delayed mini-burst garnish so the eyes and mouth remain readable.
+Long Willow uses sparse decaying long-branch trails while baseline Willow remains lighter.
 
 If you do not use `uv`, install dependencies manually from `pyproject.toml`.
 

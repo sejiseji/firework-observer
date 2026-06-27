@@ -163,12 +163,32 @@ class RuntimeRenderer:
                 self.accent_ray_color(particle),
             )
         if particle.should_draw_trail(pyxel.frame_count):
+            if particle.trail_history_frames > 0:
+                self.draw_long_particle_trail(particle)
             previous = self.camera.project(particle.previous_position)
             pyxel.line(previous.sx, previous.sy, projected.sx, projected.sy, color)
             if particle.trail_strength >= 2:
                 pyxel.pset(projected.sx, projected.sy, particle.tip_color)
             return
         pyxel.pset(projected.sx, projected.sy, color)
+
+    def draw_long_particle_trail(self, particle: ActiveParticle) -> None:
+        samples = particle.trail_history
+        if len(samples) < 2:
+            return
+        segment_count = len(samples) - 1
+        for index in range(segment_count):
+            if not particle.should_draw_long_trail_segment(index, segment_count):
+                continue
+            start = self.camera.project(samples[index])
+            end = self.camera.project(samples[index + 1])
+            pyxel.line(
+                start.sx,
+                start.sy,
+                end.sx,
+                end.sy,
+                particle.long_trail_segment_color(index, segment_count),
+            )
 
     def accent_ray_color(self, particle: ActiveParticle) -> int:
         if particle.age < particle.accent_until_age // 2:

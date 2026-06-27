@@ -84,6 +84,9 @@ class ParticleSpawnSpec:
     trail_until_age: int
     trail_strength: int
     trail_draw_every: int
+    trail_history_frames: int = 0
+    trail_sparse_step: int = 1
+    trail_sparse_phase: int = 0
     secondary_burst: SecondaryBurstSpec | None = None
 
 
@@ -583,6 +586,9 @@ def tune_long_willow_trails(
                     trail_until_age=int(particle.life * 0.90),
                     trail_strength=2,
                     trail_draw_every=1,
+                    trail_history_frames=84,
+                    trail_sparse_step=3,
+                    trail_sparse_phase=index % 3,
                 )
             )
             continue

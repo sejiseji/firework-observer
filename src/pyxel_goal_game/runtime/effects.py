@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import math
 from collections import deque
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from random import Random
 
 from pyxel_goal_game.camera3d import Vec3
@@ -155,11 +155,15 @@ class ActiveParticle:
     trail_until_age: int
     trail_strength: int
     trail_draw_every: int
+    trail_history_frames: int = 0
+    trail_sparse_step: int = 1
+    trail_sparse_phase: int = 0
     secondary_burst: SecondaryBurstSpec | None = None
     secondary_triggered: bool = False
     accent_origin: Vec3 | None = None
     accent_until_age: int = 0
     accent_color: int = 0
+    trail_history: list[Vec3] = field(default_factory=list)
 
     @classmethod
     def from_spawn(
@@ -186,6 +190,9 @@ class ActiveParticle:
             trail_until_age=spec.trail_until_age,
             trail_strength=spec.trail_strength,
             trail_draw_every=spec.trail_draw_every,
+            trail_history_frames=spec.trail_history_frames,
+            trail_sparse_step=spec.trail_sparse_step,
+            trail_sparse_phase=spec.trail_sparse_phase,
             secondary_burst=spec.secondary_burst,
             accent_origin=accent_origin,
             accent_until_age=accent_until_age,
@@ -209,6 +216,10 @@ class ActiveParticle:
             self.velocity.z * self.drag,
         )
         self.life -= 1
+        if self.trail_history_frames > 0:
+            self.trail_history.append(self.position)
+            if len(self.trail_history) > self.trail_history_frames:
+                del self.trail_history[: len(self.trail_history) - self.trail_history_frames]
 
     def draw_color(self) -> int:
         life_ratio = self.life / self.max_life
@@ -224,6 +235,25 @@ class ActiveParticle:
             and self.age < self.trail_until_age
             and frame_count % self.trail_draw_every == 0
         )
+
+    def should_draw_long_trail_segment(self, segment_index: int, segment_count: int) -> bool:
+        if self.trail_history_frames <= 0:
+            return False
+        rear_cutoff = int(segment_count * 0.45)
+        if segment_index >= rear_cutoff:
+            return True
+        step = max(1, self.trail_sparse_step)
+        return (segment_index + self.trail_sparse_phase) % step == 0
+
+    def long_trail_segment_color(self, segment_index: int, segment_count: int) -> int:
+        if segment_count <= 1:
+            return self.draw_color()
+        ratio = segment_index / (segment_count - 1)
+        if ratio < 0.33:
+            return self.fade_dark
+        if ratio < 0.72:
+            return self.fade_mid
+        return self.draw_color()
 
     def is_alive(self) -> bool:
         return self.life > 0

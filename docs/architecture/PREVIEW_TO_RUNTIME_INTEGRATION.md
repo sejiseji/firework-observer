@@ -151,6 +151,8 @@ Manual review found official runtime parity OK for `iphone16_balanced`. Startup,
 
 `T0008.3.2` added deterministic per-burst color palette variants. Each firework kind has three predefined palette variants, and each launch selects one from its seed without changing geometry, timing, shell tail, trail behavior, CITY, stars, UFO, audio, or global glitter. Delayed mini-burst garnish inherits the selected parent palette.
 
+`T0008.3.1` tuned `Long Willow` long branch trail decay. Only the long-trail branch subgroup keeps about 84 frames of trail history, and older rear trail sections are sparsely broken so the willow lingers without becoming a solid curtain. Baseline Willow, shell tail, global glitter, palette selection, CITY, stars, UFO, and audio remain unchanged.
+
 Primary launch commands:
 
 ```bash

@@ -964,3 +964,17 @@ Use one global palette bank for every kind, choose colors with global random sta
 
 Impact:
 Firework preset color data, burst color selection, runtime accent/garnish color selection, tests, and docs changed. Delayed mini-burst garnish inherits the selected parent palette. `main.py`, launcher behavior, CITY, stars, UFO, audio, shell tail, global glitter, Long Willow trail behavior, and firework geometry remain unchanged.
+
+## 2026-06-27 Tune Long Willow long trail decay
+
+Decision:
+Add a Long Willow-only long-branch trail history. Long branch particles keep about 84 frames of trail samples, and older rear trail sections render sparsely broken.
+
+Reason:
+Long Willow needed longer lingering branch trails without making every ember heavy or turning the burst into a solid rain curtain. A dedicated history field keeps the effect scoped to Long Willow long-trail particles.
+
+Alternatives:
+Increase global trail lifetime, retune baseline Willow, add global glitter, or make all Long Willow particles use solid long trails.
+
+Impact:
+Particle trail metadata, runtime/preview particle history rendering, Long Willow tests, and docs changed. Baseline Willow, shell tail, global glitter, Long Willow palette variants, mini-burst garnish palette inheritance, CITY, stars, UFO, audio, firework geometry, and launcher behavior remain unchanged.

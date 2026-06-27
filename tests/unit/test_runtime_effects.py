@@ -55,6 +55,25 @@ def test_active_particles_use_seed_selected_palette_for_burst() -> None:
     assert {particle.color for particle in particles} <= set(selected_palette.colors)
 
 
+def test_long_willow_active_particles_keep_long_trail_history() -> None:
+    particles = build_active_particles_for_burst(
+        firework_kind=FireworkKind.LONG_WILLOW,
+        origin=ORIGIN,
+        seed=1,
+        orientation_bank=ORIENTATION_BANK,
+    )
+    long_particle = next(particle for particle in particles if particle.trail_history_frames == 84)
+
+    for _ in range(100):
+        long_particle.step()
+
+    assert len(long_particle.trail_history) == 84
+    assert long_particle.should_draw_long_trail_segment(0, 83) in {True, False}
+    assert long_particle.should_draw_long_trail_segment(82, 83) is True
+    assert long_particle.long_trail_segment_color(0, 83) == long_particle.fade_dark
+    assert long_particle.long_trail_segment_color(82, 83) == long_particle.draw_color()
+
+
 def test_eligible_kinds_can_produce_bounded_staggered_garnish() -> None:
     for kind in MINI_BURST_GARNISH_ELIGIBLE_KINDS:
         seed, garnish = next(

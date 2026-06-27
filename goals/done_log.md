@@ -1479,7 +1479,7 @@ Record completed tasks here.
 - Files changed: `src/pyxel_goal_game/firework_bursts.py`, `src/pyxel_goal_game/runtime/effects.py`, `src/pyxel_goal_game/runtime/render.py`, `tools/preview_firework_box.py`, relevant tests, README, integration docs, visual checklist, goals logs, roadmap, task queue, and `GPT_HANDOFF.md`.
 - Behavior:
   - Only Long Willow long-trail branch particles receive long trail history.
-  - Long branch particles keep about 84 frames of trail history, matching roughly 1.4 seconds at 60fps.
+  - Long branch particles keep about 56 frames of trail history, matching roughly 0.93 seconds at 60fps.
   - Older rear sections are sparsely broken by deterministic phase/step settings.
   - Baseline Willow has no long trail history.
   - Palette variants and palette inheritance remain unchanged.
@@ -1494,4 +1494,16 @@ Record completed tasks here.
   - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_194247.txt`.
   - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with Long Willow trail decay and no immediate crash.
+  - Follow-up shortening: Long branch trail history was reduced from 84 frames to 56 frames.
+  - Follow-up validation:
+    - Targeted Long Willow/runtime tests passed: 117 passed.
+    - `python3 -m compileall src tests scripts tools main.py` passed.
+    - `.venv/bin/python -m pytest` passed: 292 tests passed.
+    - `.venv/bin/python -m ruff check .` passed.
+    - `.venv/bin/python main.py --help` passed.
+    - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+    - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 292 passed.
+    - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+    - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_194909.txt`.
+    - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with shorter Long Willow trail decay and no immediate crash.
 - Preservation: `main.py`, launcher behavior, baseline Willow, shell tail, global glitter, CITY, stars, UFO, audio, Long Willow palette variants, mini-burst garnish palette inheritance, and firework geometry unchanged.

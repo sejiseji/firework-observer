@@ -62,16 +62,16 @@ def test_long_willow_active_particles_keep_long_trail_history() -> None:
         seed=1,
         orientation_bank=ORIENTATION_BANK,
     )
-    long_particle = next(particle for particle in particles if particle.trail_history_frames == 84)
+    long_particle = next(particle for particle in particles if particle.trail_history_frames == 56)
 
     for _ in range(100):
         long_particle.step()
 
-    assert len(long_particle.trail_history) == 84
-    assert long_particle.should_draw_long_trail_segment(0, 83) in {True, False}
-    assert long_particle.should_draw_long_trail_segment(82, 83) is True
-    assert long_particle.long_trail_segment_color(0, 83) == long_particle.fade_dark
-    assert long_particle.long_trail_segment_color(82, 83) == long_particle.draw_color()
+    assert len(long_particle.trail_history) == 56
+    assert long_particle.should_draw_long_trail_segment(0, 55) in {True, False}
+    assert long_particle.should_draw_long_trail_segment(54, 55) is True
+    assert long_particle.long_trail_segment_color(0, 55) == long_particle.fade_dark
+    assert long_particle.long_trail_segment_color(54, 55) == long_particle.draw_color()
 
 
 def test_eligible_kinds_can_produce_bounded_staggered_garnish() -> None:

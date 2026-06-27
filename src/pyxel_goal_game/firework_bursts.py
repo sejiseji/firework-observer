@@ -586,7 +586,7 @@ def tune_long_willow_trails(
                     trail_until_age=int(particle.life * 0.90),
                     trail_strength=2,
                     trail_draw_every=1,
-                    trail_history_frames=84,
+                    trail_history_frames=56,
                     trail_sparse_step=3,
                     trail_sparse_phase=index % 3,
                 )

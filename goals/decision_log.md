@@ -968,7 +968,7 @@ Firework preset color data, burst color selection, runtime accent/garnish color 
 ## 2026-06-27 Tune Long Willow long trail decay
 
 Decision:
-Add a Long Willow-only long-branch trail history. Long branch particles keep about 84 frames of trail samples, and older rear trail sections render sparsely broken.
+Add a Long Willow-only long-branch trail history. Long branch particles keep about 56 frames of trail samples, and older rear trail sections render sparsely broken.
 
 Reason:
 Long Willow needed longer lingering branch trails without making every ember heavy or turning the burst into a solid rain curtain. A dedicated history field keeps the effect scoped to Long Willow long-trail particles.

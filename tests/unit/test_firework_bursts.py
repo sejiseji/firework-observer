@@ -657,7 +657,7 @@ def test_long_willow_mixes_long_trail_branches_and_light_embers() -> None:
         if particle.has_trail
         and particle.trail_strength == 2
         and particle.trail_until_age >= int(particle.life * 0.85)
-        and particle.trail_history_frames == 84
+        and particle.trail_history_frames == 56
         and particle.trail_sparse_step == 3
     ]
     short_trails = [
@@ -678,7 +678,7 @@ def test_long_willow_long_trail_decay_does_not_affect_baseline_willow() -> None:
     long_willow = generate_long_willow_burst(origin=ORIGIN, seed=123)
     baseline = generate_willow_burst(origin=ORIGIN, seed=123)
 
-    assert any(particle.trail_history_frames == 84 for particle in long_willow)
+    assert any(particle.trail_history_frames == 56 for particle in long_willow)
     assert all(particle.trail_history_frames == 0 for particle in baseline)
     assert all(particle.trail_sparse_step == 1 for particle in baseline)
 

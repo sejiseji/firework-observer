@@ -1448,3 +1448,27 @@ Record completed tasks here.
   - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_191737.txt`.
   - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with Smile preset integration and no immediate crash.
 - Preservation: `main.py`, launcher behavior, CITY, stars, UFO, audio, shell tail, global glitter behavior, delayed mini-burst garnish behavior for existing eligible kinds, and existing firework variants unchanged.
+
+## 2026-06-27 T0008.3.2 Add per-burst color palette variants
+
+- Summary: Added deterministic per-burst color palette variants for every current firework kind.
+- Files changed: `src/pyxel_goal_game/firework_presets.py`, `src/pyxel_goal_game/firework_bursts.py`, `src/pyxel_goal_game/runtime/effects.py`, relevant tests, README, product docs, integration docs, visual checklist, goals logs, roadmap, task queue, and `GPT_HANDOFF.md`.
+- Behavior:
+  - Each firework kind has exactly three predefined palette variants.
+  - Each launch selects one palette from the launch seed.
+  - Burst particle colors use the selected palette without consuming the generation RNG.
+  - Senrin secondary colors stay coherent with the selected Senrin palette.
+  - Delayed mini-burst garnish inherits the selected parent palette.
+  - Color variation does not change geometry, timing, shell tail, global glitter, Long Willow trail grouping, or controls.
+- Tests:
+  - Targeted firework/runtime tests passed before full validation: 150 passed.
+  - `python3 -m compileall src tests scripts tools main.py` passed.
+  - `.venv/bin/python -m pytest` passed: 290 tests passed.
+  - `.venv/bin/python -m ruff check .` passed.
+  - `.venv/bin/python main.py --help` passed.
+  - `python3 scripts/check_all.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `python3 scripts/check_all.py` passed when run with approved `uv` cache access; it ran `uv run pytest` and `uv run ruff check .`, and pytest reported 290 passed.
+  - `uv run python scripts/capture_smoke.py` first failed in sandbox because `uv` could not access `/Users/toytoytoy330/.cache/uv`.
+  - `uv run python scripts/capture_smoke.py` passed when run with approved `uv` cache access; it wrote `reports/visual_smoke/smoke_20260627_193029.txt`.
+  - `.venv/bin/python main.py --profile iphone16_balanced` launched briefly with palette variants and no immediate crash.
+- Preservation: `main.py`, launcher behavior, CITY, stars, UFO, audio, shell tail, global glitter behavior, Long Willow trail behavior, Smile behavior, and existing firework geometry unchanged.

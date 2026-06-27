@@ -45,6 +45,7 @@ from pyxel_goal_game.firework_presets import (
     FireworkKind,
     FireworkPreset,
     FireworkShape,
+    select_firework_palette,
 )
 
 ORIGIN = Vec3(1.0, 2.0, 3.0)
@@ -112,6 +113,19 @@ def test_kiku_specs_preserve_physics_and_colors() -> None:
     assert all(particle.fade_dark == KIKU_PRESET.fade_dark for particle in particles)
     assert all(particle.tip_color == KIKU_PRESET.tip_color for particle in particles)
     assert all(particle.secondary_burst is None for particle in particles)
+
+
+def test_burst_generation_uses_seed_selected_palette_without_changing_ranges() -> None:
+    particles = generate_kiku_burst(origin=ORIGIN, seed=1)
+    selected_palette = select_firework_palette(FireworkKind.KIKU, 1)
+
+    assert selected_palette.colors != KIKU_PRESET.palette
+    assert {particle.color for particle in particles} <= set(selected_palette.colors)
+    assert len(particles) == KIKU_PRESET.particle_count
+    assert all(
+        speed_in_scaled_range(speed_of(particle.velocity), KIKU_PRESET.speed_range)
+        for particle in particles
+    )
 
 
 def test_kiku_trails_are_partial_for_known_seed() -> None:
@@ -1066,7 +1080,10 @@ def test_senrin_secondary_specs_match_secondary_preset() -> None:
 
     assert secondary.speed_range == SENRIN_SECONDARY_PRESET.speed_range
     assert secondary.life_range == SENRIN_SECONDARY_PRESET.life_range
-    assert secondary.palette == SENRIN_SECONDARY_PRESET.palette
+    assert secondary.palette == select_firework_palette(
+        FireworkKind.SENRIN,
+        0,
+    ).secondary_colors
     assert secondary.fade_mid == SENRIN_SECONDARY_PRESET.fade_mid
     assert secondary.fade_dark == SENRIN_SECONDARY_PRESET.fade_dark
     assert secondary.tip_color == SENRIN_SECONDARY_PRESET.tip_color

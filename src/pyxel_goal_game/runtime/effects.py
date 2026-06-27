@@ -28,6 +28,7 @@ from pyxel_goal_game.firework_presets import (
     FireworkKind,
     FireworkPreset,
     TrailPreset,
+    select_firework_palette,
 )
 
 SHELL_MIN_FLIGHT_FRAMES = 96
@@ -371,7 +372,8 @@ def build_active_particles_for_burst(
         seed=seed,
         particle_count=len(specs),
     )
-    accent_color = BURST_ACCENT_STYLES[firework_kind][2]
+    selected_palette = select_firework_palette(firework_kind, seed)
+    accent_color = selected_palette.colors[-1]
     return tuple(
         ActiveParticle.from_spawn(
             spec,
@@ -399,6 +401,7 @@ def build_delayed_mini_burst_garnish(
 
     count = rng.randint(*MINI_BURST_GARNISH_COUNT_RANGE)
     delay = rng.randint(*MINI_BURST_GARNISH_DELAY_RANGE)
+    parent_palette = select_firework_palette(firework_kind, seed)
     bursts: list[DelayedMiniBurst] = []
     for index in range(count):
         offset_distance = rng.uniform(*MINI_BURST_GARNISH_OFFSET_RANGE)
@@ -424,7 +427,7 @@ def build_delayed_mini_burst_garnish(
                     seed=rng.randrange(1_000_000_000) + index,
                     speed_range=(0.20, 0.44),
                     life_range=(22, 38),
-                    palette=BURST_ACCENT_STYLES[firework_kind],
+                    palette=parent_palette.colors,
                     fade_mid=5,
                     fade_dark=1,
                     tip_color=7,

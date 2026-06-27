@@ -76,6 +76,7 @@
 - [x] tune UFO height bands and Long Willow trail mixture
 - [x] add delayed mini-burst garnish
 - [x] add smile firework preset
+- [x] add per-burst color palette variants
 - [ ] tune visual feel
 - [ ] tune performance budget
 - [ ] record user feedback

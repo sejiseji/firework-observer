@@ -46,8 +46,11 @@ The official runtime includes these first-class firework variants:
 
 `Sphere Bloom` is the explicit canonical sphere-like bloom. `Smile` is a shaped burst with two eyes and a smiling mouth arc. `Long Willow` is the explicit longer falling willow / 枝垂れ variant. Existing Kiku, Peony, and Willow remain distinct and available.
 
+Each firework kind has three predefined color palette variants. Each launch chooses one palette deterministically from the firework seed, so repeated shows can vary in color without changing geometry, timing, or preset identity.
+
 Some eligible main fireworks can also produce delayed mini-burst garnish: small deterministic child blooms near the original burst after short staggered delays. This is a secondary show effect, not a separate main firework kind.
 `Smile` does not use delayed mini-burst garnish so the face shape stays readable.
+Delayed mini-burst garnish inherits the selected parent palette so after-pops remain visually cohesive.
 
 ## Future observation space expansion
 

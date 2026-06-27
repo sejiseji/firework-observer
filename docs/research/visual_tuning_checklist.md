@@ -59,6 +59,9 @@ Interaction rules:
 - Shell tail geometry and colors are shared across burst types. Do not vary this shape by firework type.
 - Avoid rocket-like terminology and behavior for the rising shell visual.
 - Burst accent rays should appear only briefly and only on a limited subset of particles.
+- Each firework kind should retain its identity across its three deterministic color palette variants.
+- Repeated launches with different seeds may change color, but geometry, timing, shell tail, trail behavior, and glitter behavior should not change because of palette selection.
+- Delayed mini-burst garnish should inherit the selected parent palette.
 - `R` and `0` are independent.
 - `R + 0` randomizes both type and count.
 - `R + 0 + H` is the main fireworks-show stress mode.
@@ -234,7 +237,14 @@ Interaction rules:
    - Confirm Senrin secondary bursts remain sparse and controlled.
    - Confirm Halo remains a soft light ring and does not become a second Multi-ring.
 
-12. Scenery readability check:
+12. Color palette variant check:
+   - Launch the same firework kind repeatedly.
+   - Confirm color palettes can vary between launches.
+   - Confirm each kind still reads as itself after palette changes.
+   - Confirm delayed mini-burst garnish uses the same palette family as its parent.
+   - Confirm `R + H + 0` feels less repetitive without becoming visually noisy.
+
+13. Scenery readability check:
    - Press `G` to cycle `Empty` and `City`.
    - Press `B` to confirm scenery can be hidden.
    - Rotate the camera and confirm scenery projects with the box.

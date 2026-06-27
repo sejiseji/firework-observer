@@ -258,6 +258,7 @@ After the task:
 - `T0008.1` modestly increased UFO wireframe size, added deterministic low/middle/high UFO height bands, and tuned `Long Willow` to mix longer-trail falling branches with trail-light/no-trail embers.
 - `T0008.3` added delayed mini-burst garnish for eligible runtime fireworks: Kiku, Sphere Bloom, Peony, and Multi-ring can create small staggered child blooms near the parent burst. This is not a new main firework kind and has no new control.
 - `Smile` is intentionally excluded from delayed mini-burst garnish so the face shape stays readable.
+- `T0008.3.2` added three deterministic color palette variants per firework kind. Each launch chooses a palette from the seed, while delayed mini-burst garnish inherits the selected parent palette. Geometry, timing, shell tail, global glitter, CITY, stars, UFO, and audio remain unchanged.
 - Next recommended task should be chosen from visual review: tune the two new variants if they are too similar/dense, or proceed to the next planned feature.
 - Recommended visual review command: `.venv/bin/python tools/preview_firework_box.py --profile iphone16_balanced`.
 - Main stress sequence: press `R`, `H`, then `0` to combine random burst type, height variation, and random-count persistent salvos.

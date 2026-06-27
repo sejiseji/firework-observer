@@ -950,3 +950,17 @@ Implement Star or Heart first, add Smile as a garnish instead of a main preset, 
 
 Impact:
 Preset/generation dispatch, runtime and preview firework order, random/salvo selection, tests, and docs changed. Smile is excluded from delayed mini-burst garnish so after-pops do not obscure the face. `main.py`, launcher behavior, CITY, stars, UFO, audio, shell tail, global glitter, and existing firework behavior remain unchanged.
+
+## 2026-06-27 Add per-burst color palette variants
+
+Decision:
+Add three predefined color palette variants for each current firework kind and select one deterministically from the launch seed.
+
+Reason:
+Fixed one-palette-per-kind coloring made random shows visually repetitive. Seed-selected palette variants add show variety without changing firework geometry, timing, shell tail, trail behavior, or runtime controls.
+
+Alternatives:
+Use one global palette bank for every kind, choose colors with global random state, recolor particles independently, or defer color work until after additional presets.
+
+Impact:
+Firework preset color data, burst color selection, runtime accent/garnish color selection, tests, and docs changed. Delayed mini-burst garnish inherits the selected parent palette. `main.py`, launcher behavior, CITY, stars, UFO, audio, shell tail, global glitter, Long Willow trail behavior, and firework geometry remain unchanged.

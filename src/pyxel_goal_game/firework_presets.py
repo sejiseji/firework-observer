@@ -77,6 +77,27 @@ class FireworkPreset:
     secondary: SecondaryPreset | None = None
 
 
+@dataclass(frozen=True)
+class FireworkColorPalette:
+    name: str
+    colors: tuple[int, ...]
+    secondary_colors: tuple[int, ...] | None = None
+
+    def __post_init__(self) -> None:
+        validate_pyxel_colors(self.colors)
+        if self.secondary_colors is not None:
+            validate_pyxel_colors(self.secondary_colors)
+
+
+def validate_pyxel_colors(colors: tuple[int, ...]) -> None:
+    if not colors:
+        msg = "palette colors must not be empty"
+        raise ValueError(msg)
+    if any(color < 0 or color > 15 for color in colors):
+        msg = "palette colors must be valid Pyxel color indexes"
+        raise ValueError(msg)
+
+
 FUTURE_FIREWORK_KINDS = (
     FireworkKind.KIKU,
     FireworkKind.SPHERE_BLOOM,
@@ -381,3 +402,81 @@ SENRIN_PRESET = FireworkPreset(
     trail=SENRIN_TRAIL_PRESET,
     secondary=SENRIN_SECONDARY_PRESET,
 )
+
+
+FIREWORK_COLOR_PALETTES: dict[
+    FireworkKind, tuple[FireworkColorPalette, FireworkColorPalette, FireworkColorPalette]
+] = {
+    FireworkKind.KIKU: (
+        FireworkColorPalette("warm chrysanthemum", (10, 9, 7)),
+        FireworkColorPalette("blue chrysanthemum", (12, 6, 7)),
+        FireworkColorPalette("pink chrysanthemum", (14, 10, 7)),
+    ),
+    FireworkKind.SPHERE_BLOOM: (
+        FireworkColorPalette("clear blue sphere", (7, 10, 12)),
+        FireworkColorPalette("green white sphere", (6, 12, 7)),
+        FireworkColorPalette("pink white sphere", (10, 7, 14)),
+    ),
+    FireworkKind.SMILE: (
+        FireworkColorPalette("warm smile", (10, 7, 12)),
+        FireworkColorPalette("pink smile", (14, 7, 8)),
+        FireworkColorPalette("gold smile", (11, 10, 7)),
+    ),
+    FireworkKind.PEONY: (
+        FireworkColorPalette("pink peony", (14, 8, 10)),
+        FireworkColorPalette("rose peony", (8, 14, 7)),
+        FireworkColorPalette("blue peony", (12, 14, 7)),
+    ),
+    FireworkKind.RING: (
+        FireworkColorPalette("violet ring", (12, 6, 7)),
+        FireworkColorPalette("blue ring", (10, 7, 12)),
+        FireworkColorPalette("amber ring", (11, 3, 7)),
+    ),
+    FireworkKind.WILLOW: (
+        FireworkColorPalette("gold willow", (10, 9, 4)),
+        FireworkColorPalette("green willow", (11, 10, 6)),
+        FireworkColorPalette("pale willow", (7, 10, 5)),
+    ),
+    FireworkKind.LONG_WILLOW: (
+        FireworkColorPalette("gold long willow", (10, 9, 4, 7)),
+        FireworkColorPalette("green long willow", (11, 10, 6, 7)),
+        FireworkColorPalette("blue long willow", (7, 12, 10, 5)),
+    ),
+    FireworkKind.SPIRAL: (
+        FireworkColorPalette("gold spiral", (11, 10, 7)),
+        FireworkColorPalette("violet spiral", (12, 6, 7)),
+        FireworkColorPalette("green spiral", (10, 5, 7)),
+    ),
+    FireworkKind.MULTI_RING: (
+        FireworkColorPalette("violet multi-ring", (12, 6, 7, 10)),
+        FireworkColorPalette("blue multi-ring", (10, 7, 12, 6)),
+        FireworkColorPalette("pink multi-ring", (14, 8, 10, 7)),
+    ),
+    FireworkKind.HALO: (
+        FireworkColorPalette("blue halo", (7, 10, 12)),
+        FireworkColorPalette("green halo", (6, 12, 7)),
+        FireworkColorPalette("dim halo", (5, 10, 7)),
+    ),
+    FireworkKind.SENRIN: (
+        FireworkColorPalette(
+            "blue senrin",
+            (7, 10, 14),
+            secondary_colors=(7, 10, 9, 14),
+        ),
+        FireworkColorPalette(
+            "violet senrin",
+            (12, 6, 7),
+            secondary_colors=(12, 7, 10, 6),
+        ),
+        FireworkColorPalette(
+            "gold senrin",
+            (10, 11, 7),
+            secondary_colors=(10, 11, 7, 5),
+        ),
+    ),
+}
+
+
+def select_firework_palette(kind: FireworkKind, seed: int) -> FireworkColorPalette:
+    palettes = FIREWORK_COLOR_PALETTES[kind]
+    return palettes[seed % len(palettes)]

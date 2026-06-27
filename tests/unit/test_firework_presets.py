@@ -5,13 +5,16 @@ import importlib
 import pytest
 
 from pyxel_goal_game.firework_presets import (
+    FIREWORK_COLOR_PALETTES,
     FUTURE_FIREWORK_KINDS,
     SMILE_PRESET,
+    FireworkColorPalette,
     FireworkKind,
     FireworkPreset,
     FireworkShape,
     SecondaryPreset,
     TrailPreset,
+    select_firework_palette,
 )
 
 
@@ -129,6 +132,41 @@ def test_smile_preset_is_shaped_firework() -> None:
     assert SMILE_PRESET.speed_range == (0.62, 1.08)
     assert SMILE_PRESET.trail.draw_every == 2
     assert SMILE_PRESET.secondary is None
+
+
+def test_firework_color_palette_construction_validates_pyxel_colors() -> None:
+    palette = FireworkColorPalette("test", (7, 10), secondary_colors=(12,))
+
+    assert palette.colors == (7, 10)
+    assert palette.secondary_colors == (12,)
+
+    with pytest.raises(ValueError, match="must not be empty"):
+        FireworkColorPalette("empty", ())
+
+    with pytest.raises(ValueError, match="valid Pyxel"):
+        FireworkColorPalette("invalid", (16,))
+
+
+def test_every_firework_kind_has_three_color_palettes() -> None:
+    assert set(FIREWORK_COLOR_PALETTES) == set(FUTURE_FIREWORK_KINDS)
+    for kind, palettes in FIREWORK_COLOR_PALETTES.items():
+        assert len(palettes) == 3, kind
+        for palette in palettes:
+            assert palette.colors
+            assert all(0 <= color <= 15 for color in palette.colors)
+            if palette.secondary_colors is not None:
+                assert all(0 <= color <= 15 for color in palette.secondary_colors)
+
+
+def test_firework_palette_selection_is_deterministic_by_seed() -> None:
+    assert select_firework_palette(FireworkKind.KIKU, 0) is select_firework_palette(
+        FireworkKind.KIKU,
+        0,
+    )
+    assert {
+        select_firework_palette(FireworkKind.KIKU, seed).name
+        for seed in range(6)
+    } == {palette.name for palette in FIREWORK_COLOR_PALETTES[FireworkKind.KIKU]}
 
 
 def test_firework_preset_module_has_no_pyxel_dependency() -> None:

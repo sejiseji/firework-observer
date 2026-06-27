@@ -149,6 +149,8 @@ Manual review found official runtime parity OK for `iphone16_balanced`. Startup,
 
 `T0008.4` added `Smile` as a shaped burst with two eyes and a smiling mouth arc. It is included in runtime and preview cycle/random/salvo selection. Smile intentionally does not use delayed mini-burst garnish so the face shape remains readable.
 
+`T0008.3.2` added deterministic per-burst color palette variants. Each firework kind has three predefined palette variants, and each launch selects one from its seed without changing geometry, timing, shell tail, trail behavior, CITY, stars, UFO, audio, or global glitter. Delayed mini-burst garnish inherits the selected parent palette.
+
 Primary launch commands:
 
 ```bash

@@ -22,6 +22,7 @@ from pyxel_goal_game.firework_presets import (
     FireworkShape,
     SecondaryPreset,
     TrailPreset,
+    select_firework_palette,
 )
 
 RING_ORIENTATION_BANK_SEED = 20260623
@@ -235,6 +236,15 @@ def generate_burst(
     orientation_bank: RingOrientationBank | None = None,
 ) -> tuple[ParticleSpawnSpec, ...]:
     rng = Random(seed)
+    selected_palette = select_firework_palette(preset.kind, seed)
+    secondary = preset.secondary
+    if secondary is not None and selected_palette.secondary_colors is not None:
+        secondary = replace(secondary, palette=selected_palette.secondary_colors)
+    preset = replace(
+        preset,
+        palette=selected_palette.colors,
+        secondary=secondary,
+    )
     if preset.shape is FireworkShape.SPHERE:
         return generate_sphere_burst(preset=preset, origin=origin, rng=rng)
     if preset.shape is FireworkShape.SMILE:

@@ -89,6 +89,7 @@
 - [x] connect mobile count selector to salvo state
 - [x] connect mobile auto launch to selected count
 - [x] disable Pyxel Web virtual gamepad
+- [x] retry audio startup after mobile touch
 - [ ] tune visual feel
 - [ ] tune performance budget
 - [ ] record user feedback

@@ -1138,3 +1138,17 @@ Keep the Pyxel Web gamepad, hide it with custom CSS, or ask users to ignore it.
 
 Impact:
 Added a release helper script and tests, patched public Web HTML generation output, and updated docs. Runtime visuals, input handling, firework generation, CITY, stars, UFO, audio, shell tail, glitter, launcher behavior, and keyboard controls remain unchanged.
+
+## 2026-06-28 Retry audio startup after mobile touch
+
+Decision:
+Retry BGM startup on the first mobile/touch user gesture.
+
+Reason:
+Mobile Safari can block initialization-time audio until a user gesture. Without a touch-triggered retry, the runtime can appear silent even when audio is enabled.
+
+Alternatives:
+Require users to toggle audio manually, remove initialization-time BGM, or add a separate enable-sound overlay.
+
+Impact:
+Runtime audio/input handling and tests changed. Visuals, firework generation, CITY, stars, UFO, shell tail, glitter, launcher behavior, and controls remain unchanged.

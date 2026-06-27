@@ -67,6 +67,7 @@ class RuntimeAudio:
     enabled: bool = True
     bgm_enabled: bool = True
     last_explosion_frame: int | None = None
+    user_gesture_unlocked: bool = False
 
     def setup(self) -> None:
         self.pyxel.sounds[BGM_MELODY_SOUND_ID].set(
@@ -106,6 +107,12 @@ class RuntimeAudio:
     def start_bgm(self) -> None:
         if self.enabled and self.bgm_enabled:
             self.pyxel.playm(BGM_MUSIC_ID, loop=True)
+
+    def notify_user_gesture(self) -> None:
+        if self.user_gesture_unlocked:
+            return
+        self.user_gesture_unlocked = True
+        self.start_bgm()
 
     def set_enabled(self, enabled: bool) -> None:
         if self.enabled == enabled:

@@ -1645,3 +1645,13 @@ Record completed tasks here.
   - It now also wraps `AudioContext` / `webkitAudioContext`, tracks created contexts, and attempts resume plus a silent tick on touch/click/key user gestures.
   - The helper is idempotent and runs before `launchPyxel(...)` in generated HTML.
 - Preservation: Runtime visuals, firework generation, CITY, stars, UFO, audio definitions, shell tail, glitter, launcher behavior, controls, and local runtime behavior unchanged.
+
+## 2026-06-28 T0010.11 Keep mobile random type separate from random count
+
+- Summary: Fixed the mobile panel so turning on `random` firework type mode no longer leaves `COUNT RND` active as an implicit random launch-count setting.
+- Files changed: `src/pyxel_goal_game/runtime/app.py`, runtime app tests, README, integration docs, visual checklist, goals logs, task queue, roadmap, and `GPT_HANDOFF.md`.
+- Behavior:
+  - If mobile `COUNT` is `RND`, turning on mobile `random` type mode resets `COUNT` to fixed `1`.
+  - Existing fixed `COUNT` choices are preserved when mobile `random` type mode is turned on.
+  - Keyboard `R + 0` remains available for explicit random type plus random-count stress review.
+- Preservation: Firework generation, CITY, stars, UFO, audio, shell tail, glitter, launcher behavior, and non-mobile scheduling semantics unchanged.

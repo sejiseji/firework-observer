@@ -4,6 +4,12 @@
     "current": [],
     "done": [
         {
+            "id": "T0010.11",
+            "title": "Keep mobile random type separate from random count",
+            "completed_on": "2026-06-28",
+            "summary": "Reset mobile COUNT RND to fixed 1 when enabling mobile random firework type mode so type randomization and count randomization stay separate."
+        },
+        {
             "id": "T0010.10",
             "title": "Install Safari WebAudio unlock in public HTML",
             "completed_on": "2026-06-28",

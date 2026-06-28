@@ -91,6 +91,7 @@
 - [x] disable Pyxel Web virtual gamepad
 - [x] retry audio startup after mobile touch
 - [x] install Safari WebAudio unlock in public HTML
+- [x] keep mobile random type separate from random count
 - [ ] tune visual feel
 - [ ] tune performance budget
 - [ ] record user feedback

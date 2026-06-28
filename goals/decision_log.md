@@ -1166,3 +1166,17 @@ Ask Safari users to toggle audio manually, add an in-game "enable sound" overlay
 
 Impact:
 The release HTML patcher and tests changed. Public Web HTML generation now disables the Pyxel virtual gamepad and installs the Safari audio unlock helper. Runtime visuals, firework generation, CITY, stars, UFO, shell tail, glitter, launcher behavior, controls, and local runtime audio behavior remain unchanged.
+
+## 2026-06-28 Keep mobile random type separate from random count
+
+Decision:
+When mobile `random` type mode is turned on while the mobile `COUNT` selector is `RND`, reset the mobile count choice to fixed `1`.
+
+Reason:
+The mobile panel has both `random` for firework kind and `COUNT RND` for launch count. If both are active, it looks like `random` changed the firework count too. Keeping type randomization and count randomization as explicit separate choices is clearer for touch users.
+
+Alternatives:
+Leave the existing behavior, rename the controls only, or make `random` ignore `COUNT RND` internally without changing the visible count label.
+
+Impact:
+Mobile panel state handling and tests changed. Keyboard `R + 0` behavior remains available. Firework generation, CITY, stars, UFO, audio, shell tail, glitter, launcher behavior, and non-mobile scheduling semantics remain unchanged.

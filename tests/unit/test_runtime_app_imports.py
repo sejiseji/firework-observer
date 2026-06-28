@@ -100,7 +100,7 @@ def test_mobile_auto_launch_uses_random_count_choice() -> None:
     assert called == ["random"]
 
 
-def test_mobile_random_type_toggle_resets_random_count_choice_to_fixed_one() -> None:
+def test_mobile_random_type_toggle_preserves_random_count_choice() -> None:
     fake_app = SimpleNamespace(
         mobile_salvo_count_choice=None,
         state=RuntimeShowState(salvo_count_mode=SalvoCountMode.RANDOM),
@@ -110,8 +110,8 @@ def test_mobile_random_type_toggle_resets_random_count_choice_to_fixed_one() -> 
     app.RuntimeApp.apply_mobile_toggle(fake_app, "random_firework_mode")
 
     assert fake_app.state.toggles.random_firework_mode is True
-    assert fake_app.mobile_salvo_count_choice == 1
-    assert fake_app.state.salvo_count_mode is SalvoCountMode.FIXED
+    assert fake_app.mobile_salvo_count_choice is None
+    assert fake_app.state.salvo_count_mode is SalvoCountMode.RANDOM
     assert fake_app.state.salvo_count == 1
 
 

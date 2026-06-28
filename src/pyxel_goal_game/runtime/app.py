@@ -243,19 +243,7 @@ class RuntimeApp:
 
     def apply_mobile_toggle(self, key: str) -> None:
         if key == "random_firework_mode":
-            enabling_random = not self.state.toggles.random_firework_mode
             self.state = show_controller.toggle_random_mode(self.state)
-            if enabling_random and self.mobile_salvo_count_choice is None:
-                self.mobile_salvo_count_choice = 1
-                self.state = replace(
-                    self.state,
-                    salvo_count_mode=(
-                        SalvoCountMode.FIXED
-                        if self.state.salvo_count_mode is not SalvoCountMode.OFF
-                        else SalvoCountMode.OFF
-                    ),
-                    salvo_count=1,
-                )
         elif key == "height_variation":
             self.state = show_controller.toggle_height_variation(self.state)
         elif key == "auto_launch":

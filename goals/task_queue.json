@@ -4,6 +4,12 @@
     "current": [],
     "done": [
         {
+            "id": "T0010.10",
+            "title": "Install Safari WebAudio unlock in public HTML",
+            "completed_on": "2026-06-28",
+            "summary": "Extended the public Pyxel Web HTML patcher to inject a Safari-friendly WebAudio unlock helper before launchPyxel."
+        },
+        {
             "id": "T0010.9",
             "title": "Retry audio startup after mobile touch",
             "completed_on": "2026-06-28",

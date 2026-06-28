@@ -1635,3 +1635,13 @@ Record completed tasks here.
   - The first touch/click input calls the audio user-gesture unlock path and retries BGM startup once.
   - Repeated touch inputs do not repeatedly restart BGM.
 - Preservation: Visuals, firework generation, CITY, stars, UFO, shell tail, glitter, launcher behavior, controls, and Pyxel Web gamepad disabling remain unchanged.
+
+## 2026-06-28 T0010.10 Install Safari WebAudio unlock in public HTML
+
+- Summary: Extended the public Pyxel Web HTML patcher to install a Safari-friendly WebAudio unlock helper before `launchPyxel(...)`.
+- Files changed: `scripts/disable_pyxel_web_gamepad.py`, script tests, README, release checklist, integration docs, visual checklist, goals logs, task queue, roadmap, and `GPT_HANDOFF.md`.
+- Behavior:
+  - The public HTML patcher still disables Pyxel Web's default virtual gamepad.
+  - It now also wraps `AudioContext` / `webkitAudioContext`, tracks created contexts, and attempts resume plus a silent tick on touch/click/key user gestures.
+  - The helper is idempotent and runs before `launchPyxel(...)` in generated HTML.
+- Preservation: Runtime visuals, firework generation, CITY, stars, UFO, audio definitions, shell tail, glitter, launcher behavior, controls, and local runtime behavior unchanged.

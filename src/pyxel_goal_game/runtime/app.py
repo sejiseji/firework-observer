@@ -235,9 +235,6 @@ class RuntimeApp:
             frame=pyxel.frame_count,
         )
 
-    def notify_audio_user_gesture(self) -> None:
-        self.audio.notify_user_gesture()
-
     def refresh_mobile_panel_draft(self) -> None:
         self.mobile_panel_draft = MobilePanelDraft.from_state(self.state)
 

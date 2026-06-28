@@ -92,6 +92,7 @@
 - [x] retry audio startup after mobile touch
 - [x] install Safari WebAudio unlock in public HTML
 - [x] keep mobile random type separate from random count
+- [x] remove Safari audio unlock workarounds
 - [ ] tune visual feel
 - [ ] tune performance budget
 - [ ] record user feedback

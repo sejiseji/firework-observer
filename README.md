@@ -39,11 +39,11 @@ pyxel run main.py
 Before publishing, run `python3 scripts/check_public_safety.py`. Documentation and source files should use repository-relative paths such as `docs/...`, `src/...`, and `scripts/...`, not local machine paths.
 
 Runtime audio is enabled by default. Press `M` to mute or restore all audio, including the quiet chord-harmony music-box BGM and restrained firework explosion SFX. The mobile panel can also turn only the BGM off while leaving explosion SFX enabled.
-On mobile Safari, audio may start only after the first tap because of browser autoplay rules. The runtime retries BGM startup on the first touch input, and the public Pyxel Web build installs a small WebAudio unlock handler for touch/click input.
+On iPhone, first confirm Silent Mode is off if audio is not heard.
 
 A rare silent 3D wireframe UFO ambient flyby is enabled by default in the official runtime. UFOs use deterministic low, middle, or high pass heights. Press `U` to toggle it during review.
 
-On PC, use `A` / `S` or the mouse wheel to zoom. On touch devices, drag/flick the play field to rotate the camera. Tap the top-right `MENU` button to open the mobile control panel; checkbox changes apply immediately behind the panel. The panel uses larger text, is kept short enough to leave part of the scene visible, and includes BGM-only toggle, salvo count selection, quick launch, a current-firework selector button, salvo start, and `ZOOM+` / `ZOOM-` buttons. Mobile `RANDOM` randomizes only firework type and never changes the current `COUNT`; random launch count remains controlled by `COUNT RND`. The public Pyxel Web build disables Pyxel's default virtual gamepad so the in-app touch panel is the mobile control surface, and it installs a Safari-friendly WebAudio unlock handler.
+On PC, use `A` / `S` or the mouse wheel to zoom. On touch devices, drag/flick the play field to rotate the camera. Tap the top-right `MENU` button to open the mobile control panel; checkbox changes apply immediately behind the panel. The panel uses larger text, is kept short enough to leave part of the scene visible, and includes BGM-only toggle, salvo count selection, quick launch, a current-firework selector button, salvo start, and `ZOOM+` / `ZOOM-` buttons. Mobile `RANDOM` randomizes only firework type and never changes the current `COUNT`; random launch count remains controlled by `COUNT RND`. The public Pyxel Web build disables Pyxel's default virtual gamepad so the in-app touch panel is the mobile control surface.
 
 The current firework cycle includes Kiku, Sphere Bloom, Smile, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo.
 Each firework kind has three deterministic per-burst color palette variants, selected from the launch seed.

@@ -1180,3 +1180,17 @@ Reset `COUNT RND` to `1` when random type is enabled, rename the controls only, 
 
 Impact:
 Mobile panel state handling and tests changed. Keyboard `R + 0` behavior remains available. Firework generation, CITY, stars, UFO, audio, shell tail, glitter, launcher behavior, and non-mobile scheduling semantics remain unchanged.
+
+## 2026-06-28 Remove Safari audio unlock workarounds
+
+Decision:
+Remove the first-touch BGM retry path and the Safari WebAudio unlock helper from public HTML.
+
+Reason:
+The observed iPhone no-audio issue was confirmed to be caused by iPhone Silent Mode, not Safari WebAudio blocking. Keeping the first-touch retry could restart BGM unexpectedly after the game has already started.
+
+Alternatives:
+Keep the workarounds as defensive measures, keep only the HTML unlock helper, or add a sound-enable overlay.
+
+Impact:
+Runtime audio/input handling and public HTML patcher/tests/docs changed. Pyxel Web gamepad disabling remains. Visuals, firework generation, CITY, stars, UFO, shell tail, glitter, launcher behavior, and controls remain unchanged.

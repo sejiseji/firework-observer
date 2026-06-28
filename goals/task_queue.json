@@ -7,7 +7,7 @@
             "id": "T0010.11",
             "title": "Keep mobile random type separate from random count",
             "completed_on": "2026-06-28",
-            "summary": "Reset mobile COUNT RND to fixed 1 when enabling mobile random firework type mode so type randomization and count randomization stay separate."
+            "summary": "Kept the current mobile COUNT choice, including COUNT RND, when enabling mobile random firework type mode so type randomization and count randomization stay independent."
         },
         {
             "id": "T0010.10",

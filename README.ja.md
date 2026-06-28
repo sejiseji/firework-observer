@@ -79,7 +79,7 @@ pyxel run main.py
 - 右上の `MENU`: モバイル操作パネルを開く / 閉じる
 - パネル内チェック: random、height、auto、rotate、stars、UFO、audio / BGM、city を即時反映
 - `COUNT`: サルボ発射数を 1 / 2 / 3 / 4 / 5 / RND で切り替え
-- `random`: 花火種別だけをランダム化。発射数のランダム化は `COUNT RND` で指定
+- `random`: 花火種別だけをランダム化。現在の `COUNT` は変更せず、発射数のランダム化は `COUNT RND` で指定
 - `speed`: 自動回転速度の切り替え
 - `LAUNCH`: 花火を1発打ち上げ
 - 花火名ボタン: 現在の花火名を表示し、タップで種類を切り替え

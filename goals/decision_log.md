@@ -1170,13 +1170,13 @@ The release HTML patcher and tests changed. Public Web HTML generation now disab
 ## 2026-06-28 Keep mobile random type separate from random count
 
 Decision:
-When mobile `random` type mode is turned on while the mobile `COUNT` selector is `RND`, reset the mobile count choice to fixed `1`.
+Mobile `random` type mode must not change the current mobile `COUNT` choice, including `COUNT RND`.
 
 Reason:
-The mobile panel has both `random` for firework kind and `COUNT RND` for launch count. If both are active, it looks like `random` changed the firework count too. Keeping type randomization and count randomization as explicit separate choices is clearer for touch users.
+The mobile panel has both `random` for firework kind and `COUNT RND` for launch count. Users expect those controls to be independent: `random` changes only firework type, while `COUNT` remains the source of launch-count choice. Resetting `COUNT RND` to `1` was a bug.
 
 Alternatives:
-Leave the existing behavior, rename the controls only, or make `random` ignore `COUNT RND` internally without changing the visible count label.
+Reset `COUNT RND` to `1` when random type is enabled, rename the controls only, or make `random` ignore `COUNT RND` internally without changing the visible count label.
 
 Impact:
 Mobile panel state handling and tests changed. Keyboard `R + 0` behavior remains available. Firework generation, CITY, stars, UFO, audio, shell tail, glitter, launcher behavior, and non-mobile scheduling semantics remain unchanged.

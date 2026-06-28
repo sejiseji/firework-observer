@@ -1648,10 +1648,10 @@ Record completed tasks here.
 
 ## 2026-06-28 T0010.11 Keep mobile random type separate from random count
 
-- Summary: Fixed the mobile panel so turning on `random` firework type mode no longer leaves `COUNT RND` active as an implicit random launch-count setting.
+- Summary: Fixed the mobile panel so turning on `random` firework type mode preserves the current `COUNT`, including `COUNT RND`.
 - Files changed: `src/pyxel_goal_game/runtime/app.py`, runtime app tests, README, integration docs, visual checklist, goals logs, task queue, roadmap, and `GPT_HANDOFF.md`.
 - Behavior:
-  - If mobile `COUNT` is `RND`, turning on mobile `random` type mode resets `COUNT` to fixed `1`.
-  - Existing fixed `COUNT` choices are preserved when mobile `random` type mode is turned on.
+  - If mobile `COUNT` is `RND`, turning on mobile `random` type mode keeps `COUNT RND`.
+  - Existing fixed `COUNT` choices are also preserved when mobile `random` type mode is turned on.
   - Keyboard `R + 0` remains available for explicit random type plus random-count stress review.
 - Preservation: Firework generation, CITY, stars, UFO, audio, shell tail, glitter, launcher behavior, and non-mobile scheduling semantics unchanged.

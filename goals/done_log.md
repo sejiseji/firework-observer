@@ -1655,3 +1655,13 @@ Record completed tasks here.
   - Existing fixed `COUNT` choices are also preserved when mobile `random` type mode is turned on.
   - Keyboard `R + 0` remains available for explicit random type plus random-count stress review.
 - Preservation: Firework generation, CITY, stars, UFO, audio, shell tail, glitter, launcher behavior, and non-mobile scheduling semantics unchanged.
+
+## 2026-06-28 T0010.12 Remove Safari audio unlock workarounds
+
+- Summary: Removed the first-touch BGM retry and public HTML WebAudio unlock helper after confirming the iPhone no-audio issue was Silent Mode.
+- Files changed: runtime audio/input/app code, runtime/script tests, README files, release checklist, integration docs, visual checklist, goals logs, task queue, roadmap, and `GPT_HANDOFF.md`.
+- Behavior:
+  - First touch/click no longer retries or restarts BGM.
+  - The public HTML patcher only disables Pyxel Web's default virtual gamepad.
+  - iPhone audio troubleshooting is documented as checking Silent Mode first.
+- Preservation: Visuals, firework generation, CITY, stars, UFO, audio definitions, shell tail, glitter, launcher behavior, controls, and Pyxel Web gamepad disabling unchanged.

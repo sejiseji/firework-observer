@@ -550,8 +550,7 @@ Checks:
 - On PC, mouse wheel changes camera zoom within the same safe range as `A` / `S`.
 - The top-right `MENU` button opens and closes the mobile control panel.
 - The public Pyxel Web build should not show Pyxel's default virtual d-pad/buttons.
-- On mobile Safari, the first touch should retry BGM startup to satisfy browser audio unlock rules.
-- Public Pyxel Web HTML should include the Safari WebAudio unlock helper before `launchPyxel(...)`.
+- On iPhone, confirm Silent Mode is off before judging runtime audio.
 - Panel checkboxes immediately reflect random, height, auto launch, auto rotate, stars, UFO, audio/BGM, and city settings behind the panel.
 - Mobile `random` should randomize only firework type and should not change the current `COUNT`, including `COUNT RND`.
 - `COUNT` cycles salvo count selection through `1`, `2`, `3`, `4`, `5`, and `RND`.

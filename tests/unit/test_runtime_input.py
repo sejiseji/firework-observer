@@ -54,7 +54,6 @@ def test_runtime_input_maps_mobile_panel_actions() -> None:
     for name in (
         "handle_mobile_input",
         "handle_mobile_panel_click",
-        "notify_audio_user_gesture",
         "menu_button_rect",
         "salvo_count_button_rect",
         "apply_mobile_toggle",

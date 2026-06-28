@@ -1152,3 +1152,17 @@ Require users to toggle audio manually, remove initialization-time BGM, or add a
 
 Impact:
 Runtime audio/input handling and tests changed. Visuals, firework generation, CITY, stars, UFO, shell tail, glitter, launcher behavior, and controls remain unchanged.
+
+## 2026-06-28 Install Safari WebAudio unlock in public HTML
+
+Decision:
+Extend the public Pyxel Web HTML patcher so it injects a small Safari WebAudio unlock helper before `launchPyxel(...)`.
+
+Reason:
+Mobile Safari can require `AudioContext.resume()` or a silent WebAudio tick to run directly inside a touch/click/key event handler. Retrying BGM from the Pyxel update loop was not enough on Safari, even though local launch and Chrome audio worked.
+
+Alternatives:
+Ask Safari users to toggle audio manually, add an in-game "enable sound" overlay, fork Pyxel Web runtime code, or leave Safari as a known limitation.
+
+Impact:
+The release HTML patcher and tests changed. Public Web HTML generation now disables the Pyxel virtual gamepad and installs the Safari audio unlock helper. Runtime visuals, firework generation, CITY, stars, UFO, shell tail, glitter, launcher behavior, controls, and local runtime audio behavior remain unchanged.

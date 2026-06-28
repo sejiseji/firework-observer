@@ -90,6 +90,7 @@
 - [x] connect mobile auto launch to selected count
 - [x] disable Pyxel Web virtual gamepad
 - [x] retry audio startup after mobile touch
+- [x] install Safari WebAudio unlock in public HTML
 - [ ] tune visual feel
 - [ ] tune performance budget
 - [ ] record user feedback

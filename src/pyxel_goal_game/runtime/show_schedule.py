@@ -10,11 +10,22 @@ from pyxel_goal_game.runtime.state import (
     MAX_SALVO_COUNT,
     MIN_SALVO_COUNT,
 )
-from pyxel_goal_game.salvo_patterns import SalvoPlan, build_salvo_plan
+from pyxel_goal_game.salvo_patterns import (
+    DEFAULT_SALVO_INTERVAL_FRAMES,
+    SALVO_LAUNCH_Y_RATIO,
+    SalvoPlan,
+    build_salvo_plan,
+)
 from pyxel_goal_game.screen_profiles import ScreenProfile
 
 HEIGHT_VARIATION_RATIO = 0.16
 PERSISTENT_SALVO_REPEAT_FRAMES = 210
+INWARD_PAIR_REPEAT_FRAMES = 240
+INWARD_PAIR_INTERVAL_FRAMES = DEFAULT_SALVO_INTERVAL_FRAMES
+INWARD_PAIR_SLOT_COUNT = 10
+INWARD_PAIR_WAVE_PAIRS = ((0, 9), (1, 8), (2, 7), (3, 6), (4, 5))
+INWARD_PAIR_X_RATIO_START = -0.78
+INWARD_PAIR_X_RATIO_END = 0.78
 DEFAULT_SINGLE_LAUNCH_FRAME_OFFSET = 0
 
 
@@ -154,6 +165,99 @@ def build_random_count_salvo_schedule(
     )
 
 
+def build_inward_pair_salvo_schedule(
+    *,
+    profile: ScreenProfile,
+    start_frame: int,
+    base_seed: int,
+    selected_firework_kind: FireworkKind,
+    random_firework_mode: bool = False,
+    random_seed: int | None = None,
+    previous_firework_kind: FireworkKind | None = None,
+    height_variation: bool = False,
+    height_seed: int | None = None,
+    repeat_after_frames: int | None = None,
+    interval_frames: int = INWARD_PAIR_INTERVAL_FRAMES,
+) -> RuntimeLaunchSchedule:
+    _validate_start_frame(start_frame)
+    _validate_seed(base_seed)
+    if interval_frames < 1:
+        msg = "interval_frames must be at least 1"
+        raise ValueError(msg)
+    wave_kinds = choose_runtime_firework_kinds(
+        count=len(INWARD_PAIR_WAVE_PAIRS),
+        selected_firework_kind=selected_firework_kind,
+        random_firework_mode=random_firework_mode,
+        random_seed=base_seed if random_seed is None else random_seed,
+        previous_firework_kind=previous_firework_kind,
+    )
+    launch_positions, burst_positions = build_inward_pair_positions(
+        profile=profile,
+        height_variation=height_variation,
+        height_seed=base_seed if height_seed is None else height_seed,
+    )
+    slots: list[RuntimeLaunchSlot] = []
+    for wave_index, (left_index, right_index) in enumerate(INWARD_PAIR_WAVE_PAIRS):
+        frame_offset = wave_index * interval_frames
+        firework_kind = wave_kinds[wave_index]
+        seed_offset = wave_index * 6
+        for slot_index, pair_seed_offset in (
+            (left_index, seed_offset),
+            (right_index, seed_offset + 3),
+        ):
+            slots.append(
+                RuntimeLaunchSlot(
+                    frame_offset=frame_offset,
+                    launch_origin=launch_positions[slot_index],
+                    burst_origin=burst_positions[slot_index],
+                    firework_kind=firework_kind,
+                    seed=base_seed + pair_seed_offset,
+                )
+            )
+    return RuntimeLaunchSchedule(
+        start_frame=start_frame,
+        slots=tuple(slots),
+        repeat_after_frames=repeat_after_frames,
+    )
+
+
+def build_inward_pair_positions(
+    *,
+    profile: ScreenProfile,
+    height_variation: bool = False,
+    height_seed: int = 0,
+) -> tuple[tuple[Vec3, ...], tuple[Vec3, ...]]:
+    _validate_seed(height_seed)
+    half_width = profile.box_width / 2
+    half_height = profile.box_height / 2
+    half_depth = profile.box_depth / 2
+    x_step = (INWARD_PAIR_X_RATIO_END - INWARD_PAIR_X_RATIO_START) / (
+        INWARD_PAIR_SLOT_COUNT - 1
+    )
+    x_positions = tuple(
+        (INWARD_PAIR_X_RATIO_START + index * x_step) * half_width
+        for index in range(INWARD_PAIR_SLOT_COUNT)
+    )
+    burst_y_by_wave = (0.42, 0.52, 0.62, 0.56, 0.48)
+    z_by_wave = (0.10, -0.07, 0.05, -0.03, 0.02)
+    launch_positions = [Vec3(x=x, y=SALVO_LAUNCH_Y_RATIO * half_height, z=0.0) for x in x_positions]
+    burst_positions = [Vec3(x=x, y=0.0, z=0.0) for x in x_positions]
+    rng = Random(height_seed)
+    for wave_index, (left_index, right_index) in enumerate(INWARD_PAIR_WAVE_PAIRS):
+        y = burst_y_by_wave[wave_index] * half_height
+        if height_variation:
+            y = _clamp_to_half_height(
+                y
+                + rng.uniform(-HEIGHT_VARIATION_RATIO, HEIGHT_VARIATION_RATIO)
+                * half_height,
+                half_height,
+            )
+        z = z_by_wave[wave_index] * half_depth
+        burst_positions[left_index] = Vec3(x=x_positions[left_index], y=y, z=z)
+        burst_positions[right_index] = Vec3(x=x_positions[right_index], y=y, z=-z)
+    return tuple(launch_positions), tuple(burst_positions)
+
+
 def choose_random_salvo_count(*, seed: int) -> int:
     _validate_seed(seed)
     return Random(seed).randint(MIN_SALVO_COUNT, MAX_SALVO_COUNT)
@@ -259,9 +363,13 @@ def _vary_burst_height(*, position: Vec3, profile: ScreenProfile, rng: Random) -
     ) * half_height
     return Vec3(
         x=position.x,
-        y=max(-half_height, min(half_height, varied_y)),
+        y=_clamp_to_half_height(varied_y, half_height),
         z=position.z,
     )
+
+
+def _clamp_to_half_height(value: float, half_height: float) -> float:
+    return max(-half_height, min(half_height, value))
 
 
 def _validate_salvo_count(count: int) -> None:

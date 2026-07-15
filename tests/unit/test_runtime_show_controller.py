@@ -12,6 +12,7 @@ from pyxel_goal_game.runtime.show_controller import (
     cycle_auto_rotate_speed,
     cycle_firework_kind,
     set_fixed_salvo_mode,
+    set_inward_pair_salvo_mode,
     set_random_salvo_mode,
     tick_frame,
     toggle_audio,
@@ -96,6 +97,14 @@ def test_random_salvo_mode_can_be_represented() -> None:
     state = set_random_salvo_mode(RuntimeShowState())
 
     assert state.salvo_count_mode is SalvoCountMode.RANDOM
+    assert state.salvo_count == 1
+    assert state.toggles.auto_launch is False
+
+
+def test_inward_pair_salvo_mode_can_be_represented() -> None:
+    state = set_inward_pair_salvo_mode(RuntimeShowState())
+
+    assert state.salvo_count_mode is SalvoCountMode.INWARD_PAIR
     assert state.salvo_count == 1
     assert state.toggles.auto_launch is False
 

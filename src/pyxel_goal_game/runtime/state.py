@@ -18,6 +18,7 @@ class SalvoCountMode(Enum):
     OFF = "off"
     FIXED = "fixed"
     RANDOM = "random"
+    INWARD_PAIR = "inward_pair"
 
 
 FIRST_GENERATION_FIREWORK_ORDER = (

@@ -1665,3 +1665,16 @@ Record completed tasks here.
   - The public HTML patcher only disables Pyxel Web's default virtual gamepad.
   - iPhone audio troubleshooting is documented as checking Silent Mode first.
 - Preservation: Visuals, firework generation, CITY, stars, UFO, audio definitions, shell tail, glitter, launcher behavior, controls, and Pyxel Web gamepad disabling unchanged.
+
+## 2026-07-15 T0011.0 Add inward mirrored pair salvo pattern
+
+- Summary: Added `6` as a persistent mirrored inward pair salvo in the official runtime.
+- Files changed: shared runtime scheduling, runtime state/controller/input/app/render wiring, runtime tests, README files, product docs, visual checklist, goals logs, roadmap, task queue, and `GPT_HANDOFF.md`.
+- Behavior:
+  - The pattern uses 10 profile-relative horizontal launch positions.
+  - It fires five simultaneous left/right pairs in the order `(0, 9)`, `(1, 8)`, `(2, 7)`, `(3, 6)`, then `(4, 5)`.
+  - Normal mode uses the selected firework kind for all 10 launches.
+  - Random firework mode freezes one kind per wave and applies it to both launches in the pair.
+  - Pair seeds are different but have matching `seed % 3`, keeping palette variants coherent without exact visual copies.
+  - The loop uses a slightly longer repeat window than fixed-count salvos for readability with long-lived fireworks.
+- Preservation: Existing `1`, `2`-`5`, `0`, `V`, `R`, `H`, `SPACE`, and `Z` behavior remains unchanged. `main.py`, firework generation, particle counts, palette definitions, delayed mini-burst garnish, Long Willow trails, CITY, stars, UFO, audio, shell tail, and glitter were not changed.

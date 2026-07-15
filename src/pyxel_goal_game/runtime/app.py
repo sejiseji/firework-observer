@@ -33,10 +33,12 @@ from pyxel_goal_game.runtime.effects import (
 )
 from pyxel_goal_game.runtime.mobile_ui import MobilePanelDraft
 from pyxel_goal_game.runtime.show_schedule import (
+    INWARD_PAIR_REPEAT_FRAMES,
     PERSISTENT_SALVO_REPEAT_FRAMES,
     RuntimeLaunchSchedule,
     RuntimeLaunchSlot,
     build_fixed_salvo_schedule,
+    build_inward_pair_salvo_schedule,
     build_random_count_salvo_schedule,
     build_single_launch_schedule,
 )
@@ -297,6 +299,11 @@ class RuntimeApp:
         self.schedule_random_count_salvo()
         self.next_persistent_salvo_frame = pyxel.frame_count + PERSISTENT_SALVO_REPEAT_FRAMES
 
+    def start_inward_pair_salvo_loop(self) -> None:
+        self.state = show_controller.set_inward_pair_salvo_mode(self.state)
+        self.schedule_inward_pair_salvo()
+        self.next_persistent_salvo_frame = pyxel.frame_count + INWARD_PAIR_REPEAT_FRAMES
+
     def cycle_mobile_salvo_count_choice(self) -> None:
         order: tuple[int | None, ...] = (1, 2, 3, 4, 5, None)
         index = order.index(self.mobile_salvo_count_choice)
@@ -370,6 +377,21 @@ class RuntimeApp:
         self.schedule_runtime_launches(schedule)
         self.state = show_controller.advance_seed_base(self.state, len(schedule.slots))
 
+    def schedule_inward_pair_salvo(self) -> None:
+        schedule = build_inward_pair_salvo_schedule(
+            profile=self.profile,
+            start_frame=pyxel.frame_count,
+            base_seed=self.state.seed_base,
+            selected_firework_kind=self.state.selected_firework_kind,
+            random_firework_mode=self.state.toggles.random_firework_mode,
+            random_seed=self.state.seed_base,
+            previous_firework_kind=self.last_launched_kind,
+            height_variation=self.state.toggles.height_variation,
+            height_seed=self.state.seed_base,
+        )
+        self.schedule_runtime_launches(schedule)
+        self.state = show_controller.advance_seed_base(self.state, len(schedule.slots))
+
     def schedule_persistent_salvo_if_needed(self) -> None:
         if (
             self.state.salvo_count_mode is not SalvoCountMode.OFF
@@ -377,11 +399,14 @@ class RuntimeApp:
         ):
             if self.state.salvo_count_mode is SalvoCountMode.RANDOM:
                 self.schedule_random_count_salvo()
+                repeat_frames = PERSISTENT_SALVO_REPEAT_FRAMES
+            elif self.state.salvo_count_mode is SalvoCountMode.INWARD_PAIR:
+                self.schedule_inward_pair_salvo()
+                repeat_frames = INWARD_PAIR_REPEAT_FRAMES
             else:
                 self.schedule_salvo(self.state.salvo_count)
-            self.next_persistent_salvo_frame = (
-                pyxel.frame_count + PERSISTENT_SALVO_REPEAT_FRAMES
-            )
+                repeat_frames = PERSISTENT_SALVO_REPEAT_FRAMES
+            self.next_persistent_salvo_frame = pyxel.frame_count + repeat_frames
 
     def schedule_runtime_launches(self, schedule: RuntimeLaunchSchedule) -> None:
         for slot in schedule.slots:
@@ -487,6 +512,8 @@ class RuntimeApp:
             return "off"
         if self.state.salvo_count_mode is SalvoCountMode.RANDOM:
             return "random"
+        if self.state.salvo_count_mode is SalvoCountMode.INWARD_PAIR:
+            return "inward"
         return str(self.state.salvo_count)
 
 

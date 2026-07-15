@@ -66,6 +66,8 @@ def handle_runtime_input(app: object) -> None:
         app.start_fixed_salvo_loop(4)
     if pyxel.btnp(pyxel.KEY_5):
         app.start_fixed_salvo_loop(5)
+    if pyxel.btnp(pyxel.KEY_6):
+        app.start_inward_pair_salvo_loop()
     if pyxel.btnp(pyxel.KEY_SPACE):
         app.handle_space_cycle()
     if pyxel.btnp(pyxel.KEY_R):

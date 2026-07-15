@@ -93,6 +93,7 @@
 - [x] install Safari WebAudio unlock in public HTML
 - [x] keep mobile random type separate from random count
 - [x] remove Safari audio unlock workarounds
+- [x] add inward mirrored pair salvo pattern
 - [ ] tune visual feel
 - [ ] tune performance budget
 - [ ] record user feedback

@@ -8,9 +8,13 @@ from pyxel_goal_game.camera3d import Vec3
 from pyxel_goal_game.firework_presets import FireworkKind
 from pyxel_goal_game.runtime import show_schedule
 from pyxel_goal_game.runtime.show_schedule import (
+    INWARD_PAIR_REPEAT_FRAMES,
+    INWARD_PAIR_WAVE_PAIRS,
     PERSISTENT_SALVO_REPEAT_FRAMES,
     RuntimeLaunchSchedule,
     build_fixed_salvo_schedule,
+    build_inward_pair_positions,
+    build_inward_pair_salvo_schedule,
     build_random_count_salvo_schedule,
     build_single_launch_schedule,
     choose_random_salvo_count,
@@ -194,6 +198,148 @@ def test_schedule_origins_are_inside_box() -> None:
     for slot in schedule.slots:
         assert_inside_box(slot.launch_origin)
         assert_inside_box(slot.burst_origin)
+
+
+def test_inward_pair_schedule_has_ten_slots_and_five_waves() -> None:
+    schedule = build_inward_pair_salvo_schedule(
+        profile=IPHONE16_BALANCED_PROFILE,
+        start_frame=20,
+        base_seed=30,
+        selected_firework_kind=FireworkKind.KIKU,
+        repeat_after_frames=INWARD_PAIR_REPEAT_FRAMES,
+    )
+
+    assert schedule.start_frame == 20
+    assert schedule.repeat_after_frames == INWARD_PAIR_REPEAT_FRAMES
+    assert len(schedule.slots) == 10
+    assert len({slot.frame_offset for slot in schedule.slots}) == 5
+    assert len(INWARD_PAIR_WAVE_PAIRS) == 5
+
+
+def test_inward_pair_wave_order_moves_from_outside_to_center() -> None:
+    schedule = build_inward_pair_salvo_schedule(
+        profile=IPHONE16_BALANCED_PROFILE,
+        start_frame=0,
+        base_seed=10,
+        selected_firework_kind=FireworkKind.RING,
+    )
+    launch_positions, _ = build_inward_pair_positions(profile=IPHONE16_BALANCED_PROFILE)
+    sorted_positions = tuple(sorted(launch_positions, key=lambda position: position.x))
+    index_by_x = {position.x: index for index, position in enumerate(sorted_positions)}
+    observed_pairs = tuple(
+        (
+            index_by_x[schedule.slots[index * 2].launch_origin.x],
+            index_by_x[schedule.slots[index * 2 + 1].launch_origin.x],
+        )
+        for index in range(5)
+    )
+
+    assert observed_pairs == INWARD_PAIR_WAVE_PAIRS
+
+
+def test_inward_pair_wave_frames_are_paired_and_increase() -> None:
+    schedule = build_inward_pair_salvo_schedule(
+        profile=IPHONE16_BALANCED_PROFILE,
+        start_frame=0,
+        base_seed=10,
+        selected_firework_kind=FireworkKind.RING,
+    )
+    wave_frames = [
+        (schedule.slots[index].frame_offset, schedule.slots[index + 1].frame_offset)
+        for index in range(0, len(schedule.slots), 2)
+    ]
+
+    assert all(left == right for left, right in wave_frames)
+    assert [left for left, _ in wave_frames] == sorted(left for left, _ in wave_frames)
+    assert len({left for left, _ in wave_frames}) == 5
+
+
+def test_inward_pair_normal_mode_uses_selected_kind_for_all_slots() -> None:
+    schedule = build_inward_pair_salvo_schedule(
+        profile=IPHONE16_BALANCED_PROFILE,
+        start_frame=0,
+        base_seed=10,
+        selected_firework_kind=FireworkKind.LONG_WILLOW,
+    )
+
+    assert {slot.firework_kind for slot in schedule.slots} == {FireworkKind.LONG_WILLOW}
+
+
+def test_inward_pair_random_mode_freezes_same_kind_per_wave() -> None:
+    schedule = build_inward_pair_salvo_schedule(
+        profile=IPHONE16_BALANCED_PROFILE,
+        start_frame=0,
+        base_seed=5,
+        selected_firework_kind=FireworkKind.KIKU,
+        random_firework_mode=True,
+        random_seed=2,
+    )
+    wave_kinds = [
+        (schedule.slots[index].firework_kind, schedule.slots[index + 1].firework_kind)
+        for index in range(0, len(schedule.slots), 2)
+    ]
+
+    assert all(left is right for left, right in wave_kinds)
+    assert len({left for left, _ in wave_kinds}) > 1
+
+
+def test_inward_pair_seeds_keep_pair_palette_coherent_without_exact_copy() -> None:
+    schedule = build_inward_pair_salvo_schedule(
+        profile=IPHONE16_BALANCED_PROFILE,
+        start_frame=0,
+        base_seed=7,
+        selected_firework_kind=FireworkKind.KIKU,
+    )
+    seed_pairs = [
+        (schedule.slots[index].seed, schedule.slots[index + 1].seed)
+        for index in range(0, len(schedule.slots), 2)
+    ]
+
+    assert all(left != right for left, right in seed_pairs)
+    assert all(left % 3 == right % 3 for left, right in seed_pairs)
+
+
+def test_inward_pair_positions_stay_inside_box_and_center_pair_is_separate() -> None:
+    schedule = build_inward_pair_salvo_schedule(
+        profile=IPHONE16_BALANCED_PROFILE,
+        start_frame=0,
+        base_seed=11,
+        selected_firework_kind=FireworkKind.MULTI_RING,
+        height_variation=True,
+        height_seed=12,
+    )
+
+    for slot in schedule.slots:
+        assert_inside_box(slot.launch_origin)
+        assert_inside_box(slot.burst_origin)
+    center_pair = schedule.slots[-2:]
+    assert center_pair[0].launch_origin.x < 0 < center_pair[1].launch_origin.x
+    assert center_pair[1].launch_origin.x - center_pair[0].launch_origin.x > 0
+
+
+def test_inward_pair_schedule_is_deterministic_for_same_inputs() -> None:
+    first = build_inward_pair_salvo_schedule(
+        profile=IPHONE16_BALANCED_PROFILE,
+        start_frame=0,
+        base_seed=11,
+        selected_firework_kind=FireworkKind.MULTI_RING,
+        random_firework_mode=True,
+        random_seed=99,
+        height_variation=True,
+        height_seed=12,
+    )
+    second = build_inward_pair_salvo_schedule(
+        profile=IPHONE16_BALANCED_PROFILE,
+        start_frame=0,
+        base_seed=11,
+        selected_firework_kind=FireworkKind.MULTI_RING,
+        random_firework_mode=True,
+        random_seed=99,
+        height_variation=True,
+        height_seed=12,
+    )
+
+    assert first == second
 
 
 def test_random_count_schedule_uses_deterministic_count() -> None:

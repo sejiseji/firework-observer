@@ -1194,3 +1194,28 @@ Keep the workarounds as defensive measures, keep only the HTML unlock helper, or
 
 Impact:
 Runtime audio/input handling and public HTML patcher/tests/docs changed. Pyxel Web gamepad disabling remains. Visuals, firework generation, CITY, stars, UFO, shell tail, glitter, launcher behavior, and controls remain unchanged.
+
+## 2026-07-15 Add inward mirrored pair salvo as independent mode
+
+Decision:
+Add the mirrored inward pair salvo as `SalvoCountMode.INWARD_PAIR`, controlled by
+keyboard `6`, instead of expanding fixed-count salvos beyond the existing `1` to
+`5` range.
+
+Reason:
+The inward pattern is not a count variant. It has a fixed 10-slot layout, five
+simultaneous mirrored waves, pair-level random kind freezing, and pair-level
+palette coherence. Modeling it as a separate persistent mode preserves existing
+fixed and random count semantics while keeping scheduling deterministic.
+
+Alternatives:
+Treat `6` as a six-shot fixed salvo, overload random-count scheduling, or
+implement the pattern directly in the renderer/app loop.
+
+Impact:
+Shared runtime scheduling now builds the 10-slot inward pair schedule. Runtime
+input maps `6` to the new persistent mode. Pair seeds differ by 3 so left/right
+launches share deterministic palette variant selection while avoiding exact
+seed copies. Firework generation, particle counts, palette definitions, delayed
+mini-burst garnish, Long Willow trails, CITY, stars, UFO, audio, shell tail,
+glitter, and `main.py` remain unchanged.

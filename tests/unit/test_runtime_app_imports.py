@@ -5,6 +5,7 @@ from pathlib import Path
 from types import SimpleNamespace
 
 from pyxel_goal_game.runtime import app, effects, input, render
+from pyxel_goal_game.runtime.show_schedule import INWARD_PAIR_REPEAT_FRAMES
 from pyxel_goal_game.runtime.state import RuntimeShowState, SalvoCountMode
 
 
@@ -128,3 +129,22 @@ def test_mobile_random_type_toggle_preserves_fixed_count_choice() -> None:
     assert fake_app.mobile_salvo_count_choice == 3
     assert fake_app.state.salvo_count_mode is SalvoCountMode.FIXED
     assert fake_app.state.salvo_count == 3
+
+
+def test_inward_pair_salvo_loop_sets_mode_and_repeat_frame() -> None:
+    called: list[str] = []
+    fake_app = SimpleNamespace(
+        state=RuntimeShowState(),
+        schedule_inward_pair_salvo=lambda: called.append("inward"),
+        next_persistent_salvo_frame=0,
+    )
+    original_pyxel = app.pyxel
+    app.pyxel = SimpleNamespace(frame_count=100)
+    try:
+        app.RuntimeApp.start_inward_pair_salvo_loop(fake_app)
+    finally:
+        app.pyxel = original_pyxel
+
+    assert called == ["inward"]
+    assert fake_app.state.salvo_count_mode is SalvoCountMode.INWARD_PAIR
+    assert fake_app.next_persistent_salvo_frame == 100 + INWARD_PAIR_REPEAT_FRAMES

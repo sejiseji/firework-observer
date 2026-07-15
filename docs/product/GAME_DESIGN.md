@@ -52,6 +52,23 @@ Some eligible main fireworks can also produce delayed mini-burst garnish: small 
 `Smile` does not use delayed mini-burst garnish so the face shape stays readable.
 Delayed mini-burst garnish inherits the selected parent palette so after-pops remain visually cohesive.
 
+## Current salvo patterns
+
+The official runtime supports persistent salvo loops:
+
+- `1`: single-shell loop
+- `2`-`5`: fixed-count salvo loops
+- `0`: random-count salvo loop
+- `6`: mirrored inward pair salvo
+
+The mirrored inward pair salvo uses 10 horizontally arranged launch positions.
+It fires five simultaneous left/right pairs from the outside toward the center:
+positions `(0, 9)`, `(1, 8)`, `(2, 7)`, `(3, 6)`, then `(4, 5)`.
+In normal mode, all 10 launches use the selected firework kind. In random
+firework mode, each wave freezes one kind and uses it for both launches in that
+pair. Pair seeds are different but palette-coherent, so the two sides share the
+same deterministic palette variant without becoming exact visual copies.
+
 ## Future observation space expansion
 
 Screen profile and scenery work should be designed together because the observation box scale, projection camera, UI placement, particle budget, and scenery proportions are linked.

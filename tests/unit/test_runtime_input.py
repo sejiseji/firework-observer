@@ -19,6 +19,7 @@ def test_runtime_input_maps_first_generation_controls() -> None:
         "KEY_3",
         "KEY_4",
         "KEY_5",
+        "KEY_6",
         "KEY_H",
         "KEY_X",
         "KEY_Q",
@@ -39,6 +40,8 @@ def test_runtime_input_maps_first_generation_controls() -> None:
         "btnv",
     ):
         assert key_name in source
+
+    assert "start_inward_pair_salvo_loop" in source
 
 
 def test_runtime_input_does_not_import_tools_preview() -> None:

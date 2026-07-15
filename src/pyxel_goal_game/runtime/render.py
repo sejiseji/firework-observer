@@ -253,7 +253,7 @@ class RuntimeRenderer:
             else self.app.burst_label
         )
         pyxel.text(4, 4, f"Z:launch {self.app.mode_label}:{label}", 5)
-        pyxel.text(4, 12, "1-5:salvo 0:rand-count H:height", 5)
+        pyxel.text(4, 12, "1-5:salvo 6:inward 0:rnd H:height", 5)
         pyxel.text(
             4,
             20,

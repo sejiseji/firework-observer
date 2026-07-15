@@ -14,6 +14,7 @@ from pyxel_goal_game.runtime.camera_motion import (
     AutoRotateMotion,
 )
 from pyxel_goal_game.runtime.show_schedule import (
+    INWARD_PAIR_REPEAT_FRAMES,
     PERSISTENT_SALVO_REPEAT_FRAMES,
     RuntimeLaunchSchedule,
     RuntimeLaunchSlot,
@@ -36,6 +37,7 @@ __all__ = [
     "DEFAULT_AUTO_ROTATE_SPEED_INDEX",
     "EXPLOSION_SFX_COOLDOWN_FRAMES",
     "FIRST_GENERATION_FIREWORK_ORDER",
+    "INWARD_PAIR_REPEAT_FRAMES",
     "AutoRotateMotion",
     "AutoRotateSpeedMode",
     "PERSISTENT_SALVO_REPEAT_FRAMES",

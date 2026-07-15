@@ -42,6 +42,7 @@ Use `iphone16_balanced` for most visual judgement. Use `classic` to confirm comp
 | `1` | Start persistent one-shot salvo loop |
 | `2`-`5` | Start persistent fixed-count salvo loop |
 | `0` | Start persistent random-count salvo loop |
+| `6` | Start persistent mirrored inward pair salvo loop |
 | `H` | Toggle salvo burst height variation |
 | `G` | Cycle scenery preset |
 | `B` | Toggle scenery visibility |
@@ -67,6 +68,10 @@ Interaction rules:
 - `R` and `0` are independent.
 - `R + 0` randomizes both type and count.
 - `R + 0 + H` is the main fireworks-show stress mode.
+- `6` starts the mirrored inward pair salvo: 10 horizontal launch positions fire
+  as five simultaneous left/right pairs from the outer edges toward the center.
+- In random firework mode, each inward pair should keep the same firework kind
+  and palette variant on both sides, while different waves may vary.
 - `V` auto launch and persistent salvo loops are mutually exclusive.
 - `Z` remains a single immediate launch and does not change persistent salvo state.
 - `G` cycles low-detail in-box 3D scenery presets.
@@ -223,17 +228,24 @@ Interaction rules:
    - Press `1`, `2`, `3`, `4`, and `5`.
    - Confirm fixed-count loops are readable for each type.
 
-9. Random-count check:
+9. Inward pair salvo check:
+   - Press `6`.
+   - Confirm 10 launch positions read as one horizontal row.
+   - Confirm each wave launches a simultaneous left/right pair.
+   - Confirm the sequence moves from the outer positions toward the center.
+   - In random firework mode, confirm each pair shares one kind and palette.
+
+10. Random-count check:
    - Press `0`.
    - Confirm repeated salvos choose changing shot counts from 1 to 5.
 
-10. Fireworks-show stress check:
+11. Fireworks-show stress check:
    - Press `R`.
    - Press `H`.
    - Press `0`.
    - Observe combined type, count, and height variation.
 
-11. Burst radius variation check:
+12. Burst radius variation check:
    - Select Kiku, Sphere Bloom, Smile, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo.
    - Press `Z` for each type.
    - Confirm burst radii are subtly uneven but compact enough that bursts do not feel over-expanded.
@@ -242,14 +254,14 @@ Interaction rules:
    - Confirm Senrin secondary bursts remain sparse and controlled.
    - Confirm Halo remains a soft light ring and does not become a second Multi-ring.
 
-12. Color palette variant check:
+13. Color palette variant check:
    - Launch the same firework kind repeatedly.
    - Confirm color palettes can vary between launches.
    - Confirm each kind still reads as itself after palette changes.
    - Confirm delayed mini-burst garnish uses the same palette family as its parent.
    - Confirm `R + H + 0` feels less repetitive without becoming visually noisy.
 
-13. Scenery readability check:
+14. Scenery readability check:
    - Press `G` to cycle `Empty` and `City`.
    - Press `B` to confirm scenery can be hidden.
    - Rotate the camera and confirm scenery projects with the box.

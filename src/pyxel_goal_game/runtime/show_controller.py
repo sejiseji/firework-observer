@@ -111,6 +111,14 @@ def set_random_salvo_mode(state: RuntimeShowState) -> RuntimeShowState:
     )
 
 
+def set_inward_pair_salvo_mode(state: RuntimeShowState) -> RuntimeShowState:
+    return replace(
+        _replace_toggle(state, auto_launch=False),
+        salvo_count_mode=SalvoCountMode.INWARD_PAIR,
+        salvo_count=MIN_SALVO_COUNT,
+    )
+
+
 def clear_persistent_salvo_mode(state: RuntimeShowState) -> RuntimeShowState:
     return replace(
         state,

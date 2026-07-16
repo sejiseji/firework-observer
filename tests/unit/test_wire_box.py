@@ -50,6 +50,7 @@ def test_wire_box_edge_groups_match_prototype_structure() -> None:
     assert groups.count("rear") == 4
     assert groups.count("front") == 4
     assert groups.count("connector") == 4
+    assert sum(1 for edge in box.edges if edge.is_vertical) == 4
 
 
 def test_project_edges_uses_camera3d_projection() -> None:
@@ -61,6 +62,7 @@ def test_project_edges_uses_camera3d_projection() -> None:
     assert len(projected_edges) == 12
     assert all(edge.average_depth > 0.0 for edge in projected_edges)
     assert {edge.group for edge in projected_edges} == {"rear", "front", "connector"}
+    assert sum(1 for edge in projected_edges if edge.is_vertical) == 4
 
 
 def test_project_edges_is_deterministic() -> None:

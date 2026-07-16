@@ -7,6 +7,7 @@ from enum import Enum, auto
 class FireworkKind(Enum):
     KIKU = auto()
     SPHERE_BLOOM = auto()
+    GRAND_SPHERE = auto()
     SMILE = auto()
     PEONY = auto()
     RING = auto()
@@ -101,6 +102,7 @@ def validate_pyxel_colors(colors: tuple[int, ...]) -> None:
 FUTURE_FIREWORK_KINDS = (
     FireworkKind.KIKU,
     FireworkKind.SPHERE_BLOOM,
+    FireworkKind.GRAND_SPHERE,
     FireworkKind.SMILE,
     FireworkKind.PEONY,
     FireworkKind.RING,
@@ -159,6 +161,31 @@ SPHERE_BLOOM_PRESET = FireworkPreset(
     drag=0.988,
     gravity=-0.018,
     trail=SPHERE_BLOOM_TRAIL_PRESET,
+)
+
+
+GRAND_SPHERE_TRAIL_PRESET = TrailPreset(
+    rate=0.10,
+    speed_threshold=0.82,
+    early_ratio=0.24,
+    strong_speed=0.98,
+    draw_every=3,
+)
+
+GRAND_SPHERE_PRESET = FireworkPreset(
+    kind=FireworkKind.GRAND_SPHERE,
+    label="Grand Sphere",
+    shape=FireworkShape.SPHERE,
+    particle_count=192,
+    speed_range=(0.84, 1.20),
+    life_range=(96, 120),
+    palette=(7, 10, 12),
+    fade_mid=10,
+    fade_dark=5,
+    tip_color=7,
+    drag=0.986,
+    gravity=-0.001,
+    trail=GRAND_SPHERE_TRAIL_PRESET,
 )
 
 
@@ -416,6 +443,11 @@ FIREWORK_COLOR_PALETTES: dict[
         FireworkColorPalette("clear blue sphere", (7, 10, 12)),
         FireworkColorPalette("green white sphere", (6, 12, 7)),
         FireworkColorPalette("pink white sphere", (10, 7, 14)),
+    ),
+    FireworkKind.GRAND_SPHERE: (
+        FireworkColorPalette("blue grand sphere", (7, 10, 12, 5)),
+        FireworkColorPalette("gold grand sphere", (10, 11, 7, 5)),
+        FireworkColorPalette("pink grand sphere", (14, 10, 7, 5)),
     ),
     FireworkKind.SMILE: (
         FireworkColorPalette("warm smile", (10, 7, 12)),

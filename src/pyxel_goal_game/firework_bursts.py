@@ -6,6 +6,7 @@ from random import Random
 
 from pyxel_goal_game.camera3d import Vec3
 from pyxel_goal_game.firework_presets import (
+    GRAND_SPHERE_PRESET,
     HALO_PRESET,
     KIKU_PRESET,
     LONG_WILLOW_PRESET,
@@ -41,6 +42,7 @@ BURST_RADIUS_SCALE = 0.80
 BURST_RADIUS_VARIATION_BY_KIND = {
     FireworkKind.KIKU: 0.04,
     FireworkKind.SPHERE_BLOOM: 0.025,
+    FireworkKind.GRAND_SPHERE: 0.018,
     FireworkKind.PEONY: 0.04,
     FireworkKind.SMILE: 0.025,
     FireworkKind.RING: 0.03,
@@ -184,6 +186,15 @@ def generate_sphere_bloom_burst(
     origin: Vec3,
     seed: int,
     preset: FireworkPreset = SPHERE_BLOOM_PRESET,
+) -> tuple[ParticleSpawnSpec, ...]:
+    return generate_burst(preset=preset, origin=origin, seed=seed)
+
+
+def generate_grand_sphere_burst(
+    *,
+    origin: Vec3,
+    seed: int,
+    preset: FireworkPreset = GRAND_SPHERE_PRESET,
 ) -> tuple[ParticleSpawnSpec, ...]:
     return generate_burst(preset=preset, origin=origin, seed=seed)
 

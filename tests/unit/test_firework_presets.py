@@ -7,6 +7,7 @@ import pytest
 from pyxel_goal_game.firework_presets import (
     FIREWORK_COLOR_PALETTES,
     FUTURE_FIREWORK_KINDS,
+    GRAND_SPHERE_PRESET,
     SMILE_PRESET,
     FireworkColorPalette,
     FireworkKind,
@@ -22,6 +23,7 @@ def test_future_firework_kinds_exist() -> None:
     assert set(FUTURE_FIREWORK_KINDS) == {
         FireworkKind.KIKU,
         FireworkKind.SPHERE_BLOOM,
+        FireworkKind.GRAND_SPHERE,
         FireworkKind.SMILE,
         FireworkKind.PEONY,
         FireworkKind.RING,
@@ -132,6 +134,17 @@ def test_smile_preset_is_shaped_firework() -> None:
     assert SMILE_PRESET.speed_range == (0.62, 1.08)
     assert SMILE_PRESET.trail.draw_every == 2
     assert SMILE_PRESET.secondary is None
+
+
+def test_grand_sphere_preset_is_large_lingering_sphere() -> None:
+    assert GRAND_SPHERE_PRESET.kind is FireworkKind.GRAND_SPHERE
+    assert GRAND_SPHERE_PRESET.label == "Grand Sphere"
+    assert GRAND_SPHERE_PRESET.shape is FireworkShape.SPHERE
+    assert GRAND_SPHERE_PRESET.particle_count == 192
+    assert GRAND_SPHERE_PRESET.life_range[0] > 90
+    assert GRAND_SPHERE_PRESET.gravity > -0.01
+    assert GRAND_SPHERE_PRESET.trail.draw_every == 3
+    assert GRAND_SPHERE_PRESET.secondary is None
 
 
 def test_firework_color_palette_construction_validates_pyxel_colors() -> None:

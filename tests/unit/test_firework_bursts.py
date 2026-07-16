@@ -16,6 +16,7 @@ from pyxel_goal_game.firework_bursts import (
     build_smile_shape_points,
     dot_vec3,
     generate_burst,
+    generate_grand_sphere_burst,
     generate_halo_burst,
     generate_kiku_burst,
     generate_long_willow_burst,
@@ -32,6 +33,7 @@ from pyxel_goal_game.firework_bursts import (
     varied_burst_speed,
 )
 from pyxel_goal_game.firework_presets import (
+    GRAND_SPHERE_PRESET,
     HALO_PRESET,
     KIKU_PRESET,
     LONG_WILLOW_PRESET,
@@ -49,6 +51,8 @@ from pyxel_goal_game.firework_presets import (
     FireworkShape,
     select_firework_palette,
 )
+from pyxel_goal_game.runtime.show_schedule import HEIGHT_VARIATION_LEVEL_RATIOS
+from pyxel_goal_game.screen_profiles import IPHONE16_BALANCED_PROFILE
 
 ORIGIN = Vec3(1.0, 2.0, 3.0)
 
@@ -176,6 +180,115 @@ def test_sphere_bloom_generation_is_deterministic_and_spherical() -> None:
     )
 
 
+def test_grand_sphere_generation_is_large_lingering_and_spherical() -> None:
+    first = generate_grand_sphere_burst(origin=ORIGIN, seed=123)
+    second = generate_grand_sphere_burst(origin=ORIGIN, seed=123)
+
+    assert first == second
+    assert len(first) == GRAND_SPHERE_PRESET.particle_count
+    assert GRAND_SPHERE_PRESET.particle_count > SPHERE_BLOOM_PRESET.particle_count
+    assert GRAND_SPHERE_PRESET.life_range[0] > SPHERE_BLOOM_PRESET.life_range[1]
+    assert any(abs(particle.velocity.x) > 0.01 for particle in first)
+    assert any(abs(particle.velocity.y) > 0.01 for particle in first)
+    assert any(abs(particle.velocity.z) > 0.01 for particle in first)
+    assert all(
+        speed_in_scaled_range(speed_of(particle.velocity), GRAND_SPHERE_PRESET.speed_range)
+        for particle in first
+    )
+
+
+def test_grand_sphere_maximum_radius_stays_within_balanced_box_width() -> None:
+    max_radius = 0.0
+    max_horizontal_radius = 0.0
+    for particle in generate_grand_sphere_burst(origin=Vec3(0.0, 0.0, 0.0), seed=0):
+        position = particle.position
+        velocity = particle.velocity
+        for _frame in range(particle.life):
+            position = Vec3(
+                position.x + velocity.x,
+                position.y + velocity.y,
+                position.z + velocity.z,
+            )
+            velocity = Vec3(
+                velocity.x * particle.drag,
+                velocity.y * particle.drag + particle.gravity,
+                velocity.z * particle.drag,
+            )
+            max_radius = max(max_radius, length_vec3(position))
+            max_horizontal_radius = max(
+                max_horizontal_radius,
+                (position.x**2 + position.z**2) ** 0.5,
+            )
+
+    assert max_radius < 60.0
+
+    sphere_bloom_horizontal_radius = 0.0
+    for particle in generate_sphere_bloom_burst(origin=Vec3(0.0, 0.0, 0.0), seed=0):
+        position = particle.position
+        velocity = particle.velocity
+        for _frame in range(particle.life):
+            position = Vec3(
+                position.x + velocity.x,
+                position.y + velocity.y,
+                position.z + velocity.z,
+            )
+            velocity = Vec3(
+                velocity.x * particle.drag,
+                velocity.y * particle.drag + particle.gravity,
+                velocity.z * particle.drag,
+            )
+            sphere_bloom_horizontal_radius = max(
+                sphere_bloom_horizontal_radius,
+                (position.x**2 + position.z**2) ** 0.5,
+            )
+
+    assert max_horizontal_radius > sphere_bloom_horizontal_radius
+
+
+def test_grand_sphere_height_variation_levels_stay_inside_balanced_box() -> None:
+    half_width = IPHONE16_BALANCED_PROFILE.box_width / 2
+    half_height = IPHONE16_BALANCED_PROFILE.box_height / 2
+    half_depth = IPHONE16_BALANCED_PROFILE.box_depth / 2
+
+    for ratio in HEIGHT_VARIATION_LEVEL_RATIOS:
+        max_x = 0.0
+        min_y = half_height
+        max_y = -half_height
+        max_z = 0.0
+        origin = Vec3(0.0, ratio * half_height, 0.0)
+        for particle in generate_grand_sphere_burst(origin=origin, seed=0):
+            position = particle.position
+            velocity = particle.velocity
+            for _frame in range(particle.life):
+                position = Vec3(
+                    position.x + velocity.x,
+                    position.y + velocity.y,
+                    position.z + velocity.z,
+                )
+                velocity = Vec3(
+                    velocity.x * particle.drag,
+                    velocity.y * particle.drag + particle.gravity,
+                    velocity.z * particle.drag,
+                )
+                max_x = max(max_x, abs(position.x))
+                min_y = min(min_y, position.y)
+                max_y = max(max_y, position.y)
+                max_z = max(max_z, abs(position.z))
+
+        assert max_x <= half_width
+        assert -half_height <= min_y
+        assert max_y <= half_height
+        assert max_z <= half_depth
+
+
+def test_generate_burst_dispatches_grand_sphere_shape() -> None:
+    assert generate_burst(
+        preset=GRAND_SPHERE_PRESET,
+        origin=ORIGIN,
+        seed=44,
+    ) == generate_grand_sphere_burst(origin=ORIGIN, seed=44)
+
+
 def test_smile_preset_uses_readable_shaped_burst_values() -> None:
     assert SMILE_PRESET.kind is FireworkKind.SMILE
     assert SMILE_PRESET.shape is FireworkShape.SMILE
@@ -239,6 +352,7 @@ def test_generate_burst_dispatches_smile_shape() -> None:
     [
         KIKU_PRESET,
         SPHERE_BLOOM_PRESET,
+        GRAND_SPHERE_PRESET,
         SMILE_PRESET,
         RING_PRESET,
         SPIRAL_PRESET,

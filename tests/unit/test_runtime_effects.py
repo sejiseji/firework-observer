@@ -116,6 +116,7 @@ def test_excluded_kinds_do_not_produce_mini_burst_garnish() -> None:
         FireworkKind.SENRIN,
         FireworkKind.SPIRAL,
         FireworkKind.SMILE,
+        FireworkKind.GRAND_SPHERE,
     }
 
     for kind in excluded:

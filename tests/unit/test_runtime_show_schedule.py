@@ -8,6 +8,7 @@ from pyxel_goal_game.camera3d import Vec3
 from pyxel_goal_game.firework_presets import FireworkKind
 from pyxel_goal_game.runtime import show_schedule
 from pyxel_goal_game.runtime.show_schedule import (
+    HEIGHT_VARIATION_LEVEL_RATIOS,
     INWARD_PAIR_REPEAT_FRAMES,
     INWARD_PAIR_WAVE_PAIRS,
     PERSISTENT_SALVO_REPEAT_FRAMES,
@@ -150,6 +151,47 @@ def test_random_firework_selection_uses_first_generation_kinds_only() -> None:
     assert set(kinds).issubset(set(FIRST_GENERATION_FIREWORK_ORDER))
 
 
+def test_single_launch_random_mode_can_choose_grand_sphere() -> None:
+    schedule = build_single_launch_schedule(
+        profile=IPHONE16_BALANCED_PROFILE,
+        start_frame=0,
+        seed=20,
+        selected_firework_kind=FireworkKind.KIKU,
+        random_firework_mode=True,
+    )
+
+    assert len(schedule.slots) == 1
+    assert schedule.slots[0].firework_kind is FireworkKind.GRAND_SPHERE
+
+
+def test_single_launch_can_use_selected_grand_sphere_directly() -> None:
+    schedule = build_single_launch_schedule(
+        profile=IPHONE16_BALANCED_PROFILE,
+        start_frame=0,
+        seed=20,
+        selected_firework_kind=FireworkKind.GRAND_SPHERE,
+    )
+
+    assert len(schedule.slots) == 1
+    assert schedule.slots[0].firework_kind is FireworkKind.GRAND_SPHERE
+
+
+def test_fixed_salvo_random_mode_never_uses_grand_sphere() -> None:
+    schedule = build_fixed_salvo_schedule(
+        count=5,
+        profile=IPHONE16_BALANCED_PROFILE,
+        start_frame=0,
+        base_seed=20,
+        selected_firework_kind=FireworkKind.KIKU,
+        random_firework_mode=True,
+        random_seed=20,
+    )
+
+    assert FireworkKind.GRAND_SPHERE not in {
+        slot.firework_kind for slot in schedule.slots
+    }
+
+
 def test_scheduled_firework_kind_is_frozen_per_slot() -> None:
     schedule = build_fixed_salvo_schedule(
         count=5,
@@ -182,6 +224,51 @@ def test_height_variation_stays_inside_box() -> None:
     assert_inside_box(varied)
     assert varied.x == base.x
     assert varied.z == base.z
+    assert varied.y in {
+        ratio * IPHONE16_BALANCED_PROFILE.box_height / 2
+        for ratio in HEIGHT_VARIATION_LEVEL_RATIOS
+    }
+
+
+def test_height_variation_uses_only_three_deterministic_levels() -> None:
+    base = Vec3(0.0, 0.0, 0.0)
+    observed = {
+        choose_runtime_burst_height(
+            position=base,
+            profile=IPHONE16_BALANCED_PROFILE,
+            height_variation=True,
+            seed=seed,
+        ).y
+        for seed in range(20)
+    }
+    expected = {
+        ratio * IPHONE16_BALANCED_PROFILE.box_height / 2
+        for ratio in HEIGHT_VARIATION_LEVEL_RATIOS
+    }
+
+    assert observed == expected
+
+
+def test_single_launch_height_variation_uses_three_step_height() -> None:
+    schedule = build_single_launch_schedule(
+        profile=IPHONE16_BALANCED_PROFILE,
+        start_frame=0,
+        seed=8,
+        selected_firework_kind=FireworkKind.GRAND_SPHERE,
+        height_variation=True,
+    )
+    slot = schedule.slots[0]
+
+    assert slot.burst_origin.x == 0.0
+    assert slot.burst_origin.z == 0.0
+    assert slot.burst_origin.y in {
+        ratio * IPHONE16_BALANCED_PROFILE.box_height / 2
+        for ratio in HEIGHT_VARIATION_LEVEL_RATIOS
+    }
+    assert slot.launch_origin == default_shell_launch_origin(
+        profile=IPHONE16_BALANCED_PROFILE,
+        burst_origin=slot.burst_origin,
+    )
 
 
 def test_schedule_origins_are_inside_box() -> None:

@@ -4,7 +4,7 @@
 
 This checklist defines how to evaluate the current Firework Box preview before changing preset parameters or adding more effects.
 
-Use it to judge Kiku, Sphere Bloom, Smile, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo in the manual preview and official runtime. Do not treat this document as permission to change preset values, production runtime behavior, scenery, or `main.py`.
+Use it to judge Kiku, Sphere Bloom, Smile, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo in the manual preview and official runtime. Grand Sphere should be judged in the official runtime through the mobile `MENU` firework selector or rare single-launch random selection. Do not treat this document as permission to change preset values, production runtime behavior, scenery, or `main.py`.
 
 Before public release, run `python3 scripts/check_public_safety.py` and keep documentation paths repository-relative.
 
@@ -100,6 +100,20 @@ Interaction rules:
 - Occasional delayed mini-burst garnish reads as a small after-pop, not a second full explosion.
 - Salvos do not make it too dense.
 
+### Grand Sphere
+
+- Can be selected from the mobile `MENU` firework selector for deterministic review.
+- Selecting it forces mobile `COUNT` back to `1`.
+- Moving mobile `COUNT` away from `1` while it is selected should switch back to a normal salvo-compatible firework.
+- Does not appear in fixed salvos or inward pair salvos.
+- Reads as a large 3D spherical bloom rather than a flat disk or ring.
+- Expands wider and feels more ceremonial than Sphere Bloom.
+- Has enough particle density to make the sphere surface read as a coherent shell.
+- Keeps the sphere coherent while it grows, then leaves a restrained lingering fade.
+- Stays inside the observation box, especially within the `iphone16_balanced` width and depth.
+- With Height ON, remains inside the observation box on all three deterministic elevated height levels.
+- Does not use delayed mini-burst garnish.
+
 ### Smile
 
 - Reads as a smile face in `iphone16_balanced`.
@@ -191,7 +205,7 @@ Interaction rules:
 2. Height variation check:
    - Press `H`.
    - Press `Z` several times and use `1`-`5` loops.
-   - Confirm burst heights vary without leaving the box.
+   - Confirm burst heights choose from three elevated levels without leaving the box.
 
 3. Firework shell tail check:
    - Use `1`-`5` salvo loops.
@@ -248,6 +262,7 @@ Interaction rules:
 12. Burst radius variation check:
    - Select Kiku, Sphere Bloom, Smile, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo.
    - Press `Z` for each type.
+   - Use the runtime mobile `MENU` firework selector to inspect Grand Sphere directly.
    - Confirm burst radii are subtly uneven but compact enough that bursts do not feel over-expanded.
    - Confirm maximum burst radius reads about 80% of the previous wide spread.
    - Confirm Ring and Multi-ring do not collapse into cloudy spheres.
@@ -447,7 +462,7 @@ Parity checks:
 - `iphone16_balanced` should remain the primary visual target.
 - `classic` should remain the default compatibility baseline.
 - The runtime should preserve the same 3D cuboid observation-box feel.
-- Kiku, Sphere Bloom, Smile, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo should remain available.
+- Kiku, Sphere Bloom, Smile, Ring, Spiral, Willow, Long Willow, Peony, Multi-ring, Senrin, and Halo should remain available; Grand Sphere should remain single-launch-only and force mobile `COUNT 1` when selected.
 - Shell launch, short shell tail, compact burst radius, deterministic wobble, pre-scale trail decisions, and glitter residue should match the preview direction.
 - CITY should preserve 48 building cuboids, central boulevard, tower, ferris wheel, signs, sparse windows, and interleaved two-blue building outlines.
 - Interior stars should remain attached to top and upper side faces, never exterior-facing surfaces.
@@ -563,9 +578,9 @@ Checks:
 - The top-right `MENU` button opens and closes the mobile control panel.
 - The public Pyxel Web build should not show Pyxel's default virtual d-pad/buttons.
 - On iPhone, confirm Silent Mode is off before judging runtime audio.
-- Panel checkboxes immediately reflect random, height, auto launch, auto rotate, stars, UFO, audio/BGM, and city settings behind the panel.
+- Panel checkboxes immediately reflect random, height, auto launch, auto rotate, stars, UFO, audio/BGM, city, and nearest observation-box vertical-edge hide settings behind the panel.
 - Mobile `random` should randomize only firework type and should not change the current `COUNT`, including `COUNT RND`.
-- `COUNT` cycles salvo count selection through `1`, `2`, `3`, `4`, `5`, and `RND`.
+- `COUNT` cycles salvo count selection through `1`, `2`, `3`, `4`, `5`, `6`, and `RND`; `6` starts the mirrored inward pair salvo and `RND` may select it.
 - `COUNT` updates the runtime salvo count state, so `SALVO START` and active salvo repeats use the selected count.
 - `AUTO` uses the selected `COUNT` value for automatic launches instead of forcing single-shell launches.
 - `BGM` can be turned off while `audio` remains on, and explosion SFX still plays.

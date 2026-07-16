@@ -8,6 +8,7 @@ from pyxel_goal_game.runtime.state import (
     FIRST_GENERATION_FIREWORK_ORDER,
     MAX_SALVO_COUNT,
     MIN_SALVO_COUNT,
+    MOBILE_SELECTABLE_FIREWORK_ORDER,
     RuntimeShowState,
     SalvoCountMode,
 )
@@ -23,12 +24,22 @@ def cycle_firework_kind(state: RuntimeShowState) -> RuntimeShowState:
     )
 
 
+def cycle_mobile_firework_kind(state: RuntimeShowState) -> RuntimeShowState:
+    return replace(
+        state,
+        selected_firework_kind=_next_in_order(
+            state.selected_firework_kind,
+            MOBILE_SELECTABLE_FIREWORK_ORDER,
+        ),
+    )
+
+
 def select_firework_kind(
     state: RuntimeShowState,
     firework_kind: FireworkKind,
 ) -> RuntimeShowState:
-    if firework_kind not in FIRST_GENERATION_FIREWORK_ORDER:
-        msg = "firework_kind must be a first-generation firework kind"
+    if firework_kind not in MOBILE_SELECTABLE_FIREWORK_ORDER:
+        msg = "firework_kind must be a selectable firework kind"
         raise ValueError(msg)
     return replace(state, selected_firework_kind=firework_kind)
 
@@ -61,6 +72,15 @@ def toggle_stars(state: RuntimeShowState) -> RuntimeShowState:
 
 def toggle_scenery_visible(state: RuntimeShowState) -> RuntimeShowState:
     return _replace_toggle(state, scenery_visible=not state.toggles.scenery_visible)
+
+
+def toggle_box_nearest_vertical_edge_hidden(
+    state: RuntimeShowState,
+) -> RuntimeShowState:
+    return _replace_toggle(
+        state,
+        box_nearest_vertical_edge_hidden=not state.toggles.box_nearest_vertical_edge_hidden,
+    )
 
 
 def toggle_auto_rotate(state: RuntimeShowState) -> RuntimeShowState:
@@ -146,5 +166,7 @@ def _replace_toggle(state: RuntimeShowState, **changes: bool) -> RuntimeShowStat
 
 
 def _next_in_order[T](current: T, order: tuple[T, ...]) -> T:
+    if current not in order:
+        return order[0]
     index = order.index(current)
     return order[(index + 1) % len(order)]

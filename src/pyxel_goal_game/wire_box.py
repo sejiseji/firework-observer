@@ -14,6 +14,7 @@ class Edge3D:
     start: int
     end: int
     group: EdgeGroup
+    is_vertical: bool = False
 
 
 @dataclass(frozen=True)
@@ -22,6 +23,7 @@ class ProjectedEdge:
     end: ProjectedPoint
     average_depth: float
     group: EdgeGroup
+    is_vertical: bool = False
 
 
 @dataclass(frozen=True)
@@ -54,13 +56,13 @@ class WireBox:
         )
         edges = (
             Edge3D(0, 1, "rear"),
-            Edge3D(1, 2, "rear"),
+            Edge3D(1, 2, "rear", is_vertical=True),
             Edge3D(2, 3, "rear"),
-            Edge3D(3, 0, "rear"),
+            Edge3D(3, 0, "rear", is_vertical=True),
             Edge3D(4, 5, "front"),
-            Edge3D(5, 6, "front"),
+            Edge3D(5, 6, "front", is_vertical=True),
             Edge3D(6, 7, "front"),
-            Edge3D(7, 4, "front"),
+            Edge3D(7, 4, "front", is_vertical=True),
             Edge3D(0, 4, "connector"),
             Edge3D(1, 5, "connector"),
             Edge3D(2, 6, "connector"),
@@ -80,6 +82,7 @@ class WireBox:
                 )
                 / 2.0,
                 group=edge.group,
+                is_vertical=edge.is_vertical,
             )
             for edge in self.edges
         )

@@ -10,6 +10,8 @@ from pyxel_goal_game.runtime import state as runtime_state
 from pyxel_goal_game.runtime.state import (
     AUTO_ROTATE_SPEED_MODE_ORDER,
     FIRST_GENERATION_FIREWORK_ORDER,
+    MOBILE_SELECTABLE_FIREWORK_ORDER,
+    SINGLE_LAUNCH_RANDOM_FIREWORK_ORDER,
     AutoRotateSpeedMode,
     RuntimeShowState,
     SalvoCountMode,
@@ -42,6 +44,7 @@ def test_default_toggles_are_explicit() -> None:
     assert toggles.audio_enabled is True
     assert toggles.bgm_enabled is True
     assert toggles.ufo_enabled is True
+    assert toggles.box_nearest_vertical_edge_hidden is False
 
 
 def test_first_generation_firework_order_matches_preview_cycle() -> None:
@@ -58,6 +61,19 @@ def test_first_generation_firework_order_matches_preview_cycle() -> None:
         FireworkKind.SENRIN,
         FireworkKind.HALO,
     )
+
+
+def test_single_launch_random_order_adds_grand_sphere_after_cycle_kinds() -> None:
+    assert SINGLE_LAUNCH_RANDOM_FIREWORK_ORDER == (
+        *FIRST_GENERATION_FIREWORK_ORDER,
+        FireworkKind.GRAND_SPHERE,
+    )
+    assert FireworkKind.GRAND_SPHERE not in FIRST_GENERATION_FIREWORK_ORDER
+
+
+def test_mobile_selectable_order_matches_single_launch_special_order() -> None:
+    assert MOBILE_SELECTABLE_FIREWORK_ORDER == SINGLE_LAUNCH_RANDOM_FIREWORK_ORDER
+    assert RuntimeShowState(selected_firework_kind=FireworkKind.GRAND_SPHERE)
 
 
 def test_auto_rotate_speed_order_is_stable() -> None:

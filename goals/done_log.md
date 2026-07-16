@@ -1678,3 +1678,62 @@ Record completed tasks here.
   - Pair seeds are different but have matching `seed % 3`, keeping palette variants coherent without exact visual copies.
   - The loop uses a slightly longer repeat window than fixed-count salvos for readability with long-lived fireworks.
 - Preservation: Existing `1`, `2`-`5`, `0`, `V`, `R`, `H`, `SPACE`, and `Z` behavior remains unchanged. `main.py`, firework generation, particle counts, palette definitions, delayed mini-burst garnish, Long Willow trails, CITY, stars, UFO, audio, shell tail, and glitter were not changed.
+
+## 2026-07-16 T0011.1 Expose inward pair salvo in mobile count controls
+
+- Summary: Added inward mirrored pair salvo access to the mobile `MENU` count path.
+- Files changed: runtime app mobile count/random scheduling, runtime app tests, README files, integration docs, visual checklist, goals logs, roadmap, task queue, and `GPT_HANDOFF.md`.
+- Behavior:
+  - Mobile `COUNT` now cycles `1`, `2`, `3`, `4`, `5`, `6`, and `RND`.
+  - `COUNT 6` starts the inward mirrored pair salvo through `SALVO START`.
+  - Mobile `AUTO` with `COUNT 6` schedules inward pair salvos.
+  - Random-count salvo mode can deterministically choose `6`, which schedules the inward pair pattern instead of a fixed-count salvo.
+  - Mobile `random` remains firework-type-only and still preserves the current `COUNT`.
+- Preservation: `main.py`, show score schema, firework generation, particle counts, palette definitions, delayed mini-burst garnish, Long Willow trails, CITY, stars, UFO, audio, shell tail, glitter, and existing fixed-count controls remain unchanged.
+
+## 2026-07-16 T0011.2 Add single-launch grand sphere firework
+
+- Summary: Added `Grand Sphere` as a special large 3D sphere firework selectable from the mobile `MENU` with `COUNT 1` forced.
+- Files changed: firework preset data, burst generation exports, runtime effects registration, single-launch random scheduling, tests, README files, product docs, visual checklist, goals logs, roadmap, task queue, and `GPT_HANDOFF.md`.
+- Behavior:
+  - `Grand Sphere` uses the existing deterministic sphere generator.
+  - It has a larger particle count, long life range, near-neutral gravity, restrained trails, and three deterministic palettes.
+  - It can be selected from the mobile `MENU` firework selector for deterministic review.
+  - Selecting it forces mobile `COUNT 1` and turns off firework random mode for that selection.
+  - It is eligible for random single-shell launches.
+  - It is not part of the PC `SPACE` firework cycle.
+  - It is not selected by fixed-count salvos, inward pair salvos, or salvo random kind selection.
+  - It does not use delayed mini-burst garnish.
+- Preservation: `main.py`, existing cycle order, existing firework presets, particle simulation architecture, palette selection rules, delayed mini-burst garnish behavior for existing kinds, CITY, stars, UFO, audio, shell tail, glitter, and salvo scheduling semantics remain unchanged.
+
+## 2026-07-16 T0011.3 Tune Grand Sphere density and Height levels
+
+- Summary: Increased Grand Sphere particle density and changed Height variation to deterministic three-level elevated burst heights.
+- Files changed: Grand Sphere preset data, runtime show scheduling, runtime app single-launch scheduling, tests, README files, product docs, visual checklist, goals logs, and `GPT_HANDOFF.md`.
+- Behavior:
+  - `Grand Sphere` now uses 192 particles for stronger spherical shell readability.
+  - Height ON selects one of three deterministic elevated height levels instead of a continuous random offset.
+  - Single launches now pass Height variation into the runtime schedule path, so mobile `Grand Sphere` with `COUNT 1` can be reviewed at the three levels.
+  - Tests verify Grand Sphere stays inside the `iphone16_balanced` observation box at all three Height levels.
+- Preservation: `main.py`, show controls, firework schema, palette definitions, delayed mini-burst garnish, CITY, stars, UFO, audio, shell tail, glitter, and salvo kind selection remain unchanged.
+
+## 2026-07-16 T0011.4 Prevent Grand Sphere multi-shot crash
+
+- Summary: Replaced Grand Sphere with the normal default firework whenever mobile `COUNT` leaves `1`, preventing invalid multi-shot scheduling.
+- Files changed: runtime app count/scheduling guard, runtime app tests, README files, product docs, visual checklist, goals logs, and `GPT_HANDOFF.md`.
+- Behavior:
+  - If Grand Sphere is selected and mobile `COUNT` changes to `2`-`6` or `RND`, the selected firework returns to Kiku.
+  - Fixed salvo, random-count salvo, and inward pair scheduling defensively replace stale Grand Sphere state before building schedules.
+  - Grand Sphere remains selectable from mobile `MENU` and still forces `COUNT 1` when selected.
+- Preservation: `main.py`, Grand Sphere preset values, firework generation, particle counts, palette definitions, Height levels, delayed mini-burst garnish, CITY, stars, UFO, audio, shell tail, and glitter remain unchanged.
+
+## 2026-07-16 T0011.5 Add observation-box edge hide toggle
+
+- Summary: Added a mobile `HIDE` toggle beside `CITY` that hides the camera-nearest vertical edge of the enclosing observation box.
+- Files changed: WireBox edge metadata, runtime state/controller/app/input/render mobile UI wiring, tests, README files, visual checklist, goals logs, and `GPT_HANDOFF.md`.
+- Behavior:
+  - The mobile CITY row now has a companion `HIDE` checkbox.
+  - When enabled, the runtime skips the projected vertical observation-box edge closest to the camera.
+  - CITY visibility remains separately controlled by the existing CITY checkbox.
+  - CITY geometry, windows, signs, ferris wheel, and other scenery lines remain visible.
+- Preservation: `main.py`, CITY geometry coordinates, firework generation, particles, audio, UFO, shell tail, glitter, and existing controls remain unchanged.

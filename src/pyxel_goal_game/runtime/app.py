@@ -39,11 +39,11 @@ from pyxel_goal_game.runtime.show_schedule import (
     RuntimeLaunchSlot,
     build_fixed_salvo_schedule,
     build_inward_pair_salvo_schedule,
-    build_random_count_salvo_schedule,
     build_single_launch_schedule,
 )
 from pyxel_goal_game.runtime.state import (
     DEFAULT_FIREWORK_KIND,
+    MIN_SALVO_COUNT,
     RuntimeShowState,
     SalvoCountMode,
 )
@@ -65,6 +65,9 @@ AUTO_LAUNCH_FRAMES = 120
 RING_ORIENTATION_BANK_SEED = 20260623
 RUNTIME_RANDOM_SEED = 20260625
 DEFAULT_RUNTIME_PROFILE_NAME = "iphone16_balanced"
+MOBILE_INWARD_PAIR_CHOICE = 6
+MOBILE_SALVO_COUNT_CHOICES = (1, 2, 3, 4, 5, MOBILE_INWARD_PAIR_CHOICE, None)
+RANDOM_SALVO_COUNT_CHOICES = (1, 2, 3, 4, 5, MOBILE_INWARD_PAIR_CHOICE)
 
 try:
     import pyxel
@@ -79,6 +82,13 @@ def require_pyxel() -> Any:
             "Install project dependencies or use the project virtual environment."
         )
     return pyxel
+
+
+def choose_random_salvo_count_choice(*, seed: int) -> int:
+    if seed < 0:
+        msg = "seed must be non-negative"
+        raise ValueError(msg)
+    return Random(seed).randint(MIN_SALVO_COUNT, MOBILE_INWARD_PAIR_CHOICE)
 
 
 class RuntimeApp:
@@ -194,6 +204,16 @@ class RuntimeApp:
         else:
             self.state = show_controller.cycle_firework_kind(self.state)
 
+    def handle_mobile_firework_cycle(self) -> None:
+        self.state = show_controller.cycle_mobile_firework_kind(self.state)
+        if self.state.selected_firework_kind is FireworkKind.GRAND_SPHERE:
+            self.mobile_salvo_count_choice = 1
+            self.state = replace(
+                self.state,
+                toggles=replace(self.state.toggles, random_firework_mode=False),
+                salvo_count=1,
+            )
+
     def enable_random_mode(self) -> None:
         self.state = replace(
             self.state,
@@ -259,6 +279,8 @@ class RuntimeApp:
             self.toggle_bgm()
         elif key == "scenery_visible":
             self.state = show_controller.toggle_scenery_visible(self.state)
+        elif key == "box_nearest_vertical_edge_hidden":
+            self.state = show_controller.toggle_box_nearest_vertical_edge_hidden(self.state)
         else:
             msg = f"unknown mobile toggle: {key}"
             raise ValueError(msg)
@@ -285,6 +307,8 @@ class RuntimeApp:
             random_firework_mode=self.state.toggles.random_firework_mode,
             random_seed=self.state.seed_base,
             previous_firework_kind=self.last_launched_kind,
+            height_variation=self.state.toggles.height_variation,
+            height_seed=self.state.seed_base,
         )
         self.schedule_runtime_launches(schedule)
         self.state = show_controller.advance_seed_base(self.state, len(schedule.slots))
@@ -296,8 +320,8 @@ class RuntimeApp:
 
     def start_random_salvo_loop(self) -> None:
         self.state = show_controller.set_random_salvo_mode(self.state)
-        self.schedule_random_count_salvo()
-        self.next_persistent_salvo_frame = pyxel.frame_count + PERSISTENT_SALVO_REPEAT_FRAMES
+        repeat_frames = self.schedule_random_count_salvo()
+        self.next_persistent_salvo_frame = pyxel.frame_count + repeat_frames
 
     def start_inward_pair_salvo_loop(self) -> None:
         self.state = show_controller.set_inward_pair_salvo_mode(self.state)
@@ -305,12 +329,19 @@ class RuntimeApp:
         self.next_persistent_salvo_frame = pyxel.frame_count + INWARD_PAIR_REPEAT_FRAMES
 
     def cycle_mobile_salvo_count_choice(self) -> None:
-        order: tuple[int | None, ...] = (1, 2, 3, 4, 5, None)
-        index = order.index(self.mobile_salvo_count_choice)
-        self.mobile_salvo_count_choice = order[(index + 1) % len(order)]
+        index = MOBILE_SALVO_COUNT_CHOICES.index(self.mobile_salvo_count_choice)
+        self.mobile_salvo_count_choice = MOBILE_SALVO_COUNT_CHOICES[
+            (index + 1) % len(MOBILE_SALVO_COUNT_CHOICES)
+        ]
+        if self.mobile_salvo_count_choice != 1:
+            RuntimeApp.replace_grand_sphere_for_salvo(self)
         if self.mobile_salvo_count_choice is None:
             if self.state.salvo_count_mode is not SalvoCountMode.OFF:
                 self.state = show_controller.set_random_salvo_mode(self.state)
+            return
+        if self.mobile_salvo_count_choice == MOBILE_INWARD_PAIR_CHOICE:
+            if self.state.salvo_count_mode is not SalvoCountMode.OFF:
+                self.state = show_controller.set_inward_pair_salvo_mode(self.state)
             return
         if self.state.salvo_count_mode is SalvoCountMode.OFF:
             self.state = replace(self.state, salvo_count=self.mobile_salvo_count_choice)
@@ -323,18 +354,26 @@ class RuntimeApp:
     def start_mobile_salvo_loop(self) -> None:
         if self.mobile_salvo_count_choice is None:
             self.start_random_salvo_loop()
+        elif self.mobile_salvo_count_choice == MOBILE_INWARD_PAIR_CHOICE:
+            self.start_inward_pair_salvo_loop()
         else:
-            self.start_fixed_salvo_loop(self.state.salvo_count)
+            self.start_fixed_salvo_loop(self.mobile_salvo_count_choice)
 
     def toggle_mobile_auto_launch(self) -> None:
         enabling = not self.state.toggles.auto_launch
         self.state = show_controller.toggle_auto_launch(self.state)
-        if enabling and self.mobile_salvo_count_choice is not None:
+        if (
+            enabling
+            and self.mobile_salvo_count_choice is not None
+            and self.mobile_salvo_count_choice != MOBILE_INWARD_PAIR_CHOICE
+        ):
             self.state = replace(self.state, salvo_count=self.mobile_salvo_count_choice)
 
     def schedule_mobile_auto_launch(self) -> None:
         if self.mobile_salvo_count_choice is None:
             self.schedule_random_count_salvo()
+        elif self.mobile_salvo_count_choice == MOBILE_INWARD_PAIR_CHOICE:
+            self.schedule_inward_pair_salvo()
         elif self.mobile_salvo_count_choice == 1:
             self.launch()
         else:
@@ -345,7 +384,15 @@ class RuntimeApp:
             return "RND"
         return str(self.mobile_salvo_count_choice)
 
+    def replace_grand_sphere_for_salvo(self) -> None:
+        if self.state.selected_firework_kind is FireworkKind.GRAND_SPHERE:
+            self.state = replace(self.state, selected_firework_kind=DEFAULT_FIREWORK_KIND)
+
     def schedule_salvo(self, count: int) -> None:
+        if count == 1 and self.state.selected_firework_kind is FireworkKind.GRAND_SPHERE:
+            self.launch()
+            return
+        RuntimeApp.replace_grand_sphere_for_salvo(self)
         schedule = build_fixed_salvo_schedule(
             count=count,
             profile=self.profile,
@@ -361,13 +408,20 @@ class RuntimeApp:
         self.schedule_runtime_launches(schedule)
         self.state = show_controller.advance_seed_base(self.state, len(schedule.slots))
 
-    def schedule_random_count_salvo(self) -> None:
-        schedule = build_random_count_salvo_schedule(
+    def schedule_random_count_salvo(self) -> int:
+        choice = choose_random_salvo_count_choice(seed=self.state.seed_base)
+        if choice == MOBILE_INWARD_PAIR_CHOICE:
+            RuntimeApp.replace_grand_sphere_for_salvo(self)
+            self.schedule_inward_pair_salvo()
+            return INWARD_PAIR_REPEAT_FRAMES
+        if choice != 1:
+            RuntimeApp.replace_grand_sphere_for_salvo(self)
+        schedule = build_fixed_salvo_schedule(
+            count=choice,
             profile=self.profile,
             start_frame=pyxel.frame_count,
             base_seed=self.state.seed_base,
             selected_firework_kind=self.state.selected_firework_kind,
-            count_seed=self.state.seed_base,
             random_firework_mode=self.state.toggles.random_firework_mode,
             random_seed=self.state.seed_base,
             previous_firework_kind=self.last_launched_kind,
@@ -376,8 +430,10 @@ class RuntimeApp:
         )
         self.schedule_runtime_launches(schedule)
         self.state = show_controller.advance_seed_base(self.state, len(schedule.slots))
+        return PERSISTENT_SALVO_REPEAT_FRAMES
 
     def schedule_inward_pair_salvo(self) -> None:
+        RuntimeApp.replace_grand_sphere_for_salvo(self)
         schedule = build_inward_pair_salvo_schedule(
             profile=self.profile,
             start_frame=pyxel.frame_count,
@@ -398,8 +454,7 @@ class RuntimeApp:
             and pyxel.frame_count >= self.next_persistent_salvo_frame
         ):
             if self.state.salvo_count_mode is SalvoCountMode.RANDOM:
-                self.schedule_random_count_salvo()
-                repeat_frames = PERSISTENT_SALVO_REPEAT_FRAMES
+                repeat_frames = self.schedule_random_count_salvo()
             elif self.state.salvo_count_mode is SalvoCountMode.INWARD_PAIR:
                 self.schedule_inward_pair_salvo()
                 repeat_frames = INWARD_PAIR_REPEAT_FRAMES

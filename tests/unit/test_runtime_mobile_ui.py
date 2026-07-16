@@ -11,6 +11,9 @@ from pyxel_goal_game.runtime.mobile_ui import (
     audio_toggle_rect,
     bgm_checkbox_rect,
     bgm_toggle_rect,
+    box_edge_hide_checkbox_rect,
+    box_edge_hide_toggle_rect,
+    city_toggle_rect,
     close_button_rect,
     launch_button_rect,
     menu_button_rect,
@@ -45,6 +48,10 @@ def test_mobile_panel_draft_captures_runtime_state() -> None:
     assert draft.audio_enabled is state.toggles.audio_enabled
     assert draft.bgm_enabled is state.toggles.bgm_enabled
     assert draft.scenery_visible is state.toggles.scenery_visible
+    assert (
+        draft.box_nearest_vertical_edge_hidden
+        is state.toggles.box_nearest_vertical_edge_hidden
+    )
     assert draft.auto_rotate_speed_mode is AutoRotateSpeedMode.NORMAL
 
 
@@ -57,6 +64,9 @@ def test_mobile_panel_draft_toggles_known_fields_only() -> None:
 
     assert "audio_enabled" in {spec.key for spec in MOBILE_TOGGLE_SPECS}
     assert "bgm_enabled" not in {spec.key for spec in MOBILE_TOGGLE_SPECS}
+    assert "box_nearest_vertical_edge_hidden" not in {
+        spec.key for spec in MOBILE_TOGGLE_SPECS
+    }
 
     with pytest.raises(ValueError, match="unknown mobile toggle"):
         draft.toggle("not_a_real_toggle")
@@ -126,3 +136,16 @@ def test_mobile_audio_and_bgm_share_one_toggle_row() -> None:
     assert audio.x < bgm.x
     assert audio.x + audio.width == bgm.x
     assert bgm.contains(bgm_box.x, bgm_box.y)
+
+
+def test_mobile_city_and_box_edge_hide_share_one_toggle_row() -> None:
+    panel = panel_rect(236, 512)
+    city = city_toggle_rect(panel)
+    hide = box_edge_hide_toggle_rect(panel)
+    hide_box = box_edge_hide_checkbox_rect(panel)
+
+    assert city.y == hide.y
+    assert city.height == hide.height
+    assert city.x < hide.x
+    assert city.x + city.width == hide.x
+    assert hide.contains(hide_box.x, hide_box.y)

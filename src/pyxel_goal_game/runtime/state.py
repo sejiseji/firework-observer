@@ -35,6 +35,13 @@ FIRST_GENERATION_FIREWORK_ORDER = (
     FireworkKind.HALO,
 )
 
+SINGLE_LAUNCH_RANDOM_FIREWORK_ORDER = (
+    *FIRST_GENERATION_FIREWORK_ORDER,
+    FireworkKind.GRAND_SPHERE,
+)
+
+MOBILE_SELECTABLE_FIREWORK_ORDER = SINGLE_LAUNCH_RANDOM_FIREWORK_ORDER
+
 AUTO_ROTATE_SPEED_MODE_ORDER = (
     AutoRotateSpeedMode.SLOW,
     AutoRotateSpeedMode.NORMAL,
@@ -59,6 +66,7 @@ class RuntimeToggles:
     audio_enabled: bool = True
     bgm_enabled: bool = True
     ufo_enabled: bool = True
+    box_nearest_vertical_edge_hidden: bool = False
 
 
 @dataclass(frozen=True)
@@ -83,8 +91,8 @@ class RuntimeShowState:
         if not isinstance(self.salvo_count_mode, SalvoCountMode):
             msg = "salvo_count_mode must be a SalvoCountMode"
             raise ValueError(msg)
-        if self.selected_firework_kind not in FIRST_GENERATION_FIREWORK_ORDER:
-            msg = "selected_firework_kind must be a first-generation firework kind"
+        if self.selected_firework_kind not in MOBILE_SELECTABLE_FIREWORK_ORDER:
+            msg = "selected_firework_kind must be a selectable firework kind"
             raise ValueError(msg)
         if self.selected_scenery_name not in SCENERY_PRESET_NAMES:
             msg = "selected_scenery_name must be an active scenery preset name"

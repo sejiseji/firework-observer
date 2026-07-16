@@ -246,7 +246,10 @@ def building_cuboid_lines(
         (6, 7),
         (2, 6),
     )
-    return tuple(SceneryLine(vertices[start], vertices[end], color) for start, end in edges)
+    return tuple(
+        SceneryLine(vertices[start], vertices[end], color)
+        for start, end in edges
+    )
 
 
 def building_window_lines(

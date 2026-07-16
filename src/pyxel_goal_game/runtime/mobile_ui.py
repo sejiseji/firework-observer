@@ -19,6 +19,7 @@ BOTTOM_BUTTON_WIDTH = 64
 BOTTOM_BUTTON_GAP = 8
 ACTION_BUTTON_HEIGHT = 26
 AUDIO_BGM_ROW_INDEX = 6
+CITY_ROW_INDEX = 7
 
 
 @dataclass(frozen=True)
@@ -61,6 +62,7 @@ class MobilePanelDraft:
     audio_enabled: bool
     bgm_enabled: bool
     scenery_visible: bool
+    box_nearest_vertical_edge_hidden: bool
     auto_rotate_speed_mode: AutoRotateSpeedMode
 
     @classmethod
@@ -75,6 +77,9 @@ class MobilePanelDraft:
             audio_enabled=state.toggles.audio_enabled,
             bgm_enabled=state.toggles.bgm_enabled,
             scenery_visible=state.toggles.scenery_visible,
+            box_nearest_vertical_edge_hidden=(
+                state.toggles.box_nearest_vertical_edge_hidden
+            ),
             auto_rotate_speed_mode=state.auto_rotate_speed_mode,
         )
 
@@ -144,6 +149,26 @@ def bgm_toggle_rect(panel: Rect) -> Rect:
 
 def bgm_checkbox_rect(panel: Rect) -> Rect:
     row = checkbox_row_rect(panel, AUDIO_BGM_ROW_INDEX)
+    return Rect(
+        x=row.x + row.width // 2 + 6,
+        y=row.y + 6,
+        width=CHECKBOX_SIZE,
+        height=CHECKBOX_SIZE,
+    )
+
+
+def city_toggle_rect(panel: Rect) -> Rect:
+    row = checkbox_row_rect(panel, CITY_ROW_INDEX)
+    return Rect(row.x, row.y, row.width // 2, row.height)
+
+
+def box_edge_hide_toggle_rect(panel: Rect) -> Rect:
+    row = checkbox_row_rect(panel, CITY_ROW_INDEX)
+    return Rect(row.x + row.width // 2, row.y, row.width - row.width // 2, row.height)
+
+
+def box_edge_hide_checkbox_rect(panel: Rect) -> Rect:
+    row = checkbox_row_rect(panel, CITY_ROW_INDEX)
     return Rect(
         x=row.x + row.width // 2 + 6,
         y=row.y + 6,

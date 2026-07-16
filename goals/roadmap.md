@@ -94,6 +94,11 @@
 - [x] keep mobile random type separate from random count
 - [x] remove Safari audio unlock workarounds
 - [x] add inward mirrored pair salvo pattern
+- [x] expose inward pair salvo through mobile COUNT and random-count selection
+- [x] add single-launch random-only grand sphere firework
+- [x] tune Grand Sphere density and Height three-level scheduling
+- [x] prevent Grand Sphere multi-shot count crash
+- [x] add mobile observation-box nearest vertical-edge hide toggle
 - [ ] tune visual feel
 - [ ] tune performance budget
 - [ ] record user feedback

@@ -4,6 +4,36 @@
     "current": [],
     "done": [
         {
+            "id": "T0011.5",
+            "title": "Add observation-box edge hide toggle",
+            "completed_on": "2026-07-16",
+            "summary": "Added a mobile HIDE toggle beside CITY that hides the camera-nearest vertical edge of the enclosing observation box without disabling CITY scenery."
+        },
+        {
+            "id": "T0011.4",
+            "title": "Prevent Grand Sphere multi-shot crash",
+            "completed_on": "2026-07-16",
+            "summary": "Changed mobile COUNT and salvo scheduling guards so Grand Sphere is replaced by the normal default firework whenever the selected count leaves one."
+        },
+        {
+            "id": "T0011.3",
+            "title": "Tune Grand Sphere density and Height levels",
+            "completed_on": "2026-07-16",
+            "summary": "Increased Grand Sphere particle density and changed Height variation to deterministic three-level elevated burst heights that also apply to single launches."
+        },
+        {
+            "id": "T0011.2",
+            "title": "Add single-launch grand sphere firework",
+            "completed_on": "2026-07-16",
+            "summary": "Added Grand Sphere as a large 3D spherical single-launch firework selectable from the mobile MENU with COUNT forced to 1, while keeping it out of multi-shot salvos."
+        },
+        {
+            "id": "T0011.1",
+            "title": "Expose inward pair salvo in mobile count controls",
+            "completed_on": "2026-07-16",
+            "summary": "Added COUNT 6 to the mobile MENU salvo selector and allowed COUNT RND/random-count salvo mode to select the inward mirrored pair pattern."
+        },
+        {
             "id": "T0011.0",
             "title": "Add inward mirrored pair salvo pattern",
             "completed_on": "2026-07-15",

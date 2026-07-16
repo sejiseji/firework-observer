@@ -11,6 +11,7 @@ from pyxel_goal_game.runtime.show_controller import (
     clear_persistent_salvo_mode,
     cycle_auto_rotate_speed,
     cycle_firework_kind,
+    cycle_mobile_firework_kind,
     set_fixed_salvo_mode,
     set_inward_pair_salvo_mode,
     set_random_salvo_mode,
@@ -19,6 +20,7 @@ from pyxel_goal_game.runtime.show_controller import (
     toggle_auto_launch,
     toggle_auto_rotate,
     toggle_bgm,
+    toggle_box_nearest_vertical_edge_hidden,
     toggle_height_variation,
     toggle_random_mode,
     toggle_scenery_visible,
@@ -56,6 +58,22 @@ def test_firework_kind_cycle_follows_preview_order() -> None:
     assert state.selected_firework_kind is FireworkKind.KIKU
 
 
+def test_mobile_firework_kind_cycle_includes_grand_sphere() -> None:
+    state = RuntimeShowState(selected_firework_kind=FireworkKind.HALO)
+
+    state = cycle_mobile_firework_kind(state)
+
+    assert state.selected_firework_kind is FireworkKind.GRAND_SPHERE
+
+
+def test_space_firework_kind_cycle_resets_from_mobile_only_grand_sphere() -> None:
+    state = RuntimeShowState(selected_firework_kind=FireworkKind.GRAND_SPHERE)
+
+    state = cycle_firework_kind(state)
+
+    assert state.selected_firework_kind is FireworkKind.KIKU
+
+
 def test_auto_rotate_speed_cycle_starts_from_default_normal() -> None:
     state = RuntimeShowState()
 
@@ -81,6 +99,12 @@ def test_toggles_flip_deterministically() -> None:
     assert toggle_audio(state).toggles.audio_enabled is False
     assert toggle_bgm(state).toggles.bgm_enabled is False
     assert toggle_ufo(state).toggles.ufo_enabled is False
+    assert (
+        toggle_box_nearest_vertical_edge_hidden(
+            state,
+        ).toggles.box_nearest_vertical_edge_hidden
+        is True
+    )
 
     assert toggle_random_mode(toggle_random_mode(state)).toggles.random_firework_mode is False
 

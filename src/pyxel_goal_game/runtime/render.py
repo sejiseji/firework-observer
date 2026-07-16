@@ -17,6 +17,7 @@ from pyxel_goal_game.runtime.mobile_ui import (
     MOBILE_TOGGLE_SPECS,
     Rect,
     bgm_checkbox_rect,
+    box_edge_hide_checkbox_rect,
     checkbox_rect,
     checkbox_row_rect,
     close_button_rect,
@@ -30,7 +31,10 @@ from pyxel_goal_game.runtime.mobile_ui import (
     zoom_in_button_rect,
     zoom_out_button_rect,
 )
-from pyxel_goal_game.scenery_presets import SceneryLine, SceneryPolyline
+from pyxel_goal_game.scenery_presets import (
+    SceneryLine,
+    SceneryPolyline,
+)
 from pyxel_goal_game.wire_box import ProjectedEdge
 
 PYXEL_FONT_HEIGHT = 7
@@ -60,7 +64,7 @@ class RuntimeRenderer:
     def draw(self) -> None:
         pyxel.cls(0)
         projected_edges = sorted(
-            self.app.box.project_edges(self.app.camera),
+            self.visible_box_edges(self.app.box.project_edges(self.app.camera)),
             key=lambda edge: edge.average_depth,
             reverse=True,
         )
@@ -84,6 +88,26 @@ class RuntimeRenderer:
         for edge in edges:
             color = self.edge_color(edge=edge, far=far)
             pyxel.line(edge.start.sx, edge.start.sy, edge.end.sx, edge.end.sy, color)
+
+    def visible_box_edges(
+        self,
+        edges: tuple[ProjectedEdge, ...],
+    ) -> tuple[ProjectedEdge, ...]:
+        if not self.app.state.toggles.box_nearest_vertical_edge_hidden:
+            return edges
+        hidden_edge = self.nearest_vertical_box_edge(edges)
+        if hidden_edge is None:
+            return edges
+        return tuple(edge for edge in edges if edge is not hidden_edge)
+
+    def nearest_vertical_box_edge(
+        self,
+        edges: tuple[ProjectedEdge, ...],
+    ) -> ProjectedEdge | None:
+        vertical_edges = tuple(edge for edge in edges if edge.is_vertical)
+        if not vertical_edges:
+            return None
+        return min(vertical_edges, key=lambda edge: edge.average_depth)
 
     def draw_box_stars(self) -> None:
         if not self.app.state.toggles.interior_stars_visible:
@@ -355,6 +379,25 @@ class RuntimeRenderer:
                         7,
                     )
                 self.draw_scaled_text(bgm_box.x + 18, row.y + 5, "BGM", 5)
+            if spec.key == "scenery_visible":
+                hide_box = box_edge_hide_checkbox_rect(panel)
+                pyxel.rectb(hide_box.x, hide_box.y, hide_box.width, hide_box.height, 5)
+                if draft.box_nearest_vertical_edge_hidden:
+                    pyxel.line(
+                        hide_box.x + 2,
+                        hide_box.y + 6,
+                        hide_box.x + 5,
+                        hide_box.y + 10,
+                        7,
+                    )
+                    pyxel.line(
+                        hide_box.x + 5,
+                        hide_box.y + 10,
+                        hide_box.x + 10,
+                        hide_box.y + 2,
+                        7,
+                    )
+                self.draw_scaled_text(hide_box.x + 18, row.y + 5, "HIDE", 5)
 
         speed = speed_button_rect(panel)
         pyxel.rectb(speed.x, speed.y, speed.width, speed.height, 5)

@@ -22,6 +22,8 @@ from pyxel_goal_game.runtime.show_schedule import (
 from pyxel_goal_game.runtime.state import (
     AUTO_ROTATE_SPEED_MODE_ORDER,
     FIRST_GENERATION_FIREWORK_ORDER,
+    MOBILE_SELECTABLE_FIREWORK_ORDER,
+    SINGLE_LAUNCH_RANDOM_FIREWORK_ORDER,
     AutoRotateSpeedMode,
     RuntimeShowState,
     RuntimeToggles,
@@ -38,6 +40,7 @@ __all__ = [
     "EXPLOSION_SFX_COOLDOWN_FRAMES",
     "FIRST_GENERATION_FIREWORK_ORDER",
     "INWARD_PAIR_REPEAT_FRAMES",
+    "MOBILE_SELECTABLE_FIREWORK_ORDER",
     "AutoRotateMotion",
     "AutoRotateSpeedMode",
     "PERSISTENT_SALVO_REPEAT_FRAMES",
@@ -47,5 +50,6 @@ __all__ = [
     "RuntimeToggles",
     "SFX_CHANNEL",
     "SFX_EXPLOSION_SOUND_ID",
+    "SINGLE_LAUNCH_RANDOM_FIREWORK_ORDER",
     "SalvoCountMode",
 ]

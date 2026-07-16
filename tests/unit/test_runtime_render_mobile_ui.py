@@ -18,6 +18,9 @@ def test_mobile_panel_uses_scaled_text_and_zoom_buttons() -> None:
     assert "burst_label.upper()" in source
     assert '"NEXT"' not in source
     assert "BGM" in source
+    assert "HIDE" in source
+    assert "box_nearest_vertical_edge_hidden" in source
+    assert "nearest_vertical_box_edge" in source
     assert "tap toggles for instant change" in source
     assert "APPLY" not in source
 

@@ -1219,3 +1219,117 @@ launches share deterministic palette variant selection while avoiding exact
 seed copies. Firework generation, particle counts, palette definitions, delayed
 mini-burst garnish, Long Willow trails, CITY, stars, UFO, audio, shell tail,
 glitter, and `main.py` remain unchanged.
+
+## 2026-07-16 Include inward pair in mobile count and random-count selection
+
+Decision:
+Add `6` to the mobile `COUNT` selector as the inward mirrored pair pattern, and
+allow random-count salvo mode to choose `6` as an inward pattern choice.
+
+Reason:
+Keyboard `6` already exposes the inward pair salvo, but the mobile `MENU`
+control path still only offered `1` through `5` and `RND`. Including `6` keeps
+mobile controls aligned with keyboard controls. Allowing `RND` to select `6`
+makes random-count review cover the new pattern as well.
+
+Alternatives:
+Keep inward pair keyboard-only, add a separate mobile button, or leave
+random-count mode limited to fixed counts.
+
+Impact:
+Mobile `COUNT` now cycles `1`, `2`, `3`, `4`, `5`, `6`, and `RND`. `COUNT 6`
+starts the inward pair loop, mobile `AUTO` can schedule inward when `COUNT 6`
+is selected, and random-count mode can choose inward using deterministic seed
+selection. The show score, firework generation, particle counts, palette
+definitions, CITY, stars, UFO, audio, shell tail, glitter, and `main.py` remain
+unchanged.
+
+## 2026-07-16 Add Grand Sphere as single-launch firework
+
+Decision:
+Add `Grand Sphere` as a special large 3D sphere firework that can be selected
+from the mobile `MENU` firework selector and by random single-launch scheduling.
+When it is selected from `MENU`, force mobile `COUNT` back to `1`.
+
+Reason:
+The requested effect should feel grand and spacious, but it would make fixed
+salvos and inward mirrored pairs too dense and too likely to exceed the
+readable box composition. Restricting it to single launches lets it be larger
+and slower-fading while preserving salvo readability.
+
+Alternatives:
+Add it to the normal PC cycle, include it in all random salvos, keep it
+random-only, or make it a new shape generator instead of reusing the existing
+sphere generator with a tuned preset.
+
+Impact:
+`Grand Sphere` uses the existing deterministic sphere generator with a larger
+particle count, long life, near-neutral gravity, restrained trails, and three
+palettes. It is registered for runtime rendering/effects but excluded from
+`FIRST_GENERATION_FIREWORK_ORDER`, fixed-count salvos, inward pair salvos, and
+salvo random kind selection. Mobile `MENU` can cycle to it for deterministic
+review; selecting it sets `COUNT 1` and disables firework random mode for that
+choice. Firework generation architecture, particle simulation, palette
+selection rules, delayed mini-burst garnish, CITY, stars, UFO, audio, shell
+tail, glitter, and `main.py` remain unchanged.
+
+## 2026-07-16 Increase Grand Sphere density and use three-step height variation
+
+Decision:
+Increase `Grand Sphere` particle density and change Height variation from a
+continuous random offset to one of three deterministic elevated levels.
+
+Reason:
+Grand Sphere should read as a large spherical shell rather than a sparse point
+cloud. Height ON should be easier to visually compare and should support the
+single-launch Grand Sphere path, but the largest sphere still needs to remain
+inside the observation box.
+
+Impact:
+`Grand Sphere` now uses 192 particles. Height variation uses three named
+profile-relative levels, and single launches pass through scheduled burst
+height selection so mobile `Grand Sphere` with `COUNT 1` can use Height ON.
+The levels were constrained against the `iphone16_balanced` box for Grand
+Sphere. Firework schema, palette definitions, delayed mini-burst garnish, CITY,
+stars, UFO, audio, shell tail, glitter, and `main.py` remain unchanged.
+
+## 2026-07-16 Replace Grand Sphere when mobile COUNT leaves 1
+
+Decision:
+When the mobile `COUNT` selector is moved away from `1` while `Grand Sphere` is
+selected, replace the selected firework with the normal first-generation
+default before scheduling multi-shot modes.
+
+Reason:
+`Grand Sphere` is intentionally single-launch-only. Leaving it selected while
+changing `COUNT` to fixed multi-shot, inward pair, or random-count modes creates
+an invalid scheduling state and can crash the runtime. Automatically replacing
+the firework keeps the user action valid without allowing Grand Sphere into
+multi-shot salvos.
+
+Impact:
+Mobile `COUNT` cycling now clears `Grand Sphere` when the selected count is not
+`1`. Fixed salvo, random-count salvo, and inward pair scheduling also defend
+against stale Grand Sphere state before building schedules. Firework generation,
+particle counts, palette definitions, delayed mini-burst garnish, CITY, stars,
+UFO, audio, shell tail, glitter, and `main.py` remain unchanged.
+
+## 2026-07-16 Add mobile observation-box edge hide toggle
+
+Decision:
+Add a mobile `CITY` row companion toggle that hides the camera-nearest vertical
+edge of the enclosing observation box without disabling CITY scenery itself.
+
+Reason:
+The nearest vertical edge of the enclosing box can visually cut through the
+scene during camera rotation. Putting the option beside the existing CITY
+toggle allows quick A/B review without changing scenery geometry, box geometry,
+or the default CITY visibility behavior.
+
+Impact:
+The runtime renderer finds the projected vertical edge of the enclosing box
+closest to the camera and skips that one edge when
+`box_nearest_vertical_edge_hidden` is enabled. The toggle is available in the
+mobile panel beside `CITY` as `HIDE`. CITY geometry, scenery lines, firework
+generation, controls, audio, UFO, shell tail, glitter, and `main.py` remain
+unchanged.

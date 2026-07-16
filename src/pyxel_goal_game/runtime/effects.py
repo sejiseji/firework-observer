@@ -14,6 +14,7 @@ from pyxel_goal_game.firework_bursts import (
     generate_secondary_burst,
 )
 from pyxel_goal_game.firework_presets import (
+    GRAND_SPHERE_PRESET,
     HALO_PRESET,
     KIKU_PRESET,
     LONG_WILLOW_PRESET,
@@ -55,6 +56,7 @@ MINI_BURST_GARNISH_ELIGIBLE_KINDS = frozenset(
 FIREWORK_PRESETS_BY_KIND: dict[FireworkKind, FireworkPreset] = {
     FireworkKind.KIKU: KIKU_PRESET,
     FireworkKind.SPHERE_BLOOM: SPHERE_BLOOM_PRESET,
+    FireworkKind.GRAND_SPHERE: GRAND_SPHERE_PRESET,
     FireworkKind.SMILE: SMILE_PRESET,
     FireworkKind.RING: RING_PRESET,
     FireworkKind.SPIRAL: SPIRAL_PRESET,
@@ -69,6 +71,7 @@ FIREWORK_PRESETS_BY_KIND: dict[FireworkKind, FireworkPreset] = {
 BURST_ACCENT_STYLES = {
     FireworkKind.KIKU: (10, 9, 7),
     FireworkKind.SPHERE_BLOOM: (7, 10, 12),
+    FireworkKind.GRAND_SPHERE: (7, 10, 12),
     FireworkKind.SMILE: (10, 7, 12),
     FireworkKind.RING: (12, 6, 7),
     FireworkKind.SPIRAL: (11, 10, 7),
@@ -83,6 +86,7 @@ BURST_ACCENT_STYLES = {
 ACCENT_COUNTS = {
     FireworkKind.KIKU: 8,
     FireworkKind.SPHERE_BLOOM: 7,
+    FireworkKind.GRAND_SPHERE: 8,
     FireworkKind.SMILE: 5,
     FireworkKind.RING: 6,
     FireworkKind.SPIRAL: 8,
@@ -97,6 +101,7 @@ ACCENT_COUNTS = {
 GLITTER_RESIDUE_COUNTS = {
     FireworkKind.KIKU: 8,
     FireworkKind.SPHERE_BLOOM: 6,
+    FireworkKind.GRAND_SPHERE: 10,
     FireworkKind.SMILE: 4,
     FireworkKind.RING: 6,
     FireworkKind.SPIRAL: 7,

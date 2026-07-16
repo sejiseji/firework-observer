@@ -46,6 +46,17 @@ The official runtime includes these first-class firework variants:
 
 `Sphere Bloom` is the explicit canonical sphere-like bloom. `Smile` is a shaped burst with two eyes and a smiling mouth arc. `Long Willow` is the explicit longer falling willow / 枝垂れ variant. Existing Kiku, Peony, and Willow remain distinct and available.
 
+Grand Sphere is a special single-launch firework. It is a denser, larger 3D
+spherical bloom with a longer, restrained fade. The mobile `MENU` firework
+selector can choose it for deterministic review, and selecting it forces mobile
+`COUNT` back to `1`. It can also appear from random single-shell launches, but
+it is intentionally not part of fixed-count salvo or inward pair salvo
+selection. If mobile `COUNT` is moved away from `1` while Grand Sphere is
+selected, the selected firework returns to the normal first-generation cycle so
+multi-shot scheduling remains valid. When Height is ON, scheduled burst heights
+choose one of three deterministic elevated levels that still keep Grand Sphere
+inside the observation box.
+
 Each firework kind has three predefined color palette variants. Each launch chooses one palette deterministically from the firework seed, so repeated shows can vary in color without changing geometry, timing, or preset identity.
 
 Some eligible main fireworks can also produce delayed mini-burst garnish: small deterministic child blooms near the original burst after short staggered delays. This is a secondary show effect, not a separate main firework kind.
@@ -60,6 +71,11 @@ The official runtime supports persistent salvo loops:
 - `2`-`5`: fixed-count salvo loops
 - `0`: random-count salvo loop
 - `6`: mirrored inward pair salvo
+
+Random-count salvo mode may choose the inward pair pattern as its `6` choice.
+Height variation uses three deterministic elevated height levels instead of a
+continuous random offset, keeping reviewable compositions easier to compare.
+On mobile, the `MENU` `COUNT` selector exposes the same `6` choice directly.
 
 The mirrored inward pair salvo uses 10 horizontally arranged launch positions.
 It fires five simultaneous left/right pairs from the outside toward the center:
@@ -78,6 +94,7 @@ Screen profile and scenery work should be designed together because the observat
 - A larger optional profile may target `393x852`.
 - Larger profiles should use a portrait/tall screen and internal firework volume so launch height, altitude differences, and falling trails remain expressive.
 - Future in-box scenery should be quiet 3D line geometry that rotates with the box.
+- The mobile CITY row may include viewer/readability toggles, such as hiding the nearest vertical edge of the enclosing observation box, but they should not mutate the underlying CITY or box geometry.
 - Do not solve scenery by drawing 2D screen-space backgrounds.
 
 ## Design notes for Codex

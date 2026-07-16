@@ -7,7 +7,9 @@ from pyxel_goal_game.runtime.mobile_ui import (
     MOBILE_TOGGLE_SPECS,
     audio_toggle_rect,
     bgm_toggle_rect,
+    box_edge_hide_toggle_rect,
     checkbox_row_rect,
+    city_toggle_rect,
     close_button_rect,
     launch_button_rect,
     menu_button_rect,
@@ -156,6 +158,12 @@ def handle_mobile_panel_click(app: object, mouse_x: int, mouse_y: int) -> bool:
                 elif audio_toggle_rect(panel).contains(mouse_x, mouse_y):
                     app.apply_mobile_toggle("audio_enabled")
                 return True
+            if spec.key == "scenery_visible":
+                if box_edge_hide_toggle_rect(panel).contains(mouse_x, mouse_y):
+                    app.apply_mobile_toggle("box_nearest_vertical_edge_hidden")
+                elif city_toggle_rect(panel).contains(mouse_x, mouse_y):
+                    app.apply_mobile_toggle("scenery_visible")
+                return True
             app.apply_mobile_toggle(spec.key)
             return True
 
@@ -166,7 +174,7 @@ def handle_mobile_panel_click(app: object, mouse_x: int, mouse_y: int) -> bool:
         app.launch()
         return True
     if next_button_rect(panel).contains(mouse_x, mouse_y):
-        app.handle_space_cycle()
+        app.handle_mobile_firework_cycle()
         app.refresh_mobile_panel_draft()
         return True
     if random_salvo_button_rect(panel).contains(mouse_x, mouse_y):
